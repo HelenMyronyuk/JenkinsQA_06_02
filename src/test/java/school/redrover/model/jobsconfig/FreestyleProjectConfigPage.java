@@ -195,8 +195,7 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
 
     public FreestyleProjectConfigPage clickAddBuildStepButton() {
         new Actions(getDriver())
-                .sendKeys(Keys.PAGE_DOWN)
-                .pause(250)
+                .scrollToElement(footer)
                 .click(addBuildStepButton)
                 .build()
                 .perform();
