@@ -589,6 +589,23 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
+  @Test
+  public void testConfigureProjectsEditScriptPath() {
+        final String scriptPath = "Test Script Path";
+        TestUtils.createJob(this,ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String organizationFolderProjectIsPresent = new MainPage(getDriver())
+            .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+            .clickConfigure()
+            .clickProjectsSideMenu()
+            .enterScriptPath(scriptPath)
+            .clickSaveButton()
+            .clickConfigure()
+            .clickProjectsSideMenu()
+            .getScriptPath();
+        Assert.assertEquals(organizationFolderProjectIsPresent, scriptPath);
+  } 
+
     @Test
     public void testAccessConfigurationPageFromDashboard() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
