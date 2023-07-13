@@ -527,6 +527,18 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
+    public void testAccessConfigurationPageFromDashboard() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String getTitleFromPage = new MainPage(getDriver())
+                .clickConfigureDropDown(
+                        ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
+                .getTitle();
+
+        Assert.assertEquals(getTitleFromPage, "Configuration");
+    }
+
+    @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
@@ -587,17 +599,5 @@ public class OrganizationFolderTest extends BaseTest {
                 .getWelcomeText();
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
-    }
-
-    @Test
-    public void testAccessConfigurationPageFromDashboard() {
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String getTitleFromPage = new MainPage(getDriver())
-                .clickConfigureDropDown(
-                        ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .getTitle();
-
-        Assert.assertEquals(getTitleFromPage, "Configuration");
     }
 }
