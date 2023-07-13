@@ -1162,4 +1162,18 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
     }
+
+    @Test
+    public void testCreateFromCreateAJob() {
+        MainPage mainPage = new MainPage(getDriver())
+                .clickCreateAJob()
+                .enterItemName(FREESTYLE_NAME)
+                .selectJobType(TestUtils.JobType.FreestyleProject)
+                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
+                .getHeader()
+                .clickLogo();
+
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertEquals(mainPage.getJobName(FREESTYLE_NAME), FREESTYLE_NAME);
+    }
 }
