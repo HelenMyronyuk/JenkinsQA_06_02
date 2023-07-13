@@ -1045,7 +1045,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .clickBuildNowFromSideMenu()
                 .clickWorkspaceFromSideMenu()
-                .getPageTitle();
+                .getTextFromWorkspacePage();
 
         Assert.assertEquals(actualWorkspaceStatus, expectedWorkspaceStatus);
     }

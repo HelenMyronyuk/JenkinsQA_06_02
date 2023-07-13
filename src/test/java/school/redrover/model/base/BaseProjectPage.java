@@ -191,10 +191,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return new ChangesPage<>((Self)this);
     }
 
-    public WorkspacePage<Self> clickWorkspaceFromSideMenu() {
+    public WorkspacePage clickWorkspaceFromSideMenu() {
         workspaceButton.click();
 
-        return new WorkspacePage<>((Self)this);
+        return new WorkspacePage(getDriver());
     }
 
     public EditBuildInformationPage clickEditBuildInformFromProjectPage(){
@@ -206,6 +206,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     public ConsoleOutputPage clickConsoleOutputType(){
         consoleOutputType.click();
+
         return new ConsoleOutputPage(getDriver());
     }
 
