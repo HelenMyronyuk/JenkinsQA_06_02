@@ -1055,6 +1055,20 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testCreateFromCreateAJobArrow(){
+        boolean freestyleProjectNameIsAppeared = new MainPage(getDriver())
+                .clickCreateAJobArrow()
+                .enterItemName(FREESTYLE_NAME)
+                .selectJobType(TestUtils.JobType.FreestyleProject)
+                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
+                .getHeader()
+                .clickLogo()
+                .jobIsDisplayed(FREESTYLE_NAME);
+
+        Assert.assertTrue(freestyleProjectNameIsAppeared,"Error! Job Is Not Displayed");
+    }
+  
+    @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
 
@@ -1135,6 +1149,5 @@ public class FreestyleProjectTest extends BaseTest {
                 .isDisplayedBuildTitle();
 
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
-
     }
 }
