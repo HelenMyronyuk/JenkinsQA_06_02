@@ -1226,4 +1226,24 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
+
+    @Test
+    public void testEditDescriptionFromBuildPage() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String newBuildDescription = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickBuildFromSideMenu(FREESTYLE_NAME,1)
+                .clickEditBuildInformation()
+                .enterDescription(DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .clickEditDescription()
+                .clearDescriptionText()
+                .enterDescriptionText(NEW_DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);
+    }
 }

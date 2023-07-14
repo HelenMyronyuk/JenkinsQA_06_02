@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,6 +31,18 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     @FindBy(xpath = "//div[@id='description']/div[1]")
     private WebElement buildDescription;
+
+    @FindBy(xpath = "//a[@href='editDescription']")
+    private WebElement editDescription;
+
+    @FindBy(name = "description")
+    private WebElement descriptionTextField;
+
+    @FindBy(xpath = "//button[contains(text(),'Save')]")
+    private WebElement saveButton;
+
+    @FindBy(xpath = "//a[@class='textarea-show-preview']")
+    private WebElement previewButton;
 
     public BuildPage(WebDriver driver) {
         super(driver);
@@ -80,6 +93,31 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     }
 
     public String getDescriptionText() {
-        return buildDescription.getText();
+        return getWait2().until(ExpectedConditions.visibilityOf(buildDescription)).getText();
+    }
+
+    public BuildPage clickEditDescription() {
+        editDescription.click();
+        return this;
+    }
+
+    public BuildPage clearDescriptionText() {
+        descriptionTextField.clear();
+        return this;
+    }
+
+    public BuildPage enterDescriptionText(String text) {
+        descriptionTextField.sendKeys(text);
+        return this;
+    }
+
+    public BuildPage clickSaveButton() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+        return this;
+    }
+
+    public BuildPage clickPreview() {
+        previewButton.click();
+        return this;
     }
 }
