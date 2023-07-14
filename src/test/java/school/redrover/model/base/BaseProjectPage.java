@@ -78,6 +78,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//span[contains(text(),'Console Output')]")
     private WebElement consoleOutputType;
 
+    @FindBy(xpath = "(//li[@class='permalink-item'])[1]//button")
+    private WebElement permalinksLastBuildDropDown;
+
     public BaseProjectPage(WebDriver driver) {
         super(driver);
     }
@@ -220,5 +223,18 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         int startIndex = lastBuildLink.getText().indexOf("#");
         int finalIndex = lastBuildLink.getText().indexOf(")");
        return lastBuildLink.getText().substring(startIndex, finalIndex);
+    }
+
+    public Self openPermalinksLastBuildsDropDownMenu() {
+        getWait10().until(ExpectedConditions.visibilityOf(permalinksLastBuildDropDown)).sendKeys(Keys.RETURN);
+
+        return (Self)this;
+    }
+
+    public EditBuildInformationPage clickEditBuildInfoPermalinksLBDropDown() {
+        openPermalinksLastBuildsDropDownMenu();
+        editBuildInformFromDropDownOfBuild.click();
+
+        return new EditBuildInformationPage(getDriver());
     }
 }

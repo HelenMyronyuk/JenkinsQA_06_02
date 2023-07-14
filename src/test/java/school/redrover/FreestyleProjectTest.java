@@ -23,6 +23,8 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
     private static final String NEW_DESCRIPTION_TEXT = "NEW_DESCRIPTION_TEXT";
     private static final String GITHUB_URL = "https://github.com/ArtyomDulya/TestRepo";
+    private static final String DISPLAY_NAME = "FreestyleDisplayName";
+    private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
 
     @Test
     public void testAddDescriptionFromConfigurationPage() {
@@ -1177,10 +1179,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testEditBuildInformationFromLastBuild() {
-        final String displayName = "FreestyleDisplayName";
-        final String newDisplayName = "NewFreestyleDisplayName";
-
+    public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String buildName = new MainPage(getDriver())
@@ -1188,11 +1187,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickLastBuildLink()
                 .clickEditBuildInformation()
-                .enterDisplayName(displayName)
+                .enterDisplayName(DISPLAY_NAME)
                 .enterDescription(DESCRIPTION_TEXT)
                 .clickSaveButton()
                 .clickEditBuildInformation()
-                .editDisplayName(newDisplayName)
+                .editDisplayName(NEW_DISPLAY_NAME)
                 .enterDescription(NEW_DESCRIPTION_TEXT)
                 .clickSaveButton()
                 .getBuildNameFromTitle();
@@ -1200,7 +1199,7 @@ public class FreestyleProjectTest extends BaseTest {
         String description = new BuildPage(getDriver())
                 .getDescriptionText();
 
-        Assert.assertEquals(buildName, newDisplayName);
+        Assert.assertEquals(buildName, NEW_DISPLAY_NAME);
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 
@@ -1245,5 +1244,32 @@ public class FreestyleProjectTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);
+    }
+
+    @Test
+    public void testEditBuildInformationFromLastBuild() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String buildName = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickEditBuildInfoPermalinksLBDropDown()
+                .enterDisplayName(DISPLAY_NAME)
+                .enterDescription(DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .getHeader()
+                .clickLogo()
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickEditBuildInfoPermalinksLBDropDown()
+                .editDisplayName(NEW_DISPLAY_NAME)
+                .enterDescription(NEW_DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .getBuildNameFromTitle();
+
+        String description = new BuildPage(getDriver())
+                .getDescriptionText();
+
+        Assert.assertEquals(buildName, NEW_DISPLAY_NAME);
+        Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 }
