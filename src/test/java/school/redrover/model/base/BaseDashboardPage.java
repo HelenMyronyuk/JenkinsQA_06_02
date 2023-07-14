@@ -408,4 +408,10 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
         return new EditBuildInformationPage(getDriver());
     }
+
+    public ChangesBuildPage clickOnChangesItem() {
+        getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Changes')]"))).click();
+
+        return new ChangesBuildPage(getDriver());
+    }
 }

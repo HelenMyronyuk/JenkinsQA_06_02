@@ -1272,4 +1272,19 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(buildName, NEW_DISPLAY_NAME);
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
+
+    @Test
+    public void testBuildChangesFromDropDown() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String titleChange= new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .getHeader()
+                .clickLogo()
+                .openBuildDropDownMenu("#1")
+                .clickOnChangesItem()
+                .getTextChanges();
+
+        Assert.assertEquals(titleChange,"Changes");
+    }
 }
