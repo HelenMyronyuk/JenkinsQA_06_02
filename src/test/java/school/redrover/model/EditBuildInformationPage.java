@@ -57,12 +57,17 @@ public class EditBuildInformationPage extends BaseMainHeaderPage<EditBuildInform
     }
 
     public String getPreviewText() {
-
         return getWait5().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
     }
 
     public String getTitle(){
-
         return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
+    }
+
+    public EditBuildInformationPage editDisplayName(String displayName) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField)).clear();
+        displayNameField.sendKeys(displayName);
+
+        return this;
     }
 }

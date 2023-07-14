@@ -36,12 +36,10 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     }
 
     public boolean isDisplayedGreenIconV() {
-
         return getWait5().until(ExpectedConditions.visibilityOf(greenIconV)).isDisplayed();
     }
 
     public boolean isDisplayedBuildTitle() {
-
         return buildHeader.getText().contains("Build #1");
     }
 
@@ -67,8 +65,13 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     }
 
     public String getBuildHeaderText() {
-
         return getWait5().until(ExpectedConditions.visibilityOf(buildHeader)).getText();
+    }
+
+    public String getBuildNameFromTitle() {
+        String buildName = getWait5().until(ExpectedConditions.visibilityOf(buildHeader)).getText();
+
+        return buildName.substring(buildName.indexOf(" ") + 1, buildName.indexOf(" ("));
     }
 
     public FreestyleProjectPage deleteBuild() {

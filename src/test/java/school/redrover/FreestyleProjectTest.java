@@ -3,7 +3,6 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -1175,5 +1174,33 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
         Assert.assertEquals(mainPage.getJobName(FREESTYLE_NAME), FREESTYLE_NAME);
+    }
+
+    @Test
+    public void testEditBuildInformationFromLastBuild() {
+        final String displayName = "FreestyleDisplayName";
+        final String newDisplayName = "NewFreestyleDisplayName";
+
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String buildName = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickLastBuildLink()
+                .clickEditBuildInformation()
+                .enterDisplayName(displayName)
+                .enterDescription(DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .clickEditBuildInformation()
+                .editDisplayName(newDisplayName)
+                .enterDescription(NEW_DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .getBuildNameFromTitle();
+
+        String description = new BuildPage(getDriver())
+                .getDescriptionText();
+
+        Assert.assertEquals(buildName, newDisplayName);
+        Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 }
