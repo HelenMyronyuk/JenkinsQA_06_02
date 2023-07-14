@@ -215,4 +215,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
         return new BuildPage(getDriver());
     }
+
+    public String getLastBuildNumber(){
+        int startIndex = lastBuildLink.getText().indexOf("#");
+        int finalIndex = lastBuildLink.getText().indexOf(")");
+       return lastBuildLink.getText().substring(startIndex, finalIndex);
+    }
 }

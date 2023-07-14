@@ -1203,4 +1203,27 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(buildName, newDisplayName);
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
+
+    @Test
+    public void testConsoleOutputFromLastBuild() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        FreestyleProjectPage freestyleJob = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()));
+
+        String lastBuildNumber = freestyleJob
+                .getLastBuildNumber();
+
+        ConsoleOutputPage consoleOutput = freestyleJob
+                .clickLastBuildLink()
+                .clickConsoleOutput();
+
+        String breadcrumb = consoleOutput
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
+        Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
+    }
 }
