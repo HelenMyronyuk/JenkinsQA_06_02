@@ -7,6 +7,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
 
     @FindBy(css = ".task-link-wrapper>a[href$='newJob']")
@@ -26,6 +29,9 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
 
     @FindBy(xpath = "//table[@id = 'people']/tbody")
     private WebElement user;
+
+    @FindBy(xpath = "//div[@class='jenkins-icon-size']//ol/li")
+    private List<WebElement> iconButtons;
 
     public PeoplePage(WebDriver driver) {
         super(driver);
@@ -77,4 +83,17 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
     public boolean checkIfUserWasAdded(String userName) {
         return user.getText().contains(userName);
     }
+
+    public static List<String> listText(List<WebElement> elementList) {
+        List<String> stringList = new ArrayList<>();
+        for (WebElement element : elementList) {
+            stringList.add(element.getText());
+        }
+        return stringList;
+    }
+
+    public List<String> getIconButtonsList() {
+        return listText(iconButtons);
+    }
+
 }

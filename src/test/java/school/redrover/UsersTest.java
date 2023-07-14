@@ -1,6 +1,5 @@
 package school.redrover;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -8,7 +7,6 @@ import school.redrover.model.*;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,16 +16,7 @@ public class UsersTest extends BaseTest {
     protected static final String PASSWORD = "p@ssword123";
     protected static final String EMAIL = "test@test.com";
     protected static final String USER_FULL_NAME = "Test User";
-    protected static final String USER_LINK = "//a[@href='user/" + USER_NAME + "/']";
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
-
-    public static List<String> listText(List<WebElement> elementList) {
-        List<String> stringList = new ArrayList<>();
-        for (WebElement element : elementList) {
-            stringList.add(element.getText());
-        }
-        return stringList;
-    }
 
     @Test
     public void testCreateNewUser() {
@@ -95,9 +84,11 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualDisplayedDescriptionText, displayedDescriptionText);
     }
 
-    @Test(dependsOnMethods = "testAddDescriptionToUserOnUserStatusPage")
+    @Test
     public void testEditDescriptionToUserOnUserStatusPage() {
         final String displayedDescriptionText = "User Description Updated";
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         new MainPage(getDriver())
                 .clickManageJenkinsPage()
@@ -178,9 +169,9 @@ public class UsersTest extends BaseTest {
     public void testViewIconButtonsPeoplePage() {
         List<String> expectedIconButtonsNames = List.of("S" + "\n" + "mall", "M" + "\n" + "edium", "L" + "\n" + "arge");
 
-        getDriver().findElement(By.xpath("//span/a[@href='/asynchPeople/']")).click();
-        List<WebElement> iconButtons = getDriver().findElements(By.xpath("//div[@class='jenkins-icon-size']//ol/li"));
-        List<String> actualIconButtonsNames = listText(iconButtons);
+        List<String> actualIconButtonsNames = new MainPage(getDriver())
+                .clickPeopleOnLeftSideMenu()
+                .getIconButtonsList();
 
         Assert.assertEquals(actualIconButtonsNames, expectedIconButtonsNames);
     }
@@ -213,7 +204,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIDButtonNotContainsArrow, "UserID button has sort arrow");
     }
 
-    @Test(dependsOnMethods = "testErrorWhenCreateDuplicatedUser")
+    @Test
     public void testSearchPeople() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
@@ -242,8 +233,10 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted);
     }
 
-    @Test(dependsOnMethods = "testCreateNewUser")
+    @Test
     public void testDeleteUserViaManageUsersByDeleteButton() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
         boolean userNotFound = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
@@ -254,9 +247,15 @@ public class UsersTest extends BaseTest {
         Assert.assertFalse(userNotFound);
     }
 
-    @Test(dependsOnMethods = "testDeleteUserViaPeopleMenu")
+    @Test
     public void testLogInWithDeletedUserCredentials() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
         String invalidMessage = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickDeleteUser()
+                .clickYesButton()
                 .getHeader()
                 .clickLogoutButton()
                 .enterUsername(USER_NAME)
@@ -328,9 +327,11 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectUsernameAndPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
-    @Test(dependsOnMethods = "testUserCanLoginToJenkinsWithCreatedAccount")
+    @Test
     public void testCreateUserFromManageUser() {
         final String expectedResultTitle = "Dashboard [Jenkins]";
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         new MainPage(getDriver())
                 .getHeader()
@@ -370,9 +371,11 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResultFindUSerName, "true");
     }
 
-    @Test(dependsOnMethods = "testCreateUserFromManageUser")
+    @Test
     public void testCreateUserCheckInManageUsers() {
         final String expectedResultTitle = "Users [Jenkins]";
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         new MainPage(getDriver())
                 .clickManageJenkinsPage()
