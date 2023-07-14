@@ -19,13 +19,13 @@ public class BreadcrumbTest extends BaseTest {
     public void testNavigateToManageJenkinsSection() {
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
-                .clickManageJenkinsOnDropDownMenu()
+                .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 
         Assert.assertEquals(actualResult, "Manage Jenkins");
     }
 
-    @DataProvider (name = "subsections")
+    @DataProvider(name = "subsections")
     public Object[][] provideSubsection() {
         return new Object[][]{
                 {"Configure System", new ConfigureSystemPage(getDriver())},
@@ -126,9 +126,9 @@ public class BreadcrumbTest extends BaseTest {
     public void testMoveToPluginsPageThroughDashboardDropDownMenu() {
 
         String actualResult = new MainPage(getDriver())
-                        .getBreadcrumb()
-                        .selectAnOptionFromDashboardManageJenkinsSubmenuList("Manage Plugins", new PluginsPage(getDriver()))
-                        .getPageTitle();
+                .getBreadcrumb()
+                .selectAnOptionFromDashboardManageJenkinsSubmenuList("Manage Plugins", new PluginsPage(getDriver()))
+                .getPageTitle();
 
         Assert.assertEquals(actualResult, "Plugins");
     }
@@ -138,7 +138,7 @@ public class BreadcrumbTest extends BaseTest {
         String actualTitle = new MainPage(getDriver())
                 .clickBuildsHistoryButton()
                 .getBreadcrumb()
-                .openPeoplePageFromDashboardDropdownMenu()
+                .getPageFromDashboardDropdownMenu("People", new PeoplePage(getDriver()))
                 .getPageTitle();
 
         Assert.assertEquals(actualTitle, "People");

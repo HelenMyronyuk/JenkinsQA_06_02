@@ -7,9 +7,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.MainPage;
-import school.redrover.model.ManageJenkinsPage;
-import school.redrover.model.MyViewsPage;
-import school.redrover.model.PeoplePage;
 import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
@@ -20,20 +17,11 @@ import java.util.List;
 
 public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseComponent<Page> {
 
-    @FindBy(xpath = "//a[contains(text(), 'Dashboard')]")
+    @FindBy(xpath = "//a[text()='Dashboard']")
     private WebElement dashboard;
-
-    @FindBy(xpath = "//div[@id = 'breadcrumbBar']//a[@href='/']//button")
-    private WebElement sliderDashboard;
-
-    @FindBy(xpath = "//*[@id='yui-gen4']/a/span")
-    private WebElement manageJenkinsInSliderDashboard;
 
     @FindBy(xpath = "//div[@id='breadcrumbBar']")
     private WebElement fullBreadcrumb;
-
-    @FindBy(xpath = "//div[@id='breadcrumb-menu']")
-    private WebElement dropdownMenu;
 
     @FindBy(xpath = "//a[text()='Dashboard']/button")
     private WebElement dashboardButton;
@@ -44,33 +32,41 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(css = "#breadcrumb-menu>div:first-child>ul>li")
     private List<WebElement> dropDownMenu;
 
-    @FindBy(xpath = "//li/a/span[contains(text(), 'People')]")
-    private WebElement people;
-
-    @FindBy(xpath = "//div[@id='breadcrumb-menu']/div/ul/li/a")
-    private WebElement newItem;
-
-    @FindBy(xpath = "//li/a/span[contains(text(), 'My Views')]")
-    private WebElement myViews;
-
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
 
-    private void  openDropDownMenuDashboard() {
-        Actions actions = new Actions(getDriver());
-
-        actions.moveToElement(dashboard).perform();
-        actions.moveToElement(sliderDashboard).perform();
-        sliderDashboard.sendKeys(Keys.RETURN);
+    public MainPage clickDashboardButton() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(dashboard)).click();
+        return new MainPage(getDriver());
     }
 
-    public ManageJenkinsPage clickManageJenkinsOnDropDownMenu() {
-        openDropDownMenuDashboard();
+    public MainBreadcrumbComponent<Page> getDashboardDropdownMenu() {
+        new Actions(getDriver())
+                .moveToElement(dashboard)
+                .pause(Duration.ofMillis(300))
+                .perform();
+        getWait2().until(ExpectedConditions.visibilityOf(dashboardButton)).sendKeys(Keys.RETURN);
+        return this;
+    }
 
-        getWait5().until(ExpectedConditions.elementToBeClickable(manageJenkinsInSliderDashboard)).click();
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
+        getDashboardDropdownMenu();
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '"
+                + listItemName + "')]"))).click();
+        return pageToReturn;
+    }
 
-        return new ManageJenkinsPage(getDriver());
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(String menuItem,
+                                                                                                                       SubmenuPage submenuPage) {
+        getDashboardDropdownMenu();
+        new Actions(getDriver())
+                .moveToElement(manageJenkinsSubmenu)
+                .pause(500)
+                .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + menuItem + "')]")))
+                .click()
+                .perform();
+        return submenuPage;
     }
 
     public String getFullBreadcrumbText() {
@@ -81,42 +77,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .trim();
     }
 
-    public MainPage clickDashboardButton() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(dashboard)).click();
-        return new MainPage(getDriver());
-    }
-
-    private void hoverOver(By locator) {
-        new Actions(getDriver())
-                .moveToElement(getDriver().findElement(locator))
-                .pause(Duration.ofMillis(300))
-                .perform();
-    }
-
-    public MainBreadcrumbComponent<Page> getDashboardDropdownMenu() {
-        hoverOver(By.xpath("//a[text()='Dashboard']"));
-        getWait2().until(ExpectedConditions.visibilityOf(dashboardButton)).sendKeys(Keys.RETURN);
-
-        return this;
-    }
-
-    public <PageFromSubMenu extends BaseMainHeaderPage<?>> PageFromSubMenu selectAnOptionFromDashboardManageJenkinsSubmenuList(
-            String menuItem, PageFromSubMenu pageFromSubMenu) {
-
-        getDashboardDropdownMenu();
-
-        new Actions(getDriver())
-                .moveToElement(manageJenkinsSubmenu)
-                .pause(500)
-                .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + menuItem + "')]")))
-                .click()
-                .perform();
-
-        return pageFromSubMenu;
-    }
-
     public List<String> getMenuList() {
-
         List<String> menuList = new ArrayList<>();
         for (WebElement el : dropDownMenu) {
             menuList.add(el.getAttribute("innerText"));
@@ -124,24 +85,10 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return menuList;
     }
 
-    public PeoplePage openPeoplePageFromDashboardDropdownMenu () {
-        getDashboardDropdownMenu();
-        people.click();
-        return new PeoplePage(getDriver());
-    }
-
-    public MyViewsPage openMyViewsPageFromDashboardDropdownMenu () {
-        getDashboardDropdownMenu();
-        myViews.click();
-        return new MyViewsPage(getDriver());
-    }
-
-    public void clickOkOnPopUp () {
+    public void clickOkOnPopUp() {
         getDriver()
                 .switchTo()
                 .alert()
                 .accept();
     }
 }
-
-

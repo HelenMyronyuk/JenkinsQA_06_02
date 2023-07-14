@@ -43,7 +43,7 @@ public class ManageJenkinsTest extends BaseTest {
 
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
-                .clickManageJenkinsOnDropDownMenu()
+                .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 
         Assert.assertEquals(actualResult, "Manage Jenkins");
