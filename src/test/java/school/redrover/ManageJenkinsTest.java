@@ -153,34 +153,36 @@ public class ManageJenkinsTest extends BaseTest {
 
     @Test
     public void testCreateNewAgentNode() {
+        final String nodeName = "NewAgentNode";
 
         String manageNodesPage = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageNodes()
                 .clickNewNodeButton()
-                .inputNodeNameField(NODE_NAME)
+                .inputNodeNameField(nodeName)
                 .clickPermanentAgentRadioButton()
                 .clickCreateButton()
                 .clickSaveButton()
-                .getNodeName(NODE_NAME);
+                .getNodeName(nodeName);
 
-        Assert.assertEquals(manageNodesPage, NODE_NAME);
+        Assert.assertEquals(manageNodesPage, nodeName);
     }
 
     @Test
     public void testCreateNewAgentNodeWithDescription() {
         final String description = getRandomStr(50);
+        final String nodeName = "NameWithDescription";
 
         String nodeDescription = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageNodes()
                 .clickNewNodeButton()
-                .inputNodeNameField(NODE_NAME)
+                .inputNodeNameField(nodeName)
                 .clickPermanentAgentRadioButton()
                 .clickCreateButton()
                 .addDescription(description)
                 .clickSaveButton()
-                .clickOnNode(NODE_NAME)
+                .clickOnNode(nodeName)
                 .getNodeDescription();
 
         Assert.assertEquals(nodeDescription, description);
@@ -258,27 +260,44 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(ServerHelpInfo, expectedServerHelpInfo);
     }
 
-    @Test(dependsOnMethods = "testCreateNewAgentNode")
+    @Test
     public void testDeleteNodeBySideMenuOnNodePage() {
-        List<String> nodeNameList = new MainPage(getDriver())
-                .clickOnNodeName(NODE_NAME)
+        final String nodeName = "NameDeleteSideMenu";
+
+        List<String> nodeNameList= new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageNodes()
+                .clickNewNodeButton()
+                .inputNodeNameField(nodeName)
+                .clickPermanentAgentRadioButton()
+                .clickCreateButton()
+                .clickSaveButton()
+                .clickOnNode(nodeName)
                 .clickOnDeleteAgent()
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(NODE_NAME));
+        Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
-    @Test(dependsOnMethods = "testCreateNewAgentNodeWithDescription")
+    @Test
     public void testDeleteNodeByDropDownOnManageNodesPage() {
+        final String nodeName = "NameFor Delete";
+
         List<String> nodeNameList = new MainPage(getDriver())
-                .clickBuildExecutorStatus()
-                .openNodeDropDownMenu(NODE_NAME)
+                .clickManageJenkinsPage()
+                .clickManageNodes()
+                .clickNewNodeButton()
+                .inputNodeNameField(nodeName)
+                .clickPermanentAgentRadioButton()
+                .clickCreateButton()
+                .clickSaveButton()
+                .openNodeDropDownMenu(nodeName)
                 .dropDownMenuClickDeleteAgent()
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(NODE_NAME));
+        Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
     @Test
