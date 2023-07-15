@@ -335,10 +335,10 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return new LoginPage(getDriver());
     }
 
-    public AdminPage clickOnAdminButton() {
+    public UserPage clickOnAdminButton() {
         getWait2().until(ExpectedConditions.visibilityOf(adminButton)).click();
 
-        return new AdminPage(getDriver());
+        return new UserPage(getDriver());
     }
 
     public RestApiPage clickOnRestApiLink() {

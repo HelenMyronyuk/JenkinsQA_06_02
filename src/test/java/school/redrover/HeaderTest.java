@@ -120,7 +120,7 @@ public class HeaderTest extends BaseTest {
                 .sendSearchBox()
                 .getTitle();
 
-        Assert.assertEquals(textPageFromSearchBox,"Built-In Node");
+        Assert.assertEquals(textPageFromSearchBox, "Built-In Node");
     }
 
     @Test
@@ -194,9 +194,9 @@ public class HeaderTest extends BaseTest {
         String adminPageSign = new MainPage(getDriver())
                 .getHeader()
                 .clickOnAdminButton()
-                .getTitleText();
+                .getActualNameUser();
 
-        assertEquals(adminPageSign,"Jenkins User ID: admin");
+        assertEquals(adminPageSign, "Jenkins User ID: admin");
     }
 
     @Test
@@ -283,7 +283,7 @@ public class HeaderTest extends BaseTest {
                 .clickManageLinkFromPopUp()
                 .getActualHeader();
 
-        Assert.assertEquals(screenManageFromPopUp,"Manage Jenkins");
+        Assert.assertEquals(screenManageFromPopUp, "Manage Jenkins");
     }
 
     @Test
