@@ -25,7 +25,7 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
     @FindBy(xpath = "//div[@class='setting-main help-sibling']//button[contains(@class, 'advancedButton')]")
     private WebElement advancedButtonExtendedEmailNotifications;
 
-    @FindBy(xpath = "//button[@id='yui-gen3-button']")
+    @FindBy(css = "div.credentials-select-control button")
     private WebElement addButtonExtendedEmailNotifications;
 
     @FindBy(xpath = "//span[@title='Jenkins Credentials Provider']")
@@ -97,7 +97,7 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
     @FindBy(xpath = "//input[@name='sendTestMailTo']")
     private WebElement testEmailRecipientInputField;
 
-    @FindBy(xpath = "//button[@id='yui-gen27-button']")
+    @FindBy(xpath = "//button[text()='Test configuration']")
     private WebElement testConfigurationButton;
 
     @FindBy(xpath = "//select[@name='_.credentialsId']")
@@ -111,6 +111,9 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
 
     @FindBy(xpath = "//button[@name='Submit']")
     private WebElement saveButton;
+
+    @FindBy(css = "#footer")
+    private WebElement footer;
 
     public ConfigureSystemPage(WebDriver driver) {
         super(driver);
@@ -140,8 +143,9 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
     }
 
     public ConfigureSystemPage clickAddCredentialButton() {
-        addButtonExtendedEmailNotifications.click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(addButtonExtendedEmailNotifications)).click();
         getWait2().until(ExpectedConditions.elementToBeClickable(jenkinsCredentialProvider)).click();
+
         return this;
     }
 
@@ -244,7 +248,7 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
     }
 
     public ConfigureSystemPage clickTestConfigurationButton() {
-        TestUtils.scrollToElementByJavaScript(this, testConfigurationButton);
+        TestUtils.scrollToElementByJavaScript(this, footer);
         testConfigurationButton.click();
         return this;
     }
