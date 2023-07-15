@@ -1,6 +1,5 @@
 package school.redrover.model;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,6 +42,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     @FindBy(xpath = "//a[@class='textarea-show-preview']")
     private WebElement previewButton;
+
+    @FindBy(xpath = "//div[@class='textarea-preview']")
+    private WebElement previewTextarea;
 
     public BuildPage(WebDriver driver) {
         super(driver);
@@ -119,5 +121,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     public BuildPage clickPreview() {
         previewButton.click();
         return this;
+    }
+
+    public String getPreviewText() {
+        return getWait2().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
     }
 }

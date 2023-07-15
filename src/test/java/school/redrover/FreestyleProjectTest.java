@@ -984,6 +984,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + NEW_FREESTYLE_NAME);
     }
+
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1116,7 +1117,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .isDisplayedBuildTitle();
 
         Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
-
     }
 
     @Test
@@ -1271,6 +1271,21 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(buildName, NEW_DISPLAY_NAME);
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
+    }
+
+    @Test
+    public void testPreviewDescriptionFromBuildPage() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
+
+        String previewText = new FreestyleProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .clickEditDescription()
+                .enterDescriptionText(DESCRIPTION_TEXT)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
     @Test
