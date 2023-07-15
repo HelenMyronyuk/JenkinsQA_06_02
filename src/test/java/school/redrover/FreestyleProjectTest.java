@@ -1253,14 +1253,14 @@ public class FreestyleProjectTest extends BaseTest {
         String buildName = new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickEditBuildInfoPermalinksLBDropDown()
+                .editBuildInfoPermalinksLastBuildDropDown()
                 .enterDisplayName(DISPLAY_NAME)
                 .enterDescription(DESCRIPTION_TEXT)
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickEditBuildInfoPermalinksLBDropDown()
+                .editBuildInfoPermalinksLastBuildDropDown()
                 .editDisplayName(NEW_DISPLAY_NAME)
                 .enterDescription(NEW_DESCRIPTION_TEXT)
                 .clickSaveButton()
@@ -1286,5 +1286,19 @@ public class FreestyleProjectTest extends BaseTest {
                 .getTextChanges();
 
         Assert.assertEquals(titleChange,"Changes");
+    }
+
+    @Test
+    public void testDeleteBuildNowFromLastBuild() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean buildMessage = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .deleteBuildPermalinksLastBuildDropDown()
+                .clickYesButton()
+                .isNoBuildsDisplayed();
+
+        Assert.assertTrue(buildMessage, "error! No builds message is not display");
     }
 }

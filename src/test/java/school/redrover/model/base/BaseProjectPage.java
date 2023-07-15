@@ -231,10 +231,17 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return (Self)this;
     }
 
-    public EditBuildInformationPage clickEditBuildInfoPermalinksLBDropDown() {
+    public EditBuildInformationPage editBuildInfoPermalinksLastBuildDropDown() {
         openPermalinksLastBuildsDropDownMenu();
         editBuildInformFromDropDownOfBuild.click();
 
         return new EditBuildInformationPage(getDriver());
+    }
+
+    public DeletePage<Self> deleteBuildPermalinksLastBuildDropDown() {
+        openPermalinksLastBuildsDropDownMenu();
+        deleteBuildButtonDropDownMenu.click();
+
+        return new DeletePage<>((Self)this);
     }
 }
