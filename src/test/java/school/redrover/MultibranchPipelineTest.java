@@ -59,8 +59,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(isDescriptionEmpty);
     }
 
-    @Test(dependsOnMethods = "testCreateMultibranchPipelineWithoutDescription")
+    @Test
     public void testRenameMultibranchPipeline() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
         String actualDisplayedName = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickRename()
@@ -71,8 +73,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualDisplayedName, RENAMED);
     }
 
-    @Test(dependsOnMethods = "testRenameMultibranchPipeline")
+    @Test
     public void testDisableMultibranchPipeline() {
+        TestUtils.createJob(this, RENAMED, TestUtils.JobType.MultibranchPipeline, true);
+
         String actualDisableMessage = new MainPage(getDriver())
                 .clickJobName(RENAMED, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
@@ -82,8 +86,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(actualDisableMessage.contains("This Multibranch Pipeline is currently disabled"));
     }
 
-    @Test(dependsOnMethods = "testDisableMultibranchPipeline")
+    @Test
     public void testDeleteMultibranchPipeline() {
+        TestUtils.createJob(this, RENAMED, TestUtils.JobType.MultibranchPipeline, true);
+
         String WelcomeJenkinsPage = new MainPage(getDriver())
                 .dropDownMenuClickDeleteFolders(RENAMED)
                 .clickYesButton()
@@ -92,8 +98,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(WelcomeJenkinsPage, "Welcome to Jenkins!");
     }
 
-    @Test (dependsOnMethods = "testCreateMultibranchPipelineWithDisplayName")
+    @Test
     public void testChooseDefaultIcon() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
         boolean defaultIconDisplayed = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
@@ -105,8 +113,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "error was not shown default icon");
     }
 
-    @Test (dependsOnMethods = "testCreateMultibranchPipelineWithDisplayName")
+    @Test
     public void testAddHealthMetrics() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
         boolean healthMetricIsVisible = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
@@ -119,8 +129,10 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(healthMetricIsVisible, "error was not shown Health Metrics");
     }
 
-    @Test(dependsOnMethods = "testCreateMultibranchPipelineWithDescription")
+    @Test
     public void testFindCreatedMultibranchPipelineOnMainPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
         boolean jobIsPresent = new MainPage(getDriver())
                 .jobIsDisplayed(NAME);
 
