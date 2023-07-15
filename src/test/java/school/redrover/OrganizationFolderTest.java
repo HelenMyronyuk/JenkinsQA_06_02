@@ -21,6 +21,7 @@ public class OrganizationFolderTest extends BaseTest {
     private static final String ORGANIZATION_FOLDER_RENAMED = "OrgFolderNew";
     private static final String PRINT_MESSAGE_PIPELINE_SYNTAX = "TEXT";
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
+    private static final String DISPLAY_NAME = "This is Display Name of Folder";
 
     @Test
     public void testCreateFromCreateAJob() {
@@ -157,8 +158,9 @@ public class OrganizationFolderTest extends BaseTest {
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder name is not displayed on Dashboard from MyViews page");
     }
 
-    @Test(dependsOnMethods = "testCreateFromManageJenkinsPage")
+    @Test
     public void testCreateWithExistingName() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
         CreateItemErrorPage errorPage =
                 TestUtils.createJobWithExistingName(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder);
 
@@ -225,8 +227,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
-    @Test(dependsOnMethods = "testAddDescriptionFromConfigurationPage")
+    @Test
     public void testRenameFromDropDownMenu() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String actualRenamedName = new MainPage(getDriver())
                 .dropDownMenuClickRename(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .enterNewName(ORGANIZATION_FOLDER_RENAMED)
@@ -236,8 +240,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedName, ORGANIZATION_FOLDER_RENAMED);
     }
 
-    @Test(dependsOnMethods = "testDeleteDisplayName")
+    @Test
     public void testRenameFromSideMenu() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String actualRenamedFolderName = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickRename()
@@ -248,11 +254,13 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedFolderName, ORGANIZATION_FOLDER_RENAMED);
     }
 
-    @Test(dependsOnMethods = "testRenameFromDropDownMenu")
+    @Test
     public void testRenameToTheCurrentNameAndGetError() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String errorMessage = new MainPage(getDriver())
-                .dropDownMenuClickRename(ORGANIZATION_FOLDER_RENAMED, new OrganizationFolderPage(getDriver()))
-                .enterNewName(ORGANIZATION_FOLDER_RENAMED)
+                .dropDownMenuClickRename(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .enterNewName(ORGANIZATION_FOLDER_NAME)
                 .clickRenameButtonAndGoError()
                 .getErrorMessage();
 
@@ -302,8 +310,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
-    @Test(dependsOnMethods = "testCredentials")
+    @Test
     public void testReRunFolderComputation() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String titleScanOrganizationFolder = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickRerunTheFolderComputation()
@@ -337,8 +347,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(createMultibranchProject, "Branches and Pull Requests");
     }
 
-    @Test(dependsOnMethods = "testCreateFromCreateAJob")
+    @Test
     public void testScanOrgFolderLog() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String titleScanOrgFolderLogPage = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickScanOrgFolderLog()
@@ -359,9 +371,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(eventTitle, "Organization Folder Events");
     }
 
-    @Test(dependsOnMethods = "testCreateFromCreateAJob")
+    @Test
     public void testOrganizationFolderConfigPipelineSyntax() {
         final String expectedText = "echo '" + PRINT_MESSAGE_PIPELINE_SYNTAX + "'";
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
         String pipelineSyntax = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
@@ -374,8 +387,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedText);
     }
 
-    @Test(dependsOnMethods = "testCreateFromCreateAJob")
+    @Test
     public void testCredentials() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String titleCredentials = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickCredentials()
@@ -384,10 +399,12 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleCredentials, "Credentials");
     }
 
-    @Test(dependsOnMethods = "testRenameFromSideMenu")
+    @Test
     public void testPreviewDescriptionFromProjectPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String previewText = new MainPage(getDriver())
-                .clickJobName(ORGANIZATION_FOLDER_RENAMED, new OrganizationFolderPage(getDriver()))
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickAddDescription()
                 .enterDescription(DESCRIPTION_TEXT)
                 .clickPreview()
@@ -396,8 +413,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
-    @Test(dependsOnMethods = "testEnableFromConfigurationPage")
+    @Test
     public void testDisableFromProjectPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String disabledText = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickDisableEnableButton()
@@ -406,10 +425,13 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(disabledText.substring(0, 46), "This Organization Folder is currently disabled");
     }
 
-    @Test(dependsOnMethods = "testDisableFromProjectPage")
+    @Test
     public void testEnableFromProjectPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String disableButton = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickDisableEnableButton()
                 .clickDisableEnableButton()
                 .getDisableButtonText();
 
@@ -420,8 +442,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(iconOrgFolder, "the dispayеd icon OrganizationFolder exists");
     }
 
-    @Test(dependsOnMethods = "testCreateFromNewItem")
+    @Test
     public void testDisableFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String disabledText = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickConfigure()
@@ -432,10 +456,15 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(disabledText.contains("This Organization Folder is currently disabled"));
     }
 
-    @Test(dependsOnMethods = "testDisableFromConfigurationPage")
+    @Test
     public void testEnableFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String enableOrgFolder = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .clickDisableEnable()
+                .clickSaveButton()
                 .clickConfigure()
                 .clickDisableEnable()
                 .clickSaveButton()
@@ -444,24 +473,29 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(enableOrgFolder.trim(), "Disable Organization Folder");
     }
 
-    @Test(dependsOnMethods = "testCreateWithExistingName")
+    @Test
     public void testAddDisplayName() {
-        final String displayName = "This is Display Name of Folder";
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
         OrganizationFolderPage orgFolderPage = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickConfigure()
-                .enterDisplayName(displayName)
+                .enterDisplayName(DISPLAY_NAME)
                 .clickSaveButton();
 
-        Assert.assertEquals(orgFolderPage.getJobName(), displayName);
-        Assert.assertEquals(orgFolderPage.getHeader().clickLogo().getJobName(ORGANIZATION_FOLDER_NAME), displayName);
+        Assert.assertEquals(orgFolderPage.getJobName(), DISPLAY_NAME);
+        Assert.assertEquals(orgFolderPage.getHeader().clickLogo().getJobName(ORGANIZATION_FOLDER_NAME), DISPLAY_NAME);
     }
 
-    @Test(dependsOnMethods = "testAddDisplayName")
+    @Test
     public void testDeleteDisplayName() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String orgFolderName = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .enterDisplayName(DISPLAY_NAME)
+                .clickSaveButton()
                 .clickConfigure()
                 .clearDisplayName()
                 .clickSaveButton()
@@ -470,8 +504,10 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(orgFolderName, ORGANIZATION_FOLDER_NAME);
     }
 
-    @Test(dependsOnMethods = "testEnableFromProjectPage")
+    @Test
     public void testAddDescriptionFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String textFromDescription = new MainPage(getDriver())
                 .clickConfigureDropDown(ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
                 .addDescription(DESCRIPTION_TEXT)
@@ -481,10 +517,12 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(textFromDescription, DESCRIPTION_TEXT);
     }
 
-    @Test(dependsOnMethods = "testPreviewDescriptionFromProjectPage")
+    @Test
     public void testPreviewDescriptionFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
         String previewText = new MainPage(getDriver())
-                .clickJobName(ORGANIZATION_FOLDER_RENAMED, new OrganizationFolderPage(getDriver()))
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickConfigure()
                 .addDescription(DESCRIPTION_TEXT)
                 .clickPreview()
@@ -493,7 +531,6 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
-    @Ignore
     @Test
     public void testAppearanceIconHasChanged() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -509,7 +546,6 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "The appearance icon was not changed to the default icon");
     }
 
-    @Ignore
     @Test
     public void testAddHealthMetricsFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -590,10 +626,12 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(welcomeToJenkinsIsDisplayed, "error, Welcome to Jenkins! is not displayed");
     }
 
-    @Test(dependsOnMethods = "testRenameToTheCurrentNameAndGetError")
+    @Test
     public void testDeleteItemFromSideMenu() {
+        TestUtils.createJob(this, "OrgFolder", TestUtils.JobType.OrganizationFolder, true);
+
         String welcomeText = new MainPage(getDriver())
-                .clickJobName(ORGANIZATION_FOLDER_RENAMED, new OrganizationFolderPage(getDriver()))
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickDeleteJobLocatedOnMainPage()
                 .clickYesButton()
                 .getWelcomeText();
