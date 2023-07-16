@@ -800,7 +800,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the folder name is not displayed");
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the freestyle name is not displayed");
     }
 
     @Test

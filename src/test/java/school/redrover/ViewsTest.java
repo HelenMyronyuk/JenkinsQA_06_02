@@ -1,7 +1,6 @@
 package school.redrover;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
@@ -19,6 +18,18 @@ import static org.testng.Assert.assertEquals;
 
 public class ViewsTest extends BaseTest {
 
+    private static final String PROJECT_NAME = "Project1";
+
+    private static final String NEW_PROJECT_NAME = "Project2";
+
+    private static final String VIEW_NAME = "View1";
+
+    private static final String NEW_VIEW_NAME = "View2";
+
+    final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+
+    final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+
     private void createNewFreestyleProjectFromMyViewsPage(String projectName) {
         new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
@@ -26,20 +37,14 @@ public class ViewsTest extends BaseTest {
                 .enterItemName(projectName)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
                 .getHeader()
                 .clickLogo();
     }
 
     private void createNewFreestyleProjectAndNewView(String name) {
+        TestUtils.createJob(this, name, TestUtils.JobType.FreestyleProject, true);
+
         new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(name)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
                 .createNewView()
                 .setNewViewName(name)
                 .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
@@ -51,212 +56,199 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testCreateAJobInThePageMyViews() {
-        final String newViewNameRandom = RandomStringUtils.randomAlphanumeric(5);
+        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
 
-        boolean isJobPresent = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickNewItem()
-                .enterItemName(newViewNameRandom)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(newViewNameRandom);
+        boolean isJobPresent = new MainPage(getDriver()).jobIsDisplayed(PROJECT_NAME);
 
         Assert.assertTrue(isJobPresent);
     }
 
     @Test
     public void testCreateAJobFromMyViewsPage() {
-
-        final String newViewNameRandom = RandomStringUtils.randomAlphanumeric(5);
-
-        new MainPage(getDriver())
+        FreestyleProjectPage project = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .clickCreateAJob()
-                .enterItemName(newViewNameRandom)
+                .enterItemName(PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
                 .clickSaveButton();
 
-        Assert.assertEquals(getDriver().findElement(By.xpath("//div[@id='main-panel']/h1")).getText(), "Project " + newViewNameRandom);
+        Assert.assertEquals(project.getJobName(), "Project " + PROJECT_NAME);
     }
 
 
     @Test
     public void testAddDescriptionFromMyViewsPage() {
-        final String newViewDescriptionRandom = RandomStringUtils.randomAlphanumeric(7);
-
         String description = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .clickOnDescription()
                 .clearTextFromDescription()
-                .enterDescription(newViewDescriptionRandom)
+                .enterDescription(VIEW_DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();
 
-        Assert.assertEquals(description, newViewDescriptionRandom);
+        Assert.assertEquals(description, VIEW_DESCRIPTION);
     }
 
-
-    @Test(dependsOnMethods = "testAddDescriptionFromMyViewsPage")
+    @Test
     public void testEditDescription() {
-
-        final String newViewNewDescriptionRandom = RandomStringUtils.randomAlphanumeric(7);
-
-        String description = new MyViewsPage(getDriver())
+        String description = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickOnDescription()
+                .enterDescription(VIEW_DESCRIPTION)
+                .clickSaveButtonDescription()
                 .clickOnDescription()
                 .clearTextFromDescription()
-                .enterDescription(newViewNewDescriptionRandom)
+                .enterDescription(NEW_VIEW_DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();
 
-        Assert.assertEquals(description, newViewNewDescriptionRandom);
+        Assert.assertEquals(description, NEW_VIEW_DESCRIPTION);
     }
 
     @Test
     public void testCreateListView() {
-        String freestyleProjectName = "Test Freestyle Project";
-        String expectedName = "TestName";
+        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+
         String actualName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickNewItem()
-                .enterItemName(freestyleProjectName)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
                 .createNewView()
-                .setNewViewName(expectedName)
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
                 .clickSaveButton()
                 .getActiveViewName();
 
-        assertEquals(actualName, expectedName);
+        Assert.assertEquals(actualName, VIEW_NAME);
     }
 
     @Test
     public void testCreateNewViewSecond() {
-        final String newProjectName = "Test Freestyle Name";
-        final String expectedViewName = "My New Vew";
-        createNewFreestyleProjectFromMyViewsPage(newProjectName);
+        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+
         String actualViewName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .createNewView()
-                .setNewViewName(expectedViewName)
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
                 .getActiveViewName();
 
-        Assert.assertEquals(actualViewName, expectedViewName);
+        Assert.assertEquals(actualViewName, VIEW_NAME);
     }
 
-    @Test(dependsOnMethods = "testCreateNewViewSecond")
+    @Test
     public void testRenameView() {
-        final String expectedEditedMyViewText = "My View Edited";
+        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+
         String actualViewName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
                 .clickInactiveLastCreatedMyView()
-                .editMyViewNameAndClickSubmitButton(expectedEditedMyViewText)
+                .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
                 .getActiveViewName();
 
-        assertEquals(actualViewName, expectedEditedMyViewText);
+        Assert.assertEquals(actualViewName, NEW_VIEW_NAME);
     }
 
-    @Test(dependsOnMethods = "testRenameView")
+    @Test
     public void testDeleteMyView() {
-        final int numberOfAllViews;
-        final int numberOfAllViewsAfterDeletion;
+        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
 
-        numberOfAllViews = new MainPage(getDriver())
+        new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .getHeader()
+                .clickLogo();
+
+        int numberOfAllViews = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .getListOfAllViews().size();
 
-        numberOfAllViewsAfterDeletion = new MyViewsPage(getDriver())
+        int numberOfAllViewsAfterDeletion = new MyViewsPage(getDriver())
                 .clickInactiveLastCreatedMyView()
                 .clickDeleteViewButton()
                 .clickYesButton()
                 .getListOfAllViews().size();
 
-        assertEquals(numberOfAllViews - numberOfAllViewsAfterDeletion, 1);
+        Assert.assertEquals(numberOfAllViews - numberOfAllViewsAfterDeletion, 1);
     }
 
     @Test
     public void testDeleteView() {
-        final String freestyleProjectName = "Test Freestyle Project";
-        final String viewName = "NewView";
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         boolean isDeletedViewPresent = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(freestyleProjectName)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getBreadcrumb()
-                .clickDashboardButton()
                 .createNewView()
-                .setNewViewName(viewName)
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
                 .clickSaveButton()
                 .clickDeleteView()
                 .clickYesButton()
-                .verifyViewIsPresent(viewName);
+                .verifyViewIsPresent(VIEW_NAME);
 
         Assert.assertFalse(isDeletedViewPresent);
     }
 
     @Test
     public void testMoveFolderToNewViewList() {
-        final String folderName1 = "f1";
-        final String folderName2 = "f2";
-        final String viewName = "view1";
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+        TestUtils.createJob(this, NEW_PROJECT_NAME, TestUtils.JobType.Folder, true);
 
-        TestUtils.createJob(this, folderName1, TestUtils.JobType.Folder, true);
-        TestUtils.createJob(this, folderName2, TestUtils.JobType.Folder, true);
-
-        ViewPage viewPage = new MainPage(getDriver())
+        new MainPage(getDriver())
                 .createNewView()
-                .setNewViewName(viewName)
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
-                .selectJobsInJobFilters(folderName1)
+                .selectJobsInJobFilters(PROJECT_NAME)
                 .clickSaveButton();
 
-        Assert.assertEquals(viewPage.getActiveViewName(), viewName);
-        Assert.assertEquals(viewPage.getJobName(folderName1), folderName1);
+        ViewPage viewPage = new MainPage(getDriver()).clickOnView(VIEW_NAME, new ViewPage(getDriver()));
+
+        Assert.assertEquals(viewPage.getActiveViewName(), VIEW_NAME);
+        Assert.assertEquals(viewPage.getJobName(PROJECT_NAME), PROJECT_NAME);
+
     }
 
-    @Test(dependsOnMethods = "testMoveFolderToNewViewList")
+    @Test
     public void testCreateNewViewWithJobFilters() {
-        final String folderName1 = "f1";
-        final String folderName2 = "f2";
-        final String viewName1 = "view1";
-        final String viewName2 = "view2";
         final String jobName1 = "job1";
         final String jobName2 = "job2";
         final String jobName3 = "job3";
-        final List<String> expectedViewJobs = Arrays.asList(folderName1 + " » " + jobName1, folderName1 + " » " + jobName3, folderName2);
+        final List<String> expectedViewJobs = Arrays.asList(PROJECT_NAME + " » " + jobName1, PROJECT_NAME + " » " + jobName3, NEW_PROJECT_NAME);
 
-        new MainPage(getDriver()).clickOnView(viewName1, new ViewPage(getDriver()));
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+        TestUtils.createJob(this, NEW_PROJECT_NAME, TestUtils.JobType.Folder, true);
 
-        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName1, viewName1, folderName1);
-        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName2, viewName1, folderName1);
-        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName3, viewName1, folderName1);
+        new MainPage(getDriver())
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .selectJobsInJobFilters(PROJECT_NAME)
+                .clickSaveButton()
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()));
+
+        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName1, VIEW_NAME, PROJECT_NAME);
+        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName2, VIEW_NAME, PROJECT_NAME);
+        TestUtils.createFreestyleProjectInsideFolderAndView(this, jobName3, VIEW_NAME, PROJECT_NAME);
 
         ViewPage viewPage = new ViewPage(getDriver())
                 .createNewView()
-                .setNewViewName(viewName2)
+                .setNewViewName(NEW_VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
                 .selectRecurseCheckbox()
                 .scrollToAddJobFilterDropDown()
-                .selectJobsInJobFilters(folderName1 + " » " + jobName1)
-                .selectJobsInJobFilters(folderName1 + " » " + jobName3)
-                .selectJobsInJobFilters(folderName2)
+                .selectJobsInJobFilters(PROJECT_NAME + " » " + jobName1)
+                .selectJobsInJobFilters(PROJECT_NAME + " » " + jobName3)
+                .selectJobsInJobFilters(NEW_PROJECT_NAME)
                 .clickSaveButton();
 
         List<String> actualViewJobsTexts = viewPage.getJobList();
 
-        Assert.assertEquals(viewPage.getActiveViewName(), viewName2);
+        Assert.assertEquals(viewPage.getActiveViewName(), NEW_VIEW_NAME);
         Assert.assertEquals(actualViewJobsTexts.size(), 3);
         Assert.assertEquals(actualViewJobsTexts, expectedViewJobs);
     }
@@ -265,23 +257,23 @@ public class ViewsTest extends BaseTest {
     public void testCreateMyView() {
         String newView = new MainPage(getDriver())
                 .clickNewItem()
-                .enterItemName("TestFolder")
+                .enterItemName(PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.Folder)
                 .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
                 .getHeader()
                 .clickLogo()
-                .clickJobName("TestFolder", new FolderPage(getDriver()))
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
                 .clickNewView()
-                .setNewViewName("MyNewView")
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
                 .getActiveViewName();
 
-        assertEquals(newView, "MyNewView");
+        assertEquals(newView, VIEW_NAME);
     }
 
     @Test
     public void testHelpForFeatureDescription() {
-        createNewFreestyleProjectAndNewView("TestFreestyleName");
+        createNewFreestyleProjectAndNewView(PROJECT_NAME);
 
         String helpFeature = new ListViewConfigPage(new ViewPage(getDriver()))
                 .clickHelpForFeatureDescription()
@@ -299,14 +291,11 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testAddViewDescriptionPreview() {
-        final String projectName = "R_R";
-        String randomText = "java test program";
-
-        createNewFreestyleProjectAndNewView(projectName);
+        createNewFreestyleProjectAndNewView(PROJECT_NAME);
 
         String previewText =
                 new ListViewConfigPage(new ViewPage(getDriver()))
-                        .addDescription(randomText)
+                        .addDescription(VIEW_DESCRIPTION)
                         .clickPreview()
                         .getPreviewText();
 
@@ -315,31 +304,26 @@ public class ViewsTest extends BaseTest {
                         .clickSaveButton()
                         .getDescriptionText();
 
-        Assert.assertEquals(previewText, randomText);
-        Assert.assertEquals(textDescription, randomText);
+        Assert.assertEquals(previewText, VIEW_DESCRIPTION);
+        Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
     }
 
     @Test
     public void testCreateNewViewInFolder() {
-        final String viewName = "Test View";
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
         boolean viewIsDisplayed = new MainPage(getDriver())
-                .clickCreateAJob()
-                .enterItemName("FolderName")
-                .selectJobType(TestUtils.JobType.Folder)
-                .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
-                .getHeader()
-                .clickLogo()
                 .clickNewItem()
-                .enterItemName("FolderName")
+                .enterItemName(PROJECT_NAME)
                 .selectJobAndOkAndGoError(TestUtils.JobType.Folder)
                 .getHeader()
                 .clickLogo()
-                .clickJobName("FolderName", new FolderPage(getDriver()))
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
                 .clickNewView()
-                .setNewViewName(viewName)
+                .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.MyView,ViewPage.class)
                 .clickAllOnFolderView()
-                .viewIsDisplayed(viewName);
+                .viewIsDisplayed(VIEW_NAME);
 
         Assert.assertTrue(viewIsDisplayed, "error was not shown created view");
     }
