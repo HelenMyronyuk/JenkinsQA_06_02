@@ -1359,4 +1359,23 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
     }
+
+    @Test
+    public void testBuildKeepForever() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+        final List<String> buildKeepForeverMenuOptions = new ArrayList<>(List.of(
+        "Changes", "Console Output", "Edit Build Information"));
+
+        FreestyleProjectPage freestyleProjectPage = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickBuildDateFromBuildRow()
+                .clickKeepBuildForever()
+                .getBreadcrumb()
+                .clickJobNameFromBreadcrumb(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .openBuildsDropDownMenu();
+
+        Assert.assertEquals(freestyleProjectPage.getTextBuildDropDownMenuOptions(), buildKeepForeverMenuOptions);
+        Assert.assertTrue(freestyleProjectPage.isIconLockIsDispalyed(), "The lock icon is not displayed");
+    }
 }

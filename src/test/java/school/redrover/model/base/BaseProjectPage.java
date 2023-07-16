@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
+import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -80,6 +81,15 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     @FindBy(xpath = "(//li[@class='permalink-item'])[1]//button")
     private WebElement permalinksLastBuildDropDown;
+
+    @FindBy(xpath = "//a[@update-parent-class='.build-row'][@tooltip]")
+    private WebElement buildDate;
+
+    @FindBy(xpath = "//div[@class='bd']/ul/li")
+    private List<WebElement> buildDropdownMenuOptions;
+
+    @FindBy(xpath = "//div[@class='middle-align build-badge']/img")
+    private WebElement iconLock;
 
     public BaseProjectPage(WebDriver driver) {
         super(driver);
@@ -243,5 +253,21 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         deleteBuildButtonDropDownMenu.click();
 
         return new DeletePage<>((Self)this);
+    }
+
+    public BuildPage clickBuildDateFromBuildRow() {
+        buildDate.click();
+
+        return new BuildPage(getDriver());
+    }
+
+    public List<String> getTextBuildDropDownMenuOptions() {
+
+        return TestUtils.getTexts(buildDropdownMenuOptions);
+    }
+
+    public boolean isIconLockIsDispalyed() {
+
+        return iconLock.isDisplayed();
     }
 }

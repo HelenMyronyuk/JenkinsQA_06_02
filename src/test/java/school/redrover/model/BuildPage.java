@@ -46,6 +46,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     @FindBy(xpath = "//div[@class='textarea-preview']")
     private WebElement previewTextarea;
 
+    @FindBy(xpath = "//button[@formnovalidate]")
+    private WebElement keepBuildForeverButton;
+
     public BuildPage(WebDriver driver) {
         super(driver);
     }
@@ -125,5 +128,11 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     public String getPreviewText() {
         return getWait2().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
+    }
+
+    public BuildPage clickKeepBuildForever() {
+        keepBuildForeverButton.click();
+
+        return this;
     }
 }

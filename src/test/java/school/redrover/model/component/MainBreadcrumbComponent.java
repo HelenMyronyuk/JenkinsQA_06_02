@@ -91,4 +91,11 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .alert()
                 .accept();
     }
+
+    public <JobPage extends BasePage<?, ?>> JobPage clickJobNameFromBreadcrumb (String jobName, JobPage jobPage) {
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(String.format("//a[@href='/job/%s/']", jobName)))).click();
+
+        return jobPage;
+    }
 }
