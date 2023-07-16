@@ -59,6 +59,11 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
         return new PeoplePage(getDriver());
     }
 
+    public PeoplePage clickNameButton() {
+        nameButton.click();
+        return new PeoplePage(getDriver());
+    }
+
     public boolean isUserIDButtonWithoutArrow() {
         return userIDButtonArrow.getText().isEmpty();
     }
@@ -69,15 +74,6 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
 
     public boolean isUserIDButtonWithDownArrow() {
         return userIDButtonArrow.getText().trim().contains("↓");
-    }
-
-    public PeoplePage clickNameButton() {
-        nameButton.click();
-        return new PeoplePage(getDriver());
-    }
-
-    public String getPageTitle() {
-        return pageTitle.getText();
     }
 
     public boolean checkIfUserWasAdded(String userName) {
@@ -96,4 +92,7 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
         return listText(iconButtons);
     }
 
+    public String getPageTitle() {
+        return pageTitle.getText();
+    }
 }
