@@ -42,7 +42,7 @@ public class PipelineTest extends BaseTest {
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
                 .addDescription(DESCRIPTION)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(jobDescription, DESCRIPTION);
     }
@@ -62,7 +62,7 @@ public class PipelineTest extends BaseTest {
                 .clearDescriptionField()
                 .enterDescription(newDescription)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(jobDescription, newDescription);
     }
@@ -108,7 +108,7 @@ public class PipelineTest extends BaseTest {
                 .clickEditDescription()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(resultDescriptionText, DESCRIPTION);
     }
@@ -192,7 +192,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .addDescription("Pipeline text")
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(jobDescription, "Pipeline text");
     }
@@ -521,7 +521,7 @@ public class PipelineTest extends BaseTest {
                 .clearDescriptionArea()
                 .addDescription(newDescription)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertTrue(actualDescription.contains(newDescription), "description not displayed");
     }

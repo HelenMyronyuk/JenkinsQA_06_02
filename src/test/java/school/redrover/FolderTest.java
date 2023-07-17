@@ -347,7 +347,7 @@ public class FolderTest extends BaseTest {
                 .clickConfigure()
                 .addDescription(DESCRIPTION)
                 .clickSaveButton()
-                .getDescriptionFromConfigure();
+                .getFolderDescription();
 
         Assert.assertEquals(descriptionText,DESCRIPTION);
     }
@@ -462,7 +462,7 @@ public class FolderTest extends BaseTest {
                 .enterDescription(DESCRIPTION)
                 .clickSaveButton();
 
-        Assert.assertEquals(folderPage.getDescription(), DESCRIPTION);
+        Assert.assertEquals(folderPage.getTextDescription(), DESCRIPTION);
         Assert.assertEquals(folderPage.getDescriptionButton(), "Edit description");
     }
 
@@ -485,7 +485,7 @@ public class FolderTest extends BaseTest {
                 .clearDescriptionField()
                 .enterDescription(DESCRIPTION_2)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(newDescription, DESCRIPTION_2);
     }

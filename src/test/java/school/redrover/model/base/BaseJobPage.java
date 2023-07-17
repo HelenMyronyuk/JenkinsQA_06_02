@@ -15,7 +15,7 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
     @FindBy(linkText = "Configure")
     private WebElement configureButton;
 
-    @FindBy(css = "#main-panel>h1")
+    @FindBy(xpath = "//h1")
     private WebElement jobName;
 
     @FindBy(linkText = "Rename")
@@ -28,28 +28,25 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
     private WebElement addEditDescriptionButton;
 
     @FindBy(xpath = "//textarea[@name='description']")
-    private WebElement descriptionField;
+    private WebElement descriptionTextarea;
 
-    @FindBy(xpath = "//div[@id='description']/div[1]")
-    private WebElement jobDescription;
-
-    @FindBy(css = "[href$='/move']")
+    @FindBy(xpath = "//span[text()='Move']/..")
     private WebElement moveButton;
 
-    @FindBy(xpath = "//button[text() = 'Save']")
+    @FindBy(xpath = "//button[text()='Save']")
     private WebElement saveButton;
 
     @FindBy(xpath = "//div[@id='main-panel']")
     private WebElement mainPanel;
 
-    @FindBy(xpath = "//a[contains(@previewendpoint, 'previewDescription')]")
+    @FindBy(xpath = "//a[@class='textarea-show-preview']")
     private WebElement preview;
 
     @FindBy(xpath = "//div[@class='textarea-preview']")
     private WebElement previewTextarea;
 
-    @FindBy(xpath = "//div[@id='view-message']")
-    private WebElement textDescriptionFromConfig;
+    @FindBy(xpath = "//div[@id=\"description\"]/div")
+    private WebElement textDescription;
 
     public BaseJobPage(WebDriver driver) {
         super(driver);
@@ -83,25 +80,21 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
     }
 
     public Self enterDescription(String description) {
-        descriptionField.sendKeys(description);
+        descriptionTextarea.sendKeys(description);
         return (Self) this;
     }
 
     public Self clearDescriptionField() {
-        getWait5().until(ExpectedConditions.visibilityOf(descriptionField)).clear();
+        getWait5().until(ExpectedConditions.visibilityOf(descriptionTextarea)).clear();
         return (Self) this;
     }
 
-    public String getDescription() {
-        return getWait5().until(ExpectedConditions.visibilityOf(jobDescription)).getText();
+    public String getTextDescription() {
+        return getWait5().until(ExpectedConditions.visibilityOf(textDescription)).getText();
     }
 
-    public String getDescriptionFromConfigure(){
-        return getWait5().until(ExpectedConditions.visibilityOf(textDescriptionFromConfig)).getText();
-    }
-
-    public boolean isDescriptionEmpty(){
-        return jobDescription.getText().isEmpty();
+    public boolean isDescriptionEmpty() {
+        return textDescription.getText().isEmpty();
     }
 
     public MovePage<Self> clickMoveOnSideMenu() {
@@ -111,9 +104,9 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
 
     public Self changeDescriptionWithoutSaving(String newDescription) {
         addEditDescriptionButton.click();
-        getWait2().until(ExpectedConditions.elementToBeClickable(descriptionField));
-        descriptionField.clear();
-        descriptionField.sendKeys(newDescription);
+        getWait2().until(ExpectedConditions.elementToBeClickable(descriptionTextarea));
+        descriptionTextarea.clear();
+        descriptionTextarea.sendKeys(newDescription);
         return (Self) this;
     }
 

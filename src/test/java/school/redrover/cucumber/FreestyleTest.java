@@ -7,7 +7,6 @@ import io.cucumber.java.en.When;
 import org.testng.Assert;
 import school.redrover.model.MainPage;
 import school.redrover.model.NewJobPage;
-import school.redrover.model.base.BaseConfigPage;
 import school.redrover.model.jobs.*;
 import school.redrover.model.jobsconfig.*;
 import school.redrover.runner.CucumberDriver;
@@ -87,6 +86,6 @@ public class FreestyleTest {
 
     @Then("Job description is {string}")
     public void assertFreestyleJobDescription(String jobDescription) {
-        Assert.assertEquals(freestylePage.getDescription(), jobDescription);
+        Assert.assertEquals(freestylePage.getTextDescription(), jobDescription);
     }
 }

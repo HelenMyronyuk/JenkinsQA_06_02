@@ -49,7 +49,7 @@ public class BuildPageTest extends BaseTest {
                 .clickEditDescription()
                 .enterDescription(BUILD_DESCRIPTION)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
     }

@@ -42,7 +42,7 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
     }
 
     public Self addDescription(String description) {
-        descriptionTextBox.sendKeys(description);
+        getWait5().until(ExpectedConditions.visibilityOf(descriptionTextBox)).sendKeys(description);
         return (Self) this;
     }
 

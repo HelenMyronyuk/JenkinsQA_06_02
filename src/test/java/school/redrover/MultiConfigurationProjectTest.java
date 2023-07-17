@@ -233,7 +233,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         String getDescription = new MultiConfigurationProjectPage(getDriver())
                 .changeDescriptionWithoutSaving(DESCRIPTION)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(getDescription, DESCRIPTION);
     }

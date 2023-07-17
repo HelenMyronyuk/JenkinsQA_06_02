@@ -779,7 +779,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure()
                 .addDescription("Freestyle project")
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(actualDescription, "Freestyle project");
     }
@@ -793,7 +793,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickEditDescription()
                 .removeOldDescriptionAndAddNew(NEW_DESCRIPTION_TEXT)
                 .clickSaveDescription()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(editDescription, NEW_DESCRIPTION_TEXT);
     }
@@ -812,7 +812,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         String actualDescriptionText = new FreestyleProjectPage(getDriver())
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(previewText, descriptionText);
         Assert.assertEquals(actualDescriptionText, descriptionText);
@@ -826,7 +826,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure()
                 .addDescription(DESCRIPTION_TEXT)
                 .clickSaveButton()
-                .getDescription();
+                .getTextDescription();
 
         Assert.assertEquals(description, DESCRIPTION_TEXT);
     }
