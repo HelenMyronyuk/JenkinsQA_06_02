@@ -7,12 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageNodesPage extends BaseMainHeaderPage<ManageNodesPage> {
+public class ManageNodesPage extends BaseSubmenuPage<ManageNodesPage> {
 
     @FindBy(xpath = "//a[@href='new']")
     private WebElement newNodeButton;
@@ -25,6 +25,11 @@ public class ManageNodesPage extends BaseMainHeaderPage<ManageNodesPage> {
 
     public ManageNodesPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Manage Nodes and Clouds";
     }
 
     public NewNodePage clickNewNodeButton() {

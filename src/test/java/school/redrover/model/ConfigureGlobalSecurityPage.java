@@ -5,13 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigureGlobalSecurityPage extends BaseMainHeaderPage<ConfigureGlobalSecurityPage> {
+public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobalSecurityPage> {
 
     @FindBy(css = ".jenkins-section__title")
     private List<WebElement> listSectionTitles;
@@ -42,6 +42,11 @@ public class ConfigureGlobalSecurityPage extends BaseMainHeaderPage<ConfigureGlo
 
     public ConfigureGlobalSecurityPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Configure Global Security";
     }
 
     public int getNumberOfTitles() {

@@ -5,16 +5,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.runner.TestUtils;
 
-public class UserPage extends BaseMainHeaderPage<UserPage> {
+public class UserPage extends BaseSubmenuPage<UserPage> {
 
     @FindBy(xpath = "//div[contains(text(), 'Jenkins User ID:')]")
     private WebElement actualNameUser;
 
     public UserPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Manage Users";
     }
 
     public UserDeletePage clickDeleteUserBtnFromUserPage(String newUserName) {

@@ -6,12 +6,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage> {
+public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
 
     @FindBy(xpath = "//h1")
     private WebElement title;
@@ -115,12 +115,17 @@ public class ConfigureSystemPage extends BaseMainHeaderPage<ConfigureSystemPage>
     @FindBy(css = "#footer")
     private WebElement footer;
 
+
     public ConfigureSystemPage(WebDriver driver) {
         super(driver);
     }
 
-    public String getTitle() {
+    @Override
+    public String callByMenuItemName() {
+        return "Configure System";
+    }
 
+    public String getTitle() {
         return title.getText();
     }
 

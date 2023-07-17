@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.MainPage;
 import school.redrover.model.base.BaseComponent;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 
@@ -57,13 +58,12 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
-    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(String menuItem,
-                                                                                                                       SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(SubmenuPage submenuPage) {
         getDashboardDropdownMenu();
         new Actions(getDriver())
                 .moveToElement(manageJenkinsSubmenu)
                 .pause(500)
-                .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + menuItem + "')]")))
+                .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]")))
                 .click()
                 .perform();
         return submenuPage;

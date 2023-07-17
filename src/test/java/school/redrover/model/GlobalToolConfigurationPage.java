@@ -1,11 +1,16 @@
 package school.redrover.model;
 
 import org.openqa.selenium.WebDriver;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
-public class GlobalToolConfigurationPage extends BaseMainHeaderPage<ConfigureSystemPage> {
+public class GlobalToolConfigurationPage extends BaseSubmenuPage<ConfigureSystemPage> {
 
     public GlobalToolConfigurationPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Global Tool Configuration";
     }
 }
