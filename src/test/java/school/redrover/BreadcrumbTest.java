@@ -7,8 +7,6 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseSubmenuPage;
-import school.redrover.model.jobs.FreestyleProjectPage;
-import school.redrover.model.jobsconfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -94,16 +92,20 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualMenuList, expectedMenuList);
     }
 
-    @Test
-    public void testReturnToDashboardPageFromProjectPage() {
+    @DataProvider(name = "job-type")
+    public Object[][] provideWrongCharacters() {
+        return new Object[][]{{TestUtils.JobType.FreestyleProject},{TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject}, {TestUtils.JobType.Folder},
+                {TestUtils.JobType.MultibranchPipeline}, {TestUtils.JobType.OrganizationFolder}};
+    }
+
+    @Test(dataProvider = "job-type")
+    public void testReturnToDashboardPageFromProjectPage(TestUtils.JobType jobType) {
         final String nameProject = "One";
 
-        String nameProjectOnMainPage = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(nameProject)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
+        TestUtils.createJob(this, nameProject, jobType, false);
+
+        String nameProjectOnMainPage = jobType.createConfigPage(getDriver())
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .getJobName(nameProject);
