@@ -115,7 +115,8 @@ public class UsersTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .clickUserEditButton()
-                .enterDescriptionText("Description text")
+                .clearDescriptionArea()
+                .addDescription("Description text")
                 .clickSaveButton()
                 .getDescription();
 

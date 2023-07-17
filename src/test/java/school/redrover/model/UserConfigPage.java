@@ -8,17 +8,11 @@ import school.redrover.runner.TestUtils;
 
 public class UserConfigPage extends BaseConfigPage<UserConfigPage,StatusUserPage> {
 
-    @FindBy(name = "_.description")
-    private WebElement addEditDescriptionButton;
-
     @FindBy(xpath = "//input[@name='email.address']")
     private WebElement inputEmail;
 
     @FindBy(xpath = "//input[@name='insensitiveSearch']")
     private WebElement insensitiveSearchCheckbox;
-
-    @FindBy(xpath = "//button[@name='Submit']")
-    private WebElement buttonSubmit;
 
     public UserConfigPage(StatusUserPage statusUserPage) {
         super(statusUserPage);
@@ -46,19 +40,6 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage,StatusUserPage
             TestUtils.scrollToElementByJavaScript(this, checkboxInsensitiveSearch);
             TestUtils.clickByJavaScript(this, checkboxInsensitiveSearch);
         }
-
-        return this;
-    }
-
-    public StatusUserPage saveConfig(){
-        getWait2().until(ExpectedConditions.visibilityOf(buttonSubmit)).click();
-
-        return new StatusUserPage(getDriver());
-    }
-
-    public UserConfigPage enterDescriptionText(String text) {
-        addEditDescriptionButton.clear();
-        addEditDescriptionButton.sendKeys(text);
 
         return this;
     }

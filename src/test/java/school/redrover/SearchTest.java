@@ -13,7 +13,7 @@ public class SearchTest extends BaseTest {
                 .clickAdminDropdownMenu()
                 .openConfigureTabFromAdminDropdownMenu()
                 .selectInsensitiveSearch()
-                .saveConfig()
+                .clickSaveButton()
                 .getHeader()
                 .typeToSearch("built")
                 .isSearchResultContainsText("built");
