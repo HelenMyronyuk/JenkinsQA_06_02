@@ -1180,6 +1180,25 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testConfigurePostBuildActionsAggregateDownStreamTestResults() {
+        BuildPage buildPage = new MainPage(getDriver())
+                .clickNewItem()
+                .enterItemName(FREESTYLE_NAME)
+                .selectJobType(TestUtils.JobType.FreestyleProject)
+                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
+                .clickPostBuildActionsButton()
+                .clickAddPostBuildActionDropDown()
+                .clickAggregateDownstreamTestResults()
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink();
+
+        Assert.assertTrue(buildPage.isDisplayedAggregatedTestResultLink());
+        Assert.assertEquals(buildPage.getTestResultsNodeText(), "Aggregated Test Result (no tests)");
+        Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/FREESTYLE_NAME/lastBuild/aggregatedTestReport"));
+    }
+
+    @Test
     public void testConfigurePostBuildActionArchiveArtifacts() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 

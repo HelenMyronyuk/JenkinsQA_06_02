@@ -84,6 +84,9 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     @FindBy(xpath = "//a[text()='Delete workspace when build is done']")
     private WebElement deleteWorkspaceType;
 
+    @FindBy(xpath = "//a[text()='Aggregate downstream test results']")
+    private WebElement aggregateDownstreamTestResultsType;
+
     public FreestyleProjectConfigPage(FreestyleProjectPage freestyleProjectPage) {
         super(freestyleProjectPage);
     }
@@ -220,6 +223,11 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     public FreestyleProjectConfigPage clickDeleteWorkspaceWhenBuildDone() {
         scrollToFooter();
         deleteWorkspaceType.click();
+        return this;
+    }
+
+    public FreestyleProjectConfigPage clickAggregateDownstreamTestResults() {
+        aggregateDownstreamTestResultsType.click();
         return this;
     }
 }

@@ -48,6 +48,15 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     @FindBy(xpath = "//button[@formnovalidate]")
     private WebElement keepBuildForeverButton;
 
+    @FindBy (css = "a[href = 'aggregatedTestReport/']")
+    private WebElement aggregatedTestResultLink;
+
+    @FindBy(css = "#main-panel table tr:last-child td:last-child")
+    private WebElement aggregatedTestResultNodeValue;
+
+    @FindBy(css = ".task:last-of-type span a")
+    private WebElement aggregatedTestResultSideMenuOption;
+
     public BuildPage(WebDriver driver) {
         super(driver);
     }
@@ -128,5 +137,17 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
         keepBuildForeverButton.click();
 
         return this;
+    }
+
+    public boolean isDisplayedAggregatedTestResultLink() {
+        return aggregatedTestResultLink.isDisplayed();
+    }
+
+    public String getTestResultsNodeText() {
+        return aggregatedTestResultNodeValue.getText();
+    }
+
+    public String getAggregateTestResultSideMenuLinkText() {
+        return aggregatedTestResultSideMenuOption.getAttribute("href");
     }
 }
