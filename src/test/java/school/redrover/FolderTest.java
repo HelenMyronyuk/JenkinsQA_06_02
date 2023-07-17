@@ -292,6 +292,22 @@ public class FolderTest extends BaseTest {
         }
     }
 
+    @Test
+    public void testRenameWithDotName() {
+        final String expectedErrorMessage = "“.” is not an allowed name";
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
+        String actualErrorMessage = new MainPage(getDriver())
+                .clickJobName(NAME, new FolderPage(getDriver()))
+                .clickRename()
+                .enterNewName(".")
+                .clickRenameButtonAndGoError()
+                .getErrorMessage();
+
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
+    }
+
     @Test(dependsOnMethods = "testRenameToTheCurrentNameAndGetError")
     public void testAccessConfigurationPageFromDashboard() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
