@@ -18,7 +18,7 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     @FindBy(xpath = "//input[@name='_.defaultVersion']")
     private WebElement defaultVersionField;
 
-    @FindBy(xpath = "//div[@name='retriever']//select[contains(@class, 'dropdownList')]")
+    @FindBy(xpath = "(//div[@name='retriever']//select[@class='jenkins-select__input dropdownList'])[1]")
     private WebElement sourceCodeManagementOptions;
 
     @FindBy(xpath = "//div[@name='retriever']//select[@class='jenkins-select__input dropdownList']/option[text()='GitHub']")
@@ -39,28 +39,44 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     @FindBy(xpath = "//button[@data-section-id='properties']")
     private WebElement propertiesButton;
 
+    @FindBy(tagName = "footer")
+    private WebElement footer;
+
+    @FindBy(xpath = "//label[contains(text(), 'Repository Scan')]")
+    private WebElement repositoryScanRadio;
+
+    @FindBy(xpath = "//label[@class='attach-previous ']")
+    private WebElement cacheFetchedLabel;
+
     public FolderConfigPage(FolderPage folderPage) {
         super(folderPage);
     }
 
     public FolderConfigPage inputNameLibrary() {
-        propertiesButton.click();
-        getWait5().until(ExpectedConditions.elementToBeClickable(addButton)).click();
+        new Actions(getDriver())
+                .scrollToElement(footer)
+                .click(addButton)
+                .perform();
+
         nameField.sendKeys("shared-library");
 
         return this;
     }
 
     public FolderConfigPage inputDefaultVersion(String defaultVersion) {
-        defaultVersionField.sendKeys(defaultVersion);
+        new Actions(getDriver())
+                .scrollToElement(cacheFetchedLabel)
+                .perform();
+
+       getWait2().until(ExpectedConditions.elementToBeClickable(defaultVersionField)).sendKeys(defaultVersion);
 
         return this;
     }
 
     public FolderConfigPage pushSourceCodeManagementButton() {
         new Actions(getDriver())
-            .scrollToElement(sourceCodeManagementOptions)
-                .click()
+                .scrollToElement(sourceCodeManagementOptions)
+                .click(sourceCodeManagementOptions)
                 .perform();
 
         return this;
@@ -73,7 +89,11 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     }
 
     public FolderConfigPage inputLibraryRepoUrl(String repoUrl) {
-        repositoryField.sendKeys(repoUrl);
+        new Actions(getDriver())
+                .scrollToElement(repositoryScanRadio)
+                .perform();
+
+        getWait2().until(ExpectedConditions.elementToBeClickable(repositoryField)).sendKeys(repoUrl);
 
         return this;
     }
@@ -92,6 +112,10 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     }
 
     public Boolean libraryDefaultVersionValidated() {
-        return getWait2().until(ExpectedConditions.visibilityOf(currentDefaultVersion)).getText().contains("Currently maps to revision");
+        new Actions(getDriver())
+                .scrollToElement(cacheFetchedLabel)
+                .perform();
+
+        return getWait5().until(ExpectedConditions.visibilityOf(currentDefaultVersion)).getText().contains("Currently maps to revision");
     }
 }
