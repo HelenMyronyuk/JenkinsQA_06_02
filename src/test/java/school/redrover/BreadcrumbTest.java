@@ -6,12 +6,16 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
+import javax.lang.model.element.Name;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class BreadcrumbTest extends BaseTest {
     @Test
@@ -144,5 +148,16 @@ public class BreadcrumbTest extends BaseTest {
                 .getPageTitle();
 
         Assert.assertEquals(actualTitle, "People");
+    }
+
+    @Test
+    public void testReturnToDashboardPageFromPeoplePage() {
+        String actualTitle = new MainPage(getDriver())
+                .clickPeopleOnLeftSideMenu()
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .getTitle();
+
+        Assert.assertEquals(actualTitle, "Dashboard [Jenkins]");
     }
 }
