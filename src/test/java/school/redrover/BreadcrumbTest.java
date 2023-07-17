@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BreadcrumbTest extends BaseTest {
     @Test
-    public void testNavigateToManageJenkinsSection() {
+    public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
@@ -66,7 +66,6 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test
     public void testReloadConfigurationFromDiskOfManageJenkinsSubmenu() {
-
         String expectedLoadingText = "Please wait while Jenkins is getting ready to work ...";
 
         new MainPage(getDriver())
@@ -112,7 +111,7 @@ public class BreadcrumbTest extends BaseTest {
 
 
     @Test
-    public void testMoveFromPeoplePageToPluginsPageByDropDownMenu() {
+    public void testNavigateToPluginsPageFromPeoplePage() {
         String actualTitle = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
                 .getBreadcrumb()
@@ -123,8 +122,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testMoveToPluginsPageThroughDashboardDropDownMenu() {
-
+    public void testNavigateToPluginsPageFromDropDown() {
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .selectAnOptionFromDashboardManageJenkinsSubmenuList("Manage Plugins", new PluginsPage(getDriver()))
@@ -134,7 +132,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testMoveFromBuildHistoryPageToPeoplePageByDropDownMenu() {
+    public void testNavigateToPeoplePageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
                 .clickBuildsHistoryButton()
                 .getBreadcrumb()
