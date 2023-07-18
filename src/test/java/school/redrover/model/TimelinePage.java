@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TimelinePage extends BaseMainHeaderPage<TimelinePage> {
 
-    @FindBy(css = "[href$='console']")
+    @FindBy(css = "#trend .build-status-link")
     private WebElement buildIcon;
 
     public TimelinePage(WebDriver driver) {
