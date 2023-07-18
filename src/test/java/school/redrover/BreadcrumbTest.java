@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BreadcrumbTest extends BaseTest {
+
+    private static final String PROJECT_NAME = "JOB";
     @Test
     public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -101,16 +103,14 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromProjectPage(TestUtils.JobType jobType) {
-        final String nameProject = "One";
-
-        TestUtils.createJob(this, nameProject, jobType, false);
+        TestUtils.createJob(this, PROJECT_NAME, jobType, false);
 
         String nameProjectOnMainPage = jobType.createConfigPage(getDriver())
                 .getBreadcrumb()
                 .clickDashboardButton()
-                .getJobName(nameProject);
+                .getJobName(PROJECT_NAME);
 
-        Assert.assertEquals(nameProjectOnMainPage, nameProject);
+        Assert.assertEquals(nameProjectOnMainPage, PROJECT_NAME);
     }
 
 
@@ -148,13 +148,13 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test
     public void testReturnToDashboardPageFromPeoplePage() {
-        String actualTitle = new MainPage(getDriver())
+       boolean welcomeJenkins = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
                 .getBreadcrumb()
                 .clickDashboardButton()
-                .getTitle();
+                .isWelcomeDisplayed();
 
-        Assert.assertEquals(actualTitle, "Dashboard [Jenkins]");
+        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
     @Test
@@ -177,5 +177,18 @@ public class BreadcrumbTest extends BaseTest {
                 .isWelcomeDisplayed();
 
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+    }
+
+    @Test(dataProvider = "job-type")
+    public void testReturnToDashboardPageFromConfigurationPage(TestUtils.JobType jobType) {
+        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+
+        boolean mainPageOpen = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, jobType.createConfigPage(getDriver()))
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .isMainPageOpen();
+
+        Assert.assertTrue(mainPageOpen, "Main page is not displayed!");
     }
 }
