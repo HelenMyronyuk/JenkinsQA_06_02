@@ -1364,7 +1364,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickMyViewsSideMenuLink();
 
         Assert.assertEquals(h2text.getStatusMessageText(), "This folder is empty");
-        Assert.assertTrue(h2text.getHeader().clickLogo().WelcomeIsDisplayed());
+        Assert.assertTrue(h2text.getHeader().clickLogo().isWelcomeDisplayed());
     }
 
     @Test
@@ -1374,7 +1374,7 @@ public class FreestyleProjectTest extends BaseTest {
         boolean isProjectPresent = new MainPage(getDriver())
                 .clickJobName(NEW_FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickDeleteAndAccept()
-                .WelcomeIsDisplayed();
+                .isWelcomeDisplayed();
 
         Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
     }

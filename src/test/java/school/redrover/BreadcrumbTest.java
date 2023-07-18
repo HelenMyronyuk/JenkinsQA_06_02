@@ -163,7 +163,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickNewItem()
                 .getBreadcrumb()
                 .clickDashboardButton()
-                .WelcomeIsDisplayed();
+                .isWelcomeDisplayed();
 
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }

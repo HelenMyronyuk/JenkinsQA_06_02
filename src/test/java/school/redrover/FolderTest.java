@@ -600,7 +600,7 @@ public class FolderTest extends BaseTest {
                 .dropDownMenuClickDeleteFolders(NAME)
                 .clickYesButton();
 
-        Assert.assertTrue(welcomeIsDisplayed.WelcomeIsDisplayed());
+        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed());
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
@@ -612,7 +612,7 @@ public class FolderTest extends BaseTest {
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickDeleteJobThatIsMainPage()
                 .clickYesButton()
-                .WelcomeIsDisplayed();
+                .isWelcomeDisplayed();
 
         Assert.assertTrue(welcomeIsDisplayed, "error was not show Welcome to Jenkins!");
     }

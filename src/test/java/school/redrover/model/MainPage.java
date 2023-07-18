@@ -53,7 +53,7 @@ public class MainPage extends BaseDashboardPage<MainPage> {
         return new NodePage(getDriver());
     }
 
-    public boolean WelcomeIsDisplayed() {
+    public boolean isWelcomeDisplayed() {
         return welcomeToJenkins.isDisplayed();
     }
 
