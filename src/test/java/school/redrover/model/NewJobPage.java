@@ -66,20 +66,12 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return getWait5().until(ExpectedConditions.visibilityOf(getItemInvalidNameMessage())).getText();
     }
 
-    public String getItemNameRequiredMessage() {
-        return itemNameRequiredMessage.getText();
-    }
-
     private WebElement getItemInvalidNameMessage() {
         return itemInvalidNameMessage;
     }
 
     public String getItemNameRequiredErrorText() {
         return getWait2().until(ExpectedConditions.visibilityOf(itemNameRequiredMessage)).getText();
-    }
-
-    public String getTitle() {
-        return getWait2().until(ExpectedConditions.visibilityOf(title)).getText();
     }
 
     public CreateBugPage selectJobAndOkAndGoToBugPage(TestUtils.JobType jobType) {

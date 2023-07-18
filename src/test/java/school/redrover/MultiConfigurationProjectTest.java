@@ -62,7 +62,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         String exceptionMessage = new MainPage(getDriver())
                 .clickNewItem()
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
-                .getItemNameRequiredMessage();
+                .getItemNameRequiredErrorText();
 
         Assert.assertEquals(exceptionMessage, "» This field cannot be empty, please enter a valid name");
     }
