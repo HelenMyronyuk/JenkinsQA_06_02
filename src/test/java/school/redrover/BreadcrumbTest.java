@@ -191,4 +191,15 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertTrue(mainPageOpen, "Main page is not displayed!");
     }
+
+    @Test
+    public void testReturnToDashboardPageFromMyViewsPage() {
+        boolean welcomeJenkins = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .isWelcomeDisplayed();
+
+        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+    }
 }
