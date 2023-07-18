@@ -158,6 +158,17 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
+    public void testReturnToDashboardPageFromBuildHistoryPage() {
+        String actualTitle = new MainPage(getDriver())
+                .clickBuildsHistoryButton()
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .getTitle();
+
+        Assert.assertEquals(actualTitle, "Dashboard [Jenkins]");
+    }
+
+    @Test
     public void testReturnToDashboardPageFromNewItemPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
                 .clickNewItem()
