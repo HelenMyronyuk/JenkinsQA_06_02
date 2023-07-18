@@ -69,12 +69,6 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     @FindBy(xpath = "//input[@name='_.context']")
     private WebElement contextNameField;
 
-    @FindBy(xpath = "//button[text() = 'Add build step']")
-    private WebElement addBuildStepButton;
-
-    @FindBy(css = ".bd li a")
-    private List<WebElement> buildStepsDropdownOptions;
-
     @FindBy(xpath = "//a[contains(text(),'Git Publisher')]")
     private WebElement gitPublisher;
 
@@ -190,23 +184,6 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     public String getGitHubCommitStatus() {
         scrollToFooter();
         return contextNameField.getAttribute("value");
-    }
-
-
-    public FreestyleProjectConfigPage clickAddBuildStepButton() {
-        new Actions(getDriver())
-                .scrollToElement(footer)
-                .click(addBuildStepButton)
-                .build()
-                .perform();
-        return this;
-    }
-
-    public List<String> getBuildStepsOptionsList() {
-        return buildStepsDropdownOptions
-                .stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toList());
     }
 
     public FreestyleProjectConfigPage clickGitPublisher() {
