@@ -33,6 +33,12 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(css = "#breadcrumb-menu>div:first-child>ul>li")
     private List<WebElement> dropDownMenu;
 
+    @FindBy(xpath = "//*[@id='breadcrumbs']/li[3]/a/button")
+    private WebElement jobBreadcrumbChevron;
+
+    @FindBy(xpath = "//*[@id='breadcrumbs']/li[3]/a")
+    private WebElement jobNameBreadcrumb;
+
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
@@ -97,5 +103,21 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 By.xpath(String.format("//a[@href='/job/%s/']", jobName)))).click();
 
         return jobPage;
+    }
+
+    public MainBreadcrumbComponent<Page> getJobBreadcrumbDropdownMenu() {
+        new Actions(getDriver())
+                .moveToElement(jobNameBreadcrumb)
+                .pause(Duration.ofMillis(300))
+                .perform();
+
+        getWait2().until(ExpectedConditions.visibilityOf(jobBreadcrumbChevron)).sendKeys(Keys.RETURN);
+        return this;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromJobBreadcrumbDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '"
+                + listItemName + "')]"))).click();
+        return pageToReturn;
     }
 }

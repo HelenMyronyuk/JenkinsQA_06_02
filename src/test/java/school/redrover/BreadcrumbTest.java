@@ -7,6 +7,7 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.jobs.FolderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -212,5 +213,31 @@ public class BreadcrumbTest extends BaseTest {
                 .isWelcomeDisplayed();
 
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+    }
+
+    @DataProvider(name = "options")
+    public Object[][] jobDropDownBreadcrumb (){
+       return new Object[][]{
+               {"Configure", PROJECT_NAME + " Config [Jenkins]"},
+               {"New Item", "New Item [Jenkins]"},
+               {"Delete Folder", "Jenkins"},
+               {"People", "People - [Jenkins]"},
+               {"Build History", "All [Jenkins]"},
+               {"Rename", "Rename [Jenkins]"},
+               {"Credentials", PROJECT_NAME + " » Credentials [Jenkins]"}};
+    }
+
+    @Test(dataProvider = "options")
+    public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(String option, String expectedTitleText){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
+        String actualTitle = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromJobBreadcrumbDropdownMenu(option, new FolderPage(getDriver()))
+                .getPageTitle();
+
+        Assert.assertEquals(actualTitle, expectedTitleText);
     }
 }
