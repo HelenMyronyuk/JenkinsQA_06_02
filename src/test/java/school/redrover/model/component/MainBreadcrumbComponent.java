@@ -58,7 +58,6 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     }
 
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
-        getDashboardDropdownMenu();
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '"
                 + listItemName + "')]"))).click();
         return pageToReturn;
@@ -113,11 +112,5 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
 
         getWait2().until(ExpectedConditions.visibilityOf(jobBreadcrumbChevron)).sendKeys(Keys.RETURN);
         return this;
-    }
-
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromJobBreadcrumbDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '"
-                + listItemName + "')]"))).click();
-        return pageToReturn;
     }
 }

@@ -21,6 +21,7 @@ public class BreadcrumbTest extends BaseTest {
     public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
+                .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 
@@ -141,6 +142,7 @@ public class BreadcrumbTest extends BaseTest {
         String actualTitle = new MainPage(getDriver())
                 .clickBuildsHistoryButton()
                 .getBreadcrumb()
+                .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("People", new PeoplePage(getDriver()))
                 .getPageTitle();
 
@@ -235,7 +237,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromJobBreadcrumbDropdownMenu(option, new FolderPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(option, new FolderPage(getDriver()))
                 .getPageTitle();
 
         Assert.assertEquals(actualTitle, expectedTitleText);

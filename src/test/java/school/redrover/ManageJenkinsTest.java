@@ -44,6 +44,7 @@ public class ManageJenkinsTest extends BaseTest {
 
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
+                .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 

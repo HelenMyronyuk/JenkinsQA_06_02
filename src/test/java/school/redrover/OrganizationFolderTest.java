@@ -116,6 +116,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         boolean newOrganizationFolderNameIsDisplayed = new OrganizationFolderPage(getDriver())
                 .getBreadcrumb()
+                .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("My Views", new MyViewsPage(getDriver()))
                 .jobIsDisplayed(newOrganizationFolderName);
 
