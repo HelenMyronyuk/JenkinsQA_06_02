@@ -1,7 +1,6 @@
 package school.redrover.model.jobsconfig;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -9,9 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.base.BaseConfigProjectsPage;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<FreestyleProjectConfigPage, FreestyleProjectPage> {
 
@@ -80,6 +76,12 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
 
     @FindBy(xpath = "//a[text()='Aggregate downstream test results']")
     private WebElement aggregateDownstreamTestResultsType;
+
+    @FindBy(xpath = "//a[text()='Editable Email Notification']")
+    private WebElement editableEmailNotificationType;
+
+    @FindBy(xpath = "//textarea[@name='project_recipient_list']")
+    private WebElement projectRecipientListInputField;
 
     public FreestyleProjectConfigPage(FreestyleProjectPage freestyleProjectPage) {
         super(freestyleProjectPage);
@@ -205,6 +207,18 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
 
     public FreestyleProjectConfigPage clickAggregateDownstreamTestResults() {
         aggregateDownstreamTestResultsType.click();
+        return this;
+    }
+
+    public FreestyleProjectConfigPage selectEditableEmailNotification() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(editableEmailNotificationType)).click();
+        return this;
+    }
+
+    public FreestyleProjectConfigPage inputEmailIntoProjectRecipientListInputField(String email) {
+        new Actions(getDriver()).moveToElement(projectRecipientListInputField);
+        getWait2().until(ExpectedConditions.elementToBeClickable(projectRecipientListInputField)).clear();
+        projectRecipientListInputField.sendKeys(email);
         return this;
     }
 }

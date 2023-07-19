@@ -1267,6 +1267,31 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testConfigurePostBuildActionEditableEmailNotification() {
+        String username = "jenkins05test@gmail.com";
+        String expectedConsoleOutputText = "Sending email to: jenkins05test@gmail.com";
+
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+        TestUtils.manageJenkinsEmailNotificationSetUp(this);
+
+        String emailSentLog = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickConfigure()
+                .clickPostBuildActionsButton()
+                .clickAddPostBuildActionDropDown()
+                .selectEditableEmailNotification()
+                .inputEmailIntoProjectRecipientListInputField(username)
+                .clickSaveButton()
+                .clickBuildNowButtonSideMenu()
+                .clickBuildIconStatus()
+                .getConsoleOutputText();
+
+        Assert.assertTrue(emailSentLog.contains(expectedConsoleOutputText), "Error: Email report wasn't sent");
+
+        TestUtils.manageJenkinsEmailNotificationGoingBackToOriginalSettings(this);
+    }
+
+    @Test
     public void testSetGitHubCommitStatusToPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 

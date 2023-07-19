@@ -1,9 +1,9 @@
 package school.redrover.model.jobs;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.ConsoleOutputPage;
 import school.redrover.model.jobsconfig.FreestyleProjectConfigPage;
 import school.redrover.model.base.BaseProjectPage;
 
@@ -23,6 +23,12 @@ public class FreestyleProjectPage extends BaseProjectPage<FreestyleProjectPage> 
 
     @FindBy(xpath = "//*[@class = 'textarea-preview']")
     private WebElement descriptionPreviewButton;
+
+    @FindBy(css = "[href*='build?']")
+    private WebElement buildNowButtonSideMenu;
+
+    @FindBy(xpath = "//a[@tooltip='Success > Console Output']")
+    private WebElement buildIconStatus;
 
     public FreestyleProjectPage(WebDriver driver) {
         super(driver);
@@ -62,5 +68,16 @@ public class FreestyleProjectPage extends BaseProjectPage<FreestyleProjectPage> 
 
     public String getPreviewDescription () {
         return descriptionPreviewButton.getText();
+    }
+
+    public FreestyleProjectPage clickBuildNowButtonSideMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildNowButtonSideMenu)).click();
+        return this;
+    }
+
+    public ConsoleOutputPage clickBuildIconStatus() {
+        getWait5().until(ExpectedConditions.visibilityOf(buildIconStatus));
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildIconStatus)).click();
+        return new ConsoleOutputPage(getDriver());
     }
 }
