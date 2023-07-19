@@ -1,6 +1,7 @@
 package school.redrover;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -13,6 +14,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class BreadcrumbTest extends BaseTest {
 
@@ -31,40 +33,36 @@ public class BreadcrumbTest extends BaseTest {
     @DataProvider(name = "subsections")
     public Object[][] provideSubsection() {
         return new Object[][]{
-                {new ConfigureSystemPage(getDriver())},
-                {new GlobalToolConfigurationPage(getDriver())},
-                {new PluginsPage(getDriver())},
-                {new ManageNodesPage(getDriver())},
-                {new ConfigureGlobalSecurityPage(getDriver())},
-                {new CredentialsPage(getDriver())},
-                {new ConfigureCredentialProvidersPage(getDriver())},
-                {new UserPage(getDriver())},
-                {new SystemInformationPage(getDriver())},
-                {new LogRecordersPage(getDriver())},
-                {new LoadStatisticsPage(getDriver())},
-                {new AboutJenkinsPage(getDriver())},
-                {new ManageOldDataPage(getDriver())},
-                {new JenkinsCLIPage(getDriver())},
-                {new ScriptConsolePage(getDriver())},
-                {new PrepareForShutdownPage(getDriver())}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Configure System"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) GlobalToolConfigurationPage::new, "Global Tool Configuration"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) PluginsPage::new, "Plugins"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ManageNodesPage::new, "Manage nodes and clouds"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureGlobalSecurityPage::new, "Configure Global Security"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) CredentialsPage::new, "Credentials"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureCredentialProvidersPage::new, "Configure Credential Providers"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) UserPage::new, "Users"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) SystemInformationPage::new, "System Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) LogRecordersPage::new, "Log Recorders"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) LoadStatisticsPage::new, "Load statistics: Jenkins"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) AboutJenkinsPage::new, "Jenkins\n" + "Version\n" + "2.387.2"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ManageOldDataPage::new, "Manage Old Data"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) JenkinsCLIPage::new, "Jenkins CLI"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ScriptConsolePage::new, "Script Console"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) PrepareForShutdownPage::new, "Prepare for Shutdown"}
         };
     }
 
     @Test(dataProvider = "subsections")
-    public <PageFromSubMenu extends BaseSubmenuPage<PageFromSubMenu>> void testNavigateToManageJenkinsSubsection(PageFromSubMenu pageFromSubMenu) {
-        new MainPage(getDriver())
+    public  void testNavigateToManageJenkinsSubsection(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+
+        String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .selectAnOptionFromDashboardManageJenkinsSubmenuList(pageFromSubMenu);
+                .selectAnOptionFromDashboardManageJenkinsSubmenuList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getHeading();
 
-        String pageName = getDriver().findElement(By.xpath("//h1")).getText();
-
-        switch (pageFromSubMenu.callByMenuItemName()) {
-            case "System Log" -> Assert.assertEquals(pageName, "Log Recorders");
-            case "Load Statistics" -> Assert.assertTrue(pageName.toLowerCase().contains(pageFromSubMenu.callByMenuItemName().toLowerCase()));
-            case "About Jenkins" -> Assert.assertTrue(pageName.contains("Jenkins\n" + "Version"));
-            default -> Assert.assertTrue(pageFromSubMenu.callByMenuItemName().toLowerCase().contains(pageName.toLowerCase()));
-        }
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Ignore
