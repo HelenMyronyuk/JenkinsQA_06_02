@@ -13,8 +13,6 @@ public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseMainHea
     @FindBy(name = "Submit")
     private WebElement renameButton;
 
-    @FindBy(css = ".error")
-    private WebElement errorMessage;
     private final JobTypePage jobTypePage;
 
     public RenamePage(JobTypePage jobTypePage) {

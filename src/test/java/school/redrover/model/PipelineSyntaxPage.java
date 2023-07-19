@@ -7,10 +7,7 @@ import school.redrover.model.base.BaseMainHeaderPage;
 
 public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
 
-    @FindBy(xpath = "//select")
-    private WebElement sampleStepDropDownList;
-
-    @FindBy(xpath = "//select//option[@value='echo: Print Message']")
+    @FindBy(xpath = "//option[@value='echo: Print Message']")
     private WebElement printMessage;
 
     @FindBy(name = "_.message")
