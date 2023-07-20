@@ -337,4 +337,16 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertTrue(isBuildDisplayed, "Last build icon is not displayed!");
     }
+
+    @Test
+    public void testNavigateToNewItemPageFromMyViewsPage() {
+        String actualResult = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .getBreadcrumb()
+                .getDashboardDropdownMenu()
+                .getPageFromDashboardDropdownMenu("New Item", new NewJobPage(getDriver()))
+                .getHeaderText();
+
+        Assert.assertEquals(actualResult, "Enter an item name");
+    }
 }

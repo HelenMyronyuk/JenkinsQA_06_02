@@ -23,8 +23,8 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
     @FindBy(id = "itemname-invalid")
     private WebElement itemInvalidNameMessage;
 
-    @FindBy(xpath = "//label[@class = 'h3']")
-    private WebElement title;
+    @FindBy(xpath = "//*[@id='createItem']//label")
+    private WebElement header;
 
     private TestUtils.JobType jobType;
 
@@ -78,5 +78,9 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         selectJobType(jobType);
         clickOkButton(null);
         return new CreateBugPage(getDriver());
+    }
+
+    public String getHeaderText () {
+        return header.getText();
     }
 }
