@@ -13,6 +13,9 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
     @FindBy(xpath = "//div[@id='matrix']//span[@class='build-status-icon__outer']/child::*")
     private WebElement jobBuildStatus;
 
+    @FindBy(xpath = "//div[@class='build-icon']")
+    private WebElement lastBuildIcon;
+
     public MultiConfigurationProjectPage(WebDriver driver) {
         super(driver);
     }
@@ -34,6 +37,15 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
 
     public String getDeleteAlertText() {
         return getDriver().switchTo().alert().getText();
+    }
+
+    public boolean isLastBuildIconDisplayed() {
+        return getWait2().until(ExpectedConditions.visibilityOf(lastBuildIcon)).isDisplayed();
+    }
+
+    public MultiConfigurationProjectPage refreshPage() {
+        getDriver().navigate().refresh();
+        return this;
     }
 }
 

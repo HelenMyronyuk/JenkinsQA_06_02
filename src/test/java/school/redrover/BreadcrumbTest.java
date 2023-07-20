@@ -320,4 +320,21 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(actualAlertText, alertText);
     }
+
+    @Test
+    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow() {
+        final String optionName = "Build Now";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+
+        boolean isBuildDisplayed = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new MultiConfigurationProjectPage(getDriver()))
+                .refreshPage()
+                .isLastBuildIconDisplayed();
+
+        Assert.assertTrue(isBuildDisplayed, "Last build icon is not displayed!");
+    }
 }
