@@ -76,4 +76,8 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
         return new PipelineSyntaxPage(getDriver());
     }
+
+    public String getPageTitle() {
+        return getDriver().getTitle();
+    }
 }

@@ -11,6 +11,7 @@ import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.jobs.FolderPage;
+import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
@@ -220,8 +221,8 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
-    @DataProvider(name = "options")
-    public Object[][] jobDropDownBreadcrumb (){
+    @DataProvider(name = "optionsFolder")
+    public Object[][] folderDropDownBreadcrumb (){
        return new Object[][]{
                {"Configure", PROJECT_NAME + " Config [Jenkins]"},
                {"New Item", "New Item [Jenkins]"},
@@ -232,7 +233,7 @@ public class BreadcrumbTest extends BaseTest {
                {"Credentials", PROJECT_NAME + " » Credentials [Jenkins]"}};
     }
 
-    @Test(dataProvider = "options")
+    @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(String option, String expectedTitleText){
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
 
@@ -348,5 +349,34 @@ public class BreadcrumbTest extends BaseTest {
                 .getHeaderText();
 
         Assert.assertEquals(actualResult, "Enter an item name");
+    }
+
+    @DataProvider(name = "optionsOrganizationFolder")
+    public Object[][] organizationFolderDropDownBreadcrumb (){
+        return new Object[][]{
+                {"Configure", PROJECT_NAME + " Config [Jenkins]"},
+                {"Scan Organization Folder Log", PROJECT_NAME + " Scan Organization Folder Log [Jenkins]"},
+                {"Organization Folder Events", PROJECT_NAME + " Scan Organization Folder Log [Jenkins]"},
+                {"Delete Organization Folder", "Jenkins"},
+                {"People", "Error 404 Not Found"},
+                {"Build History", "Error 404 Not Found"},
+                {"Rename", "Rename [Jenkins]"},
+                {"Pipeline Syntax", "Pipeline Syntax: Snippet Generator [Jenkins]"},
+                {"Credentials", PROJECT_NAME + " » Credentials [Jenkins]"}
+        };
+    }
+
+    @Test(dataProvider = "optionsOrganizationFolder")
+    public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(String option, String expectedTitleText){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String actualTitle = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(option, new OrganizationFolderPage(getDriver()))
+                .getPageTitle();
+
+        Assert.assertEquals(actualTitle, expectedTitleText);
     }
 }
