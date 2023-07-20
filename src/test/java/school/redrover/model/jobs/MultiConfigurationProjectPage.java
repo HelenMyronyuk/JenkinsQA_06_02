@@ -31,5 +31,9 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
 
         return buildStatus.getAttribute("tooltip");
     }
+
+    public String getDeleteAlertText() {
+        return getDriver().switchTo().alert().getText();
+    }
 }
 

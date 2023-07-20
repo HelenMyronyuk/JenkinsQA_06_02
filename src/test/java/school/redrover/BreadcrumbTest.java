@@ -303,4 +303,21 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(pageName, optionName);
     }
+
+    @Test
+    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbDelete() {
+        final String optionName = "Delete Multi-configuration project";
+        final String alertText = "Delete Multi-configuration project: are you sure?";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+
+        String actualAlertText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new MultiConfigurationProjectPage(getDriver()))
+                .getDeleteAlertText();
+
+        Assert.assertEquals(actualAlertText, alertText);
+    }
 }
