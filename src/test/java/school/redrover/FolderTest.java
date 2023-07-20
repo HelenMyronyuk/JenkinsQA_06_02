@@ -267,7 +267,7 @@ public class FolderTest extends BaseTest {
                 .enterNewName(NAME)
                 .clickRenameButtonAndGoError();
 
-        Assert.assertEquals(createItemErrorPage.getError(), "Error");
+        Assert.assertEquals(createItemErrorPage.getHeaderText(), "Error");
         Assert.assertEquals(createItemErrorPage.getErrorMessage(), "The new name is the same as the current name.");
     }
 

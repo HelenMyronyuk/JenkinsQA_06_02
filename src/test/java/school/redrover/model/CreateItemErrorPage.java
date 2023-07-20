@@ -12,9 +12,6 @@ public class CreateItemErrorPage extends BaseMainHeaderPage<CreateItemErrorPage>
     private WebElement errorMessage;
 
     @FindBy(xpath = "//h1")
-    private WebElement error;
-
-    @FindBy(xpath = "//div[@id='main-panel']//h1")
     private WebElement headerText;
 
     public CreateItemErrorPage(WebDriver driver) {
@@ -23,10 +20,6 @@ public class CreateItemErrorPage extends BaseMainHeaderPage<CreateItemErrorPage>
 
     public String getErrorMessage() {
         return getWait10().until(ExpectedConditions.visibilityOf(errorMessage)).getText();
-    }
-
-    public String getError() {
-        return error.getText();
     }
 
     public String getHeaderText() {
