@@ -8,8 +8,10 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.jobs.FolderPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -268,5 +270,37 @@ public class BreadcrumbTest extends BaseTest {
         }
 
         Assert.assertEquals(jobNameActualList, jobNameList);
+    }
+
+    @DataProvider(name = "job-submenu-option")
+    public Object[][] provideJobSubmenuOption() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ChangesPage<>(new MultiConfigurationProjectPage(driver)), "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new WorkspacePage(driver), "Workspace"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MultiConfigurationProjectPage(driver), "Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new MultiConfigurationProjectPage(driver)), "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename"}
+        };
+    }
+
+    @Test(dataProvider = "job-submenu-option")
+    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName) {
+        TestUtils.createJob(this, "Folder", TestUtils.JobType.Folder, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+
+        String pageName = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
+                .getOnlyPageNameFromHeader();
+
+        Assert.assertEquals(pageName, optionName);
     }
 }
