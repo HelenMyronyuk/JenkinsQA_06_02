@@ -7,7 +7,7 @@ import school.redrover.model.base.BaseMainHeaderPage;
 
 public class BuiltInNodePage extends BaseMainHeaderPage<BuiltInNodePage> {
 
-    @FindBy(xpath = "//div[@class='jenkins-app-bar__content']/h1")
+    @FindBy(xpath = "//h1")
     private WebElement title;
 
     public BuiltInNodePage(WebDriver driver) {
