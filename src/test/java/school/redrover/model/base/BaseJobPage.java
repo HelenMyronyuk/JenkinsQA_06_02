@@ -138,4 +138,13 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
     public String getDescriptionButton() {
         return addEditDescriptionButton.getText();
     }
+
+    public String getProjectName() {
+        String projectName = jobName.getText();
+        if (projectName.contains("Project") || projectName.contains("Pipeline")) {
+            return projectName.substring(projectName.indexOf(" ") + 1);
+        } else {
+            return projectName;
+        }
+    }
 }

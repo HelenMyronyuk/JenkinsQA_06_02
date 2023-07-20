@@ -7,13 +7,16 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class BreadcrumbTest extends BaseTest {
@@ -239,5 +242,31 @@ public class BreadcrumbTest extends BaseTest {
                 .getPageTitle();
 
         Assert.assertEquals(actualTitle, expectedTitleText);
+    }
+
+    @Test
+    public void testNavigateToJobFromBuildHistory() {
+        Map<String, BaseJobPage<?>> jobMap = TestUtils.getJobMap(this);
+
+        for (Map.Entry<String, BaseJobPage<?>> entry : TestUtils.getJobMap(this).entrySet()) {
+            TestUtils.createJob(this, entry.getKey(), TestUtils.JobType.valueOf(entry.getKey()), true);
+        }
+
+        List<String> jobNameList = new ArrayList<>(jobMap.keySet());
+        List<String> jobNameActualList = new ArrayList<>();
+
+        for (Map.Entry<String, BaseJobPage<?>> jobNameAndJobTypeMap: jobMap.entrySet()) {
+            jobNameActualList.add(new MainPage(getDriver())
+                    .clickBuildsHistoryButton()
+                    .getBreadcrumb()
+                    .clickProjectNameFromAllButtonDropDownMenu(jobNameAndJobTypeMap.getValue(), jobNameAndJobTypeMap.getKey())
+                    .getProjectName());
+
+            jobNameAndJobTypeMap.getValue()
+                    .getHeader()
+                    .clickLogo();
+        }
+
+        Assert.assertEquals(jobNameActualList, jobNameList);
     }
 }
