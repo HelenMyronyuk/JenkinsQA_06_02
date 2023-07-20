@@ -16,6 +16,8 @@
         <mercury.version>0.1.5</mercury.version>
         <cucumber.version>7.12.1</cucumber.version>
         <aspectj.version>1.9.19</aspectj.version>
+        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+
     </properties>
 
     <repositories>
@@ -91,6 +93,10 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -99,6 +105,14 @@
                         <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>2.10.0</reportVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>
