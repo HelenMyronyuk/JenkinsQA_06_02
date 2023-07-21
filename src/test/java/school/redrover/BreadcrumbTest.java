@@ -97,7 +97,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @DataProvider(name = "job-type")
-    public Object[][] provideWrongCharacters() {
+    public Object[][] provideJobTypes() {
         return new Object[][]{{TestUtils.JobType.FreestyleProject},{TestUtils.JobType.Pipeline},
                 {TestUtils.JobType.MultiConfigurationProject}, {TestUtils.JobType.Folder},
                 {TestUtils.JobType.MultibranchPipeline}, {TestUtils.JobType.OrganizationFolder}};
@@ -215,6 +215,21 @@ public class BreadcrumbTest extends BaseTest {
                 .isWelcomeDisplayed();
 
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+    }
+
+    @Test(dataProvider = "job-type")
+    public void testNavigateToMyViewsPageFromConfigurationPage(TestUtils.JobType jobType) {
+        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+
+        String actualTextFromBreadCrumb = new MainPage(getDriver())
+                .clickConfigureDropDown(PROJECT_NAME, jobType.createConfigPage(getDriver()))
+                .getBreadcrumb()
+                .getDashboardDropdownMenu()
+                .getPageFromDashboardDropdownMenu("My Views", new MyViewsPage(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertEquals(actualTextFromBreadCrumb, "Dashboard > admin > My Views > All");
     }
 
     @DataProvider(name = "optionsFolder")
