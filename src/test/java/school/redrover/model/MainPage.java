@@ -19,9 +19,6 @@ public class MainPage extends BaseDashboardPage<MainPage> {
     @FindBy(xpath = "//h1[text()='Welcome to Jenkins!']")
     private WebElement welcomeToJenkins;
 
-    @FindBy(xpath = "//div[@class='empty-state-block']/h1")
-    private WebElement welcomeJenkins;
-
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -48,16 +45,11 @@ public class MainPage extends BaseDashboardPage<MainPage> {
         return getWait10().until(ExpectedConditions.visibilityOf(tooltipDescription)).getText();
     }
 
-    public NodePage clickOnNodeName(String name) {
-        getDriver().findElement(By.xpath("//span[text()='" + name + "']")).click();
-        return new NodePage(getDriver());
-    }
-
     public boolean isWelcomeDisplayed() {
         return welcomeToJenkins.isDisplayed();
     }
 
     public String getWelcomeText() {
-        return welcomeJenkins.getText();
+        return welcomeToJenkins.getText();
     }
 }
