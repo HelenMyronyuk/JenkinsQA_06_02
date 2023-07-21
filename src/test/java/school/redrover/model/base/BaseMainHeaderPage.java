@@ -30,16 +30,8 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
         return new MainBreadcrumbComponent<>( (Self)this);
     }
 
-    public String getOnlyPageNameFromHeader() {
-        String pageName = getWait2().until(ExpectedConditions.visibilityOf(header)).getText();
-
-        if (pageName.contains("workspace")) {
-            pageName = pageName.substring(pageName.indexOf("w")).replaceAll("w", "W");
-        }
-        if (pageName.contains("Rename")) {
-            pageName = pageName.substring(pageName.indexOf("R"), pageName.indexOf(" "));
-        }
-        return pageName;
+    public String getPageHeaderText() {
+        return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
     }
 
     public JenkinsVersionPage clickJenkinsVersionLink() {

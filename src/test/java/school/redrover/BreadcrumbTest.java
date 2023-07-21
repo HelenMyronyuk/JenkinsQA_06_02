@@ -11,6 +11,7 @@ import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
+import school.redrover.model.jobsconfig.FolderConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -215,29 +216,34 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @DataProvider(name = "optionsFolder")
-    public Object[][] folderDropDownBreadcrumb (){
-       return new Object[][]{
-               {"Configure", PROJECT_NAME + " Config [Jenkins]"},
-               {"New Item", "New Item [Jenkins]"},
-               {"Delete Folder", "Jenkins"},
-               {"People", "People - [Jenkins]"},
-               {"Build History", "All [Jenkins]"},
-               {"Rename", "Rename [Jenkins]"},
-               {"Credentials", PROJECT_NAME + " » Credentials [Jenkins]"}};
+    public Object[][] folderDropDownBreadcrumb() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new FolderConfigPage(new FolderPage(driver)), "Configure", "Configuration"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PeoplePage(getDriver()), "People", "People"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildHistoryPage(getDriver()), "Build History", "Build History of Jenkins"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new FolderPage(driver)), "Rename", "Rename Folder " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}
+        };
     }
 
     @Test(dataProvider = "optionsFolder")
-    public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(String option, String expectedTitleText){
+    public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText){
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
 
-        String actualTitle = new MainPage(getDriver())
+        String pageName = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(option, new FolderPage(getDriver()))
-                .getPageTitle();
+                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
 
-        Assert.assertEquals(actualTitle, expectedTitleText);
+        Assert.assertEquals(pageName, pageHeaderText);
     }
 
     @Test
@@ -270,32 +276,32 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<>(new MultiConfigurationProjectPage(driver)), "Changes"},
+                        driver -> new ChangesPage<>(new MultiConfigurationProjectPage(driver)), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new WorkspacePage(driver), "Workspace"},
+                        driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MultiConfigurationProjectPage(driver), "Configure"},
+                        driver -> new MultiConfigurationProjectPage(driver), "Configure", "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new MultiConfigurationProjectPage(driver)), "Move"},
+                        driver -> new MovePage<>(new MultiConfigurationProjectPage(driver)), "Move", "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename"}
+                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename", "Rename Multi-configuration project " + PROJECT_NAME}
         };
     }
 
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
         TestUtils.createJob(this, "Folder", TestUtils.JobType.Folder, true);
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
 
-        String pageName = new MainPage(getDriver())
+        String pageText = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
                 .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
-                .getOnlyPageNameFromHeader();
+                .getPageHeaderText();
 
-        Assert.assertEquals(pageName, optionName);
+        Assert.assertEquals(pageText, pageHeaderText);
     }
 
     @Test
