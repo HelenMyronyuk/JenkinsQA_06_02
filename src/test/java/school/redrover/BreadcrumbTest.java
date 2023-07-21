@@ -12,6 +12,7 @@ import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobsconfig.FolderConfigPage;
+import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -291,7 +292,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
-        TestUtils.createJob(this, "Folder", TestUtils.JobType.Folder, true);
+        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
 
         String pageText = new MainPage(getDriver())
@@ -351,31 +352,36 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @DataProvider(name = "optionsOrganizationFolder")
-    public Object[][] organizationFolderDropDownBreadcrumb (){
+    public Object[][] organizationFolderDropDownBreadcrumb() {
         return new Object[][]{
-                {"Configure", PROJECT_NAME + " Config [Jenkins]"},
-                {"Scan Organization Folder Log", PROJECT_NAME + " Scan Organization Folder Log [Jenkins]"},
-                {"Organization Folder Events", PROJECT_NAME + " Scan Organization Folder Log [Jenkins]"},
-                {"Delete Organization Folder", "Jenkins"},
-                {"People", "Error 404 Not Found"},
-                {"Build History", "Error 404 Not Found"},
-                {"Rename", "Rename [Jenkins]"},
-                {"Pipeline Syntax", "Pipeline Syntax: Snippet Generator [Jenkins]"},
-                {"Credentials", PROJECT_NAME + " » Credentials [Jenkins]"}
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new OrganizationFolderConfigPage(new OrganizationFolderPage(driver)), "Configure", "Configuration"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ScanOrganizationFolderLog(driver), "Scan Organization Folder Log", "Scan Organization Folder Log"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new OrganizationFolderEventsPage(driver), "Organization Folder Events", "Organization Folder Events"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new OrganizationFolderPage(driver)), "Move", "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new OrganizationFolderPage(driver)), "Rename", "Rename Organization Folder " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Credentials", "Credentials"}
         };
     }
 
     @Test(dataProvider = "optionsOrganizationFolder")
-    public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(String option, String expectedTitleText){
+    public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
 
-        String actualTitle = new MainPage(getDriver())
+        String actualPageHeaderText = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(option, new OrganizationFolderPage(getDriver()))
-                .getPageTitle();
+                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
 
-        Assert.assertEquals(actualTitle, expectedTitleText);
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 }

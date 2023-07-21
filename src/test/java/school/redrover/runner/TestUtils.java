@@ -307,4 +307,11 @@ public class TestUtils {
                 .inputSmtpPortEmailNotificationsField("25")
                 .clickSaveButton();
     }
+
+    public static void checkMoveOptionAndCreateFolder(
+            String optionName, BaseTest baseTest, Boolean goToMainPage) {
+        if (optionName.equals("Move")) {
+            createJob(baseTest, "Folder", JobType.Folder, goToMainPage);
+        }
+    }
 }
