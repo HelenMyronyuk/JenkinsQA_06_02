@@ -13,7 +13,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> extends BaseMainHeaderPage<Self> {
+public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> extends BaseSubmenuPage<Self> {
 
     @FindBy(id = "description-link")
     private WebElement onDescription;
@@ -113,6 +113,11 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public BaseDashboardPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Reload Configuration from Disk";
     }
 
     public String getDescriptionText() {
@@ -413,5 +418,9 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Changes')]"))).click();
 
         return new ChangesBuildPage(getDriver());
+    }
+
+    public String getPopUp(){
+       return getDriver().switchTo().alert().getText();
     }
 }

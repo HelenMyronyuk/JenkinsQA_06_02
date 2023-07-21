@@ -1,10 +1,8 @@
 package school.redrover;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -71,21 +69,16 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, expectedResult);
     }
 
-    @Ignore
     @Test
     public void testReloadConfigurationFromDiskOfManageJenkinsSubmenu() {
-        String expectedLoadingText = "Please wait while Jenkins is getting ready to work ...";
 
-        new MainPage(getDriver())
+        String popUp = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .selectAnOptionFromDashboardManageJenkinsSubmenuList(new ConfigureSystemPage(getDriver()))
-                .getBreadcrumb()
-                .clickOkOnPopUp();
+                .selectAnOptionFromDashboardManageJenkinsSubmenuList(new MainPage(getDriver()))
+                .getPopUp();
 
-        String loadingText = getDriver().findElement(By.xpath("//h1")).getText();
-
-        Assert.assertEquals(loadingText, expectedLoadingText);
+        Assert.assertEquals(popUp, "Reload Configuration from Disk: are you sure?");
     }
 
     @Test
