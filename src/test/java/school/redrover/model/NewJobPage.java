@@ -23,7 +23,7 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
     @FindBy(id = "itemname-invalid")
     private WebElement itemInvalidNameMessage;
 
-    @FindBy(xpath = "//*[@id='createItem']//label")
+    @FindBy(xpath = "//div[@class='header']//label")
     private WebElement header;
 
     private TestUtils.JobType jobType;

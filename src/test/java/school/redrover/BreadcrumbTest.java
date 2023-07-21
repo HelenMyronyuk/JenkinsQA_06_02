@@ -389,6 +389,22 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Test
+    public void testNewItemNavigateToFolderPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "New Item";
+        final String pageHeaderText = "Enter an item name";
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new NewJobPage(getDriver()))
+                .getHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
     @DataProvider(name = "buildSubMenu")
     public Object[][] getBuildSubmenu() {
         return new Object[][]{
