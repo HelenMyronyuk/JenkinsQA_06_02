@@ -27,4 +27,5 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
         deleteYesButton.click();
         return jobPage;
     }
+
 }

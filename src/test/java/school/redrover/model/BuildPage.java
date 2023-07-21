@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 
 import java.time.Duration;
 
@@ -178,5 +179,13 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
                 .click()
                 .perform();
         return submenuPage;
+    }
+
+    public <JobTypePage extends BasePage<?, ?>> DeletePage<JobTypePage> selectDeleteOptionFromBuildDropDownList(JobTypePage jobTypePage) {
+        new Actions(getDriver())
+                .moveToElement(getDriver().findElement(By.xpath("//a[contains(@href, 'confirmDelete')]")))
+                .click()
+                .perform();
+        return new DeletePage<>(jobTypePage);
     }
 }

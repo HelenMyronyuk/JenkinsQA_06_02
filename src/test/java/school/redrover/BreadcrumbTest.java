@@ -450,4 +450,22 @@ public class BreadcrumbTest extends BaseTest {
         }
         Assert.assertEquals(actualResult, expectedResult);
     }
+
+    @Test
+    public void testNavigateToFreestyleDeletePageFromDropdownOnBreadcrumb() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        Boolean deleteSubmenuPage = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .selectDeleteOptionFromBuildDropDownList(new FreestyleProjectPage(getDriver()))
+                .clickYesButton()
+                .getBreadcrumb()
+                .clickJobNameFromBreadcrumb(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+                .isNoBuildsDisplayed();
+
+        Assert.assertTrue(deleteSubmenuPage, "Error");
+    }
 }
