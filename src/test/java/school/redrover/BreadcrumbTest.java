@@ -13,6 +13,7 @@ import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobsconfig.FolderConfigPage;
 import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -386,5 +387,36 @@ public class BreadcrumbTest extends BaseTest {
                 .getPageHeaderText();
 
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
+    @DataProvider(name = "buildSubMenu")
+    public Object[][] getBuildSubmenu() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"}
+        };
+    }
+
+    @Test(dataProvider = "buildSubMenu")
+    public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb
+            (Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+        String projectName = "FreestyleProject";
+        TestUtils.createJob(this, projectName, TestUtils.JobType.FreestyleProject, true);
+        String actualResult = "";
+
+        BaseSubmenuPage submenuPage = new MainPage(getDriver())
+                .clickJobName(projectName, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
+
+        if ("configure".equals(pageFromSubMenuConstructor.apply(getDriver()).callByMenuItemName())) {
+            actualResult = submenuPage.getTextFromBreadCrumb();
+        } else {
+            actualResult = submenuPage.getHeading();
+        }
+        Assert.assertEquals(actualResult, expectedResult);
     }
 }

@@ -6,8 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
-public class ConsoleOutputPage extends BaseMainHeaderPage<ConsoleOutputPage> {
+public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
 
     @FindBy(xpath = "//pre[@class='console-output']")
     private WebElement consoleOutput;
@@ -23,6 +24,11 @@ public class ConsoleOutputPage extends BaseMainHeaderPage<ConsoleOutputPage> {
 
     public ConsoleOutputPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "console";
     }
 
     public String getConsoleOutputText() {

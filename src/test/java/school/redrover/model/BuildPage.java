@@ -1,11 +1,17 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.base.BaseSubmenuPage;
+
+import java.time.Duration;
 
 public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
@@ -56,6 +62,12 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     @FindBy(css = ".task:last-of-type span a")
     private WebElement aggregatedTestResultSideMenuOption;
+
+    @FindBy(xpath = "//body/div[@id='breadcrumbBar']/ol[@id='breadcrumbs']/li[5]/a[1]/button[1]")
+    private WebElement buildDropDownMenu;
+
+    @FindBy(xpath = "//body/div[@id='breadcrumbBar']/ol[@id='breadcrumbs']/li[5]/a[1]")
+    private WebElement buildNumber;
 
     public BuildPage(WebDriver driver) {
         super(driver);
@@ -149,5 +161,22 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     public String getAggregateTestResultSideMenuLinkText() {
         return aggregatedTestResultSideMenuOption.getAttribute("href");
+    }
+
+    public BuildPage getBuildDropdownMenu() {
+        new Actions(getDriver())
+                .moveToElement(buildNumber)
+                .pause(Duration.ofMillis(300))
+                .perform();
+        getWait2().until(ExpectedConditions.visibilityOf(buildDropDownMenu)).sendKeys(Keys.RETURN);
+        return this;
+    }
+
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromBuildDropDownList(SubmenuPage submenuPage) {
+        new Actions(getDriver())
+                .moveToElement(getDriver().findElement(By.xpath("//a[contains(@href, '" + submenuPage.callByMenuItemName() + "')]")))
+                .click()
+                .perform();
+        return submenuPage;
     }
 }
