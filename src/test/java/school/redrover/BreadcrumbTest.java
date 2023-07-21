@@ -226,6 +226,8 @@ public class BreadcrumbTest extends BaseTest {
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new BuildHistoryPage(getDriver()), "Build History", "Build History of Jenkins"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new FolderPage(driver)), "Move", "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new RenamePage<>(new FolderPage(driver)), "Rename", "Rename Folder " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}
@@ -234,7 +236,8 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText){
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
 
         String pageName = new MainPage(getDriver())
