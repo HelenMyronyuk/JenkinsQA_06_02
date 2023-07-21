@@ -2,7 +2,6 @@ package school.redrover;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import school.redrover.model.JenkinsVersionPage;
 import school.redrover.model.MainPage;
 import school.redrover.runner.BaseTest;
 
@@ -19,7 +18,8 @@ public class FooterTest extends BaseTest {
 
     @Test
     public void testLinkJenkinsVersion() {
-        String jenkinsText = new JenkinsVersionPage(getDriver())
+        String jenkinsText = new MainPage(getDriver())
+                .clickJenkinsVersionLink()
                 .switchJenkinsDocPage()
                 .getJenkinsPageTitle();
 

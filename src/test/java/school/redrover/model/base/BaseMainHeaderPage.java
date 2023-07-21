@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.JenkinsVersionPage;
 import school.redrover.model.component.MainBreadcrumbComponent;
 import school.redrover.model.component.MainHeaderComponent;
 
@@ -11,6 +12,9 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
 
     @FindBy(xpath = "//h1")
     private WebElement header;
+
+    @FindBy(xpath = "//a[contains(text(), 'Jenkins')]")
+    private WebElement jenkinsVersionLink;
 
     public BaseMainHeaderPage(WebDriver driver) {
         super(driver);
@@ -36,5 +40,10 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
             pageName = pageName.substring(pageName.indexOf("R"), pageName.indexOf(" "));
         }
         return pageName;
+    }
+
+    public JenkinsVersionPage clickJenkinsVersionLink() {
+        jenkinsVersionLink.click();
+        return new JenkinsVersionPage(getDriver());
     }
 }

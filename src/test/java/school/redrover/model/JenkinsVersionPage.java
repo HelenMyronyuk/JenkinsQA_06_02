@@ -22,11 +22,10 @@ public class JenkinsVersionPage extends BaseModel {
 
     public JenkinsVersionPage switchJenkinsDocPage() {
         String originalWindow = getDriver().getWindowHandle();
-        assert getDriver().getWindowHandles().size() == 1;
-
-        jenkinsVersionLink.click();
 
         getWait2().until(numberOfWindowsToBe(2));
+
+        assert getDriver().getWindowHandles().size() == 2;
 
         for (String winHandle : getDriver().getWindowHandles()) {
             if (!originalWindow.contentEquals(winHandle)) {
