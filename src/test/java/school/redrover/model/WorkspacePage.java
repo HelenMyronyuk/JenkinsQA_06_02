@@ -11,15 +11,15 @@ import school.redrover.model.jobs.FreestyleProjectPage;
 
 public class WorkspacePage extends BaseMainHeaderPage<BuildPage> {
 
-    @FindBy(css = "#main-panel h1")
-    private WebElement pageTitle;
+    @FindBy(xpath = "//h1")
+    private WebElement headerText;
 
     public WorkspacePage(WebDriver driver) {
         super(driver);
     }
 
     public String getTextFromWorkspacePage() {
-        return getWait5().until(ExpectedConditions.visibilityOf(pageTitle)).getText();
+        return getWait5().until(ExpectedConditions.visibilityOf(headerText)).getText();
     }
 
 
