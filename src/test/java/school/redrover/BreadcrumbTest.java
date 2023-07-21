@@ -187,7 +187,7 @@ public class BreadcrumbTest extends BaseTest {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
 
         boolean mainPageOpen = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, jobType.createConfigPage(getDriver()))
+                .clickConfigureDropDown(PROJECT_NAME, jobType.createConfigPage(getDriver()))
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .isMainPageOpen();
