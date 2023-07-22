@@ -485,4 +485,21 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(actualText, text);
     }
+
+    @Test
+    public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "Delete Folder";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
+        boolean deleteButton = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new FolderPage(getDriver())))
+                .isDeleteButtonDisplayed();
+
+        Assert.assertTrue(deleteButton, "Delete button is not displayed!");
+
+    }
 }
