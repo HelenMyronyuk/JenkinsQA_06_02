@@ -107,7 +107,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testCreateListView() {
+    public void testCreateListViewType() {
         createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
 
         String actualName = new MainPage(getDriver())
@@ -288,7 +288,6 @@ public class ViewsTest extends BaseTest {
         );
     }
 
-
     @Test
     public void testAddViewDescriptionPreview() {
         createNewFreestyleProjectAndNewView(PROJECT_NAME);
@@ -321,7 +320,7 @@ public class ViewsTest extends BaseTest {
                 .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
                 .clickNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView,ViewPage.class)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
                 .clickAllOnFolderView()
                 .viewIsDisplayed(VIEW_NAME);
 
