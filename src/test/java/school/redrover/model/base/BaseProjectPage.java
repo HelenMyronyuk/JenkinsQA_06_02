@@ -91,6 +91,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//div[@class='middle-align build-badge']/img")
     private WebElement iconLock;
 
+    @FindBy(xpath = "//span[contains(text(), 'Changes')]")
+    private WebElement changesBuildButton;
+
     public BaseProjectPage(WebDriver driver) {
         super(driver);
     }
@@ -215,6 +218,13 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         editBuildInformFromDropDownOfBuild.click();
 
         return new EditBuildInformationPage(getDriver());
+    }
+
+    public ChangesBuildPage clickChangesBuildFromProjectPage() {
+        openBuildsDropDownMenu();
+        changesBuildButton.click();
+
+        return new ChangesBuildPage(getDriver());
     }
 
     public ConsoleOutputPage clickConsoleOutputType(){

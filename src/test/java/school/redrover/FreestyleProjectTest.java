@@ -430,7 +430,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .openBuildDropDownMenu("#1")
-                .clickOnChangesItem()
+                .clickChangesBuildFromDropDown()
                 .getTextChanges();
 
         Assert.assertEquals(titleChange, "Changes");
@@ -438,16 +438,16 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testBuildChangesFromProjectPage() {
-        final String title = "Changes";
+        final String heading = "Changes";
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String changesTitle = new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickChangesFromDropDownMenu()
-                .getPageTitle();
+                .clickChangesBuildFromProjectPage()
+                .getHeading();
 
-        Assert.assertEquals(changesTitle, title);
+        Assert.assertEquals(changesTitle, heading);
     }
 
     @Test
