@@ -3,6 +3,7 @@ package school.redrover.model;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 
 public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
@@ -18,6 +19,9 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
 
     @FindBy(xpath = "//textarea")
     private WebElement textArea;
+
+    @FindBy(xpath = "//div[contains(text(), 'Overview')]")
+    private WebElement overviewText;
 
     public PipelineSyntaxPage(WebDriver driver) {
         super(driver);
@@ -43,5 +47,9 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
 
     public String getTextPipelineScript() {
        return textArea.getAttribute("value");
+    }
+
+    public String getOverviewText() {
+        return getWait5().until(ExpectedConditions.visibilityOf(overviewText)).getText().trim();
     }
 }

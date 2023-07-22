@@ -468,4 +468,21 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertTrue(deleteSubmenuPage, "Error");
     }
+
+    @Test
+    public void testPipelineSyntaxNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "Pipeline Syntax";
+        final String text = "Overview";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String actualText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new PipelineSyntaxPage(getDriver()))
+                .getOverviewText();
+
+        Assert.assertEquals(actualText, text);
+    }
 }
