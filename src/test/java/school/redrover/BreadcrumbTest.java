@@ -137,6 +137,20 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, "Plugins");
     }
 
+    @Test(dataProvider = "job-type")
+    public void testNavigateToBuildHistoryPageFromProjectPage(TestUtils.JobType jobType) {
+        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+
+        String actualHeaderText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, jobType.createJobPage(getDriver()) )
+                .getBreadcrumb()
+                .getDashboardDropdownMenu()
+                .getPageFromDashboardDropdownMenu("Build History", new BuildHistoryPage(getDriver()))
+                .getHeaderText();
+
+        Assert.assertEquals(actualHeaderText, "Build History of Jenkins", "The header is not correct");
+    }
+
     @Test
     public void testNavigateToPeoplePageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())

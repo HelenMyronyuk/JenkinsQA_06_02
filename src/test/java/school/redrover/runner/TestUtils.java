@@ -21,12 +21,22 @@ public class TestUtils {
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new FreestyleProjectConfigPage(new FreestyleProjectPage(driver));
             }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new FreestyleProjectPage(driver);
+            }
         },
 
         Pipeline(By.xpath("//span[contains(text(),'Pipeline')]")) {
             @Override
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new PipelineConfigPage(new PipelinePage(driver));
+            }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new PipelinePage(driver);
             }
         },
 
@@ -35,12 +45,22 @@ public class TestUtils {
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(driver));
             }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new MultiConfigurationProjectPage(driver);
+            }
         },
 
         Folder(By.xpath("//li[@class='com_cloudbees_hudson_plugins_folder_Folder']")) {
             @Override
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new FolderConfigPage(new FolderPage(driver));
+            }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new FolderPage(driver);
             }
         },
 
@@ -49,12 +69,22 @@ public class TestUtils {
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new MultibranchPipelineConfigPage(new MultibranchPipelinePage(driver));
             }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new MultibranchPipelinePage(driver);
+            }
         },
 
         OrganizationFolder(By.xpath("//span[contains(text(),'Organization Folder')]")) {
             @Override
             public BaseConfigPage<?, ?> createConfigPage(WebDriver driver) {
                 return new OrganizationFolderConfigPage(new OrganizationFolderPage(driver));
+            }
+
+            @Override
+            public BaseJobPage<?> createJobPage(WebDriver driver) {
+                return new OrganizationFolderPage(driver);
             }
         };
 
@@ -69,6 +99,8 @@ public class TestUtils {
         }
 
         public abstract BaseConfigPage<?, ?> createConfigPage(WebDriver driver);
+
+        public abstract BaseJobPage<?> createJobPage(WebDriver driver);
     }
 
     public enum ViewType {
