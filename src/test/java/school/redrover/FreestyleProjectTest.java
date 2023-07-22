@@ -1129,6 +1129,26 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testBuildStepsExecuteWindowsBatchCommand(){
+        final String commandFieldText = "echo Hello";
+
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String consoleOutput = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickConfigure()
+                .openBuildStepOptionsDropdown()
+                .selectExecuteWindowsBatchCommandBuildStep()
+                .addExecuteWindowsBatchCommand(commandFieldText)
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .clickIconBuildOpenConsoleOutput(1)
+                .getConsoleOutputText();
+
+        Assert.assertTrue(consoleOutput.contains(commandFieldText), "Command wasn't run");
+    }
+
+    @Test
     public void testBuildStepsExecuteShell() {
         final String commandFieldText = "echo Hello";
 
