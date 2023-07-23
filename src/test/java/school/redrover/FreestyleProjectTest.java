@@ -1131,6 +1131,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testBuildStepsExecuteWindowsBatchCommand(){
         final String commandFieldText = "echo Hello";
+        final String cmdCommand = "$ cmd /c call";
 
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
@@ -1145,7 +1146,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .getConsoleOutputText();
 
-        Assert.assertTrue(consoleOutput.contains(commandFieldText), "Command wasn't run");
+        Assert.assertTrue(consoleOutput.contains(cmdCommand), "Command wasn't run");
     }
 
     @Test
