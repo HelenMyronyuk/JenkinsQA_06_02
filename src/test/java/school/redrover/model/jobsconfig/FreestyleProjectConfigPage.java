@@ -23,6 +23,12 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     @FindBy(xpath = "//a[text()='Invoke top-level Maven targets']")
     private WebElement invokeMavenTargetsButton;
 
+    @FindBy(xpath = "//a[text()='Execute Windows batch command']")
+    private WebElement executeWindowsBatchCommandButton;
+
+    @FindBy(xpath = "//textarea[@name='command']")
+    private WebElement windowsBatchCommandTextField;
+
     @FindBy(xpath = "//input[@name='blockBuildWhenUpstreamBuilding']")
     private WebElement trueBlockBuildWhenUpstreamProjectIsBuilding;
 
@@ -101,6 +107,22 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
 
         getWait5().until(ExpectedConditions.visibilityOf(invokeMavenTargetsButton)).click();
         goalsField.sendKeys(goals);
+
+        return this;
+    }
+
+    public FreestyleProjectConfigPage selectExecuteWindowsBatchCommandBuildStep() {
+        new Actions(getDriver())
+                .moveToElement(executeWindowsBatchCommandButton)
+                .perform();
+
+        getWait5().until(ExpectedConditions.visibilityOf(executeWindowsBatchCommandButton)).click();
+
+        return this;
+    }
+
+    public FreestyleProjectConfigPage addExecuteWindowsBatchCommand(String command) {
+        windowsBatchCommandTextField.sendKeys(command);
 
         return this;
     }
