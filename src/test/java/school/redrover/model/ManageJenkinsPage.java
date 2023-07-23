@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -66,6 +67,9 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
 
     @FindBy(xpath = "//dl/dt[text()='Credentials']")
     private WebElement credentialsLink;
+
+    @FindBy(linkText = "Delete Agent")
+    private WebElement deleteAgent;
 
     public ManageJenkinsPage(WebDriver driver) {
         super(driver);
@@ -182,5 +186,19 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
     public ConfigureSystemPage clickConfigureSystemLink() {
         getWait2().until(ExpectedConditions.elementToBeClickable(configureSystemLink)).click();
         return new ConfigureSystemPage(getDriver());
+    }
+
+    public ManageJenkinsPage clickNodeDropdownMenu(String nodeName) {
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//tr/th/a[@href='/manage/computer/" + nodeName + "/']/button")))
+                .sendKeys(Keys.RETURN);
+
+        return this;
+    }
+
+    public DeletePage<ManageNodesPage> selectDeleteAgentInDropdown() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
+
+        return new DeletePage<>(new ManageNodesPage(getDriver()));
     }
 }

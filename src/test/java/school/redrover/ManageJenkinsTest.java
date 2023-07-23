@@ -371,4 +371,27 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(configureSystemPage.isUseSSLCheckboxEmailNotificationsChecked());
         Assert.assertTrue(configureSystemPage.isSmtpPortFieldEmailNotificationsBackToOriginal());
     }
+
+    @Test
+    public void testDeleteNodeFromManageJenkinsPage() {
+        final String nodeName = "NodeName";
+
+        List<String> nodeNameList = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageNodes()
+                .clickNewNodeButton()
+                .inputNodeNameField(nodeName)
+                .clickPermanentAgentRadioButton()
+                .clickCreateButton()
+                .clickSaveButton()
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickNodeDropdownMenu(nodeName)
+                .selectDeleteAgentInDropdown()
+                .clickYesButton()
+                .getNodesList();
+
+        Assert.assertFalse(nodeNameList.contains(nodeName));
+    }
 }
