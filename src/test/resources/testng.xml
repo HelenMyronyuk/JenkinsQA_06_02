@@ -7,5 +7,7 @@
 </test>
 <listeners>
     <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    <listener class-name="school.redrover.runner.FilterForTests" />
+    <listener class-name="school.redrover.runner.order.OrderForTests" />
 </listeners>
 </suite>
