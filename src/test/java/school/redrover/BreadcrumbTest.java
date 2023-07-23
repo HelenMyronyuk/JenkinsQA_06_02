@@ -341,9 +341,8 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(pageText, pageHeaderText);
     }
 
-    @Ignore
     @Test
-    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbDelete() {
+    public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multi-configuration project";
         final String alertText = "Delete Multi-configuration project: are you sure?";
 
@@ -540,7 +539,6 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualText, text);
     }
 
-    @Ignore
     @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Folder";

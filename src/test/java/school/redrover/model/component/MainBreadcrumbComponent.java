@@ -62,7 +62,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
 
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
-            if (listItemName.contains("Delete"))
+            if (listItemName.contains("Delete Pipeline"))
                  {clickOkOnPopUp();}
         return pageToReturn;
     }
