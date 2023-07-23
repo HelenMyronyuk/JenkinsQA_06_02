@@ -77,4 +77,8 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
         return new NewJobPage(getDriver());
     }
+
+    public String getHeaderText(){
+        return pageHeader.getText();
+    }
 }
