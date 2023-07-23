@@ -26,13 +26,13 @@ public class CreateUserPage extends BaseMainHeaderPage<CreateUserPage> {
     @FindBy(name = "Submit")
     private WebElement createUserButton;
 
-    @FindBy(xpath = "//div[contains(text(),'Username')]/../following-sibling::div[@class='error jenkins-!-margin-bottom-2']")
+    @FindBy(xpath = "//div[contains(@class, 'error') and contains(text(),'User name')]")
     private WebElement userExistsError;
 
-    @FindBy(xpath = "//li[@aria-current]")
+    @FindBy(xpath = "//ol[@id='breadcrumbs']//li[@aria-current]")
     private WebElement actualIconName;
 
-    @FindBy(xpath = "//div[contains(text(),'E-mail address')]/../following-sibling::div[@class='error jenkins-!-margin-bottom-2']")
+    @FindBy(xpath = "//div[contains(@class, 'error') and contains(text(),'e-mail')]")
     private WebElement invalidEmailError;
 
     public CreateUserPage(WebDriver driver) {
