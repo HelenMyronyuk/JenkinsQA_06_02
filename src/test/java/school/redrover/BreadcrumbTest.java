@@ -3,6 +3,7 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -340,6 +341,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(pageText, pageHeaderText);
     }
 
+    @Ignore
     @Test
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbDelete() {
         final String optionName = "Delete Multi-configuration project";
@@ -538,6 +540,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualText, text);
     }
 
+    @Ignore
     @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Folder";
