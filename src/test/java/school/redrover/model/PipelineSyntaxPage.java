@@ -20,8 +20,12 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
     @FindBy(xpath = "//textarea")
     private WebElement textArea;
 
+    @FindBy(className = "jenkins-section__title")
+    private WebElement header;
+
     @FindBy(xpath = "//div[contains(text(), 'Overview')]")
     private WebElement overviewText;
+
 
     public PipelineSyntaxPage(WebDriver driver) {
         super(driver);
@@ -47,6 +51,11 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<StatusUserPage>  {
 
     public String getTextPipelineScript() {
        return textArea.getAttribute("value");
+    }
+
+   @Override
+    public String getPageHeaderText() {
+        return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
     }
 
     public String getOverviewText() {

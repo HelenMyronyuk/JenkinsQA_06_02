@@ -9,11 +9,13 @@ import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.jobs.FolderPage;
+import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobsconfig.FolderConfigPage;
 import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.jobsconfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -481,6 +483,42 @@ public class BreadcrumbTest extends BaseTest {
                 .isNoBuildsDisplayed();
 
         Assert.assertTrue(deleteSubmenuPage, "Error");
+    }
+
+    @DataProvider(name = "pipesubmenu")
+    public Object[][] pipeDropDownBreadcrumb (){
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ChangesPage<>(new PipelinePage(driver)), "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PipelineConfigPage(new PipelinePage(driver)), "Configure", "Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PipelinePage(driver), "Delete Pipeline", "Welcome to Jenkins!"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new PipelinePage(driver)), "Move", "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new FullStageViewPage(driver), "Full Stage View", PROJECT_NAME + " - Stage View"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new PipelinePage(driver)), "Rename", "Rename Pipeline " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PipelineSyntaxPage(driver), "Pipeline Syntax","Overview"}};
+    }
+
+    @Test(dataProvider = "pipesubmenu")
+    public void testNavigateToPipelinePagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new PipelinePage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
+
     }
 
     @Test
