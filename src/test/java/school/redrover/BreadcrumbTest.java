@@ -13,7 +13,9 @@ import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
+import school.redrover.model.jobs.*;
 import school.redrover.model.jobsconfig.FolderConfigPage;
+import school.redrover.model.jobsconfig.MultibranchPipelineConfigPage;
 import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsconfig.PipelineConfigPage;
@@ -393,9 +395,9 @@ public class BreadcrumbTest extends BaseTest {
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new OrganizationFolderConfigPage(new OrganizationFolderPage(driver)), "Configure", "Configuration"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ScanOrganizationFolderLog(driver), "Scan Organization Folder Log", "Scan Organization Folder Log"},
+                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Organization Folder Log", "Scan Organization Folder Log"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new OrganizationFolderEventsPage(driver), "Organization Folder Events", "Organization Folder Events"},
+                        driver -> new OtherFoldersEventsPage(driver), "Organization Folder Events", "Organization Folder Events"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new MovePage<>(new OrganizationFolderPage(driver)), "Move", "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -419,6 +421,44 @@ public class BreadcrumbTest extends BaseTest {
                 .getPageHeaderText();
 
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
+    @DataProvider(name = "optionsMultibranchPipeline")
+    public Object[][] multibranchPipelineDropDownBreadcrumb() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MultibranchPipelineConfigPage(new MultibranchPipelinePage(driver)), "Configure", "Configuration"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Multibranch Pipeline Log", "Scan Multibranch Pipeline Log"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new OtherFoldersEventsPage(driver), "Multibranch Pipeline Events", "Multibranch Pipeline Events"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PeoplePage(getDriver()), "People", "People - Welcome"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildHistoryPage(getDriver()), "Build History", "Build History of Welcome"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new MultibranchPipelinePage(driver)), "Move", "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new MultibranchPipelinePage(driver)), "Rename", "Rename Multibranch Pipeline " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Credentials", "Credentials"}
+        };
+    }
+
+    @Test(dataProvider = "optionsMultibranchPipeline")
+    public void testNavigateToMultibranchPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
     @Test

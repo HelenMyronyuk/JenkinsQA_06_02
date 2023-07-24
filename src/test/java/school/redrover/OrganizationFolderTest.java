@@ -364,7 +364,7 @@ public class OrganizationFolderTest extends BaseTest {
         String eventTitle = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickOrgFolderEvents()
-                .getTextFromTitle();
+                .getPageHeaderText();
 
         Assert.assertEquals(eventTitle, "Organization Folder Events");
     }

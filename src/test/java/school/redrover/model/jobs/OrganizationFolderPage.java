@@ -7,8 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.MultibranchProjectPage;
 import school.redrover.model.CredentialsPage;
-import school.redrover.model.OrganizationFolderEventsPage;
-import school.redrover.model.ScanOrganizationFolderLog;
+import school.redrover.model.OtherFoldersEventsPage;
+import school.redrover.model.ScanOtherFoldersLogPage;
 
 import school.redrover.model.base.BaseOtherFoldersPage;
 import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
@@ -61,14 +61,14 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new MultibranchProjectPage(getDriver());
     }
 
-    public ScanOrganizationFolderLog clickScanOrgFolderLog() {
+    public ScanOtherFoldersLogPage clickScanOrgFolderLog() {
         getWait5().until(ExpectedConditions.elementToBeClickable(scanButton)).click();
-        return new ScanOrganizationFolderLog(getDriver());
+        return new ScanOtherFoldersLogPage(getDriver());
     }
 
-    public OrganizationFolderEventsPage clickOrgFolderEvents() {
+    public OtherFoldersEventsPage clickOrgFolderEvents() {
         getWait5().until(ExpectedConditions.elementToBeClickable(eventButton)).click();
-        return new OrganizationFolderEventsPage(getDriver());
+        return new OtherFoldersEventsPage(getDriver());
     }
 
     public CredentialsPage clickCredentials() {
@@ -87,9 +87,9 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return this;
     }
 
-    public ScanOrganizationFolderLog clickRerunTheFolderComputation() {
+    public ScanOtherFoldersLogPage clickRerunTheFolderComputation() {
         getWait5().until(ExpectedConditions.elementToBeClickable(reRunFolderComputationLink)).click();
-        return new ScanOrganizationFolderLog(getDriver());
+        return new ScanOtherFoldersLogPage(getDriver());
     }
 
     public PipelineProjectPage clickPipelineOneTutorial() {

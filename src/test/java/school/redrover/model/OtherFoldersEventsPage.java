@@ -5,17 +5,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseMainHeaderPage;
 
-public class ScanOrganizationFolderLog extends BaseMainHeaderPage<ScanOrganizationFolderLog> {
+public class OtherFoldersEventsPage extends BaseMainHeaderPage<ScanOtherFoldersLogPage> {
 
-    @FindBy(xpath = "//span[@class='jenkins-icon-adjacent']")
+    @FindBy(xpath = "//h1")
     private WebElement title;
 
-    public ScanOrganizationFolderLog(WebDriver driver) {
+    public OtherFoldersEventsPage(WebDriver driver) {
         super(driver);
     }
 
-    public String getTextFromTitle(){
+    public String getTextFromTitle() {
         return title.getText();
     }
 }
-
