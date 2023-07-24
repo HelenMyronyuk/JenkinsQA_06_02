@@ -12,12 +12,6 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
     @FindBy(id = "name")
     private WebElement nameInput;
 
-    @FindBy(xpath = "//label[@for='hudson.model.ListView']")
-    private WebElement listViewRadio;
-
-    @FindBy(xpath = "//label[@for='hudson.model.MyView']")
-    private WebElement myViewRadio;
-
     @FindBy(name = "Submit")
     private WebElement createButton;
 
