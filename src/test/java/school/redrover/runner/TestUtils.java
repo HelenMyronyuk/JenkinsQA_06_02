@@ -346,4 +346,12 @@ public class TestUtils {
             createJob(baseTest, "Folder", JobType.Folder, goToMainPage);
         }
     }
+
+    public static Map<String, Integer> getJenkinsTableSizeMap() {
+        return Map.of(
+                "Small", 71,
+                "Medium", 86,
+                "Large", 102
+        );
+    }
 }

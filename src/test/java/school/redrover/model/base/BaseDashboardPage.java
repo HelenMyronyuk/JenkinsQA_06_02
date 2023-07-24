@@ -1,9 +1,6 @@
 package school.redrover.model.base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -110,6 +107,9 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     @FindBy(xpath = "//span[contains(text(),'Edit Build Information')]")
     private WebElement editBuildInformFromDropDown;
+
+    @FindBy(xpath = "//table[@id='projectstatus']")
+    private WebElement jenkinsTable;
 
     public BaseDashboardPage(WebDriver driver) {
         super(driver);
@@ -422,5 +422,14 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public String getPopUp(){
        return getDriver().switchTo().alert().getText();
+    }
+
+    public Self clickChangeJenkinsTableSize(String size) {
+        getDriver().findElement(By.xpath("//a[@tooltip='" + size + "']")).click();
+        return (Self) this;
+    }
+
+    public Integer getJenkinsTableHeight() {
+        return getWait2().until(ExpectedConditions.visibilityOf(jenkinsTable)).getSize().height;
     }
 }
