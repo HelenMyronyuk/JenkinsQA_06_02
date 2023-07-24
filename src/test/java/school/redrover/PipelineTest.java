@@ -444,6 +444,20 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testConsoleOutputFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        boolean consoleOutputTitle = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .openBuildsDropDownMenu()
+                .clickConsoleOutputType()
+                .isDisplayedBuildTitle();
+
+        Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
+    }
+
+    @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
