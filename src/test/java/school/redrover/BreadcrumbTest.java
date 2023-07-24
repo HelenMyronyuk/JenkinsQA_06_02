@@ -3,7 +3,6 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -31,6 +30,7 @@ import java.util.function.Function;
 public class BreadcrumbTest extends BaseTest {
 
     private static final String PROJECT_NAME = "JOB";
+
     @Test
     public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -79,7 +79,6 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test
     public void testReloadConfigurationFromDiskOfManageJenkinsSubmenu() {
-
         String popUp = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
@@ -119,7 +118,6 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(nameProjectOnMainPage, PROJECT_NAME);
     }
-
 
     @Test
     public void testNavigateToPluginsPageFromPeoplePage() {
@@ -487,8 +485,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test(dataProvider = "buildSubMenu")
-    public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb
-            (Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+    public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
         String projectName = "FreestyleProject";
         TestUtils.createJob(this, projectName, TestUtils.JobType.FreestyleProject, true);
         String actualResult = "";
@@ -626,6 +624,22 @@ public class BreadcrumbTest extends BaseTest {
                 .isDeleteButtonDisplayed();
 
         Assert.assertTrue(deleteButton, "Delete button is not displayed!");
+    }
+
+    @Test
+    public void testNavigateToDeleteFromMultibranchPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "Delete Multibranch Pipeline";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        DeletePage deletePage = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())));
+
+        Assert.assertEquals(deletePage.getTextFromConfirmDeletionForm(), "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
+        Assert.assertTrue(deletePage.isDeleteButtonDisplayed(), "Error: Delete button is not displayed!");
     }
 
     @DataProvider(name = "userDropDownMenu")

@@ -9,6 +9,9 @@ import school.redrover.model.base.BasePage;
 
 public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeaderPage<DeletePage<ParentPage>> {
 
+    @FindBy(xpath = "//form[@action='doDelete']")
+    private WebElement confirmDeletionForm;
+
     @FindBy(name = "Submit")
     private WebElement deleteYesButton;
 
@@ -27,6 +30,10 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
     public <JobPage extends BaseJobPage<?>> JobPage clickDelete(JobPage jobPage) {
         deleteYesButton.click();
         return jobPage;
+    }
+
+    public String getTextFromConfirmDeletionForm() {
+        return getWait5().until(ExpectedConditions.visibilityOf(confirmDeletionForm)).getText();
     }
 
     public boolean isDeleteButtonDisplayed() {
