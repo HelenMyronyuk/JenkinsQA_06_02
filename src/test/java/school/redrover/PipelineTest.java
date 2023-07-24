@@ -382,6 +382,22 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testAddDescriptionFromBuildPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String newBuildDescription = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickLastBuildLink()
+                .clickEditDescription()
+                .enterDescriptionText(DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(newBuildDescription, DESCRIPTION);
+    }
+
+    @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
