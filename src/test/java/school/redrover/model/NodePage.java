@@ -8,10 +8,10 @@ import school.redrover.model.base.BaseMainHeaderPage;
 
 public class NodePage extends BaseMainHeaderPage<NodePage> {
 
-    @FindBy(xpath = "//div[@id='description']/div[1]")
+    @FindBy(xpath = "//div[@id='description']/div[not(@class)]")
     private WebElement nodeDescription;
 
-    @FindBy(linkText = "Delete Agent")
+    @FindBy(xpath = "//a[contains(@href, '/delete')]")
     private WebElement deleteAgent;
 
     public NodePage(WebDriver driver) {
