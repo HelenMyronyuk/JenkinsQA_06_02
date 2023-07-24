@@ -305,6 +305,23 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Test
+    public void testAddBuildStepsOptionsCollectToList() {
+        List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
+                "Invoke Ant", "Invoke Gradle script", "Invoke top-level Maven targets", "Run with timeout",
+                "Set build status to \"pending\" on GitHub commit");
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        List<String> actualOptionsInBuildStepsSection = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .openBuildStepOptionsDropdown()
+                .getOptionsInBuildStepDropdown();
+
+        Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
+    }
+
+    @Test
     public void testProjectPageDelete() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
