@@ -165,8 +165,9 @@ public class FolderTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
     }
 
-    @Test(dependsOnMethods = "testCreateFromCreateAJob")
+    @Test
     public void testCreateWithExistingName() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         CreateItemErrorPage errorPage = TestUtils.createJobWithExistingName(this, NAME, TestUtils.JobType.Folder);
 
         Assert.assertEquals(errorPage.getHeaderText(), "Error");
@@ -234,8 +235,9 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
-    @Test(dependsOnMethods = "testCreateWithExistingName")
+    @Test
     public void testRenameFromDropDownMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         boolean newNameIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickRename(NAME, new FolderPage(getDriver()))
                 .enterNewName(RENAME)
@@ -247,22 +249,22 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(newNameIsDisplayed, "Error: was not show new name folder");
     }
 
-    @Test(dependsOnMethods = "testRenameFromDropDownMenu")
+    @Test
     public void testRenameFromSideMenu() {
-        FolderPage folderPage = new MainPage(getDriver())
-                .clickJobName(RENAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        FolderPage folderPage = new FolderPage(getDriver())
                 .clickRename()
-                .enterNewName(NAME)
+                .enterNewName(RENAME)
                 .clickRenameButton();
 
-        Assert.assertEquals(folderPage.getJobName(), NAME);
-        Assert.assertEquals(folderPage.getPageTitle(), "All [" + NAME + "] [Jenkins]");
+        Assert.assertEquals(folderPage.getJobName(), RENAME);
+        Assert.assertEquals(folderPage.getPageTitle(), "All [" + RENAME + "] [Jenkins]");
     }
 
-    @Test(dependsOnMethods = "testRenameFromSideMenu")
+    @Test
     public void testRenameToTheCurrentNameAndGetError() {
-        CreateItemErrorPage createItemErrorPage = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        CreateItemErrorPage createItemErrorPage = new FolderPage(getDriver())
                 .clickRename()
                 .enterNewName(NAME)
                 .clickRenameButtonAndGoError();
@@ -296,10 +298,9 @@ public class FolderTest extends BaseTest {
     public void testRenameWithDotName() {
         final String expectedErrorMessage = "“.” is not an allowed name";
 
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
 
-        String actualErrorMessage = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        String actualErrorMessage = new FolderPage(getDriver())
                 .clickRename()
                 .enterNewName(".")
                 .clickRenameButtonAndGoError()
@@ -308,10 +309,10 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
 
-    @Test(dependsOnMethods = "testRenameToTheCurrentNameAndGetError")
+    @Test
     public void testAccessConfigurationPageFromDashboard() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
-
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         FolderConfigPage folderConfigPage = new MainPage(getDriver())
                 .clickConfigureDropDown(NAME, new FolderConfigPage(new FolderPage(getDriver())));
 
@@ -319,22 +320,21 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderConfigPage.getTitle(), "Configuration");
     }
 
-    @Test(dependsOnMethods = "testAccessConfigurationPageFromDashboard")
+    @Test
     public void testAccessConfigurationPageFromSideMenu() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
-
-        FolderConfigPage folderConfigPage = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        FolderConfigPage folderConfigPage = new FolderPage(getDriver())
                 .clickConfigure();
 
         Assert.assertEquals(folderConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
         Assert.assertEquals(folderConfigPage.getTitle(), "Configuration");
     }
 
-    @Test(dependsOnMethods = "testAccessConfigurationPageFromSideMenu")
+    @Test
     public void testAddDisplayName() {
-        String jobName = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        String jobName = new FolderPage(getDriver())
                 .clickConfigure()
                 .enterDisplayName(DISPLAY_NAME)
                 .clickSaveButton()
@@ -343,10 +343,13 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(jobName, DISPLAY_NAME);
     }
 
-    @Test(dependsOnMethods = "testAddDisplayName")
+    @Test
     public void testDeleteDisplayName() {
-        String folderName = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        String folderName = new FolderPage(getDriver())
+                .clickConfigure()
+                .enterDisplayName(DISPLAY_NAME)
+                .clickSaveButton()
                 .clickConfigure()
                 .clearDisplayName()
                 .clickSaveButton()
@@ -355,10 +358,10 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderName, NAME);
     }
 
-    @Test(dependsOnMethods = "testDeleteDisplayName")
+    @Test
     public void testAddDescriptionFromConfigurationPage(){
-        String descriptionText = new MainPage(getDriver())
-                .clickJobName(NAME, new FolderPage(getDriver()))
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+        String descriptionText = new FolderPage(getDriver())
                 .clickConfigure()
                 .addDescription(DESCRIPTION)
                 .clickSaveButton()
@@ -367,21 +370,25 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(descriptionText,DESCRIPTION);
     }
 
-    @Test(dependsOnMethods = "testAddDescriptionFromConfigurationPage")
+    @Test
     public void testPreviewDescriptionFromConfigurationPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
+                .addDescription(DESCRIPTION)
                 .clickPreview()
                 .getPreviewText();
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
-    @Test(dependsOnMethods = "testPreviewDescriptionFromConfigurationPage")
+    @Test
     public void testDeleteDescriptionFromConfigPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String actualDescription = new MainPage(getDriver())
                 .clickConfigureDropDown(NAME, new FolderConfigPage(new FolderPage(getDriver())))
+                .addDescription(DESCRIPTION)
                 .clearDescriptionArea()
                 .clickSaveButton()
                 .getFolderDescription();
@@ -389,8 +396,9 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(actualDescription.isEmpty());
     }
 
-    @Test(dependsOnMethods = "testDeleteDescriptionFromConfigPage")
+    @Test
     public void testAddHealthMetricsFromSideMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         boolean isHealthMetricsAdded =  new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
@@ -403,15 +411,12 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
     }
 
-    @Test(dependsOnMethods = "testAddHealthMetricsFromSideMenu")
+    @Test
     public void testHealthMetricWithRecursive() {
         String pipelineName = "BadPipe";
-
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         new MainPage(getDriver()).
                 clickJobName(NAME, new FolderPage(getDriver()));
-
-        TestUtils.createJob(this, RENAME, TestUtils.JobType.Folder, false);
-
         String tooltipDescription = new FolderPage(getDriver())
                 .clickConfigure()
                 .addHealthMetrics()
@@ -429,13 +434,17 @@ public class FolderTest extends BaseTest {
                 .getTooltipDescription();
 
         Assert.assertEquals(tooltipDescription,
-                "Worst health: " + NAME + " » " + RENAME + " » " + pipelineName + ": Build stability: All recent builds failed.");
+                "Worst health: " + NAME + " » " +  pipelineName + ": Build stability: All recent builds failed.");
     }
 
-    @Test(dependsOnMethods = "testHealthMetricWithRecursive")
+    @Test
     public void testDeleteHealthMetrics() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         boolean healthMetric = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
+                .clickConfigure()
+                .addHealthMetrics()
+                .clickSaveButton()
                 .clickConfigure()
                 .clickHealthMetrics()
                 .removeHealthMetrics()
@@ -468,8 +477,9 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isVersionValidated, "Cannot validate default version");
     }
 
-    @Test(dependsOnMethods = "testDeleteHealthMetrics")
+    @Test
     public void testAddDescriptionFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         FolderPage folderPage = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickAddDescription()
@@ -480,10 +490,14 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderPage.getDescriptionButton(), "Edit description");
     }
 
-    @Test(dependsOnMethods = "testAddDescriptionFromProjectPage")
+    @Test
     public void testPreviewDescriptionFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
+                .clickAddDescription()
+                .enterDescription(DESCRIPTION)
+                .clickSaveButton()
                 .clickEditDescription()
                 .clickPreview()
                 .getPreviewText();
@@ -491,10 +505,14 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
-    @Test(dependsOnMethods = "testPreviewDescriptionFromProjectPage")
+    @Test
     public void testEditDescription() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String newDescription = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
+                .clickAddDescription()
+                .enterDescription(DESCRIPTION)
+                .clickSaveButton()
                 .clickEditDescription()
                 .clearDescriptionField()
                 .enterDescription(DESCRIPTION_2)
@@ -571,8 +589,9 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }
 
-    @Test(dependsOnMethods = "testEditDescription")
-    public void testCancelDeletingFromFromDropDownMenu() {
+    @Test
+    public void testCancelDeletingFromDropDownMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         boolean folderIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDeleteFolders(NAME)
                 .getBreadcrumb()
@@ -582,8 +601,9 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
     }
 
-    @Test(dependsOnMethods = "testCancelDeletingFromFromDropDownMenu")
+    @Test
     public void testCancelDeletingFromSideMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         boolean folderIsDisplayed = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickDeleteJobThatIsMainPage()
@@ -594,8 +614,9 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
     }
 
-    @Test(dependsOnMethods = "testCancelDeletingFromSideMenu")
+    @Test
     public void testDeleteItemFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         MainPage welcomeIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDeleteFolders(NAME)
                 .clickYesButton();
