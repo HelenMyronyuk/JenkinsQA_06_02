@@ -10,9 +10,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsT
 
 public class JenkinsVersionPage extends BaseModel {
 
-    @FindBy(xpath = "//a[text()='Jenkins 2.387.2']")
-    private WebElement jenkinsVersionLink;
-
     @FindBy(xpath = "//h1")
     private WebElement jenkinsPageTitle;
 
