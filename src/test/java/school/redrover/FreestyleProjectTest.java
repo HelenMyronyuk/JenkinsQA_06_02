@@ -1074,11 +1074,11 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testAddRepositoryFromSourceCodeManagement() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
         String repositoryUrl = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(FREESTYLE_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickConfigure()
                 .clickSourceCodeManagementLink()
                 .clickRadioButtonGit()
                 .inputRepositoryUrl(GITHUB_URL)
