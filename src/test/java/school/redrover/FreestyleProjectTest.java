@@ -700,16 +700,22 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testNavigateToChangePage() {
-        TestUtils.createJob(this, "Engineer", TestUtils.JobType.FreestyleProject, true);
+    public void testKeepThisBuildForever() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+        final List<String> buildKeepForeverMenuOptions = new ArrayList<>(List.of(
+                "Changes", "Console Output", "Edit Build Information"));
 
-        String text = new MainPage(getDriver())
-                .clickJobName("Engineer", new FreestyleProjectPage(getDriver()))
-                .clickChangeOnLeftSideMenu()
-                .getTextOfPage();
+        FreestyleProjectPage freestyleProjectPage = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickBuildDateFromBuildRow()
+                .clickKeepBuildForever()
+                .getBreadcrumb()
+                .clickJobNameFromBreadcrumb(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .openBuildsDropDownMenu();
 
-        Assert.assertTrue(text.contains("No builds."),
-                "In the Freestyle project Changes chapter, not displayed status of the latest build.");
+        Assert.assertEquals(freestyleProjectPage.getTextBuildDropDownMenuOptions(), buildKeepForeverMenuOptions);
+        Assert.assertTrue(freestyleProjectPage.isIconLockIsDispalyed(), "The lock icon is not displayed");
     }
 
     @Test
@@ -797,6 +803,19 @@ public class FreestyleProjectTest extends BaseTest {
                 .getTextDescription();
 
         Assert.assertEquals(editDescription, NEW_DESCRIPTION_TEXT);
+    }
+
+    @Test
+    public void testNavigateToChangePage() {
+        TestUtils.createJob(this, "Engineer", TestUtils.JobType.FreestyleProject, true);
+
+        String text = new MainPage(getDriver())
+                .clickJobName("Engineer", new FreestyleProjectPage(getDriver()))
+                .clickChangeOnLeftSideMenu()
+                .getTextOfPage();
+
+        Assert.assertTrue(text.contains("No builds."),
+                "In the Freestyle project Changes chapter, not displayed status of the latest build.");
     }
 
     @Test
@@ -1422,24 +1441,5 @@ public class FreestyleProjectTest extends BaseTest {
                 .isWelcomeDisplayed();
 
         Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
-    }
-
-    @Test
-    public void testBuildKeepForever() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-        final List<String> buildKeepForeverMenuOptions = new ArrayList<>(List.of(
-        "Changes", "Console Output", "Edit Build Information"));
-
-        FreestyleProjectPage freestyleProjectPage = new MainPage(getDriver())
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .clickBuildDateFromBuildRow()
-                .clickKeepBuildForever()
-                .getBreadcrumb()
-                .clickJobNameFromBreadcrumb(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .openBuildsDropDownMenu();
-
-        Assert.assertEquals(freestyleProjectPage.getTextBuildDropDownMenuOptions(), buildKeepForeverMenuOptions);
-        Assert.assertTrue(freestyleProjectPage.isIconLockIsDispalyed(), "The lock icon is not displayed");
     }
 }
