@@ -8,26 +8,19 @@ import school.redrover.model.base.BaseMainHeaderPage;
 
 public class ErrorNodePage extends BaseMainHeaderPage<ErrorNodePage> {
 
-    @FindBy(xpath = "//div//p")
-    private WebElement errorMessage;
-
-    @FindBy(xpath = "//p")
-    private WebElement textError;
-
     @FindBy(xpath = "//h1")
     private WebElement error;
+
+    @FindBy(xpath = "//p")
+    private WebElement errorMessage;
 
     public ErrorNodePage(WebDriver driver){
         super(driver);
     }
 
-    public String getTextError() {
+    public String getErrorMessage() {
         getWait2().until(ExpectedConditions
                 .textToBePresentInElement(error, "Error"));
-        return textError.getText();
-    }
-
-    public String getErrorMessage() {
         return errorMessage.getText();
     }
 }

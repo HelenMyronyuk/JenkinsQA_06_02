@@ -79,7 +79,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickCreateButton()
                 .clearNameField()
                 .clickSaveButtonWhenNameFieldEmpty()
-                .getTextError();
+                .getErrorMessage();
 
         Assert.assertEquals(textError, "Query parameter 'name' is required");
     }
