@@ -580,6 +580,23 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
+    public void testNavigateToPipelineSyntaxFromMultibranchPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "Pipeline Syntax";
+        final String text = "Overview";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String actualText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new PipelineSyntaxPage(getDriver()))
+                .getOverviewText();
+
+        Assert.assertEquals(actualText, text);
+    }
+
+    @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Folder";
 
