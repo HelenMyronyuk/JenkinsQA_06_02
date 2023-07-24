@@ -553,7 +553,22 @@ public class BreadcrumbTest extends BaseTest {
                 .isDeleteButtonDisplayed();
 
         Assert.assertTrue(deleteButton, "Delete button is not displayed!");
+    }
 
+    @Test
+    public void testDeleteNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
+        final String optionName = "Delete Organization Folder";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        boolean deleteButton = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new OrganizationFolderPage(getDriver())))
+                .isDeleteButtonDisplayed();
+
+        Assert.assertTrue(deleteButton, "Delete button is not displayed!");
     }
 
     @DataProvider(name = "userDropDownMenu")
