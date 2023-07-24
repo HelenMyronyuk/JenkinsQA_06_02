@@ -42,6 +42,9 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(xpath = "//li[@href='/view/all/']")
     private WebElement allButtonDropDownMenu;
 
+    @FindBy(xpath = "//a[contains(@href, '/user/')]")
+    private WebElement userBreadcrumb;
+
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
@@ -123,5 +126,20 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='" + jobName + "']"))).click();
 
         return jobPage;
+    }
+
+    public MainBreadcrumbComponent<Page> getUserBreadcrumbDropdownMenu() {
+        getWait2().until(ExpectedConditions.visibilityOf(jobBreadcrumbChevron)).sendKeys(Keys.RETURN);
+
+        return this;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickPageFromUserBreadcrumbDropdownMenu(
+            String listItemName, ReturnedPage pageToReturn) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//div[@id='breadcrumb-menu']//a[@href='/user/admin/" + listItemName + "']")))
+                .click();
+
+        return pageToReturn;
     }
 }

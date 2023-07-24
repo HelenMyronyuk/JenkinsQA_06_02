@@ -555,4 +555,35 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(deleteButton, "Delete button is not displayed!");
 
     }
+
+    @DataProvider(name = "userDropDownMenu")
+    public Object[][] userDropDownBreadcrumbToMyViews2 (){
+        return new Object[][]{
+                {"builds", (Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildPage(driver), "Dashboard > admin > Builds"},
+                {"configure", (Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ConfigureSystemPage(driver), "Dashboard > admin > Configure"},
+                {"my-views", (Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MyViewsPage(driver), "Dashboard > admin > My Views > All"},
+                {"credentials", (Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Dashboard > admin > Credentials"},
+        };
+    }
+    @Test(dataProvider = "userDropDownMenu")
+    public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
+            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText){
+
+        String actualFullBreadcrumbText =
+                new MainPage(getDriver())
+                        .getHeader()
+                        .clickAdminDropdownMenu()
+                        .clickMyViewsTabFromAdminDropdownMenu()
+                        .getBreadcrumb()
+                        .getUserBreadcrumbDropdownMenu()
+                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
+                        .getBreadcrumb()
+                        .getFullBreadcrumbText();
+
+        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+    }
 }

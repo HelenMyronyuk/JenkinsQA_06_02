@@ -355,4 +355,10 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
         return new MainPage(getDriver());
     }
+
+    public MyViewsPage clickMyViewsTabFromAdminDropdownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(myViewsTabFromAdminDropdownMenu)).click();
+
+        return new MyViewsPage(getDriver());
+    }
 }
