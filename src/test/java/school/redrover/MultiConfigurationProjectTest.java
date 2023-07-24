@@ -672,6 +672,19 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Test
+    public void testNavigateToChangesPageFromSideMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String text =
+                new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickChangeOnLeftSideMenu()
+                .getTextOfPage();
+
+        Assert.assertTrue(text.contains("No builds."),
+                "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
+    }
+    @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
