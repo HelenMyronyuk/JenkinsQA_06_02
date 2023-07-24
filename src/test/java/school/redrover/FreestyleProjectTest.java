@@ -800,6 +800,19 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testNavigateToWorkspaceFromProjectPage(){
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String workspacePage = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickWorkspaceFromSideMenu()
+                .getTextFromWorkspacePage();
+
+        Assert.assertEquals(workspacePage, "Workspace of FREESTYLE_NAME on Built-In Node");
+    }
+
+    @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         final String descriptionText = "In publishing and graphic design, Lorem ipsum is a placeholder " +
                 "text commonly used to demonstrate the visual form of a document or a typeface without relying .";
