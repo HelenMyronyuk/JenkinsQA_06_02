@@ -33,6 +33,9 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText();
     }
 
+    public boolean isUserPageAvailable() {
+        return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText().contains("Jenkins User ID:");
+    }
 }
 
 

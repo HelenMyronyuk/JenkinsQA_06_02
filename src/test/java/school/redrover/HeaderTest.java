@@ -190,13 +190,13 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testAdminPageIsAvailable() {
-        String adminPageSign = new MainPage(getDriver())
+    public void testAdminOrUserPageIsAvailable() {
+        boolean adminOrUserPage = new MainPage(getDriver())
                 .getHeader()
                 .clickOnAdminButton()
-                .getActualNameUser();
+                .isUserPageAvailable();
 
-        assertEquals(adminPageSign, "Jenkins User ID: admin");
+        assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
     @Test

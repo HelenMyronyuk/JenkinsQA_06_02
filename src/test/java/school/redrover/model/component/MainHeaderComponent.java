@@ -94,8 +94,8 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(xpath = "//a[@href='/logout']")
     private WebElement logOutButton;
 
-    @FindBy(xpath = "//a[@href='/user/admin']")
-    private WebElement adminButton;
+    @FindBy(xpath = "//div[@class='login page-header__hyperlinks']//a[contains(@href,'/user/')]")
+    private WebElement adminOrUserButton;
 
     @FindBy(xpath = "//a[contains(@href,'api')]")
     private WebElement restApi;
@@ -156,7 +156,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public MainHeaderComponent<Page> hoverOverAdminButton() {
-        hoverOver(adminButton);
+        hoverOver(adminOrUserButton);
 
         return this;
     }
@@ -172,7 +172,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public String getAdminButtonBackgroundColor() {
-        return getIconBackgroundColor(adminButton);
+        return getIconBackgroundColor(adminOrUserButton);
     }
 
     public String getLogOutButtonBackgroundColor() {
@@ -180,7 +180,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public String getAdminTextDecorationValue() {
-        WebElement adminLink = getWait5().until(ExpectedConditions.visibilityOf(adminButton));
+        WebElement adminLink = getWait5().until(ExpectedConditions.visibilityOf(adminOrUserButton));
 
         return adminLink.getCssValue("text-decoration");
     }
@@ -336,7 +336,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public UserPage clickOnAdminButton() {
-        getWait2().until(ExpectedConditions.visibilityOf(adminButton)).click();
+        getWait2().until(ExpectedConditions.visibilityOf(adminOrUserButton)).click();
 
         return new UserPage(getDriver());
     }
