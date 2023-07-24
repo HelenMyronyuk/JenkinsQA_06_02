@@ -394,4 +394,26 @@ public class ManageJenkinsTest extends BaseTest {
 
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
+
+    @Test
+    public void testDeleteNodeFromMainPage() {
+        final String nodeName = "NameDeleteSideMenu";
+
+        List<String> nodeNameList = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageNodes()
+                .clickNewNodeButton()
+                .inputNodeNameField(nodeName)
+                .clickPermanentAgentRadioButton()
+                .clickCreateButton()
+                .clickSaveButton()
+                .getHeader()
+                .clickLogo()
+                .clickNodeDropdownMenu(nodeName)
+                .selectDeleteAgentInDropdown()
+                .clickYesButton()
+                .getNodesList();
+
+        Assert.assertFalse(nodeNameList.contains(nodeName));
+    }
 }
