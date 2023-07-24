@@ -102,7 +102,7 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
         return new MovePage<>((Self) this);
     }
 
-    public Self changeDescriptionWithoutSaving(String newDescription) {
+    public Self clickAddEditDescription(String newDescription) {
         addEditDescriptionButton.click();
         getWait2().until(ExpectedConditions.elementToBeClickable(descriptionTextarea));
         descriptionTextarea.clear();
