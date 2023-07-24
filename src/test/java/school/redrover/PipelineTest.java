@@ -661,6 +661,20 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testPreviewDescriptionFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String previewDescription = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickAddDescription()
+                .enterDescription(DESCRIPTION)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewDescription, DESCRIPTION);
+    }
+
+    @Test
     public void testPipelineBuildNow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 

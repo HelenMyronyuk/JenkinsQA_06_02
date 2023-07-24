@@ -132,7 +132,7 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
     }
 
     public String getPreviewText() {
-        return previewTextarea.getText();
+        return getWait5().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
     }
 
     public String getDescriptionButton() {
