@@ -662,7 +662,8 @@ public class FreestyleProjectTest extends BaseTest {
         boolean noBuildsMessage = new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickDeleteBuildFromDropDownMenu()
+                .clickLastBuildLink()
+                .clickDeleteBuild(new FreestyleProjectPage(getDriver()))
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 

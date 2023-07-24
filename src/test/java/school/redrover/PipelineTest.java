@@ -597,6 +597,21 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testDeleteBuildNowFromSideMenu() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        boolean noBuildsMessage = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickLastBuildLink()
+                .clickDeleteBuild(new PipelinePage(getDriver()))
+                .clickYesButton()
+                .isNoBuildsDisplayed();
+
+        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+    }
+
+    @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
