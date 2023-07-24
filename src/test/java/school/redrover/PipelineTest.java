@@ -417,6 +417,19 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testBuildChangesFromLastBuild() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String text = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickChangesViaLastBuildDropDownMenu()
+                .getPageHeaderText();
+
+        Assert.assertEquals(text, "Changes");
+    }
+
+    @Test
     public void testBuildChangesFromProjectPage() {
         final String title = "Changes";
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -428,19 +441,6 @@ public class PipelineTest extends BaseTest {
                 .getPageHeaderText();
 
         Assert.assertEquals(changesTitle, title);
-    }
-
-    @Test
-    public void testBuildChangesFromLastBuild() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String text = new MainPage(getDriver())
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .clickChangesViaLastBuildDropDownMenu()
-                .getPageHeaderText();
-
-        Assert.assertEquals(text, "Changes");
     }
 
     @Test
