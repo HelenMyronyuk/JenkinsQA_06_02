@@ -6,12 +6,14 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsconfig.MultiConfigurationProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
+import java.net.FileNameMap;
 import java.util.List;
 
 public class MultiConfigurationProjectTest extends BaseTest {
@@ -682,6 +684,19 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         Assert.assertTrue(text.contains("No builds."),
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
+    }
+
+    @Test
+    public void testNavigateToWorkspaceFromProjectPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String workspacePage = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickWorkspaceFromSideMenu()
+                .getTextFromWorkspacePage();
+
+        Assert.assertEquals(workspacePage, "Workspace of MULTI_CONFIGURATION_NAME on Built-In Node");
     }
 
     @Test
