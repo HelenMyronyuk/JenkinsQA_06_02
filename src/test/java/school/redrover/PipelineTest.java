@@ -1124,4 +1124,20 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
+
+    @Test
+    public void testPreviewDescriptionFromBuildPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String previewText = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .clickEditDescription()
+                .enterDescriptionText(DESCRIPTION)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewText, DESCRIPTION);
+    }
 }
