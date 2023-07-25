@@ -102,7 +102,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .inputToSearchField("c")
                 .clickConfigureSystemFromSearchDropdown()
-                .getTitle();
+                .getHeading();
 
         Assert.assertEquals(getDriver().getTitle(), "Configure System [Jenkins]");
         Assert.assertEquals(configureSystemPageTitle, "Configure System");

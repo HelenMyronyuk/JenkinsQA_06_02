@@ -13,13 +13,10 @@ import java.util.List;
 
 public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
 
-    @FindBy(xpath = "//h1")
-    private WebElement title;
-
-    @FindBy(xpath = "//div[@class='setting-main help-sibling']//input[@name='_.smtpHost']")
+    @FindBy(xpath = "//div[text()='SMTP server']/following-sibling::div/input")
     private WebElement smtpServerFieldExtendedEmailNotifications;
 
-    @FindBy(xpath = "//div[@class='setting-main help-sibling']//input[@name='_.smtpPort']")
+    @FindBy(xpath = "//div[text()='SMTP Port']/following-sibling::div/input")
     private WebElement smtpPortFieldExtendedEmailNotifications;
 
     @FindBy(xpath = "//div[@class='setting-main help-sibling']//button[contains(@class, 'advancedButton')]")
@@ -40,10 +37,10 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     @FindBy(css = "#credentialsDialog_c button#credentials-add-submit-button")
     private WebElement addButtonAddCredentialsPopUpWindow;
 
-    @FindBy(xpath = "//div[@class='setting-main help-sibling']//span[@class='jenkins-checkbox']//span[text()='Use SSL']")
+    @FindBy(xpath = "//div[@class='setting-main help-sibling']//span[text()='Use SSL']")
     private WebElement useSSLCheckboxExtendedEmailNotifications;
 
-    @FindBy(xpath = "//div[@class='setting-main help-sibling']//span[@class='jenkins-checkbox']/input[@name='_.useSsl']")
+    @FindBy(xpath = "//div[@class='setting-main help-sibling']//input[@name='_.useSsl']")
     private WebElement useSSLCheckboxExtendedEmailVerification;
 
     @FindBy(xpath = "//button[contains(text(), 'Default Triggers')]")
@@ -106,7 +103,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     @FindBy(xpath = "//div[@class='jenkins-validate-button__container__status']//div[@class='ok']")
     private WebElement testConfigurationMessage;
 
-    @FindBy(xpath = "//div[@class='jenkins-form-label help-sibling'][text()='Content Token Reference']")
+    @FindBy(xpath = "//div[text()='Content Token Reference']")
     private WebElement contentTokenReference;
 
     @FindBy(xpath = "//button[@name='Submit']")
@@ -123,10 +120,6 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     @Override
     public String callByMenuItemName() {
         return "Configure System";
-    }
-
-    public String getTitle() {
-        return title.getText();
     }
 
     public ConfigureSystemPage inputSmtpServerFieldExtendedEmailNotifications(String smtpServer) {
