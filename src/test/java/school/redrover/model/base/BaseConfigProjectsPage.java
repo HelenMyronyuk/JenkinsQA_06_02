@@ -59,7 +59,10 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     private WebElement projectIsParametrized;
 
     @FindBy(xpath = "//button[@class='hetero-list-add']")
-    private WebElement addParameter;
+    private WebElement addParameterDropdown;
+
+    @FindBy(xpath = "//ul[@class='first-of-type']/li")
+    private List<WebElement> optionsOfAddParameterDropdown;
 
     @FindBy(xpath = "//input[@name='parameter.name']")
     private WebElement inputParameterName;
@@ -199,12 +202,16 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     }
 
     public Self openAddParameterDropDown() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(addParameter));
+        getWait5().until(ExpectedConditions.elementToBeClickable(addParameterDropdown));
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         getWait5().until(ExpectedConditions.elementToBeClickable(projectIsParametrized));
         js.executeScript("arguments[0].scrollIntoView();", projectIsParametrized);
-        addParameter.click();
+        addParameterDropdown.click();
         return (Self) this;
+    }
+
+    public List<String> getAllOptionsOfAddParameterDropdown() {
+        return TestUtils.getTexts(optionsOfAddParameterDropdown);
     }
 
     public Self inputParameterName(String name) {

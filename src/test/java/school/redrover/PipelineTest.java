@@ -1014,6 +1014,23 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testThisProjectIsParameterizedCheckAllParameters() {
+        List<String> expectedOptionsOfAddParameterDropdown = List.of(
+                "Boolean Parameter", "Choice Parameter", "Credentials Parameter", "File Parameter",
+                "Multi-line String Parameter", "Password Parameter", "Run Parameter", "String Parameter"
+        );
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        List<String> actualOptionsOfAddParameterDropdown = new MainPage(getDriver())
+                .clickConfigureDropDown(NAME, new PipelineConfigPage(new PipelinePage(getDriver())))
+                .checkProjectIsParametrized()
+                .openAddParameterDropDown()
+                .getAllOptionsOfAddParameterDropdown();
+
+        Assert.assertEquals(actualOptionsOfAddParameterDropdown, expectedOptionsOfAddParameterDropdown);
+    }
+
+    @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
 
