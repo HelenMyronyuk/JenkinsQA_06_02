@@ -89,7 +89,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testCreateNewViewSecond() {
+    public void testCreateMyViewType() {
         createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
 
         String actualViewName = new MainPage(getDriver())
