@@ -147,7 +147,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteView() {
+    public void testDeleteListViewFromViewPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         boolean isDeletedViewPresent = new MainPage(getDriver())
