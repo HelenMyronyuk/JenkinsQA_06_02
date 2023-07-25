@@ -902,19 +902,19 @@ public class FreestyleProjectTest extends BaseTest {
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        FreestyleProjectConfigPage configPage = new MainPage(getDriver())
+        FreestyleProjectPage freestyleProjectPage = new MainPage(getDriver())
                 .clickConfigureDropDown(FREESTYLE_NAME, new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSwitchEnableOrDisable();
+                .clickSwitchEnableOrDisable()
+                .clickSaveButton();
 
-        Boolean availableMode = configPage
-                .isEnabledDisplayed();
+        String availableMode = freestyleProjectPage
+                .getEnableButtonText();
 
-        MainPage mainPage = configPage
-                .clickSaveButton()
+        MainPage mainPage = freestyleProjectPage
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(availableMode, "'Enabled' is not displayed");
+        Assert.assertEquals(availableMode, "Enable");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(FREESTYLE_NAME), "Disabled");
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "Error: disabled project cannot be built");
     }
