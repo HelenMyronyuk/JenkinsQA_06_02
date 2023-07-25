@@ -55,6 +55,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//a[@class='model-link inside build-link display-name']//button[@class='jenkins-menu-dropdown-chevron']")
     private WebElement buildsDropDownMenu;
 
+    @FindBy(xpath = "//span[text() = 'Workspaces']")
+    private WebElement workspacesFromBuildDropDownMenu;
+
     @FindBy(xpath = "//span[contains(text(),'Delete build ‘#1’')]")
     private WebElement deleteBuildButtonDropDownMenu;
 
@@ -287,5 +290,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public boolean isIconLockIsDispalyed() {
 
         return iconLock.isDisplayed();
+    }
+
+    public WorkspacesBuildPage clickWorkspaceButtonFromBuildDropDown() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(workspacesFromBuildDropDownMenu)).click();
+
+        return new WorkspacesBuildPage(getDriver());
     }
 }

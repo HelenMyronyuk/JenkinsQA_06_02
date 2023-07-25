@@ -6,17 +6,16 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 
-
-public class WorkspacePage extends BaseMainHeaderPage<WorkspacePage> {
+public class WorkspacesBuildPage extends BaseMainHeaderPage<WorkspacesBuildPage> {
 
     @FindBy(xpath = "//h1")
     private WebElement headerText;
 
-    public WorkspacePage(WebDriver driver) {
+    public WorkspacesBuildPage(WebDriver driver) {
         super(driver);
     }
 
-    public String getTextFromWorkspacePage() {
+    public String getHeaderTextFromWorkspacesBuildPage() {
         return getWait5().until(ExpectedConditions.visibilityOf(headerText)).getText();
     }
 }
