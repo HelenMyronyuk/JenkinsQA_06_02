@@ -671,6 +671,20 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testReplayBuildFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String lastBuildNumber = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .openPermalinksLastBuildsDropDownMenu()
+                .clickReplayFromDropDownMenu()
+                .clickRunButton()
+                .getLastBuildNumber();
+
+        Assert.assertEquals(lastBuildNumber, "#2");
+    }
+    @Test
     public void testWorkspacesBuildFromProjectPage() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
 

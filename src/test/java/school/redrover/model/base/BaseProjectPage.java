@@ -100,6 +100,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//span[contains(text(), 'Changes')]")
     private WebElement changesBuildButton;
 
+    @FindBy(xpath = "//span[contains(text(), 'Replay')]")
+    private WebElement replayButton;
+
+
     public BaseProjectPage(WebDriver driver) {
         super(driver);
     }
@@ -290,6 +294,12 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public boolean isIconLockIsDispalyed() {
 
         return iconLock.isDisplayed();
+    }
+
+    public ReplayPage<Self> clickReplayFromDropDownMenu() {
+        replayButton.click();
+
+        return new ReplayPage<>((Self)this);
     }
 
     public WorkspacesBuildPage clickWorkspaceButtonFromBuildDropDown() {
