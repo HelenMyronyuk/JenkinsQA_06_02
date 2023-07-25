@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
-import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsconfig.MultiConfigurationProjectConfigPage;
@@ -683,6 +682,18 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         Assert.assertTrue(text.contains("No builds."),
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
+    }
+
+    @Test
+    public void testAccessConfigurationPageFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String getTitleFromPage = new MainPage(getDriver())
+                .clickConfigureDropDown(
+                        NAME, new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
+                .getTitle();
+
+        Assert.assertEquals(getTitleFromPage, "Configure");
     }
     @Test
     public void testDisableFromConfigurationPage() {
