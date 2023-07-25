@@ -69,6 +69,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     @FindBy(xpath = "//body/div[@id='breadcrumbBar']/ol[@id='breadcrumbs']/li[5]/a[1]")
     private WebElement buildNumber;
 
+    @FindBy(xpath = "//span[contains(text(), 'Replay')]/..")
+    private WebElement replayButton;
+
     public BuildPage(WebDriver driver) {
         super(driver);
     }
@@ -187,4 +190,10 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
                 .perform();
         return new DeletePage<>(jobTypePage);
     }
+
+    public <JobTypePage extends BasePage<?, ?>> ReplayPage<JobTypePage> clickReplay(JobTypePage jobTypePage){
+        replayButton.click();
+        return new ReplayPage<>(jobTypePage);
+    }
+
 }
