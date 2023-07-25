@@ -191,7 +191,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Test
-    public void testCreateWithSpaceInsteadName() {
+    public void testCreateWithSpaceInsteadOfName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         CreateItemErrorPage errorPage =

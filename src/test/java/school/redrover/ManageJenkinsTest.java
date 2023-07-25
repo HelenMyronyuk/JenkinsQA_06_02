@@ -235,7 +235,7 @@ public class ManageJenkinsTest extends BaseTest {
     }
 
     @Test
-    public void testFourTasksOnLeftsidePanel() {
+    public void testFourTasksOnLeftSidePanel() {
         final List<String> expectedListOfTasks = List.of(new String[]{"Updates", "Available plugins", "Installed plugins", "Advanced settings"});
         List<String> actualListOfTasks = new MainPage(getDriver())
                 .clickManageJenkinsPage()

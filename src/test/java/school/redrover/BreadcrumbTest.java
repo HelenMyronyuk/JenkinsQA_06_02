@@ -654,6 +654,7 @@ public class BreadcrumbTest extends BaseTest {
                         driver -> new CredentialsPage(driver), "Dashboard > admin > Credentials"},
         };
     }
+
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
             String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText){

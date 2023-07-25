@@ -195,7 +195,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
-    public void testCreateWithSpaceInsteadName() {
+    public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
                 TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.OrganizationFolder);
 

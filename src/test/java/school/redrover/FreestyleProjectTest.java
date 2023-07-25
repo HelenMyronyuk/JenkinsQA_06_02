@@ -211,7 +211,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testCreateWithSpaceInsteadName() {
+    public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
                 TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.FreestyleProject);
 
@@ -220,7 +220,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testCreateWithDotName() {
+    public void testCreateWithDotInsteadOfName() {
         final String expectedError = "» “.” is not an allowed name";
 
         String actualError = new MainPage(getDriver())

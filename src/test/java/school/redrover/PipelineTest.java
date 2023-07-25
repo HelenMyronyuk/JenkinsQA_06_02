@@ -188,7 +188,7 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
-    public void testCreateWithSpaceInsteadName() {
+    public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage createItemErrorPage =
                 TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.Pipeline);
 
