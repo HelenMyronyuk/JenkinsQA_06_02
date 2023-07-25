@@ -11,7 +11,7 @@ import school.redrover.model.jobsconfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-public class BuildPageTest extends BaseTest {
+public class BuildHistoryTest extends BaseTest {
 
     private static final String NAME_PIPELINE = "Pipeline2023";
     private static final String BUILD_DESCRIPTION = "For QA";

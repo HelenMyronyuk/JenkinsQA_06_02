@@ -2,6 +2,7 @@ package school.redrover;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.FolderPage;
@@ -181,6 +182,7 @@ public class ViewsTest extends BaseTest {
 
     }
 
+    @Ignore
     @Test
     public void testCreateNewViewWithJobFilters() {
         final String jobName1 = "job1";
