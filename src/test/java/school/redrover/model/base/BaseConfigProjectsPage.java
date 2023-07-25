@@ -61,7 +61,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//button[@class='hetero-list-add']")
     private WebElement addParameterDropdown;
 
-    @FindBy(xpath = "//ul[@class='first-of-type']/li")
+    @FindBy(xpath = "//button[text()='Add Parameter']/../../..//a")
     private List<WebElement> optionsOfAddParameterDropdown;
 
     @FindBy(xpath = "//input[@name='parameter.name']")

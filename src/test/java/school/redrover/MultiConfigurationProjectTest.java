@@ -759,6 +759,25 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
+
+    @Test
+    public void testThisProjectIsParameterizedOptionsCollectToList() {
+        List<String> expectedOptionsProjectIsParameterizedList = List.of("Boolean Parameter", "Choice Parameter",
+                "Credentials Parameter", "File Parameter", "Multi-line String Parameter", "Password Parameter",
+                "Run Parameter", "String Parameter");
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        List<String> actualOptionsProjectIsParameterizedList = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .checkProjectIsParametrized()
+                .openAddParameterDropDown()
+                .getAllOptionsOfAddParameterDropdown();
+
+        Assert.assertEquals(actualOptionsProjectIsParameterizedList, expectedOptionsProjectIsParameterizedList);
+    }
+
     @Test
     public void testAddBuildStepsOptionsCollectToList() {
         List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
