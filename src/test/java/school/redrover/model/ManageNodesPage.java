@@ -49,7 +49,6 @@ public class ManageNodesPage extends BaseSubmenuPage<ManageNodesPage> {
             if (ele.getText().equals(nodeName)) {
                 new Actions(getDriver()).moveToElement(ele).click().perform();
                 break;
-                //return new NodePage(getDriver());
             }
         }
        return new NodePage(getDriver());
