@@ -14,7 +14,7 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     @FindBy(partialLinkText = "Delete ")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//button[@class='jenkins-button jenkins-button--primary ']")
+    @FindBy(xpath = "//button[@name='Submit']")
     private WebElement disableEnableButton;
 
     @FindBy(xpath = "//form[@method='post']")
@@ -23,13 +23,13 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     @FindBy(xpath = "//div[@id='view-message']")
     private WebElement descriptionMessage;
 
-    @FindBy(xpath = "(//*[name()='svg'][@title='Folder'])[1]")
+    @FindBy(xpath = "//h1/*[@title='Folder']")
     private WebElement defaultIcon;
 
     @FindBy(xpath = "//h1/img")
     private WebElement metadataFolderIcon;
 
-    @FindBy(xpath = "//div/span/a[contains(@href, 'pipeline-syntax')]")
+    @FindBy(xpath = "//a[contains(@href, 'pipeline-syntax')]")
     private WebElement pipelineSyntax;
 
     public BaseOtherFoldersPage(WebDriver driver) {
@@ -75,9 +75,5 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
         pipelineSyntax.click();
 
         return new PipelineSyntaxPage(getDriver());
-    }
-
-    public String getPageTitle() {
-        return getDriver().getTitle();
     }
 }
