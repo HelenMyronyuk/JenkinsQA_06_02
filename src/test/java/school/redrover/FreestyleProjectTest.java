@@ -1443,22 +1443,13 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testDeleteItemFromDropDown() {
-        final String projectName = "Name";
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject,true);
+        MainPage welcomeIsDisplayed= new MainPage(getDriver())
+                .dropDownMenuClickDelete(FREESTYLE_NAME)
+                .acceptAlert();
 
-        MyViewsPage h2text = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(projectName)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
-                .dropDownMenuClickDelete(projectName)
-                .acceptAlert()
-                .clickMyViewsSideMenuLink();
-
-        Assert.assertEquals(h2text.getStatusMessageText(), "This folder is empty");
-        Assert.assertTrue(h2text.getHeader().clickLogo().isWelcomeDisplayed());
+        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed());
+        Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
     @Test
