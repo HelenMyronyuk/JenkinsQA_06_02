@@ -18,12 +18,6 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> {
     @FindBy(xpath = "//a[contains(@href, '/configure')]")
     private WebElement configureView;
 
-    @FindBy(xpath = "//input[@name = 'name']")
-    private WebElement nameView;
-
-    @FindBy(xpath = "//button[@name = 'Submit']")
-    private WebElement submitView;
-
     @FindBy(xpath = "//h2")
     private WebElement statusMessage;
 
@@ -33,7 +27,7 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> {
     @FindBy(xpath = "//a[@href = 'delete']")
     private WebElement deleteViewButton;
 
-    @FindBy(xpath = "//div[@class='tabBar']//div[starts-with(@class, 'tab')]")
+    @FindBy(xpath = "//div[@class='tabBar']/div")
     private List<WebElement> allViews;
 
     public String getStatusMessageText() {
@@ -47,12 +41,9 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> {
         return this;
     }
 
-    public MyViewsPage editMyViewNameAndClickSubmitButton(String editedMyViewName) {
+    public MyViewConfigPage clickEditView() {
         TestUtils.click(this, configureView);
-        TestUtils.sendTextToInput(this, nameView, editedMyViewName);
-        TestUtils.click(this, submitView);
-
-        return this;
+        return new MyViewConfigPage(new ViewPage(getDriver()));
     }
 
     public DeletePage<MyViewsPage> clickDeleteViewButton() {
