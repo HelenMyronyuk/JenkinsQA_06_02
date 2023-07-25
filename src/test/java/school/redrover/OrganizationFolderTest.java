@@ -441,6 +441,30 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
+    public void testAccessConfigurationPageFromDropDown() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String getTitleFromPage = new MainPage(getDriver())
+                .clickConfigureDropDown(
+                        ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
+                .getTitle();
+
+        Assert.assertEquals(getTitleFromPage, "Configuration");
+    }
+
+    @Test
+    public void testAccessConfigurationPageFromSideMenu(){
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String getTitleFromPage = new MainPage(getDriver())
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .getTitle();
+
+        Assert.assertEquals(getTitleFromPage, "Configuration");
+    }
+
+    @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
@@ -469,6 +493,33 @@ public class OrganizationFolderTest extends BaseTest {
                 .getDisableButtonText();
 
         Assert.assertEquals(enableOrgFolder.trim(), "Disable Organization Folder");
+    }
+
+    @Test
+    public void testPreviewDescriptionFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String previewText = new MainPage(getDriver())
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .addDescription(DESCRIPTION_TEXT)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewText, DESCRIPTION_TEXT);
+    }
+
+    @Test
+    public void testAddDescriptionFromConfigurationPage() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        String textFromDescription = new MainPage(getDriver())
+                .clickConfigureDropDown(ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
+                .addDescription(DESCRIPTION_TEXT)
+                .clickSaveButton()
+                .getAddedDescriptionFromConfig();
+
+        Assert.assertEquals(textFromDescription, DESCRIPTION_TEXT);
     }
 
     @Test
@@ -503,33 +554,6 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
-    public void testAddDescriptionFromConfigurationPage() {
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String textFromDescription = new MainPage(getDriver())
-                .clickConfigureDropDown(ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .addDescription(DESCRIPTION_TEXT)
-                .clickSaveButton()
-                .getAddedDescriptionFromConfig();
-
-        Assert.assertEquals(textFromDescription, DESCRIPTION_TEXT);
-    }
-
-    @Test
-    public void testPreviewDescriptionFromConfigurationPage() {
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String previewText = new MainPage(getDriver())
-                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickConfigure()
-                .addDescription(DESCRIPTION_TEXT)
-                .clickPreview()
-                .getPreviewText();
-
-        Assert.assertEquals(previewText, DESCRIPTION_TEXT);
-    }
-
-    @Test
     public void testAppearanceIconHasChanged() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
@@ -561,27 +585,20 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
-    public void testAccessConfigurationPageFromDashboard() {
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+    public void testConfigureProjectsEditScriptPath() {
+        final String scriptPath = "Test Script Path";
+        TestUtils.createJob(this,ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
-                .clickConfigureDropDown(
-                        ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .getTitle();
-
-        Assert.assertEquals(getTitleFromPage, "Configuration");
-    }
-
-    @Test
-    public void testAccessConfigurationPageFromSideMenu(){
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String getTitleFromPage = new MainPage(getDriver())
+        String organizationFolderProjectIsPresent = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickConfigure()
-                .getTitle();
-
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+                .clickProjectsSideMenu()
+                .enterScriptPath(scriptPath)
+                .clickSaveButton()
+                .clickConfigure()
+                .clickProjectsSideMenu()
+                .getScriptPath();
+        Assert.assertEquals(organizationFolderProjectIsPresent, scriptPath);
     }
 
     @Test
@@ -636,21 +653,4 @@ public class OrganizationFolderTest extends BaseTest {
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
-
-  @Test
-  public void testConfigureProjectsEditScriptPath() {
-        final String scriptPath = "Test Script Path";
-        TestUtils.createJob(this,ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String organizationFolderProjectIsPresent = new MainPage(getDriver())
-            .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-            .clickConfigure()
-            .clickProjectsSideMenu()
-            .enterScriptPath(scriptPath)
-            .clickSaveButton()
-            .clickConfigure()
-            .clickProjectsSideMenu()
-            .getScriptPath();
-        Assert.assertEquals(organizationFolderProjectIsPresent, scriptPath);
-  }
 }
