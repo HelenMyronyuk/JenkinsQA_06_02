@@ -198,7 +198,7 @@ public class PipelineTest extends BaseTest {
 
     @Test
     public void testCreateWithDotInsteadOfName() {
-        String  getMessage = new MainPage(getDriver())
+        String getMessage = new MainPage(getDriver())
                 .clickNewItem()
                 .enterItemName(".")
                 .getItemInvalidMessage();
@@ -676,7 +676,7 @@ public class PipelineTest extends BaseTest {
 
         List<String> buildNumberExpected = Arrays.asList("#1", "#2", "#3", "#4");
 
-        List buildNumber = new MainPage(getDriver())
+        List<String> buildNumber = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickBuildNowFromSideMenu()
                 .clickBuildNowFromSideMenu()
@@ -825,6 +825,21 @@ public class PipelineTest extends BaseTest {
                 .isProjectDisable();
 
         Assert.assertFalse(projectDisable, "Pipeline is enabled");
+    }
+
+    @Test
+    public void testEnableFromConfigurationPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String disableButtonText = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickDisable()
+                .clickConfigure()
+                .switchCheckboxEnabled()
+                .clickSaveButton()
+                .getDisableButtonText();
+
+        Assert.assertEquals(disableButtonText, "Disable Project");
     }
 
     @Test
@@ -977,7 +992,7 @@ public class PipelineTest extends BaseTest {
         final String description = "Some boolean parameters here";
         final String parameterName = "Boolean Parameter";
 
-        BuildWithParametersPage buildParametersPagePage = new PipelinePage(getDriver())
+        BuildWithParametersPage<PipelinePage> buildParametersPagePage = new PipelinePage(getDriver())
                 .clickConfigure()
                 .clickAndAddParameter(parameterName)
                 .setBooleanParameterName(name)
@@ -1000,7 +1015,7 @@ public class PipelineTest extends BaseTest {
         final String name = "Pipeline Boolean Parameter";
         final String parameterName = "Boolean Parameter";
 
-        BuildWithParametersPage buildParametersPage = new PipelinePage(getDriver())
+        BuildWithParametersPage<PipelinePage> buildParametersPage = new PipelinePage(getDriver())
                 .clickConfigure()
                 .clickAndAddParameter(parameterName)
                 .setBooleanParameterName(name)
@@ -1102,7 +1117,7 @@ public class PipelineTest extends BaseTest {
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        String welcomeText =  new MainPage(getDriver())
+        String welcomeText = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickDeleteAndAccept()
                 .getWelcomeText();
