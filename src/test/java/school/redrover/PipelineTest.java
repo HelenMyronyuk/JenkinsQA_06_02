@@ -1204,4 +1204,15 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }
+
+    @Test
+    public void testAccessConfigurationPageFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String configPageHeaderText = new MainPage(getDriver())
+                .clickConfigureDropDown(NAME, new PipelineConfigPage(new PipelinePage(getDriver())))
+                .getPageHeaderText();
+
+        Assert.assertEquals(configPageHeaderText, "Configure");
+    }
 }
