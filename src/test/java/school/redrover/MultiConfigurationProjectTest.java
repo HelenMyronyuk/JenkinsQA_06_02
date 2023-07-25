@@ -12,7 +12,6 @@ import school.redrover.model.jobsconfig.MultiConfigurationProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import java.net.FileNameMap;
 import java.util.List;
 
 public class MultiConfigurationProjectTest extends BaseTest {
@@ -709,6 +708,18 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         Assert.assertEquals(getTitleFromPage, "Configure");
     }
+
+    @Test
+    public void testAccessConfigurationPageFromSideMenu() {
+        final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+        MultiConfigurationProjectConfigPage multiConfigurationProjectConfigPage = new MultiConfigurationProjectPage(getDriver())
+                .clickConfigure();
+
+        Assert.assertEquals(multiConfigurationProjectConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
+        Assert.assertEquals(multiConfigurationProjectConfigPage.getTitle(), "Configure");
+    }
+
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
