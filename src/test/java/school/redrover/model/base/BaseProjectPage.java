@@ -91,6 +91,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//div[@class='middle-align build-badge']/img")
     private WebElement iconLock;
 
+    @FindBy(xpath = "//a[not(contains(tooltip, 'In progress > Console Output'))]/ancestor::div/a[contains(@href,'/2/')]")
+    private WebElement iconAddBranchBuild;
+
     @FindBy(xpath = "//span[contains(text(), 'Changes')]")
     private WebElement changesBuildButton;
 
@@ -164,6 +167,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         getDriver().navigate().refresh();
         getWait10().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
         return new BuildPage(getDriver());
+    }
+
+    public ConsoleOutputPage clickIconAdditionalBranchBuild() {
+        getWait15().until(ExpectedConditions.visibilityOf(iconAddBranchBuild)).click();
+        return new ConsoleOutputPage(getDriver());
     }
 
     public TimelinePage clickTrend() {

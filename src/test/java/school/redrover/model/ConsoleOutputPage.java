@@ -22,6 +22,9 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
     @FindBy(css = ".jenkins-icon-adjacent")
     private WebElement buildTitle;
 
+    @FindBy(xpath = "//span[text()='Git Build Data']/..")
+    private WebElement gitBuildDataLink;
+
     public ConsoleOutputPage(WebDriver driver) {
         super(driver);
     }
@@ -63,5 +66,11 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
         getWait5().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(text() ,'#" + buildNumber +  "')]"))).click();
         return new BuildPage(getDriver());
+    }
+
+    public GitBuildDataPage clickGitBuildDataLink() {
+        getWait15().until(ExpectedConditions.elementToBeClickable(gitBuildDataLink)).click();
+
+        return new GitBuildDataPage(getDriver());
     }
 }

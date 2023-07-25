@@ -109,6 +109,15 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//input[@name='_.url']")
     private WebElement inputRepositoryUrl;
 
+    @FindBy(xpath = "(//input[@default='*/master'])[1]")
+    private WebElement mainBranchInput;
+
+    @FindBy(xpath = "//button[text()='Add Branch']")
+    private WebElement addBranchButton;
+
+    @FindBy(xpath = "(//input[@default='*/master'])[2]")
+    private WebElement additionalBranchInput;
+
     @FindBy(xpath = "//input[@name='jenkins-triggers-ReverseBuildTrigger']")
     private WebElement buildAfterOtherProjectsAreBuiltCheckBox;
 
@@ -329,6 +338,23 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public String getRepositoryUrlText() {
         return getWait5().until(ExpectedConditions.visibilityOf(inputRepositoryUrl)).getAttribute("value");
+    }
+
+    public Self correctMainBranchName() {
+        getWait15().until(ExpectedConditions.visibilityOf(mainBranchInput)).clear();
+        mainBranchInput.sendKeys("*/main");
+        return (Self) this;
+    }
+
+    public Self clickAddBranchButton() {
+        getWait5().until(ExpectedConditions.visibilityOf(addBranchButton)).click();
+        return (Self) this;
+    }
+
+    public Self inputAddBranchName(String additionalBranchName) {
+        getWait5().until(ExpectedConditions.visibilityOf(additionalBranchInput)).clear();
+        additionalBranchInput.sendKeys("*/" + additionalBranchName);
+        return (Self) this;
     }
 
     public Self clickBuildAfterOtherProjectsAreBuiltCheckBox() {

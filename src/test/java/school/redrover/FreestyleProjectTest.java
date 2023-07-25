@@ -21,6 +21,7 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
     private static final String NEW_DESCRIPTION_TEXT = "NEW_DESCRIPTION_TEXT";
     private static final String GITHUB_URL = "https://github.com/ArtyomDulya/TestRepo";
+    private static final String NEW_GITHUB_URL = "https://github.com/nikabenz/repoForJenkinsBuild";
     private static final String DISPLAY_NAME = "FreestyleDisplayName";
     private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
 
@@ -1122,6 +1123,28 @@ public class FreestyleProjectTest extends BaseTest {
                 .getRepositoryUrlText();
 
         Assert.assertEquals(repositoryUrl, GITHUB_URL);
+    }
+
+    @Test
+    public void testAddBranchFromSourceCodeManagement() {
+        final String branchName = "for_jenkins_build";
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        GitBuildDataPage gitBuildDataPage = new MainPage(getDriver())
+                .clickConfigureDropDown(FREESTYLE_NAME, new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
+                .clickSourceCodeManagementLink()
+                .clickRadioButtonGit()
+                .inputRepositoryUrl(NEW_GITHUB_URL)
+                .correctMainBranchName()
+                .clickAddBranchButton()
+                .inputAddBranchName(branchName)
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .clickIconAdditionalBranchBuild()
+                .clickGitBuildDataLink();
+
+        Assert.assertEquals(gitBuildDataPage.getNamesOfBuiltBranches(), "origin/main, origin/for_jenkins_build");
+        Assert.assertEquals(gitBuildDataPage.getRepositoryName(), NEW_GITHUB_URL);
     }
 
     @Test
