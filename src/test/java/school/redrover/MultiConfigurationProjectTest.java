@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
-import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsconfig.MultiConfigurationProjectConfigPage;
@@ -716,17 +715,17 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         MultiConfigurationProjectConfigPage statusSwitchButton = new MainPage(getDriver())
                 .clickConfigureDropDown(NAME, new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
-                .switchCheckboxDisable();
+                .clickSwitchEnableOrDisable();
 
-        String availableMode = statusSwitchButton
-                .getTextEnabled();
+        Boolean availableMode = statusSwitchButton
+                .isEnabledDisplayed();
 
         MainPage mainPage = statusSwitchButton
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertEquals(availableMode, "Enabled");
+        Assert.assertTrue(availableMode, "'Enabled' is not displayed");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(NAME), "Disabled");
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(NAME), "Error: disabled project cannot be built");
     }
@@ -735,12 +734,12 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        String enabledButtonText = new MainPage(getDriver())
+        Boolean enabledButtonText = new MainPage(getDriver())
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .clickConfigure()
-                .getTextEnabled();
+                .isEnabledDisplayed();
 
-        Assert.assertEquals(enabledButtonText, "Enabled");
+        Assert.assertTrue(enabledButtonText, "'Enabled' is not displayed");
     }
 
     @Test

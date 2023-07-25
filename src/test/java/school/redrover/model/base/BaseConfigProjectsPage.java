@@ -25,7 +25,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//a[contains(text(), 'Execute shell')]")
     private WebElement executeShell;
 
-    @FindBy(xpath = "//span[@class='jenkins-checkbox']//input[@id='cb4']")
+    @FindBy(xpath = "//label[text()='Discard old builds']/../input")
     private WebElement oldBuildCheckBox;
 
     @FindBy(xpath = "//input[@name='_.daysToKeepStr']")
@@ -37,17 +37,11 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//input[@name='_.numToKeepStr']")
     private WebElement maxNumOfBuildsToKeepNumber;
 
-    @FindBy(xpath = "//span[text() = 'Enabled']")
-    private WebElement enabled;
-
     @FindBy(xpath = "//label[@for='enable-disable-project']")
-    private WebElement disabled;
-
-    @FindBy(xpath = "//span[text() = 'Disabled']")
-    private WebElement nameDisabledSwitch;
+    private WebElement enableDisableSwitch;
 
     @FindBy(xpath = "//span[text() = 'Enabled']")
-    private WebElement nameEnabledSwitch;
+    private WebElement enabledText;
 
     @FindBy(xpath = "//label[text()='GitHub project']")
     private WebElement checkBoxGitHubProject;
@@ -58,7 +52,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//label[text()='This project is parameterized']")
     private WebElement projectIsParametrized;
 
-    @FindBy(xpath = "//button[@class='hetero-list-add']")
+    @FindBy(xpath = "//button[text()='Add Parameter']")
     private WebElement addParameterDropdown;
 
     @FindBy(xpath = "//button[text()='Add Parameter']/../../..//a")
@@ -163,22 +157,13 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
         return (Self) this;
     }
 
-    public Self switchCheckboxDisable() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(enabled)).click();
+    public Self clickSwitchEnableOrDisable() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(enableDisableSwitch)).click();
         return (Self) this;
     }
 
-    public Self switchCheckboxEnabled() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(disabled)).click();
-        return (Self) this;
-    }
-
-    public String getTextDisable() {
-        return getWait5().until(ExpectedConditions.elementToBeClickable(nameDisabledSwitch)).getText();
-    }
-
-    public String getTextEnabled() {
-        return getWait5().until(ExpectedConditions.elementToBeClickable(nameEnabledSwitch)).getText();
+    public Boolean isEnabledDisplayed() {
+        return getWait5().until(ExpectedConditions.elementToBeClickable(enabledText)).isDisplayed();
     }
 
     public String getDaysToKeepBuilds(String attribute) {

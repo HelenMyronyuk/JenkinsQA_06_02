@@ -765,7 +765,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         SoftAssert soft = new SoftAssert();
         soft.assertEquals(projectName.getDisableButtonText(), "Disable Project");
-        soft.assertEquals(projectName.clickConfigure().getTextEnabled(), "Enabled");
+        soft.assertTrue(projectName.clickConfigure().isEnabledDisplayed(), "'Enabled' is not displayed");
         soft.assertEquals(projectName.getHeader().clickLogo().getJobBuildStatusIcon(FREESTYLE_NAME), "Not built");
         soft.assertAll();
     }
@@ -904,17 +904,17 @@ public class FreestyleProjectTest extends BaseTest {
 
         FreestyleProjectConfigPage configPage = new MainPage(getDriver())
                 .clickConfigureDropDown(FREESTYLE_NAME, new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .switchCheckboxDisable();
+                .clickSwitchEnableOrDisable();
 
-        String availableMode = configPage
-                .getTextEnabled();
+        Boolean availableMode = configPage
+                .isEnabledDisplayed();
 
         MainPage mainPage = configPage
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertEquals(availableMode, "Enabled");
+        Assert.assertTrue(availableMode, "'Enabled' is not displayed");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(FREESTYLE_NAME), "Disabled");
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "Error: disabled project cannot be built");
     }

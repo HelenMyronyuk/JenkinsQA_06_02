@@ -883,7 +883,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickDisable()
                 .clickConfigure()
-                .switchCheckboxEnabled()
+                .clickSwitchEnableOrDisable()
                 .clickSaveButton()
                 .getDisableButtonText();
 
