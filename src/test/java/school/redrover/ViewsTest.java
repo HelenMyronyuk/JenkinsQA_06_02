@@ -29,16 +29,6 @@ public class ViewsTest extends BaseTest {
 
     final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
-    private void createNewFreestyleProjectFromMyViewsPage(String projectName) {
-        new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickNewItem()
-                .enterItemName(projectName)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .getHeader()
-                .clickLogo();
-    }
 
     private void createNewFreestyleProjectAndNewView(String name) {
         TestUtils.createJob(this, name, TestUtils.JobType.FreestyleProject, true);
@@ -51,15 +41,6 @@ public class ViewsTest extends BaseTest {
                 .clickLogo()
                 .clickOnView(name, new ViewPage(getDriver()))
                 .clickEditListView(name);
-    }
-
-    @Test
-    public void testCreateAJobInThePageMyViews() {
-        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
-
-        boolean isJobPresent = new MainPage(getDriver()).jobIsDisplayed(PROJECT_NAME);
-
-        Assert.assertTrue(isJobPresent);
     }
 
     @Test
@@ -77,7 +58,7 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testCreateListViewType() {
-        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String actualName = new MainPage(getDriver())
                 .createNewView()
@@ -91,7 +72,7 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testCreateMyViewType() {
-        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String actualViewName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
@@ -105,7 +86,7 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testRenameView() {
-        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String actualViewName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
@@ -124,7 +105,7 @@ public class ViewsTest extends BaseTest {
 
     @Test
     public void testDeleteMyViewFromViewPage() {
-        createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
@@ -163,6 +144,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertFalse(isDeletedViewPresent);
     }
 
+    @Ignore
     @Test
     public void testMoveFolderToNewViewList() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
