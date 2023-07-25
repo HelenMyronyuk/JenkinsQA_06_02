@@ -1,6 +1,8 @@
 package school.redrover;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,11 +15,8 @@ import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.*;
-import school.redrover.model.jobsconfig.FolderConfigPage;
-import school.redrover.model.jobsconfig.MultibranchPipelineConfigPage;
-import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
+import school.redrover.model.jobsconfig.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
-import school.redrover.model.jobsconfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -671,5 +670,39 @@ public class BreadcrumbTest extends BaseTest {
                         .getFullBreadcrumbText();
 
         Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+    }
+
+    @DataProvider(name = "optionsFreestyleProject")
+    public Object[][] FreestyleDropDownBreadcrumb() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ChangesPage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new FreestyleProjectPage(driver), "Build Now", "Project " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new FreestyleProjectConfigPage(new FreestyleProjectPage(driver)), "Configure", "Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MovePage<>(new FreestyleProjectPage(driver)), "Move", "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Rename", "Rename Project " + PROJECT_NAME}
+        };
+    }
+
+    @Test(dataProvider = "optionsFreestyleProject")
+    public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 }
