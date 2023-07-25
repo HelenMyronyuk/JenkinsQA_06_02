@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 
 public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformationPage> {

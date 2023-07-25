@@ -59,13 +59,10 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
     @FindBy(xpath = "//a[@href='pluginManager']")
     private WebElement managePluginsLink;
 
-    @FindBy(xpath = "//h1[normalize-space()='Configure System']")
-    private WebElement configureSystem;
-
-    @FindBy(xpath = "//a[@href='configure']//dt")
+    @FindBy(xpath = "//a[@href='configure']")
     private WebElement configureSystemLink;
 
-    @FindBy(xpath = "//dl/dt[text()='Credentials']")
+    @FindBy(xpath = "//a[@href='credentials']")
     private WebElement credentialsLink;
 
     @FindBy(linkText = "Delete Agent")
@@ -135,7 +132,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ManagePluginsPage(getDriver());
     }
 
-    public ManageJenkinsPage selectOnTheFirstLineInDropdown(String text) {
+    public ConfigureSystemPage selectOnTheFirstLineInDropdown(String text) {
 
         getWait5().until(ExpectedConditions.visibilityOfAllElements(itemInDropdownSearchResults));
 
@@ -145,7 +142,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
                 break;
             }
         }
-        return this;
+        return new ConfigureSystemPage(getDriver());
     }
 
     public ManageJenkinsPage selectAllDropdownResultsFromSearchField() {
@@ -170,11 +167,6 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
             }
         }
         return true;
-    }
-
-    public String getConfigureSystemPage() {
-        getWait2().until(ExpectedConditions.visibilityOf(configureSystem));
-        return configureSystem.getText();
     }
 
     public ConfigureSystemPage clickConfigureSystemFromSearchDropdown() {

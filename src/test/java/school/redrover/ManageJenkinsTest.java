@@ -34,7 +34,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .inputToSearchField("m")
                 .selectOnTheFirstLineInDropdown(textConfigureSystem)
-                .getConfigureSystemPage();
+                .getHeading();
 
         Assert.assertEquals(configurePage, textConfigureSystem);
     }
