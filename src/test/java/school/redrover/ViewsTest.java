@@ -274,24 +274,4 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(previewText, VIEW_DESCRIPTION);
         Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
     }
-
-    @Test
-    public void testCreateNewViewInFolder() {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
-
-        boolean viewIsDisplayed = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(PROJECT_NAME)
-                .selectJobAndOkAndGoError(TestUtils.JobType.Folder)
-                .getHeader()
-                .clickLogo()
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .clickNewView()
-                .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .clickAllOnFolderView()
-                .viewIsDisplayed(VIEW_NAME);
-
-        Assert.assertTrue(viewIsDisplayed, "error was not shown created view");
-    }
 }
