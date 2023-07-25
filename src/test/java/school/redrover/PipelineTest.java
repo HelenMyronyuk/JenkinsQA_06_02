@@ -18,6 +18,7 @@ public class PipelineTest extends BaseTest {
     private static final String NAME = "PIPELINE_NAME";
     private static final String NEW_NAME = "Pipeline Project";
     private static final String DESCRIPTION = "This is a test description";
+    private static final String DISPLAYED_BUILD_NAME = "New Build Name";
 
     @Test
     public void testCreateFromCreateAJob() {
@@ -379,6 +380,23 @@ public class PipelineTest extends BaseTest {
                 .isDisplayedBuildTitle();
 
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
+    }
+
+    @Test
+    public void testAddDisplayNameForBuild() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        Boolean newDisplayedBuildName = new MainPage(getDriver())
+            .clickBuildByGreenArrow(NAME)
+            .clickJobName(NAME, new PipelinePage(getDriver()))
+            .clickLastBuildLink()
+            .clickEditBuildInformation()
+            .enterDisplayName(DISPLAYED_BUILD_NAME)
+            .clickSaveButton()
+            .getBuildHeaderText()
+            .contains(DISPLAYED_BUILD_NAME);
+
+        Assert.assertTrue(newDisplayedBuildName, "Added Name for the Build is not displayed");
     }
 
     @Test
