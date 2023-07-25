@@ -122,7 +122,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteMyView() {
+    public void testDeleteMyViewFromViewPage() {
         createNewFreestyleProjectFromMyViewsPage(PROJECT_NAME);
 
         new MainPage(getDriver())
