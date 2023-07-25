@@ -308,6 +308,18 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testScanMultibranchPipelineLog() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String pageHeaderText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickScanLog()
+                .getPageHeaderText();
+
+        Assert.assertEquals(pageHeaderText, "Scan Multibranch Pipeline Log");
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
