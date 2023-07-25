@@ -704,6 +704,21 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testReplayBuildFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String lastBuildNumber = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .openBuildsDropDownMenu()
+                .clickReplayFromDropDownMenu()
+                .clickRunButton()
+                .getLastBuildNumber();
+
+        Assert.assertEquals(lastBuildNumber, "#2");
+    }
+
+    @Test
     public void testReplayBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 

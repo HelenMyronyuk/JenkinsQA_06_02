@@ -297,7 +297,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public ReplayPage<Self> clickReplayFromDropDownMenu() {
-        replayButton.click();
+        getWait2().until(ExpectedConditions.elementToBeClickable(replayButton)).click();
 
         return new ReplayPage<>((Self)this);
     }
