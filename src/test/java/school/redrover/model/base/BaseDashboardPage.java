@@ -105,6 +105,9 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     @FindBy(xpath = "//span[text()= 'Console Output']")
     private WebElement consoleOutputButtonFromBuildDropDown;
 
+    @FindBy(xpath = "//span[text()= 'Workspaces']")
+    private WebElement workspacesButtonFromBuildDropDown;
+
     @FindBy(xpath = "//span[contains(text(),'Edit Build Information')]")
     private WebElement editBuildInformFromDropDown;
 
@@ -406,6 +409,11 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     public ConsoleOutputPage clickConsoleOutputLastBuildDropDown() {
         consoleOutputButtonFromBuildDropDown.click();
         return new ConsoleOutputPage(getDriver());
+    }
+
+    public WorkspacesBuildPage clickWorkspacesLastBuildDropDown() {
+        workspacesButtonFromBuildDropDown.click();
+        return new WorkspacesBuildPage(getDriver());
     }
 
     public EditBuildInformationPage clickEditBuildInformFromDropDown(){

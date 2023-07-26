@@ -769,6 +769,23 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testWorkspacesBuildFromDropDown() {
+        final String pageHeaderText = "Workspaces for " + NAME + " #1";
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .getHeader()
+                .clickLogo()
+                .openLastBuildDropDownMenu()
+                .clickWorkspacesLastBuildDropDown()
+                .getHeaderTextFromWorkspacesBuildPage();
+
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
+    @Test
     public void testWorkspacesBuildFromProjectPage() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
 
