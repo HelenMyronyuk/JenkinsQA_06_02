@@ -1,6 +1,5 @@
 package school.redrover.model.base;
 
-import lombok.Value;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -55,7 +54,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
-    public Self clickHealthMetrics(){
+    public Self clickHealthMetrics() {
         new Actions(getDriver())
                 .click(healthMetricsSideMenu)
                 .pause(Duration.ofMillis(800))
@@ -64,7 +63,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
-    public Self addHealthMetrics(){
+    public Self addHealthMetrics() {
         clickHealthMetrics();
 
         getWait5().until(ExpectedConditions.elementToBeClickable(addHealthMetric)).click();
@@ -73,17 +72,24 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
-    public Boolean healthMetricIsVisible(){
+    public Boolean healthMetricIsVisible() {
         return getWait5().until(ExpectedConditions.visibilityOf(addedHealthMetric)).isDisplayed();
     }
 
-    public Self removeHealthMetrics(){
-        getWait5().until(ExpectedConditions.elementToBeClickable(removeHealthMetric)).click();
+    public Self removeHealthMetrics() {
+        new Actions(getDriver())
+                .click(removeHealthMetric)
+                .pause(600)
+                .perform();
 
         return (Self) this;
     }
 
-    public Self clickProjectsSideMenu(){
+    public boolean isHealthMetricInvisible() {
+        return getWait2().until(ExpectedConditions.invisibilityOf(addedHealthMetric));
+    }
+
+    public Self clickProjectsSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(projectsSideMenu)).click();
 
         return (Self) this;

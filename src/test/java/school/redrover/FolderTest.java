@@ -451,9 +451,9 @@ public class FolderTest extends BaseTest {
                 .clickSaveButton()
                 .clickConfigure()
                 .clickHealthMetrics()
-                .healthMetricIsVisible();
+                .isHealthMetricInvisible();
 
-        Assert.assertTrue(healthMetric, "the deleted metric is no longer visible");
+        Assert.assertTrue(healthMetric, "The deleted health metric is visible!");
     }
 
     @Test
