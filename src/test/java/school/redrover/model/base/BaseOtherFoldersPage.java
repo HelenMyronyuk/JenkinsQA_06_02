@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.DeletePage;
 import school.redrover.model.MainPage;
+import school.redrover.model.OtherFoldersEventsPage;
 import school.redrover.model.PipelineSyntaxPage;
 import school.redrover.model.ScanOtherFoldersLogPage;
 import school.redrover.model.jobs.FolderPage;
@@ -33,6 +34,9 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     @FindBy(xpath = "//a[contains(@href,'/console')]")
     private WebElement scanLog;
 
+    @FindBy(xpath = "//a[contains(@href,'/events')]")
+    private WebElement eventsLink;
+
     @FindBy(xpath = "//a[contains(@href, 'pipeline-syntax')]")
     private WebElement pipelineSyntax;
 
@@ -52,7 +56,7 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
     public Self clickDisableEnableButton() {
         disableEnableButton.click();
-        return (Self)this;
+        return (Self) this;
     }
 
     public String getTextFromDisableMessage() {
@@ -79,6 +83,12 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
         getWait5().until(ExpectedConditions.elementToBeClickable(scanLog)).click();
 
         return new ScanOtherFoldersLogPage(getDriver());
+    }
+
+    public OtherFoldersEventsPage clickEventsLink() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(eventsLink)).click();
+
+        return new OtherFoldersEventsPage(getDriver());
     }
 
     public PipelineSyntaxPage clickPipelineSyntax() {
