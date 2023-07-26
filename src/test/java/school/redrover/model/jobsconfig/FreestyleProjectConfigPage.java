@@ -32,7 +32,7 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     @FindBy(xpath = "//input[@name='blockBuildWhenUpstreamBuilding']")
     private WebElement trueBlockBuildWhenUpstreamProjectIsBuilding;
 
-    @FindBy(xpath = "(//button[@class='task-link'])[5]")
+    @FindBy(xpath = "//button[@data-section-id='post-build-actions']")
     private WebElement postBuildActionsButton;
 
     @FindBy(xpath = "//button[text()='Add post-build action']")
@@ -88,6 +88,9 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
 
     @FindBy(xpath = "//textarea[@name='project_recipient_list']")
     private WebElement projectRecipientListInputField;
+
+    @FindBy(xpath = "//div[text()='Tags']")
+    private WebElement textTagsFromPostBuildActions;
 
     public FreestyleProjectConfigPage(FreestyleProjectPage freestyleProjectPage) {
         super(freestyleProjectPage);
@@ -217,7 +220,11 @@ public class FreestyleProjectConfigPage extends BaseConfigProjectsPage<Freestyle
     }
 
     public String getGitPublisherText() {
-        scrollToFooter();
+        new Actions(getDriver())
+                .scrollToElement(textTagsFromPostBuildActions)
+                .pause(300)
+                .perform();
+
         return gitPublisherHandle.getText();
     }
 
