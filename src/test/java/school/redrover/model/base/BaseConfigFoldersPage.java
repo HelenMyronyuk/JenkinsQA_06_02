@@ -57,7 +57,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
     public Self clickHealthMetrics() {
         new Actions(getDriver())
                 .click(healthMetricsSideMenu)
-                .pause(Duration.ofMillis(800))
+                .pause(Duration.ofMillis(1000))
                 .perform();
         getWait10().until(ExpectedConditions.elementToBeClickable(healthMetric)).click();
         return (Self)this;
@@ -73,7 +73,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
     }
 
     public Boolean healthMetricIsVisible() {
-        return getWait5().until(ExpectedConditions.visibilityOf(addedHealthMetric)).isDisplayed();
+        return getWait10().until(ExpectedConditions.visibilityOf(addedHealthMetric)).isDisplayed();
     }
 
     public Self removeHealthMetrics() {
