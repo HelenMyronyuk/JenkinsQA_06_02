@@ -103,6 +103,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//span[contains(text(), 'Replay')]")
     private WebElement replayButton;
 
+    @FindBy(xpath = "//a[contains(@href, 'lastBuild')]/span[text()='Pipeline Steps']")
+    private WebElement pipelineStepsDropDown;
+
 
     public BaseProjectPage(WebDriver driver) {
         super(driver);
@@ -304,5 +307,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         getWait2().until(ExpectedConditions.elementToBeClickable(workspacesFromBuildDropDownMenu)).click();
 
         return new WorkspacesBuildPage(getDriver());
+    }
+
+    public PipelineStepsPage clickPipelineStepsViaLastBuildDropDownMenu() {
+        openLastBuildDropDownMenu();
+        pipelineStepsDropDown.click();
+        return new PipelineStepsPage(getDriver());
     }
 }

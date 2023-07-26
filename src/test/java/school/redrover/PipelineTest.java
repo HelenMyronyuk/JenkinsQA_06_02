@@ -784,6 +784,22 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testPipelineStepsBuildFromLastBuild() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String pipelineSteps = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickPipelineStepsViaLastBuildDropDownMenu()
+                .getTitlePipelineFromBreadcrumb();
+
+        Assert.assertEquals(pipelineSteps, "Pipeline Steps");
+    }
+
+    @Test
     public void testWorkspacesBuildFromDropDown() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
 
