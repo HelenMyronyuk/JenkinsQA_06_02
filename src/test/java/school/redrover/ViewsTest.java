@@ -207,24 +207,6 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testCreateMyView() {
-        String newView = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.Folder)
-                .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .clickNewView()
-                .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .getActiveViewName();
-
-        assertEquals(newView, VIEW_NAME);
-    }
-
-    @Test
     public void testHelpForFeatureDescription() {
         createNewFreestyleProjectAndNewView(PROJECT_NAME);
 
@@ -258,5 +240,19 @@ public class ViewsTest extends BaseTest {
 
         Assert.assertEquals(previewText, VIEW_DESCRIPTION);
         Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
+    }
+
+    @Test
+    public void testAddDescriptionForMyViewFromConfigPage() {
+        createNewFreestyleProjectAndNewView(PROJECT_NAME);
+
+        String descriptionText = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickConfigureDropDown(PROJECT_NAME, new ListViewConfigPage(new ViewPage(getDriver())))
+                .addDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 }

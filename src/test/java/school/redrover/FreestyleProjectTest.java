@@ -3,7 +3,6 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -1311,7 +1310,6 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + FREESTYLE_NAME);
     }
 
-    @Ignore
     @Test
     public void testAddGitPublisherInPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1324,7 +1322,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickGitPublisher()
                 .clickSaveButton()
                 .clickConfigure()
-                .clickPostBuildActionsButton()
                 .getGitPublisherText();
 
         Assert.assertEquals(gitPublisherText, "Git Publisher\n?");

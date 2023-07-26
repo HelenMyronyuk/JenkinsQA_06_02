@@ -100,6 +100,9 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(xpath = "//a[contains(@href,'api')]")
     private WebElement restApi;
 
+    @FindBy(tagName = "footer")
+    private WebElement footer;
+
     public MainHeaderComponent(Page page) {
         super(page);
     }
@@ -360,5 +363,12 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         getWait5().until(ExpectedConditions.elementToBeClickable(myViewsTabFromAdminDropdownMenu)).click();
 
         return new MyViewsPage(getDriver());
+    }
+
+    public MainHeaderComponent<Page> scrollToFooter() {
+        new Actions(getDriver())
+                .scrollToElement(footer)
+                .perform();
+        return this;
     }
 }

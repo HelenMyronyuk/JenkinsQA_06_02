@@ -8,6 +8,7 @@ import school.redrover.model.BuildHistoryPage;
 import school.redrover.model.CreateItemErrorPage;
 import school.redrover.model.MainPage;
 import school.redrover.model.NewJobPage;
+import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobsconfig.MultibranchPipelineConfigPage;
 import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.runner.BaseTest;
@@ -490,6 +491,26 @@ public class MultibranchPipelineTest extends BaseTest {
                 .healthMetricIsVisible();
 
         Assert.assertTrue(healthMetricIsVisible, "error was not shown Health Metrics");
+    }
+
+    @Test
+    public void testDeleteHealthMetrics() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        boolean healthMetric = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigure()
+                .addHealthMetrics()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickHealthMetrics()
+                .removeHealthMetrics()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickHealthMetrics()
+                .isHealthMetricInvisible();
+
+        Assert.assertTrue(healthMetric, "the deleted metric is no longer visible");
     }
 
     @Test
