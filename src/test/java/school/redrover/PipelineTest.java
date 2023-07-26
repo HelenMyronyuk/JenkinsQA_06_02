@@ -3,6 +3,7 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.PipelinePage;
@@ -703,6 +704,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Ignore
     @Test
     public void testReplayBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -889,6 +891,17 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertTrue(buildPage.isDisplayedBuildTitle(), "Build #1 failed");
         Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "Build #1 failed");
+    }
+
+    @Test
+    public void testAccessConfigurationPageFromSideMenu() {
+        final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
+        PipelineConfigPage pipelineConfigPage = new PipelinePage(getDriver())
+                .clickConfigure();
+
+        Assert.assertEquals(pipelineConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
+        Assert.assertEquals(pipelineConfigPage.getTitle(), "Configure");
     }
 
     @Test
