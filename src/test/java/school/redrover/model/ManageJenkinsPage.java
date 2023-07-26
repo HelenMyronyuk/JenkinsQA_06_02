@@ -47,7 +47,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
     @FindBy(xpath = "//div[@class = 'jenkins-search__results']/a")
     private List<WebElement> listItemsInDropdownMenuSearchResultsWithTagA;
 
-    @FindBy (xpath = "//div[@class = 'jenkins-search__results']//*[contains(text(), 'Configure System')]")
+    @FindBy(xpath = "//div[@class = 'jenkins-search__results']//a[contains(text(), 'Configure System')]")
     private WebElement configureSystemLinkInSearchResult;
 
     @FindBy(xpath = "//a[@href='configureSecurity']")
@@ -61,9 +61,6 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
 
     @FindBy(xpath = "//a[@href='configure']")
     private WebElement configureSystemLink;
-
-    @FindBy(xpath = "//a[@href='credentials']")
-    private WebElement credentialsLink;
 
     @FindBy(linkText = "Delete Agent")
     private WebElement deleteAgent;
@@ -133,9 +130,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
     }
 
     public ConfigureSystemPage selectOnTheFirstLineInDropdown(String text) {
-
         getWait5().until(ExpectedConditions.visibilityOfAllElements(itemInDropdownSearchResults));
-
         for (WebElement option : listItemsInDropdownMenuSearchResults) {
             if (option.getText().equals(text)) {
                 option.click();
@@ -182,15 +177,13 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
 
     public ManageJenkinsPage clickNodeDropdownMenu(String nodeName) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//tr/th/a[@href='/manage/computer/" + nodeName + "/']/button")))
+                        By.xpath("//a[@href='/manage/computer/" + nodeName + "/']/button")))
                 .sendKeys(Keys.RETURN);
-
         return this;
     }
 
     public DeletePage<ManageNodesPage> selectDeleteAgentInDropdown() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
-
         return new DeletePage<>(new ManageNodesPage(getDriver()));
     }
 }

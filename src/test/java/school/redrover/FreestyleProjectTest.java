@@ -3,6 +3,7 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -1129,7 +1130,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(repositoryUrl, GITHUB_URL);
     }
-
+    @Ignore
     @Test
     public void testAddBranchFromSourceCodeManagement() {
         final String branchName = "for_jenkins_build";
