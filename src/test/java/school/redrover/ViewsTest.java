@@ -259,4 +259,18 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(previewText, VIEW_DESCRIPTION);
         Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
     }
+
+    @Test
+    public void testAddDescriptionForMyViewFromConfigPage() {
+        createNewFreestyleProjectAndNewView(PROJECT_NAME);
+
+        String descriptionText = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickConfigureDropDown(PROJECT_NAME, new ListViewConfigPage(new ViewPage(getDriver())))
+                .addDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
+    }
 }
