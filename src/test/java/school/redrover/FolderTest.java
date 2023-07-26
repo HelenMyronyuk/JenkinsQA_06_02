@@ -468,7 +468,7 @@ public class FolderTest extends BaseTest {
                 .inputNameLibrary()
                 .inputDefaultVersion(defaultVersion)
                 .pushSourceCodeManagementButton()
-                .chooseOption()
+                .chooseOptionGitHub()
                 .inputLibraryRepoUrl(repoUrl)
                 .pushApply()
                 .refreshPage()
