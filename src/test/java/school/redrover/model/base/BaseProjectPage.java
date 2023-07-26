@@ -97,7 +97,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//a[not(contains(tooltip, 'In progress > Console Output'))]/ancestor::div/a[contains(@href,'/2/')]")
     private WebElement iconAddBranchBuild;
 
-    @FindBy(xpath = "//span[contains(text(), 'Changes')]")
+    @FindBy(xpath = "//div[@id='breadcrumb-menu-target']//span[text()='Changes']")
     private WebElement changesBuildButton;
 
     @FindBy(xpath = "//span[contains(text(), 'Replay')]")
