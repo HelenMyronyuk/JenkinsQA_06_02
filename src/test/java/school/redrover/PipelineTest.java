@@ -802,6 +802,22 @@ public class PipelineTest extends BaseTest {
     }
 
     @Test
+    public void testWorkspacesBuildFromLastBuild() {
+        final String pageHeaderText = "Workspaces for " + NAME + " #1";
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String actualPageHeaderText = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .openPermalinksLastBuildsDropDownMenu()
+                .clickWorkspaceButtonFromBuildDropDown()
+                .getHeaderTextFromWorkspacesBuildPage();
+
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
+    @Test
     public void testMakeSeveralBuilds() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
