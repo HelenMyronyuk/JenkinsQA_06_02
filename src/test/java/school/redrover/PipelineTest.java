@@ -3,6 +3,7 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.PipelinePage;
@@ -387,16 +388,32 @@ public class PipelineTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         Boolean newDisplayedBuildName = new MainPage(getDriver())
-            .clickBuildByGreenArrow(NAME)
-            .clickJobName(NAME, new PipelinePage(getDriver()))
-            .clickLastBuildLink()
-            .clickEditBuildInformation()
-            .enterDisplayName(DISPLAYED_BUILD_NAME)
-            .clickSaveButton()
-            .getBuildHeaderText()
-            .contains(DISPLAYED_BUILD_NAME);
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickLastBuildLink()
+                .clickEditBuildInformation()
+                .enterDisplayName(DISPLAYED_BUILD_NAME)
+                .clickSaveButton()
+                .getBuildHeaderText()
+                .contains(DISPLAYED_BUILD_NAME);
 
         Assert.assertTrue(newDisplayedBuildName, "Added Name for the Build is not displayed");
+    }
+
+    @Test
+    public void testPreviewDescriptionFromBuildPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String previewText = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .clickEditDescription()
+                .enterDescriptionText(DESCRIPTION)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewText, DESCRIPTION);
     }
 
     @Test
@@ -703,6 +720,39 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Ignore
+    @Test
+    public void testReplayBuildFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String lastBuildNumber = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .openBuildsDropDownMenu()
+                .clickReplayFromDropDownMenu()
+                .clickRunButton()
+                .getLastBuildNumber();
+
+        Assert.assertEquals(lastBuildNumber, "#2");
+    }
+
+    @Test
+    public void testReplayBuildFromLastBuild() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String lastBuildNumber = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .clickReplay(new PipelinePage(getDriver()))
+                .clickRunButton()
+                .getLastBuildNumber();
+
+        Assert.assertEquals(lastBuildNumber, "#3");
+    }
+
     @Test
     public void testReplayBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -874,6 +924,28 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertTrue(buildPage.isDisplayedBuildTitle(), "Build #1 failed");
         Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "Build #1 failed");
+    }
+
+    @Test
+    public void testAccessConfigurationPageFromDropDown() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String configPageHeaderText = new MainPage(getDriver())
+                .clickConfigureDropDown(NAME, new PipelineConfigPage(new PipelinePage(getDriver())))
+                .getPageHeaderText();
+
+        Assert.assertEquals(configPageHeaderText, "Configure");
+    }
+
+    @Test
+    public void testAccessConfigurationPageFromSideMenu() {
+        final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
+        PipelineConfigPage pipelineConfigPage = new PipelinePage(getDriver())
+                .clickConfigure();
+
+        Assert.assertEquals(pipelineConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
+        Assert.assertEquals(pipelineConfigPage.getTitle(), "Configure");
     }
 
     @Test
@@ -1187,32 +1259,5 @@ public class PipelineTest extends BaseTest {
                 .getWelcomeText();
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
-    }
-
-    @Test
-    public void testPreviewDescriptionFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String previewText = new MainPage(getDriver())
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .clickLastBuildLink()
-                .clickEditDescription()
-                .enterDescriptionText(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
-
-        Assert.assertEquals(previewText, DESCRIPTION);
-    }
-
-    @Test
-    public void testAccessConfigurationPageFromDropDown() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String configPageHeaderText = new MainPage(getDriver())
-                .clickConfigureDropDown(NAME, new PipelineConfigPage(new PipelinePage(getDriver())))
-                .getPageHeaderText();
-
-        Assert.assertEquals(configPageHeaderText, "Configure");
     }
 }

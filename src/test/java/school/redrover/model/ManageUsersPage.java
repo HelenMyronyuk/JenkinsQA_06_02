@@ -25,14 +25,11 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     @FindBy(id = "people")
     private List<WebElement> people;
 
-    @FindBy(xpath = "//a[@class='jenkins-table__button jenkins-!-destructive-color']")
+    @FindBy(xpath = "//a[contains(@href,'/delete')]")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//a[@class='jenkins-table__button'][1]")
+    @FindBy(xpath = "//a[@href='user/admin/configure']")
     private WebElement configureAdminUser;
-
-    @FindBy(className = "task")
-    private List<WebElement> tasks;
 
     public ManageUsersPage(WebDriver driver) {
         super(driver);
@@ -47,13 +44,13 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return createUser.getText().trim();
     }
 
-    public ManageUsersPage clickUserIDName(String userName) {
+    public UserPage clickUserIDName(String userName) {
         WebElement userIDNameLink = getWait2()
                 .until(ExpectedConditions.elementToBeClickable(
                         By.xpath("//a[@href='user/" + userName + "/']")));
         userIDNameLink.click();
 
-        return this;
+        return new UserPage(getDriver());
     }
 
     public ManageUsersPage openUserIDDropDownMenu(String userName){
@@ -97,10 +94,6 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         configureAdminUser.click();
 
         return new UserConfigPage(new StatusUserPage(getDriver()));
-    }
-
-    public List<WebElement> getListMenu() {
-        return tasks;
     }
 }
 

@@ -3,6 +3,7 @@ package school.redrover.model.base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.jobsconfig.FolderConfigPage;
 
 public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage extends BaseMainHeaderPage<?>> extends BaseMainHeaderPage<Self> {
 
@@ -20,6 +21,12 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
 
     @FindBy(xpath = "//h1")
     private WebElement title;
+
+    @FindBy(xpath = "//button[@name='Apply']")
+    private WebElement applyButton;
+
+    @FindBy(xpath = "//div[@id='notification-bar'][contains(@class, 'jenkins-notification--visible')]")
+    private WebElement notificationSuccess;
 
     private final JobPage jobPage;
 
@@ -63,4 +70,12 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
     public String getTitle(){
         return title.getText();
     }
-}
+
+    public Self pushApply() {
+        applyButton.click();
+        getWait2().until(ExpectedConditions.visibilityOf(notificationSuccess));
+
+        return (Self) this;
+    }
+
+    }

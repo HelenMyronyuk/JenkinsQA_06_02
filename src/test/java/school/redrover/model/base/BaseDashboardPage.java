@@ -425,11 +425,11 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     public Self clickChangeJenkinsTableSize(String size) {
-        getDriver().findElement(By.xpath("//a[@tooltip='" + size + "']")).click();
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@tooltip='" + size + "']"))).click();
         return (Self) this;
     }
 
     public Integer getJenkinsTableHeight() {
-        return getWait2().until(ExpectedConditions.visibilityOf(jenkinsTable)).getSize().height;
+        return getWait5().until(ExpectedConditions.visibilityOf(jenkinsTable)).getSize().height;
     }
 }

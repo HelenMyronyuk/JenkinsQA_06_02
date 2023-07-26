@@ -11,18 +11,18 @@ import java.util.List;
 
 public class ManagePluginsPage extends BaseMainHeaderPage<ManagePluginsPage> {
 
-    @FindBy(xpath = "//div[@id='tasks']//div[not(contains(@class, 'subtask'))]")
-    private List<WebElement> fourTasksOnTheLeftsidePanel;
+    @FindBy(xpath = "//div[@id='tasks']//a")
+    private List<WebElement> fourTasksOnTheLeftSidePanel;
 
-    @FindBy(xpath = "//*[@id='tasks']/div[4]/span")
+    @FindBy(xpath = "//a[contains(@href,'/advanced')]")
     private WebElement advancedSettings;
 
     public ManagePluginsPage(WebDriver driver) {
         super(driver);
     }
 
-    public List<String> checkFourTasksOnTheLeftsidePanel() {
-        List<WebElement> listOfTasks = getWait5().until(ExpectedConditions.visibilityOfAllElements(fourTasksOnTheLeftsidePanel));
+    public List<String> checkFourTasksOnTheLeftSidePanel() {
+        List<WebElement> listOfTasks = getWait5().until(ExpectedConditions.visibilityOfAllElements(fourTasksOnTheLeftSidePanel));
 
         return TestUtils.getTexts(listOfTasks);
     }

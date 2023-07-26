@@ -97,6 +97,7 @@ public class ViewsTest extends BaseTest {
                 .clickLogo()
                 .clickMyViewsSideMenuLink()
                 .clickInactiveLastCreatedMyView()
+                .clickEditView()
                 .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
                 .getActiveViewName();
 

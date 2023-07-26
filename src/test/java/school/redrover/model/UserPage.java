@@ -8,10 +8,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.runner.TestUtils;
 
+import java.util.List;
+
 public class UserPage extends BaseSubmenuPage<UserPage> {
 
     @FindBy(xpath = "//div[contains(text(), 'Jenkins User ID:')]")
     private WebElement actualNameUser;
+
+    @FindBy(className = "task")
+    private List<WebElement> tasks;
 
     public UserPage(WebDriver driver) {
         super(driver);
@@ -35,6 +40,10 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
 
     public boolean isUserPageAvailable() {
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText().contains("Jenkins User ID:");
+    }
+
+    public List<WebElement> getListMenu() {
+        return tasks;
     }
 }
 
