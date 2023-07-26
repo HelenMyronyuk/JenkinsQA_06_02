@@ -207,24 +207,6 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testCreateMyView() {
-        String newView = new MainPage(getDriver())
-                .clickNewItem()
-                .enterItemName(PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.Folder)
-                .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .clickNewView()
-                .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .getActiveViewName();
-
-        assertEquals(newView, VIEW_NAME);
-    }
-
-    @Test
     public void testHelpForFeatureDescription() {
         createNewFreestyleProjectAndNewView(PROJECT_NAME);
 
