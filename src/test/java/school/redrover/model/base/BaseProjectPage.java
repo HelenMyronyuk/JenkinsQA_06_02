@@ -255,9 +255,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public String getLastBuildNumber(){
-        int startIndex = lastBuildLink.getText().indexOf("#");
-        int finalIndex = lastBuildLink.getText().indexOf(")");
-       return lastBuildLink.getText().substring(startIndex, finalIndex);
+        return   getWait2().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
     }
 
     public Self openPermalinksLastBuildsDropDownMenu() {
