@@ -17,7 +17,6 @@ public class DashboardTest extends BaseTest {
     final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
     final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
-    @Ignore
     @Test
     public void testDashboardTableSize() {
         Map<String, Integer> tableSizeMap = TestUtils.getJenkinsTableSizeMap();
