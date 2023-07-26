@@ -1,8 +1,6 @@
 package school.redrover;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -498,7 +496,7 @@ public class BreadcrumbTest extends BaseTest {
                 .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
 
         if ("configure".equals(pageFromSubMenuConstructor.apply(getDriver()).callByMenuItemName())) {
-            actualResult = submenuPage.getTextFromBreadCrumb();
+            actualResult = submenuPage.getTextEditBuildInformFromBreadCrumb();
         } else {
             actualResult = submenuPage.getHeading();
         }

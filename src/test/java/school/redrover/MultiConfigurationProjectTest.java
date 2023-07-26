@@ -503,7 +503,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .editBuildInfoPermalinksLastBuildDropDown()
-                .getTextFromBreadCrumb();
+                .getTextEditBuildInformFromBreadCrumb();
 
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
@@ -517,7 +517,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .clickLastBuildLink()
                 .clickEditBuildInformation()
-                .getTextFromBreadCrumb();
+                .getTextEditBuildInformFromBreadCrumb();
 
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }

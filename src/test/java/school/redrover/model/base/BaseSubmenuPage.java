@@ -23,7 +23,7 @@ public abstract class BaseSubmenuPage<Self extends BaseSubmenuPage<?>> extends B
         return heading.getText();
     }
 
-    public String getTextFromBreadCrumb(){
+    public String getTextEditBuildInformFromBreadCrumb(){
             return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
 }

@@ -72,6 +72,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     @FindBy(xpath = "//span[contains(text(), 'Replay')]/..")
     private WebElement replayButton;
 
+    @FindBy(xpath = "//a[contains(@href,'flowGraphTable')]")
+    private WebElement pipelineSteps;
+
     public BuildPage(WebDriver driver) {
         super(driver);
     }
@@ -97,6 +100,12 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
         consoleOutputButton.click();
 
         return new ConsoleOutputPage(getDriver());
+    }
+
+    public PipelineStepsPage clickPipelineStepsFromSideMenu(){
+        pipelineSteps.click();
+
+        return new PipelineStepsPage(getDriver());
     }
 
     public EditBuildInformationPage clickEditBuildInformation() {
