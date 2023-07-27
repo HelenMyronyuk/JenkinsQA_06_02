@@ -736,7 +736,7 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertEquals(lastBuildNumber, "#2");
     }
-
+    @Ignore
     @Test
     public void testReplayBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);

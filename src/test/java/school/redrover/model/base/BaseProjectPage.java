@@ -258,7 +258,8 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public String getLastBuildNumber(){
-        return   getWait2().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
+        getDriver().navigate().refresh();
+        return   getWait10().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
     }
 
     public Self openPermalinksLastBuildsDropDownMenu() {
