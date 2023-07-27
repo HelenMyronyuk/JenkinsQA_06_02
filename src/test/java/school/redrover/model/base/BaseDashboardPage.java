@@ -114,6 +114,9 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     @FindBy(xpath = "//table[@id='projectstatus']")
     private WebElement jenkinsTable;
 
+    @FindBy(xpath = "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']")
+    private WebElement buildDropDownPipelineSteps;
+
     public BaseDashboardPage(WebDriver driver) {
         super(driver);
     }
@@ -439,5 +442,12 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public Integer getJenkinsTableHeight() {
         return getWait5().until(ExpectedConditions.visibilityOf(jenkinsTable)).getSize().height;
+    }
+
+    public PipelineStepsPage clickBuildDropdownMenuPipelineSteps(String buildNumber) {
+        openBuildDropDownMenu(buildNumber);
+        getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+                "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
+        return new PipelineStepsPage(getDriver());
     }
 }

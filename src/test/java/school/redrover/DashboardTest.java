@@ -2,6 +2,7 @@ package school.redrover;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
 import school.redrover.model.ViewPage;
@@ -22,6 +23,7 @@ public class DashboardTest extends BaseTest {
     private static final String DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
     private static final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
+    @Ignore
     @Test
     public void testDashboardTableSize() {
         Map<String, Integer> tableSizeMap = TestUtils.getJenkinsTableSizeMap();

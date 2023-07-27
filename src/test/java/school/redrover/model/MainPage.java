@@ -72,4 +72,9 @@ public class MainPage extends BaseDashboardPage<MainPage> {
 
         return new DeletePage<>(new ManageNodesPage(getDriver()));
     }
+
+    public MainPage refreshBrowser() {
+        getDriver().navigate().refresh();
+        return new MainPage(getDriver());
+    }
 }
