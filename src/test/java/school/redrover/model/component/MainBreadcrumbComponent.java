@@ -45,6 +45,15 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(xpath = "//a[contains(@href, '/user/')]")
     private WebElement userBreadcrumb;
 
+    @FindBy(xpath = "//li[@class='jenkins-breadcrumbs__list-item']//a[contains(@href, 'lastBuild')]")
+    private WebElement lastBuildBreadcrumbButton;
+
+    @FindBy(xpath = "//a[contains(@href, 'lastBuild')]//button[@class='jenkins-menu-dropdown-chevron']")
+    private WebElement lastBuildChevron;
+
+    @FindBy(xpath = "//div[@class='bd']//span[contains(text(), 'Delete build')]")
+    private WebElement deleteBuildLastBuildDropDownButton;
+
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
@@ -139,6 +148,23 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         getWait5().until(ExpectedConditions.elementToBeClickable(
                         By.xpath("//div[@id='breadcrumb-menu']//a[@href='/user/admin/" + listItemName + "']")))
                 .click();
+
+        return pageToReturn;
+    }
+
+    public MainBreadcrumbComponent<Page> getLastBuildBreadcrumbDropdownMenu() {
+        new Actions(getDriver())
+                .moveToElement(lastBuildBreadcrumbButton)
+                .pause(Duration.ofMillis(500))
+                .perform();
+
+        getWait2().until(ExpectedConditions.visibilityOf(lastBuildChevron)).sendKeys(Keys.RETURN);
+        return this;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickDeleteFromLastBuildDropDownMenu(
+            ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(deleteBuildLastBuildDropDownButton)).click();
 
         return pageToReturn;
     }

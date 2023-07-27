@@ -339,6 +339,23 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
+    public void testSubmenuDeleteMultiConfigBuild() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+
+        boolean lastBuild = new MainPage(getDriver())
+                .clickBuildByGreenArrow(PROJECT_NAME)
+                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickLastBuildLink()
+                .getBreadcrumb()
+                .getLastBuildBreadcrumbDropdownMenu()
+                .clickDeleteFromLastBuildDropDownMenu(new DeletePage<>(new MultiConfigurationProjectPage(getDriver())))
+                .clickYesButton()
+                .isNoBuildsDisplayed();
+
+        Assert.assertTrue(lastBuild, "Error! No builds message is not display");
+    }
+
+    @Test
     public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multi-configuration project";
         final String alertText = "Delete Multi-configuration project: are you sure?";
