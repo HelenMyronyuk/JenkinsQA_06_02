@@ -39,6 +39,9 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     @FindBy(xpath = "//a[contains(@href,'/asynchPeople/')]")
     private WebElement peopleButton;
 
+    @FindBy(xpath = "//a[contains(@href,'/welcome/builds')]")
+    private WebElement buildHistoryButton;
+
     public BaseOtherFoldersPage(WebDriver driver) {
         super(driver);
     }
@@ -99,5 +102,10 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     public PeoplePage clickPeopleFromSideMenu(){
         getWait5().until(ExpectedConditions.elementToBeClickable(peopleButton)).click();
         return new PeoplePage(getDriver());
+    }
+
+    public WelcomeBuildHistoryPage clickBuildHistoryWelcomeFromSideMenu(){
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildHistoryButton)).click();
+        return new WelcomeBuildHistoryPage(getDriver());
     }
 }

@@ -345,6 +345,18 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testNavigateToBuildHistoryPageFromProjectPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String buildHistoryWelcomeText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickBuildHistoryWelcomeFromSideMenu()
+                .getPageHeaderText();
+
+        Assert.assertEquals(buildHistoryWelcomeText, "Build History of Welcome");
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
