@@ -27,7 +27,7 @@ public class ViewsTest extends BaseTest {
 
     private static final String NEW_VIEW_NAME = "View2";
 
-    final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+    private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
 
     private void createNewFreestyleProjectAndNewView(String name) {

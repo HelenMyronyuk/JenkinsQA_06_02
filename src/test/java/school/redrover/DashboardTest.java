@@ -19,8 +19,8 @@ public class DashboardTest extends BaseTest {
 
     private static final String PROJECT_NAME = RandomStringUtils.randomAlphanumeric(7);
     private static final String VIEW_NAME = RandomStringUtils.randomAlphanumeric(5);
-    final String DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
-    final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+    private static final String DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+    private static final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
     @Test
     public void testDashboardTableSize() {
