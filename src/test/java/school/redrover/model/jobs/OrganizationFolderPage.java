@@ -5,14 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.MultibranchProjectPage;
+import school.redrover.model.DocBookPipelineMultibranchPage;
 import school.redrover.model.CredentialsPage;
 import school.redrover.model.OtherFoldersEventsPage;
 import school.redrover.model.ScanOtherFoldersLogPage;
 
 import school.redrover.model.base.BaseOtherFoldersPage;
 import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
-import school.redrover.model.PipelineProjectPage;
+import school.redrover.model.DocBookPipelinePage;
 
 public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFolderPage> {
 
@@ -56,9 +56,9 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new OrganizationFolderConfigPage(this);
     }
 
-    public MultibranchProjectPage clickMultibranchProject() {
+    public DocBookPipelineMultibranchPage clickMultibranchProject() {
         getWait2().until(ExpectedConditions.elementToBeClickable(multibranchProject)).click();
-        return new MultibranchProjectPage(getDriver());
+        return new DocBookPipelineMultibranchPage(getDriver());
     }
 
     public ScanOtherFoldersLogPage clickScanOrgFolderLog() {
@@ -92,9 +92,9 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new ScanOtherFoldersLogPage(getDriver());
     }
 
-    public PipelineProjectPage clickPipelineOneTutorial() {
+    public DocBookPipelinePage clickPipelineOneTutorial() {
         getWait5().until(ExpectedConditions.elementToBeClickable(linkBookCreatingJenkinsPipeline)).click();
 
-        return new PipelineProjectPage(getDriver());
+        return new DocBookPipelinePage(getDriver());
     }
 }

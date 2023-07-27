@@ -5,17 +5,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseMainHeaderPage;
 
-public class PipelineProjectPage extends BaseMainHeaderPage<PipelineProjectPage> {
+public class DocBookPipelinePage extends BaseMainHeaderPage<DocBookPipelinePage> {
 
     @FindBy(id = "pipeline-1")
     private WebElement title;
 
-    public PipelineProjectPage(WebDriver driver) {
+    public DocBookPipelinePage(WebDriver driver) {
         super(driver);
     }
 
     public String getTextPipelineTitle() {
-
         return title.getText();
     }
 }

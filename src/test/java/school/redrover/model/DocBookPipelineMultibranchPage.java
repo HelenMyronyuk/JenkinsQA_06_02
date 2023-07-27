@@ -5,12 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseMainHeaderPage;
 
-public class MultibranchProjectPage extends BaseMainHeaderPage<MultibranchProjectPage> {
+public class DocBookPipelineMultibranchPage extends BaseMainHeaderPage<DocBookPipelineMultibranchPage> {
 
     @FindBy(xpath = "//h1[@id='branches-and-pull-requests']")
     private WebElement branchesAndPullRequestsTutorial;
 
-    public MultibranchProjectPage(WebDriver driver) {
+    public DocBookPipelineMultibranchPage(WebDriver driver) {
         super(driver);
     }
 
