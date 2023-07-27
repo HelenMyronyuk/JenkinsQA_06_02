@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
@@ -106,6 +107,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     @FindBy(xpath = "//a[contains(@href, 'lastBuild')]/span[text()='Pipeline Steps']")
     private WebElement pipelineStepsDropDown;
+
+    @FindBy(xpath = "//div[@id='breadcrumb-menu-target']//span[text()='Pipeline Steps']")
+    private WebElement pipelineStepsDropDownFromSideMenu;
 
 
     public BaseProjectPage(WebDriver driver) {
@@ -319,5 +323,13 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public Self refreshPage() {
         getDriver().navigate().refresh();
         return (Self) this;
+    }
+
+    public PipelineStepsPage clickPipelineStepsFromBuildDropDownFromSideMenu() {
+        openBuildsDropDownMenu();
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(pipelineStepsDropDownFromSideMenu);
+        actions.click().perform();
+        return new PipelineStepsPage(getDriver());
     }
 }

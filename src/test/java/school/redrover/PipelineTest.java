@@ -10,6 +10,7 @@ import school.redrover.model.jobsconfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.Arrays;
 import java.util.List;
 
@@ -780,6 +781,19 @@ public class PipelineTest extends BaseTest {
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .clickBuildDropdownMenuPipelineSteps("#1")
+                .getTitlePipelineFromBreadcrumb();
+
+        Assert.assertEquals(pipelineSteps, "Pipeline Steps");
+    }
+
+    @Test
+    public void testPipelineStepsBuildFromProjectPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        String pipelineSteps = new MainPage(getDriver())
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .clickPipelineStepsFromBuildDropDownFromSideMenu()
                 .getTitlePipelineFromBreadcrumb();
 
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
