@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
@@ -258,8 +259,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public String getLastBuildNumber(){
-        getDriver().navigate().refresh();
-        return   getWait10().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
+        return getWait10().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
     }
 
     public Self openPermalinksLastBuildsDropDownMenu() {
@@ -314,5 +314,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         openLastBuildDropDownMenu();
         pipelineStepsDropDown.click();
         return new PipelineStepsPage(getDriver());
+    }
+
+    public Self refreshPage() {
+        getDriver().navigate().refresh();
+        return (Self) this;
     }
 }

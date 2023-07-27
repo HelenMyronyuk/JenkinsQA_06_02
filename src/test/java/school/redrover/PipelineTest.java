@@ -3,7 +3,6 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.PipelinePage;
@@ -705,7 +704,6 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
-    @Ignore
     @Test
     public void testReplayBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -716,12 +714,12 @@ public class PipelineTest extends BaseTest {
                 .openPermalinksLastBuildsDropDownMenu()
                 .clickReplayFromDropDownMenu()
                 .clickRunButton()
+                .refreshPage()
                 .getLastBuildNumber();
 
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
-    @Ignore
     @Test
     public void testReplayBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -732,11 +730,12 @@ public class PipelineTest extends BaseTest {
                 .openBuildsDropDownMenu()
                 .clickReplayFromDropDownMenu()
                 .clickRunButton()
+                .refreshPage()
                 .getLastBuildNumber();
 
         Assert.assertEquals(lastBuildNumber, "#2");
     }
-    @Ignore
+
     @Test
     public void testReplayBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -749,12 +748,12 @@ public class PipelineTest extends BaseTest {
                 .getBuildDropdownMenu()
                 .clickReplay(new PipelinePage(getDriver()))
                 .clickRunButton()
+                .refreshPage()
                 .getLastBuildNumber();
 
         Assert.assertEquals(lastBuildNumber, "#3");
     }
 
-    @Ignore
     @Test
     public void testReplayBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -765,6 +764,7 @@ public class PipelineTest extends BaseTest {
                 .clickLastBuildLink()
                 .clickReplay(new PipelinePage(getDriver()))
                 .clickRunButton()
+                .refreshPage()
                 .getLastBuildNumber();
 
         Assert.assertEquals(lastBuildNumber, "#2");
