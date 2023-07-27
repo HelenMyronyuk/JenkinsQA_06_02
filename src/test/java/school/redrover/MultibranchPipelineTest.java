@@ -333,6 +333,18 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testNavigateToPeoplePageFromProjectPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String peoplePageText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickPeopleFromSideMenu()
+                .getPageHeaderText();
+
+        Assert.assertEquals(peoplePageText, "People - Welcome");
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 

@@ -4,11 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.DeletePage;
-import school.redrover.model.MainPage;
-import school.redrover.model.OtherFoldersEventsPage;
-import school.redrover.model.PipelineSyntaxPage;
-import school.redrover.model.ScanOtherFoldersLogPage;
+import school.redrover.model.*;
 import school.redrover.model.jobs.FolderPage;
 
 public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends BaseJobPage<Self> {
@@ -39,6 +35,9 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
     @FindBy(xpath = "//a[contains(@href, 'pipeline-syntax')]")
     private WebElement pipelineSyntax;
+
+    @FindBy(xpath = "//a[contains(@href,'/asynchPeople/')]")
+    private WebElement peopleButton;
 
     public BaseOtherFoldersPage(WebDriver driver) {
         super(driver);
@@ -95,5 +94,10 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
         pipelineSyntax.click();
 
         return new PipelineSyntaxPage(getDriver());
+    }
+
+    public PeoplePage clickPeopleFromSideMenu(){
+        getWait5().until(ExpectedConditions.elementToBeClickable(peopleButton)).click();
+        return new PeoplePage(getDriver());
     }
 }

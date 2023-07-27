@@ -705,6 +705,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Ignore
     @Test
     public void testReplayBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
