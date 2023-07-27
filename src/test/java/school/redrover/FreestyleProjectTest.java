@@ -1026,19 +1026,18 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testAllowParallelBuilds() {
-        final String checkExecuteConcurrentBuilds = "rowvg-start tr";
+
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        final String statusExecuteConcurrentBuilds = new MainPage(getDriver())
+        final boolean statusExecuteConcurrentBuilds = new MainPage(getDriver())
                 .clickJobName(NEW_FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickConfigure()
                 .clickCheckBoxExecuteConcurrentBuilds()
                 .clickSaveButton()
                 .clickConfigure()
-                .getTrueExecuteConcurrentBuilds()
-                .getAttribute("class");
+                .isExecuteConcurrentBuildsSelected();
 
-        Assert.assertEquals(statusExecuteConcurrentBuilds, checkExecuteConcurrentBuilds);
+        Assert.assertTrue(statusExecuteConcurrentBuilds, "ExecuteConcurrentBuilds is not Selected");
     }
 
     @Test

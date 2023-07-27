@@ -1,9 +1,9 @@
-package school.redrover.model.base;
+package school.redrover.model.base.baseConfig;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.jobsconfig.FolderConfigPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 
 public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage extends BaseMainHeaderPage<?>> extends BaseMainHeaderPage<Self> {
 

@@ -1,13 +1,15 @@
-package school.redrover.model.base;
+package school.redrover.model.base.baseConfig;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.base.BaseJobPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 
 import java.time.Duration;
 
-public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, FolderPage extends BaseMainHeaderPage<?>> extends BaseConfigPage<Self, FolderPage>{
+public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, FolderPage extends BaseJobPage<?>> extends BaseConfigPage<Self, FolderPage>{
 
     @FindBy(xpath = "//input[@name='_.displayNameOrNull']")
     private WebElement inputDisplayName;

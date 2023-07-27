@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.jobs.PipelinePage;
-import school.redrover.model.base.BaseConfigProjectsPage;
+import school.redrover.model.base.baseConfig.BaseConfigProjectsPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;

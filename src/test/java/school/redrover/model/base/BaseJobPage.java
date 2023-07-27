@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.MainPage;
 import school.redrover.model.MovePage;
 import school.redrover.model.RenamePage;
+import school.redrover.model.base.baseConfig.BaseConfigPage;
 
 import java.time.Duration;
 

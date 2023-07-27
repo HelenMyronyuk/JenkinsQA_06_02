@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.jobs.OrganizationFolderPage;
-import school.redrover.model.base.BaseConfigFoldersPage;
+import school.redrover.model.base.baseConfig.BaseConfigFoldersPage;
 
 public class OrganizationFolderConfigPage extends BaseConfigFoldersPage<OrganizationFolderConfigPage, OrganizationFolderPage> {
 
