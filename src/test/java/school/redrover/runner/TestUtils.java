@@ -349,10 +349,11 @@ public class TestUtils {
     }
 
     public static Map<String, Integer> getJenkinsTableSizeMap() {
-        return Map.of(
-                "Small", 71,
-                "Medium", 86,
-                "Large", 102
-        );
+        Map<String, Integer> tableSizeMap = new LinkedHashMap<>();
+        tableSizeMap.put("Small", 71);
+        tableSizeMap.put("Medium", 86);
+        tableSizeMap.put("Large", 102);
+
+        return tableSizeMap;
     }
 }
