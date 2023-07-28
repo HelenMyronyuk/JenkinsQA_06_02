@@ -134,7 +134,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
                 .addDescription(textToDescriptionField)
                 .scrollToBuildTriggers()
-                .clickBuildTriggerCheckBox()
+                .clickBuildAfterOtherProjectsAreBuiltCheckBox()
                 .scrollToPipelineSection()
                 .sendAreContentInputString(textToPipelineScript)
                 .clickSaveButton()

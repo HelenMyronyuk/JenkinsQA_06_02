@@ -935,9 +935,9 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(Integer
-                .parseInt(freestyleProjectConfigPage.getDaysToKeepBuilds("value")), daysToKeepBuilds);
+                .parseInt(freestyleProjectConfigPage.getDaysToKeepBuilds()), daysToKeepBuilds);
         Assert.assertEquals(Integer
-                .parseInt(freestyleProjectConfigPage.getMaxNumOfBuildsToKeep("value")), maxOfBuildsToKeep);
+                .parseInt(freestyleProjectConfigPage.getMaxNumOfBuildsToKeep()), maxOfBuildsToKeep);
     }
 
     @Test
@@ -970,7 +970,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .checkProjectIsParametrized()
                 .openAddParameterDropDown()
                 .selectParameterInDropDownByType(booleanParameter)
-                .inputParameterName(booleanParameterName)
+                .inputBooleanParameterName(booleanParameterName)
                 .selectCheckboxSetByDefault()
                 .clickSaveButton()
                 .clickBuildWithParameters()
@@ -996,7 +996,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .checkProjectIsParametrized()
                 .openAddParameterDropDown()
                 .selectParameterInDropDownByType(parameterType)
-                .inputParameterName(parameterName)
+                .inputBooleanParameterName(parameterName)
                 .inputParameterChoices(parameterChoicesList)
                 .inputParameterDesc(parameterDesc)
                 .clickSaveButton()

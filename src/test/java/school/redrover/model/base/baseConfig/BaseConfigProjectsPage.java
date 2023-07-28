@@ -1,7 +1,6 @@
 package school.redrover.model.base.baseConfig;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,6 +30,9 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     @FindBy(xpath = "//input[@name='_.numToKeepStr']")
     private WebElement maxNumOfBuildsToKeepNumber;
 
+    @FindBy(xpath = "//*[@name='strategy']//div[@class='error']")
+    private WebElement errorMessage;
+
     @FindBy(xpath = "//label[text()='GitHub project']")
     private WebElement checkBoxGitHubProject;
 
@@ -51,6 +53,9 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     @FindBy(xpath = "//label[normalize-space(text())='Set by Default']")
     private WebElement checkboxSetByDefault;
+
+    @FindBy(xpath = "//textarea[contains(@name,'parameter.description')]")
+    private WebElement textareaBooleanParameterDescription;
 
     @FindBy(xpath = "//textarea[@name='parameter.choices']")
     private WebElement inputParameterChoices;
@@ -80,12 +85,16 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     }
 
     public Boolean isEnabledDisplayed() {
-        return getWait5().until(ExpectedConditions.elementToBeClickable(enabledText)).isDisplayed();
+        return enabledText.isDisplayed();
     }
 
     public Self clickOldBuildCheckBox() {
         TestUtils.clickByJavaScript(this, oldBuildCheckBox);
         return (Self) this;
+    }
+
+    public boolean checkboxDiscardOldBuildsIsSelected() {
+        return oldBuildCheckBox.isSelected();
     }
 
     public Self enterDaysToKeepBuilds(int number) {
@@ -101,12 +110,16 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
         return (Self) this;
     }
 
-    public String getDaysToKeepBuilds(String attribute) {
-        return daysToKeepBuilds.getAttribute(attribute);
+    public String getDaysToKeepBuilds() {
+        return daysToKeepBuilds.getAttribute("value");
     }
 
-    public String getMaxNumOfBuildsToKeep(String attribute) {
-        return maxNumOfBuildsToKeepNumber.getAttribute(attribute);
+    public String getMaxNumOfBuildsToKeep() {
+        return maxNumOfBuildsToKeepNumber.getAttribute("value");
+    }
+
+    public String getErrorMessageStrategyDays() {
+        return getWait2().until(ExpectedConditions.elementToBeClickable(errorMessage)).getText();
     }
 
     public Self clickGitHubProjectCheckbox() {
@@ -137,13 +150,18 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
         return (Self) this;
     }
 
-    public Self inputParameterName(String name) {
+    public Self inputBooleanParameterName(String name) {
         inputParameterName.sendKeys(name);
         return (Self) this;
     }
 
     public Self selectCheckboxSetByDefault() {
         TestUtils.click(this, checkboxSetByDefault);
+        return (Self) this;
+    }
+
+    public Self setBooleanParameterDescription(String description) {
+        textareaBooleanParameterDescription.sendKeys(description);
         return (Self) this;
     }
 
@@ -161,6 +179,11 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public List<String> getAllOptionsOfAddParameterDropdown() {
         return TestUtils.getTexts(optionsOfAddParameterDropdown);
+    }
+
+    public Self scrollToBuildTriggers() {
+        TestUtils.scrollToElementByJavaScript(this, throttleBuilds);
+        return (Self) this;
     }
 
     public Self checkThrottleBuilds() {

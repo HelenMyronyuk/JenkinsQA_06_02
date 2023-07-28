@@ -770,9 +770,9 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(Integer.parseInt(
-                multiConfigurationProjectConfigPage.getDaysToKeepBuilds("value")), displayedDaysToKeepBuilds);
+                multiConfigurationProjectConfigPage.getDaysToKeepBuilds()), displayedDaysToKeepBuilds);
         Assert.assertEquals(Integer.parseInt(
-                multiConfigurationProjectConfigPage.getMaxNumOfBuildsToKeep("value")), displayedMaxNumOfBuildsToKeep);
+                multiConfigurationProjectConfigPage.getMaxNumOfBuildsToKeep()), displayedMaxNumOfBuildsToKeep);
     }
 
     @Test

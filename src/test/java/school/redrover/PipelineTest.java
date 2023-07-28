@@ -10,7 +10,6 @@ import school.redrover.model.jobsconfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.Arrays;
 import java.util.List;
 
@@ -903,7 +902,6 @@ public class PipelineTest extends BaseTest {
         String textSuccessBuild = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .clickScriptDropDownMenu()
                 .selectHelloWord()
                 .clickSaveButton()
                 .clickBuildNowFromSideMenu()
@@ -934,7 +932,6 @@ public class PipelineTest extends BaseTest {
         String stageName = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .clickScriptDropDownMenu()
                 .selectHelloWord()
                 .clickSaveButton()
                 .clickBuildNowFromSideMenu()
@@ -1010,7 +1007,6 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
                 .clickPipelineLeftMenu()
-                .clickScriptDropDownMenu()
                 .selectHelloWord()
                 .clickSaveButton()
                 .clickBuildNowFromSideMenu()
@@ -1049,10 +1045,10 @@ public class PipelineTest extends BaseTest {
         boolean projectDisable = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .toggleDisableProject()
+                .clickSwitchEnableOrDisable()
                 .clickSaveButton()
                 .clickConfigure()
-                .isProjectDisable();
+                .isEnabledDisplayed();
 
         Assert.assertFalse(projectDisable, "Pipeline is enabled");
     }
@@ -1125,7 +1121,8 @@ public class PipelineTest extends BaseTest {
         boolean discardOldBuildsCheckbox = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .selectDiscardOldBuildsandSave()
+                .clickOldBuildCheckBox()
+                .clickSaveButton()
                 .clickConfigure()
                 .checkboxDiscardOldBuildsIsSelected();
 
@@ -1138,9 +1135,9 @@ public class PipelineTest extends BaseTest {
 
         String jobName = new PipelinePage(getDriver())
                 .clickConfigure()
-                .clickDiscardOldBuildsCheckbox()
-                .enterDaysToKeepBuilds("2")
-                .enterMaxOfBuildsToKeep("30")
+                .clickOldBuildCheckBox()
+                .enterDaysToKeepBuilds(2)
+                .enterMaxNumOfBuildsToKeep(30)
                 .clickSaveButton()
                 .getJobName();
 
@@ -1149,21 +1146,21 @@ public class PipelineTest extends BaseTest {
 
     @Test
     public void testDiscardOldBuildsParams() {
-        final String days = "7";
-        final String builds = "5";
+        final int days = 7;
+        final int builds = 5;
 
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
 
         PipelineConfigPage pipelineConfigPage = new PipelinePage(getDriver())
                 .clickConfigure()
-                .clickDiscardOldBuildsCheckbox()
+                .clickOldBuildCheckBox()
                 .enterDaysToKeepBuilds(days)
-                .enterMaxOfBuildsToKeep(builds)
+                .enterMaxNumOfBuildsToKeep(builds)
                 .clickSaveButton()
                 .clickConfigure();
 
-        Assert.assertEquals(pipelineConfigPage.getDaysToKeepBuilds(), days);
-        Assert.assertEquals(pipelineConfigPage.getMaxNumbersOfBuildsToKeep(), builds);
+        Assert.assertEquals(pipelineConfigPage.getDaysToKeepBuilds(), String.valueOf(days));
+        Assert.assertEquals(pipelineConfigPage.getMaxNumOfBuildsToKeep(), String.valueOf(builds));
     }
 
     @Test
@@ -1172,26 +1169,12 @@ public class PipelineTest extends BaseTest {
 
         String actualErrorMessage = new PipelinePage(getDriver())
                 .clickConfigure()
-                .clickDiscardOldBuildsCheckbox()
-                .enterDaysToKeepBuilds("0")
-                .enterMaxOfBuildsToKeep("")
+                .clickOldBuildCheckBox()
+                .enterDaysToKeepBuilds(0)
+                .enterMaxNumOfBuildsToKeep(0)
                 .getErrorMessageStrategyDays();
 
         Assert.assertEquals(actualErrorMessage, "Not a positive integer");
-    }
-
-    @Test
-    public void testDiscardOldBuildsIsChecked0Builds() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
-
-        boolean notPositiveInteger = new PipelinePage(getDriver())
-                .clickConfigure()
-                .clickDiscardOldBuildsCheckbox()
-                .enterDaysToKeepBuilds("0")
-                .clickOutsideOfInputField()
-                .isErrorMessageDisplayed();
-
-        Assert.assertTrue(notPositiveInteger);
     }
 
     @Test
@@ -1224,9 +1207,11 @@ public class PipelineTest extends BaseTest {
 
         BuildWithParametersPage<PipelinePage> buildParametersPagePage = new PipelinePage(getDriver())
                 .clickConfigure()
-                .clickAndAddParameter(parameterName)
-                .setBooleanParameterName(name)
-                .setDefaultBooleanParameter()
+                .checkProjectIsParametrized()
+                .openAddParameterDropDown()
+                .selectParameterInDropDownByType(parameterName)
+                .inputBooleanParameterName(name)
+                .selectCheckboxSetByDefault()
                 .setBooleanParameterDescription(description)
                 .clickSaveButton()
                 .getHeader()
@@ -1247,8 +1232,10 @@ public class PipelineTest extends BaseTest {
 
         BuildWithParametersPage<PipelinePage> buildParametersPage = new PipelinePage(getDriver())
                 .clickConfigure()
-                .clickAndAddParameter(parameterName)
-                .setBooleanParameterName(name)
+                .checkProjectIsParametrized()
+                .openAddParameterDropDown()
+                .selectParameterInDropDownByType(parameterName)
+                .inputBooleanParameterName(name)
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
@@ -1297,7 +1284,8 @@ public class PipelineTest extends BaseTest {
         boolean projectIsPresent = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .selectScriptedPipelineAndSubmit()
+                .selectScriptedPipeline()
+                .clickSaveButton()
                 .getHeader()
                 .clickLogo()
                 .jobIsDisplayed(NAME);
