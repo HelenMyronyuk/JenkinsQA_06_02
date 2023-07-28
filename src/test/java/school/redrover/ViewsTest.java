@@ -262,6 +262,22 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
+    public void testAddDescriptionForGlobalViewTypeFromConfigure() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String actualViewName = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class)
+                .addDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(actualViewName, VIEW_DESCRIPTION);
+    }
+
+    @Test
     public void testAddDescriptionForMyViewFromConfigPage() {
         createNewFreestyleProjectAndNewView(PROJECT_NAME);
 
