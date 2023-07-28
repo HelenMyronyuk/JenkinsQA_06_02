@@ -356,6 +356,26 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testPipelineSyntax() {
+        final String sampleStep = "sleep: Sleep";
+        final String time = "1000";
+        final String unit = "MILLISECONDS";
+        final String expectedScript = "sleep time: " + time + ", unit: '" + unit + "'";
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String pipelineSyntax = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickPipelineSyntax()
+                .setSampleStep(sampleStep)
+                .enterSleepTime(time)
+                .setUnit(unit)
+                .clickGeneratePipelineScriptButton()
+                .getTextPipelineScript();
+
+        Assert.assertEquals(pipelineSyntax, expectedScript);
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
