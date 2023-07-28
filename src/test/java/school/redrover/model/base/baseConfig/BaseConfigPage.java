@@ -67,7 +67,7 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
         return (Self) this;
     }
 
-    public String getTitle(){
+    public String getHeaderText(){
         return title.getText();
     }
 

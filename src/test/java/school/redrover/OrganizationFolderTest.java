@@ -444,24 +444,24 @@ public class OrganizationFolderTest extends BaseTest {
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickConfigureDropDown(
                         ORGANIZATION_FOLDER_NAME, new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickConfigure()
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test

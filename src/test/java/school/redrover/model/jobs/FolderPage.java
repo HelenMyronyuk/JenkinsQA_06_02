@@ -68,7 +68,7 @@ public class FolderPage extends BaseJobPage<FolderPage> {
                 .toList();
     }
 
-    public String getPageTitle() {
+    public String getTitle() {
         return getDriver().getTitle();
     }
 

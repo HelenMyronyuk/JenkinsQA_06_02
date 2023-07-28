@@ -356,6 +356,26 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testPipelineSyntax() {
+        final String sampleStep = "sleep: Sleep";
+        final String time = "1000";
+        final String unit = "MILLISECONDS";
+        final String expectedScript = "sleep time: " + time + ", unit: '" + unit + "'";
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String pipelineSyntax = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickPipelineSyntax()
+                .setSampleStep(sampleStep)
+                .enterSleepTime(time)
+                .setUnit(unit)
+                .clickGeneratePipelineScriptButton()
+                .getTextPipelineScript();
+
+        Assert.assertEquals(pipelineSyntax, expectedScript);
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
@@ -388,24 +408,24 @@ public class MultibranchPipelineTest extends BaseTest {
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickConfigureDropDown(
                         NAME, new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test

@@ -91,7 +91,7 @@ public class ViewsTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickMyViewsSideMenuLink()
-                .clickInactiveLastCreatedMyView()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
                 .clickEditView()
                 .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
                 .getHeader()
@@ -104,7 +104,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
-    public void testRenameView() {
+    public void testRenameMyViewType() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String actualViewName = new MainPage(getDriver())
@@ -115,7 +115,7 @@ public class ViewsTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickMyViewsSideMenuLink()
-                .clickInactiveLastCreatedMyView()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
                 .clickEditView()
                 .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
                 .getActiveViewName();
@@ -140,7 +140,7 @@ public class ViewsTest extends BaseTest {
                 .getListOfAllViews().size();
 
         int numberOfAllViewsAfterDeletion = new MyViewsPage(getDriver())
-                .clickInactiveLastCreatedMyView()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
                 .clickDeleteViewButton()
                 .clickYesButton()
                 .getListOfAllViews().size();
@@ -259,6 +259,22 @@ public class ViewsTest extends BaseTest {
 
         Assert.assertEquals(previewText, VIEW_DESCRIPTION);
         Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
+    }
+
+    @Test
+    public void testAddDescriptionForGlobalViewTypeFromConfigure() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String actualViewName = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class)
+                .addDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(actualViewName, VIEW_DESCRIPTION);
     }
 
     @Test

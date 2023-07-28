@@ -21,8 +21,8 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> {
     @FindBy(xpath = "//h2")
     private WebElement statusMessage;
 
-    @FindBy(xpath = "//div[@class = 'tab'][last()-1]")
-    private WebElement inactiveLastCreatedMyView;
+    @FindBy(xpath = "//div[@class='tabBar']/div/a")
+    private List<WebElement> allViewLinks;
 
     @FindBy(xpath = "//a[@href = 'delete']")
     private WebElement deleteViewButton;
@@ -35,8 +35,16 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> {
         return statusMessage.getText();
     }
 
-    public MyViewsPage clickInactiveLastCreatedMyView() {
-        TestUtils.click(this, inactiveLastCreatedMyView);
+    public MyViewsPage clickInactiveLastCreatedMyView(String viewName) {
+        for(WebElement e : allViewLinks) {
+            String link = e.getAttribute("href");
+            String linkName = link.substring(link.length() - viewName.length() - 1, link.length() - 1);
+            if(linkName.equals(viewName)) {
+                TestUtils.click(this, e);
+
+                return this;
+            }
+        }
 
         return this;
     }

@@ -568,7 +568,7 @@ public class PipelineTest extends BaseTest {
                 .clickLogo()
                 .openBuildDropDownMenu("#1")
                 .clickEditBuildInformFromDropDown()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
@@ -581,7 +581,7 @@ public class PipelineTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickEditBuildInformFromProjectPage()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
@@ -594,7 +594,7 @@ public class PipelineTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .editBuildInfoPermalinksLastBuildDropDown()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(textPageFromBreadcrumb, "Edit Build Information");
     }
@@ -608,7 +608,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickLastBuildLink()
                 .clickEditBuildInformation()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(testPageFromBreadcrumb, "Edit Build Information");
     }
@@ -1035,7 +1035,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(pipelineConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
-        Assert.assertEquals(pipelineConfigPage.getTitle(), "Configure");
+        Assert.assertEquals(pipelineConfigPage.getHeaderText(), "Configure");
     }
 
     @Test
