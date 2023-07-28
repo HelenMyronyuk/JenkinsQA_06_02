@@ -279,6 +279,22 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
+    public void testAddDescriptionForListViewTypeFromConfigure() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String descriptionText = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .addDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
+    }
+
+    @Test
     public void testAddDescriptionForMyViewOnMyView() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
