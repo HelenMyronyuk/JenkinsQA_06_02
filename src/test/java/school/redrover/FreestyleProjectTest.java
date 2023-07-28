@@ -470,6 +470,20 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testBuildChangesFromBuildPage(){
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String text = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickLastBuildLink()
+                .clickChangesBuildFromSideMenu()
+                .getPageHeaderText();
+
+        Assert.assertEquals(text, "Changes");
+    }
+
+    @Test
     public void testConsoleOutputFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 

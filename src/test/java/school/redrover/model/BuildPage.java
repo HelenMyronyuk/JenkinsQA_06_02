@@ -75,6 +75,9 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     @FindBy(xpath = "//a[contains(@href,'flowGraphTable')]")
     private WebElement pipelineSteps;
 
+    @FindBy(xpath = "//a[contains(@href,'/lastBuild/changes')]")
+    private WebElement changesPageButton;
+
     public BuildPage(WebDriver driver) {
         super(driver);
     }
@@ -94,6 +97,12 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
     public <JobTypePage extends BasePage<?, ?>> DeletePage<JobTypePage> clickDeleteBuild(JobTypePage jobTypePage) {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteBuildButton)).click();
         return new DeletePage<>(jobTypePage);
+    }
+
+    public ChangesBuildPage clickChangesBuildFromSideMenu(){
+        changesPageButton.click();
+
+        return new ChangesBuildPage(getDriver());
     }
 
     public ConsoleOutputPage clickConsoleOutput() {
