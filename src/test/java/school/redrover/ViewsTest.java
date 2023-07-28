@@ -25,6 +25,29 @@ public class ViewsTest extends BaseTest {
 
     private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
+    @DataProvider(name = "myView types")
+    public Object[][] myViewType() {
+        return new Object[][]{
+                {TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class},
+                {TestUtils.ViewType.ListView, ListViewConfigPage.class},
+                {TestUtils.ViewType.MyView, ViewPage.class}
+        };
+    }
+    @DataProvider(name = "view types with config")
+    public Object[][] viewTypeWithConfig() {
+        return new Object[][]{
+                {TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class},
+                {TestUtils.ViewType.ListView, ListViewConfigPage.class}
+        };
+    }
+
+    @DataProvider(name = "mainView types")
+    public Object[][] viewType() {
+        return new Object[][]{
+                {TestUtils.ViewType.ListView, ListViewConfigPage.class},
+                {TestUtils.ViewType.MyView, ViewPage.class}
+        };
+    }
 
     private void createNewFreestyleProjectAndNewView(String name) {
         TestUtils.createJob(this, name, TestUtils.JobType.FreestyleProject, true);
@@ -80,40 +103,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(actualViewName, VIEW_NAME);
     }
 
-    @Test
-    public void testRenameGlobalViewType() {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        boolean actualViewName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .createNewView()
-                .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class)
-                .getHeader()
-                .clickLogo()
-                .clickMyViewsSideMenuLink()
-                .clickInactiveLastCreatedMyView(VIEW_NAME)
-                .clickEditView()
-                .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
-                .getHeader()
-                .clickLogo()
-                .clickMyViewsSideMenuLink()
-                .getListOfAllViews()
-                .contains(NEW_VIEW_NAME);
-
-        Assert.assertTrue(actualViewName, NEW_VIEW_NAME);
-    }
-
-    @DataProvider(name = "view types")
-    public Object[][] viewType() {
-        return new Object[][]{
-                {TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class},
-                {TestUtils.ViewType.ListView, ListViewConfigPage.class},
-                {TestUtils.ViewType.MyView, ViewPage.class}
-        };
-    }
-
-    @Test(dataProvider = "view types")
+    @Test(dataProvider = "myView types")
     public void testRenameViewTypes(TestUtils.ViewType viewType, Class clazz) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
@@ -137,45 +127,42 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(actualViewName, "The new name is not displayed");
     }
 
-    @Test
-    public void testDeleteMyViewFromViewPage() {
+    @Test(dataProvider = "myView types")
+    public void testDeleteMyViewTypesFromViewPage(TestUtils.ViewType viewType, Class clazz) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        new MainPage(getDriver())
+        boolean isDeletedViewPresent = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .selectTypeViewClickCreate(viewType, clazz)
                 .getHeader()
-                .clickLogo();
-
-        int numberOfAllViews = new MainPage(getDriver())
+                .clickLogo()
                 .clickMyViewsSideMenuLink()
-                .getListOfAllViews().size();
-
-        int numberOfAllViewsAfterDeletion = new MyViewsPage(getDriver())
                 .clickInactiveLastCreatedMyView(VIEW_NAME)
                 .clickDeleteViewButton()
                 .clickYesButton()
-                .getListOfAllViews().size();
+                .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertEquals(numberOfAllViews - numberOfAllViewsAfterDeletion, 1);
+        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
     }
 
-    @Test
-    public void testDeleteListViewFromViewPage() {
+    @Test(dataProvider = "mainView types")
+    public void testDeleteViewTypesFromViewPage(TestUtils.ViewType viewType, Class clazz){
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         boolean isDeletedViewPresent = new MainPage(getDriver())
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
-                .clickSaveButton()
+                .selectTypeViewClickCreate(viewType, clazz)
+                .getHeader()
+                .clickLogo()
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
                 .clickDeleteView()
                 .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertFalse(isDeletedViewPresent);
+        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
     }
 
     @Ignore
