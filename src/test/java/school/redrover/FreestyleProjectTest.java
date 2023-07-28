@@ -559,7 +559,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .openBuildDropDownMenu("#1")
                 .clickEditBuildInformFromDropDown()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
@@ -572,7 +572,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickEditBuildInformFromProjectPage()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
@@ -896,7 +896,7 @@ public class FreestyleProjectTest extends BaseTest {
                 );
 
         Assert.assertEquals(freestyleConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
-        Assert.assertEquals(freestyleConfigPage.getTitle(), "Configure");
+        Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
     @Test
@@ -909,7 +909,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(freestyleConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumbRoute);
-        Assert.assertEquals(freestyleConfigPage.getTitle(), "Configure");
+        Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
     @Test

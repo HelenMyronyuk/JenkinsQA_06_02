@@ -408,24 +408,24 @@ public class MultibranchPipelineTest extends BaseTest {
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickConfigureDropDown(
                         NAME, new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configuration");
+        Assert.assertEquals(getHeaderText, "Configuration");
     }
 
     @Test

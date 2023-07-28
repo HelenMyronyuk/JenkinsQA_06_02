@@ -14,7 +14,7 @@ public class BuiltInNodePage extends BaseMainHeaderPage<BuiltInNodePage> {
         super(driver);
     }
 
-    public String getTitle() {
+    public String getHeaderText() {
         return title.getText();
     }
 }

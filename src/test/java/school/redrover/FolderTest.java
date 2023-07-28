@@ -258,7 +258,7 @@ public class FolderTest extends BaseTest {
                 .clickRenameButton();
 
         Assert.assertEquals(folderPage.getJobName(), RENAME);
-        Assert.assertEquals(folderPage.getPageTitle(), "All [" + RENAME + "] [Jenkins]");
+        Assert.assertEquals(folderPage.getTitle(), "All [" + RENAME + "] [Jenkins]");
     }
 
     @Test
@@ -317,7 +317,7 @@ public class FolderTest extends BaseTest {
                 .clickConfigureDropDown(NAME, new FolderConfigPage(new FolderPage(getDriver())));
 
         Assert.assertEquals(folderConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
-        Assert.assertEquals(folderConfigPage.getTitle(), "Configuration");
+        Assert.assertEquals(folderConfigPage.getHeaderText(), "Configuration");
     }
 
     @Test
@@ -328,7 +328,7 @@ public class FolderTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(folderConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
-        Assert.assertEquals(folderConfigPage.getTitle(), "Configuration");
+        Assert.assertEquals(folderConfigPage.getHeaderText(), "Configuration");
     }
 
     @Test

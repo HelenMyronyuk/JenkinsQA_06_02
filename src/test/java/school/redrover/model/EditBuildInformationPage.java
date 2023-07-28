@@ -65,7 +65,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return getWait5().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
     }
 
-    public String getTitle(){
+    public String getHeaderText(){
         return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
 

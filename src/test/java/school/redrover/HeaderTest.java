@@ -118,7 +118,7 @@ public class HeaderTest extends BaseTest {
         String textPageFromSearchBox = new MainPage(getDriver())
                 .getHeader()
                 .sendSearchBox()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(textPageFromSearchBox, "Built-In Node");
     }

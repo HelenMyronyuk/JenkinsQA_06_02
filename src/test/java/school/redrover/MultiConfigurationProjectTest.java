@@ -477,7 +477,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .openBuildDropDownMenu("#1")
                 .clickEditBuildInformFromDropDown()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
@@ -490,7 +490,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .clickEditBuildInformFromProjectPage()
-                .getTitle();
+                .getHeaderText();
 
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
@@ -701,12 +701,12 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        String getTitleFromPage = new MainPage(getDriver())
+        String getHeaderText = new MainPage(getDriver())
                 .clickConfigureDropDown(
                         NAME, new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
-                .getTitle();
+                .getHeaderText();
 
-        Assert.assertEquals(getTitleFromPage, "Configure");
+        Assert.assertEquals(getHeaderText, "Configure");
     }
 
     @Test
@@ -717,7 +717,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickConfigure();
 
         Assert.assertEquals(multiConfigurationProjectConfigPage.getBreadcrumb().getFullBreadcrumbText(), breadcrumb);
-        Assert.assertEquals(multiConfigurationProjectConfigPage.getTitle(), "Configure");
+        Assert.assertEquals(multiConfigurationProjectConfigPage.getHeaderText(), "Configure");
     }
 
     @Test
