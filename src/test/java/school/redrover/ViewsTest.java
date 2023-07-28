@@ -5,17 +5,12 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
-import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
-import school.redrover.model.jobsconfig.FolderConfigPage;
 import school.redrover.model.jobsconfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static org.testng.Assert.assertEquals;
 
 public class ViewsTest extends BaseTest {
 
@@ -82,6 +77,30 @@ public class ViewsTest extends BaseTest {
                 .getActiveViewName();
 
         Assert.assertEquals(actualViewName, VIEW_NAME);
+    }
+
+    @Test
+    public void testRenameGlobalViewType() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean actualViewName = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class)
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .clickInactiveLastCreatedMyView()
+                .clickEditView()
+                .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .getListOfAllViews()
+                .contains(NEW_VIEW_NAME);
+
+        Assert.assertTrue(actualViewName, NEW_VIEW_NAME);
     }
 
     @Test
