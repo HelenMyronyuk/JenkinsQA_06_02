@@ -25,6 +25,12 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     @FindBy(xpath = "//div[@id='description']//div[not(@class)]")
     private WebElement descriptionText;
 
+    @FindBy(xpath = "//a[@class='textarea-show-preview']")
+    private WebElement previewDescriptionButton;
+
+    @FindBy(xpath = "//div[@class='textarea-preview']")
+    private WebElement previewDescriptionTextArea;
+
     @FindBy(xpath = "//span[contains(text(), 'Delete') and not(contains(text(), 'View'))]")
     private WebElement deleteInDropDownMenu;
 
@@ -450,5 +456,14 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
                 "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
         return new PipelineStepsPage(getDriver());
+    }
+
+    public Self clickPreviewDescription() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(previewDescriptionButton)).click();
+        return (Self) this;
+    }
+
+    public String getPreviewDescriptionText() {
+        return getWait5().until(ExpectedConditions.visibilityOf(previewDescriptionTextArea)).getText();
     }
 }
