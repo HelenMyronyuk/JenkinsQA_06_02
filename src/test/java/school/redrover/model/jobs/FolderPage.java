@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.*;
-import school.redrover.model.jobsconfig.FolderConfigPage;
+import school.redrover.model.jobsConfig.FolderConfigPage;
 import school.redrover.model.base.BaseJobPage;
 import school.redrover.runner.TestUtils;
 

@@ -11,7 +11,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public class BaseConfigWithoutPipelineProjectPage <Self extends BaseConfigProjectsPage<?, ?>, ProjectPage extends BaseProjectPage<?>> extends BaseConfigProjectsPage<Self, ProjectPage> {
+public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extends BaseConfigProjectsPage<?, ?>, ProjectPage extends BaseProjectPage<?>> extends BaseConfigProjectsPage<Self, ProjectPage> {
 
     @FindBy(xpath = "(//button[contains(text(),'Advanced')])[3]")
     private WebElement advancedDropdownMenu;
@@ -127,7 +127,7 @@ public class BaseConfigWithoutPipelineProjectPage <Self extends BaseConfigProjec
     @FindBy(xpath = "//a[text()='Delete workspace when build is done']")
     private WebElement deleteWorkspaceType;
 
-    public BaseConfigWithoutPipelineProjectPage(ProjectPage projectPage) {
+    public BaseConfigFreestyleAndMulticonfigProjectsPage(ProjectPage projectPage) {
         super(projectPage);
     }
 

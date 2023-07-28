@@ -4,7 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.ConsoleOutputPage;
-import school.redrover.model.jobsconfig.FreestyleProjectConfigPage;
+import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.base.BaseProjectPage;
 
 public class FreestyleProjectPage extends BaseProjectPage<FreestyleProjectPage> {

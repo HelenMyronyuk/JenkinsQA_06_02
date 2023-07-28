@@ -13,7 +13,7 @@ import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.*;
-import school.redrover.model.jobsconfig.*;
+import school.redrover.model.jobsConfig.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;

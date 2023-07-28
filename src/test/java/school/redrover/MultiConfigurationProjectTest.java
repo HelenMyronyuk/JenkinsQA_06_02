@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
-import school.redrover.model.jobsconfig.MultiConfigurationProjectConfigPage;
+import school.redrover.model.jobsConfig.MultiConfigurationProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

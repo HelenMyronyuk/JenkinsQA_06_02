@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.PipelinePage;
-import school.redrover.model.jobsconfig.PipelineConfigPage;
+import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

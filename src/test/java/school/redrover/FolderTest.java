@@ -6,11 +6,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.*;
-import school.redrover.model.jobsconfig.FolderConfigPage;
-import school.redrover.model.jobsconfig.FreestyleProjectConfigPage;
+import school.redrover.model.jobsConfig.FolderConfigPage;
+import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.base.BaseJobPage;
-import school.redrover.model.jobsconfig.PipelineConfigPage;
+import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

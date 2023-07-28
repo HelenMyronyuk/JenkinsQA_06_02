@@ -8,7 +8,7 @@ import org.testng.Assert;
 import school.redrover.model.MainPage;
 import school.redrover.model.NewJobPage;
 import school.redrover.model.jobs.*;
-import school.redrover.model.jobsconfig.*;
+import school.redrover.model.jobsConfig.*;
 import school.redrover.runner.CucumberDriver;
 import school.redrover.runner.ProjectUtils;
 import school.redrover.runner.TestUtils;

@@ -11,7 +11,7 @@ import school.redrover.model.OtherFoldersEventsPage;
 import school.redrover.model.ScanOtherFoldersLogPage;
 
 import school.redrover.model.base.BaseOtherFoldersPage;
-import school.redrover.model.jobsconfig.OrganizationFolderConfigPage;
+import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
 import school.redrover.model.DocBookPipelinePage;
 
 public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFolderPage> {

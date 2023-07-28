@@ -1,11 +1,11 @@
-package school.redrover.model.jobsconfig;
+package school.redrover.model.jobsConfig;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import school.redrover.model.base.baseConfig.BaseConfigWithoutPipelineProjectPage;
+import school.redrover.model.base.baseConfig.BaseConfigFreestyleAndMulticonfigProjectsPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 
-public class FreestyleProjectConfigPage extends BaseConfigWithoutPipelineProjectPage<FreestyleProjectConfigPage, FreestyleProjectPage> {
+public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfigProjectsPage<FreestyleProjectConfigPage, FreestyleProjectPage> {
 
 
 
