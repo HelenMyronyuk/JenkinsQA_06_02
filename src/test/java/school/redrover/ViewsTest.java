@@ -2,6 +2,7 @@ package school.redrover;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
@@ -103,24 +104,37 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(actualViewName, NEW_VIEW_NAME);
     }
 
-    @Test
-    public void testRenameMyViewType() {
+    @DataProvider(name = "view types")
+    public Object[][] viewType() {
+        return new Object[][]{
+                {TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class},
+                {TestUtils.ViewType.ListView, ListViewConfigPage.class},
+                {TestUtils.ViewType.MyView, ViewPage.class}
+        };
+    }
+
+    @Test(dataProvider = "view types")
+    public void testRenameViewTypes(TestUtils.ViewType viewType, Class clazz) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        String actualViewName = new MainPage(getDriver())
+        boolean actualViewName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .selectTypeViewClickCreate(viewType, clazz)
                 .getHeader()
                 .clickLogo()
                 .clickMyViewsSideMenuLink()
                 .clickInactiveLastCreatedMyView(VIEW_NAME)
                 .clickEditView()
                 .editMyViewNameAndClickSubmitButton(NEW_VIEW_NAME)
-                .getActiveViewName();
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .getListOfAllViews()
+                .contains(NEW_VIEW_NAME);
 
-        Assert.assertEquals(actualViewName, NEW_VIEW_NAME);
+        Assert.assertTrue(actualViewName, "The new name is not displayed");
     }
 
     @Test
