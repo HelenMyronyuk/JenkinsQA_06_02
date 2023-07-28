@@ -265,7 +265,7 @@ public class ViewsTest extends BaseTest {
     public void testAddDescriptionForGlobalViewTypeFromConfigure() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        String actualViewName = new MainPage(getDriver())
+        String descriptionText = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
@@ -274,18 +274,21 @@ public class ViewsTest extends BaseTest {
                 .clickSaveButton()
                 .getDescriptionText();
 
-        Assert.assertEquals(actualViewName, VIEW_DESCRIPTION);
+        Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
     @Test
-    public void testAddDescriptionForMyViewFromConfigPage() {
-        createNewFreestyleProjectAndNewView(PROJECT_NAME);
+    public void testAddDescriptionForMyViewOnMyView() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String descriptionText = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickConfigureDropDown(PROJECT_NAME, new ListViewConfigPage(new ViewPage(getDriver())))
-                .addDescription(VIEW_DESCRIPTION)
-                .clickSaveButton()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .clickOnDescription()
+                .enterDescription(VIEW_DESCRIPTION)
+                .clickSaveButtonDescription()
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
