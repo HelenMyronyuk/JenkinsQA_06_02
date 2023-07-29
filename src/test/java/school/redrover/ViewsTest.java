@@ -33,6 +33,7 @@ public class ViewsTest extends BaseTest {
                 {TestUtils.ViewType.MyView, ViewPage.class}
         };
     }
+
     @DataProvider(name = "view types with config")
     public Object[][] viewTypeWithConfig() {
         return new Object[][]{
@@ -75,32 +76,36 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(project.getJobName(), "Project " + PROJECT_NAME);
     }
 
-    @Test
-    public void testCreateListViewType() {
+    @Test(dataProvider = "mainView types")
+    public void testCreateViewTypes(TestUtils.ViewType viewType, Class clazz) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        String actualName = new MainPage(getDriver())
+        boolean isCreatedViewPresent = new MainPage(getDriver())
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
-                .clickSaveButton()
-                .getActiveViewName();
+                .selectTypeViewClickCreate(viewType, clazz)
+                .getHeader()
+                .clickLogo()
+                .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertEquals(actualName, VIEW_NAME);
+        Assert.assertTrue(isCreatedViewPresent, "The view is not created");
     }
 
-    @Test
-    public void testCreateMyViewType() {
+    @Test(dataProvider = "myView types")
+    public void testCreateMyViewTypes(TestUtils.ViewType viewType, Class clazz) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        String actualViewName = new MainPage(getDriver())
+        boolean isCreatedMyViewPresent = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .getActiveViewName();
+                .selectTypeViewClickCreate(viewType, clazz)
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertEquals(actualViewName, VIEW_NAME);
+        Assert.assertTrue(isCreatedMyViewPresent, "The myView type is not created");
     }
 
     @Test(dataProvider = "myView types")
