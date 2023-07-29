@@ -86,6 +86,6 @@ public class FreestyleTest {
 
     @Then("Job description is {string}")
     public void assertFreestyleJobDescription(String jobDescription) {
-        Assert.assertEquals(freestylePage.getTextDescription(), jobDescription);
+        Assert.assertEquals(freestylePage.getDescriptionText(), jobDescription);
     }
 }

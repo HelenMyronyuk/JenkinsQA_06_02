@@ -6,30 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
-import school.redrover.model.jobs.FolderPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
 public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> extends BaseSubmenuPage<Self> {
-
-    @FindBy(id = "description-link")
-    private WebElement onDescription;
-
-    @FindBy(xpath = "//textarea[@name='description']")
-    private WebElement enterDescription;
-
-    @FindBy(xpath = "//button[@class='jenkins-button jenkins-button--primary ']")
-    private WebElement saveButtonDescription;
-
-    @FindBy(xpath = "//div[@id='description']//div[not(@class)]")
-    private WebElement descriptionText;
-
-    @FindBy(xpath = "//a[@class='textarea-show-preview']")
-    private WebElement previewDescriptionButton;
-
-    @FindBy(xpath = "//div[@class='textarea-preview']")
-    private WebElement previewDescriptionTextArea;
 
     @FindBy(xpath = "//span[contains(text(), 'Delete') and not(contains(text(), 'View'))]")
     private WebElement deleteInDropDownMenu;
@@ -131,30 +112,6 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     @Override
     public String callByMenuItemName() {
         return "Reload Configuration from Disk";
-    }
-
-    public String getDescriptionText() {
-        return descriptionText.getText();
-    }
-
-    public Self clickOnDescription() {
-        getWait5().until(ExpectedConditions.visibilityOf(onDescription)).click();
-        return (Self) this;
-    }
-
-    public Self enterDescription(String name) {
-        getWait5().until(ExpectedConditions.visibilityOf(enterDescription)).sendKeys(name);
-        return (Self) this;
-    }
-
-    public Self clickSaveButtonDescription() {
-        getWait5().until(ExpectedConditions.visibilityOf(saveButtonDescription)).click();
-        return (Self) this;
-    }
-
-    public Self clearTextFromDescription() {
-        getWait10().until(ExpectedConditions.visibilityOf(enterDescription)).clear();
-        return (Self) this;
     }
 
     public Self openJobDropDownMenu(String jobName) {
@@ -377,11 +334,6 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return TestUtils.getText(this, activeViewTab);
     }
 
-    public FolderPage clickAllOnFolderView() {
-        allLink.click();
-        return new FolderPage(getDriver());
-    }
-
     public boolean isIconFolderDisplayed() {
         return iconFolder.isDisplayed();
     }
@@ -456,14 +408,5 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
                 "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
         return new PipelineStepsPage(getDriver());
-    }
-
-    public Self clickPreviewDescription() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(previewDescriptionButton)).click();
-        return (Self) this;
-    }
-
-    public String getPreviewDescriptionText() {
-        return getWait5().until(ExpectedConditions.visibilityOf(previewDescriptionTextArea)).getText();
     }
 }

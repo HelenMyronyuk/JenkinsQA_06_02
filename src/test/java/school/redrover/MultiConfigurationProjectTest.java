@@ -575,21 +575,25 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         String previewDescription = new MainPage(getDriver())
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickAddEditDescription(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(DESCRIPTION)
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
     @Test
     public void testAddDescriptionFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
         String getDescription = new MultiConfigurationProjectPage(getDriver())
-                .clickAddEditDescription(DESCRIPTION)
-                .clickSaveButton()
-                .getTextDescription();
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(DESCRIPTION)
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(getDescription, DESCRIPTION);
     }

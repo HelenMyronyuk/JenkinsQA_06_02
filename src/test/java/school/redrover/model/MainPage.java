@@ -8,7 +8,7 @@ import school.redrover.model.base.*;
 
 import java.time.Duration;
 
-public class MainPage extends BaseDashboardPage<MainPage> {
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>{
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;

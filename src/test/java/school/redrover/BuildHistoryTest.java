@@ -46,10 +46,10 @@ public class BuildHistoryTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickJobName(NAME_PIPELINE, new PipelinePage(getDriver()))
-                .clickEditDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(BUILD_DESCRIPTION)
-                .clickSaveButton()
-                .getTextDescription();
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
     }

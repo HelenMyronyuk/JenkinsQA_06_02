@@ -903,7 +903,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
                 .selectHelloWord()
-                .clickSaveButton()
+                .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .clickIconBuildOpenConsoleOutput(1)
                 .getConsoleOutputText();
@@ -917,10 +917,10 @@ public class PipelineTest extends BaseTest {
 
         String previewDescription = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
@@ -933,7 +933,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
                 .selectHelloWord()
-                .clickSaveButton()
+                .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .getStage();
 
@@ -945,10 +945,10 @@ public class PipelineTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         String resultDescriptionText = new PipelinePage(getDriver())
-                .clickEditDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickSaveButton()
-                .getTextDescription();
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(resultDescriptionText, DESCRIPTION);
     }
@@ -1008,7 +1008,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .clickPipelineLeftMenu()
                 .selectHelloWord()
-                .clickSaveButton()
+                .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink();
 
@@ -1078,11 +1078,11 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .addDescription(DESCRIPTION)
                 .clickSaveButton()
-                .clickEditDescription()
+                .clickAddOrEditDescription()
                 .clearDescriptionField()
                 .enterDescription(newDescription)
-                .clickSaveButton()
-                .getTextDescription();
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(jobDescription, newDescription);
     }
@@ -1109,7 +1109,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .addDescription(DESCRIPTION)
                 .clickSaveButton()
-                .getTextDescription();
+                .getDescriptionText();
 
         Assert.assertEquals(jobDescription, DESCRIPTION);
     }
@@ -1285,7 +1285,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
                 .selectScriptedPipeline()
-                .clickSaveButton()
+                .clickSaveButtonDescription()
                 .getHeader()
                 .clickLogo()
                 .jobIsDisplayed(NAME);

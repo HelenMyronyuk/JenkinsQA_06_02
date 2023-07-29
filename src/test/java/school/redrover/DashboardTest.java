@@ -43,7 +43,7 @@ public class DashboardTest extends BaseTest {
     @Test
     public void testAddDescriptionOnMainPage(){
         String textDescription = new MainPage(getDriver())
-                .clickOnDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();
@@ -55,8 +55,8 @@ public class DashboardTest extends BaseTest {
     public void testPreviewDescriptionFromMyViewsPage() {
         String previewDescription = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickOnDescription()
-                .clearTextFromDescription()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
                 .enterDescription(DESCRIPTION)
                 .clickPreviewDescription()
                 .getPreviewDescriptionText();
@@ -68,8 +68,8 @@ public class DashboardTest extends BaseTest {
     public void testAddDescriptionFromMyViewsPage() {
         String description = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickOnDescription()
-                .clearTextFromDescription()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();
@@ -81,11 +81,11 @@ public class DashboardTest extends BaseTest {
     public void testEditDescription() {
         String description = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickOnDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButtonDescription()
-                .clickOnDescription()
-                .clearTextFromDescription()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
                 .enterDescription(NEW_DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();

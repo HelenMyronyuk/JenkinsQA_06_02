@@ -7,8 +7,6 @@ import school.redrover.model.jobs.FreestyleProjectPage;
 
 public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfigProjectsPage<FreestyleProjectConfigPage, FreestyleProjectPage> {
 
-
-
     @FindBy(xpath = "//input[@name='blockBuildWhenUpstreamBuilding']")
     private WebElement trueBlockBuildWhenUpstreamProjectIsBuilding;
 
@@ -18,8 +16,6 @@ public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfi
     public FreestyleProjectConfigPage(FreestyleProjectPage freestyleProjectPage) {
         super(freestyleProjectPage);
     }
-
-
 
     public boolean getTrueBlockBuildWhenUpstreamProjectIsBuilding() {
         return trueBlockBuildWhenUpstreamProjectIsBuilding.isSelected();

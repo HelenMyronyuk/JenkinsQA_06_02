@@ -299,10 +299,10 @@ public class MultibranchPipelineTest extends BaseTest {
 
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }

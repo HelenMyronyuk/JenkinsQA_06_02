@@ -482,11 +482,11 @@ public class FolderTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         FolderPage folderPage = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickSaveButton();
+                .clickSaveButtonDescription();
 
-        Assert.assertEquals(folderPage.getTextDescription(), DESCRIPTION);
+        Assert.assertEquals(folderPage.getDescriptionText(), DESCRIPTION);
         Assert.assertEquals(folderPage.getDescriptionButton(), "Edit description");
     }
 
@@ -495,12 +495,12 @@ public class FolderTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickSaveButton()
-                .clickEditDescription()
-                .clickPreview()
-                .getPreviewText();
+                .clickSaveButtonDescription()
+                .clickAddOrEditDescription()
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }
@@ -510,14 +510,14 @@ public class FolderTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
         String newDescription = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
-                .clickSaveButton()
-                .clickEditDescription()
+                .clickSaveButtonDescription()
+                .clickAddOrEditDescription()
                 .clearDescriptionField()
                 .enterDescription(DESCRIPTION_2)
-                .clickSaveButton()
-                .getTextDescription();
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(newDescription, DESCRIPTION_2);
     }

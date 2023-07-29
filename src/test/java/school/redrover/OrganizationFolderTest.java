@@ -403,10 +403,10 @@ public class OrganizationFolderTest extends BaseTest {
 
         String previewText = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickAddDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION_TEXT)
-                .clickPreview()
-                .getPreviewText();
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
