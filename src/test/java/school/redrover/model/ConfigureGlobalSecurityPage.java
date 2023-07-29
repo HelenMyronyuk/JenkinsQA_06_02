@@ -28,7 +28,7 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
     @FindBy(xpath = "//div[@class='jenkins-radio']")
     private List<WebElement> radioButtons;
 
-    @FindBy(xpath = "(//div[@class='jenkins-section'])[8]//input[@type='checkbox']/following-sibling::label")
+    @FindBy(xpath = "//div[@nameref='rowSetStart6']//span[@class='jenkins-checkbox']")
     private List<WebElement> apiTokenCheckboxes;
 
     @FindBy(xpath = "//div[@class='jenkins-form-item ']//div[@class='jenkins-select']")
@@ -121,7 +121,6 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
         for (WebElement element : listSectionTitles) {
             sectionTitleList.add(element.getText());
         }
-
         return sectionTitleList;
     }
 }
