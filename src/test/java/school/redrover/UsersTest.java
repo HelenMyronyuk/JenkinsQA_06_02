@@ -412,4 +412,18 @@ public class UsersTest extends BaseTest {
 
         Assert.assertEquals(iconName, "Create User");
     }
+
+    @Test
+    public void testSearchBoxInsensitive() {
+        boolean isSearchResultContainsText = new MainPage(getDriver()).getHeader()
+                .clickAdminDropdownMenu()
+                .openConfigureTabFromAdminDropdownMenu()
+                .selectInsensitiveSearch()
+                .clickSaveButton()
+                .getHeader()
+                .typeToSearch("built")
+                .isSearchResultContainsText("built");
+
+        Assert.assertTrue(isSearchResultContainsText, "Wrong search result");
+    }
 }
