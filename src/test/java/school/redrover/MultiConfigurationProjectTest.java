@@ -361,10 +361,10 @@ public class MultiConfigurationProjectTest extends BaseTest {
         String previewText = new MultiConfigurationProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
-                .clickEditDescription()
-                .enterDescriptionText(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION)
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }
@@ -380,10 +380,10 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickEditBuildInformation()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButton()
-                .clickEditDescription()
-                .clearDescriptionText()
-                .enterDescriptionText(NEW_DESCRIPTION)
-                .clickSaveButton()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(NEW_DESCRIPTION)
+                .clickSaveButtonDescription()
                 .getDescriptionText();
 
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION);

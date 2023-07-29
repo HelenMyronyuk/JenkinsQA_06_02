@@ -400,10 +400,10 @@ public class FreestyleProjectTest extends BaseTest {
         String previewText = new FreestyleProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
-                .clickEditDescription()
-                .enterDescriptionText(DESCRIPTION_TEXT)
-                .clickPreview()
-                .getPreviewText();
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION_TEXT)
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
@@ -419,10 +419,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickEditBuildInformation()
                 .enterDescription(DESCRIPTION_TEXT)
                 .clickSaveButton()
-                .clickEditDescription()
-                .clearDescriptionText()
-                .enterDescriptionText(NEW_DESCRIPTION_TEXT)
-                .clickSaveButton()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(NEW_DESCRIPTION_TEXT)
+                .clickSaveButtonDescription()
                 .getDescriptionText();
 
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);

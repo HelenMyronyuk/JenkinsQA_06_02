@@ -13,7 +13,7 @@ import school.redrover.model.base.BaseSubmenuPage;
 
 import java.time.Duration;
 
-public class BuildPage extends BaseMainHeaderPage<BuildPage> {
+public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescription<BuildPage>{
 
     @FindBy(xpath = "//span[@Class='build-status-icon__outer']/*[@title ='Success']")
     private WebElement greenIconV;
@@ -32,24 +32,6 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     @FindBy(xpath = "//span[text()='Edit Build Information']/..")
     private WebElement editBuildInformation;
-
-    @FindBy(xpath = "//div[@id='description']/div[1]")
-    private WebElement buildDescription;
-
-    @FindBy(xpath = "//a[@href='editDescription']")
-    private WebElement editDescription;
-
-    @FindBy(name = "description")
-    private WebElement descriptionTextField;
-
-    @FindBy(xpath = "//button[contains(text(),'Save')]")
-    private WebElement saveButton;
-
-    @FindBy(xpath = "//a[@class='textarea-show-preview']")
-    private WebElement previewButton;
-
-    @FindBy(xpath = "//div[@class='textarea-preview']")
-    private WebElement previewTextarea;
 
     @FindBy(xpath = "//button[@formnovalidate]")
     private WebElement keepBuildForeverButton;
@@ -96,6 +78,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
 
     public <JobTypePage extends BasePage<?, ?>> DeletePage<JobTypePage> clickDeleteBuild(JobTypePage jobTypePage) {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteBuildButton)).click();
+
         return new DeletePage<>(jobTypePage);
     }
 
@@ -133,39 +116,6 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
         return buildName.substring(buildName.indexOf(" ") + 1, buildName.indexOf(" ("));
     }
 
-    public String getDescriptionText() {
-        return getWait2().until(ExpectedConditions.visibilityOf(buildDescription)).getText();
-    }
-
-    public BuildPage clickEditDescription() {
-        editDescription.click();
-        return this;
-    }
-
-    public BuildPage clearDescriptionText() {
-        descriptionTextField.clear();
-        return this;
-    }
-
-    public BuildPage enterDescriptionText(String text) {
-        descriptionTextField.sendKeys(text);
-        return this;
-    }
-
-    public BuildPage clickSaveButton() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        return this;
-    }
-
-    public BuildPage clickPreview() {
-        previewButton.click();
-        return this;
-    }
-
-    public String getPreviewText() {
-        return getWait2().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
-    }
-
     public BuildPage clickKeepBuildForever() {
         keepBuildForeverButton.click();
 
@@ -190,6 +140,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
                 .pause(Duration.ofMillis(300))
                 .perform();
         getWait2().until(ExpectedConditions.visibilityOf(buildDropDownMenu)).sendKeys(Keys.RETURN);
+
         return this;
     }
 
@@ -198,6 +149,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
                 .moveToElement(getDriver().findElement(By.xpath("//a[contains(@href, '" + submenuPage.callByMenuItemName() + "')]")))
                 .click()
                 .perform();
+
         return submenuPage;
     }
 
@@ -206,12 +158,13 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> {
                 .moveToElement(getDriver().findElement(By.xpath("//a[contains(@href, 'confirmDelete')]")))
                 .click()
                 .perform();
+
         return new DeletePage<>(jobTypePage);
     }
 
     public <JobTypePage extends BasePage<?, ?>> ReplayPage<JobTypePage> clickReplay(JobTypePage jobTypePage){
         replayButton.click();
+
         return new ReplayPage<>(jobTypePage);
     }
-
 }

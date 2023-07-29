@@ -184,7 +184,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .addDescription(description)
                 .clickSaveButton()
                 .clickOnNode(nodeName)
-                .getNodeDescription();
+                .getDescriptionText();
 
         Assert.assertEquals(nodeDescription, description);
 
@@ -212,7 +212,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickCreateButton()
                 .clickSaveButton()
                 .clickOnNode(newNodeName)
-                .getNodeDescription();
+                .getDescriptionText();
 
         Assert.assertEquals(newNodeDescription, description);
     }

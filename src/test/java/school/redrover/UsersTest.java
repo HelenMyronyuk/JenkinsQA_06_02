@@ -76,10 +76,11 @@ public class UsersTest extends BaseTest {
                 .clickUserIDName(USER_NAME);
 
         String actualDisplayedDescriptionText = new StatusUserPage(getDriver())
-                .clickAddDescriptionLink()
-                .addDescription(displayedDescriptionText)
-                .clickSaveButton()
-                .getDescription();
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(displayedDescriptionText)
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(actualDisplayedDescriptionText, displayedDescriptionText);
     }
@@ -97,13 +98,14 @@ public class UsersTest extends BaseTest {
 
         StatusUserPage statusUserPage = new StatusUserPage(getDriver());
         String existingDescriptionText = statusUserPage
-                .clickAddDescriptionLink()
-                .getDescriptionText();
+                .clickAddOrEditDescription()
+                .getDescriptionField();
 
         String actualDisplayedDescriptionText = statusUserPage
-                .addDescription(displayedDescriptionText)
-                .clickSaveButton()
-                .getDescription();
+                .clearDescriptionField()
+                .enterDescription(displayedDescriptionText)
+                .clickSaveButtonDescription()
+                .getDescriptionText();
 
         Assert.assertEquals(actualDisplayedDescriptionText, displayedDescriptionText);
         Assert.assertNotEquals(actualDisplayedDescriptionText, existingDescriptionText);
@@ -118,7 +120,7 @@ public class UsersTest extends BaseTest {
                 .clearDescriptionArea()
                 .addDescription("Description text")
                 .clickSaveButton()
-                .getDescription();
+                .getDescriptionText();
 
         Assert.assertEquals("Description text", descriptionText);
     }

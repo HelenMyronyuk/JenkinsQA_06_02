@@ -9,6 +9,7 @@ public interface IDescription <Self extends BaseMainHeaderPage<?>> extends IBase
 
     default Self clickAddOrEditDescription() {
         getWait5().until(ExpectedConditions.elementToBeClickable((By.id("description-link")))).click();
+
         return (Self) this;
     }
 
@@ -19,13 +20,19 @@ public interface IDescription <Self extends BaseMainHeaderPage<?>> extends IBase
     default Self enterDescription(String name) {
         getWait5().until(ExpectedConditions.visibilityOf(
                 getDriver().findElement(By.xpath("//textarea[@name='description']")))).sendKeys(name);
+
         return (Self) this;
     }
 
     default Self clearDescriptionField() {
         getWait10().until(ExpectedConditions.visibilityOf(
                 getDriver().findElement(By.xpath("//textarea[@name='description']")))).clear();
+
         return (Self) this;
+    }
+
+    default String getDescriptionField() {
+        return  getDriver().findElement(By.xpath("//textarea[@name='description']")).getText();
     }
 
     default String getDescriptionText() {
@@ -35,6 +42,7 @@ public interface IDescription <Self extends BaseMainHeaderPage<?>> extends IBase
     default Self clickPreviewDescription() {
         getWait5().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[@class='textarea-show-preview']"))).click();
+
         return (Self) this;
     }
 
@@ -47,6 +55,7 @@ public interface IDescription <Self extends BaseMainHeaderPage<?>> extends IBase
         getWait5().until(ExpectedConditions.visibilityOf(
                         getDriver().findElement(By.xpath("//button[text()='Save']"))))
                 .click();
+
         return (Self) this;
     }
 }

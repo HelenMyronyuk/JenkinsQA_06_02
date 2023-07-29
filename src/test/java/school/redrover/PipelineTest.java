@@ -407,10 +407,10 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
-                .clickEditDescription()
-                .enterDescriptionText(DESCRIPTION)
-                .clickPreview()
-                .getPreviewText();
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION)
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewText, DESCRIPTION);
     }
@@ -423,9 +423,9 @@ public class PipelineTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickLastBuildLink()
-                .clickEditDescription()
-                .enterDescriptionText(DESCRIPTION)
-                .clickSaveButton()
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION)
+                .clickSaveButtonDescription()
                 .getDescriptionText();
 
         Assert.assertEquals(newBuildDescription, DESCRIPTION);
@@ -442,10 +442,10 @@ public class PipelineTest extends BaseTest {
                 .clickEditBuildInformation()
                 .enterDescription(DESCRIPTION)
                 .clickSaveButton()
-                .clickEditDescription()
-                .clearDescriptionText()
-                .enterDescriptionText(NEW_NAME)
-                .clickSaveButton()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(NEW_NAME)
+                .clickSaveButtonDescription()
                 .getDescriptionText();
 
         Assert.assertEquals(newBuildDescription, NEW_NAME);
