@@ -127,6 +127,15 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     @FindBy(xpath = "//a[text()='Delete workspace when build is done']")
     private WebElement deleteWorkspaceType;
 
+    @FindBy(xpath = "//*[text()='Use custom workspace']")
+    private WebElement useCustomWorkspace;
+
+    @FindBy(xpath = "//input[@name='_.customWorkspace']")
+    private WebElement useDirectoryName;
+
+    @FindBy(xpath = "//*[@id='source-code-management']")
+    private WebElement soursCodeManagement;
+
     public BaseConfigFreestyleAndMulticonfigProjectsPage(ProjectPage projectPage) {
         super(projectPage);
     }
@@ -379,4 +388,20 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         deleteWorkspaceType.click();
         return (Self) this;
     }
+    public Self clickAdvancedGeneral() {
+        new Actions(getDriver())
+                .scrollToElement(soursCodeManagement)
+                .perform();
+        advancedDropdownMenu.click();
+        return (Self) this;
+    }
+    public Self clickUseCustomWorkspace(String directoryName) {
+        new Actions(getDriver())
+                .scrollToElement(soursCodeManagement)
+                .perform();
+        useCustomWorkspace.click();
+        useDirectoryName.sendKeys(directoryName);
+        return (Self) this;
+    }
+
 }
