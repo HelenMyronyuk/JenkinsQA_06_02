@@ -30,6 +30,7 @@ public class JenkinsVersionPage extends BaseModel {
                 break;
             }
         }
+
         return this;
     }
 

@@ -44,6 +44,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
     @Override
     public OrganizationFolderConfigPage clickConfigure() {
         setupClickConfigure();
+
         return new OrganizationFolderConfigPage(this);
     }
 
@@ -55,16 +56,19 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
 
     public DocBookPipelineMultibranchPage clickMultibranchProject() {
         getWait2().until(ExpectedConditions.elementToBeClickable(multibranchProject)).click();
+
         return new DocBookPipelineMultibranchPage(getDriver());
     }
 
     public ScanOtherFoldersLogPage clickScanOrgFolderLog() {
         getWait5().until(ExpectedConditions.elementToBeClickable(scanButton)).click();
+
         return new ScanOtherFoldersLogPage(getDriver());
     }
 
     public OtherFoldersEventsPage clickOrgFolderEvents() {
         getWait5().until(ExpectedConditions.elementToBeClickable(eventButton)).click();
+
         return new OtherFoldersEventsPage(getDriver());
     }
 

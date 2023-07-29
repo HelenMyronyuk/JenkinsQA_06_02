@@ -18,6 +18,7 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
     @Override
     public PipelineConfigPage clickConfigure() {
         setupClickConfigure();
+
         return new PipelineConfigPage(this);
     }
 

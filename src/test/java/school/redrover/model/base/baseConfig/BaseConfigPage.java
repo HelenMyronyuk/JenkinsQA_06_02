@@ -41,6 +41,7 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
 
     public JobPage clickSaveButton() {
         getWait10().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+
         return getJobPage();
     }
 
@@ -50,11 +51,13 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
 
     public Self addDescription(String description) {
         getWait5().until(ExpectedConditions.visibilityOf(descriptionTextBox)).sendKeys(description);
+
         return (Self) this;
     }
 
     public Self clickPreview() {
         preview.click();
+
         return (Self) this;
     }
 
@@ -64,6 +67,7 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
 
     public Self clearDescriptionArea() {
         descriptionTextBox.clear();
+
         return (Self) this;
     }
 
@@ -77,5 +81,4 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
 
         return (Self) this;
     }
-
-    }
+}

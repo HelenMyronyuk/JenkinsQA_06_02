@@ -19,7 +19,6 @@ public class ChangesBuildPage extends BaseSubmenuPage<ChangesBuildPage> {
     }
 
     public String getTextChanges() {
-
         return getWait10().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='jenkins-icon-adjacent']"))).getText();
     }
 }

@@ -21,6 +21,7 @@ public class ErrorNodePage extends BaseMainHeaderPage<ErrorNodePage> {
     public String getErrorMessage() {
         getWait2().until(ExpectedConditions
                 .textToBePresentInElement(error, "Error"));
+
         return errorMessage.getText();
     }
 }

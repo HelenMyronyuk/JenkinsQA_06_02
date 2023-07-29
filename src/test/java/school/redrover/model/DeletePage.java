@@ -24,11 +24,13 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
 
     public ParentPage clickYesButton() {
         deleteYesButton.click();
+
         return parentPage;
     }
 
     public <JobPage extends BaseJobPage<?>> JobPage clickDelete(JobPage jobPage) {
         deleteYesButton.click();
+
         return jobPage;
     }
 

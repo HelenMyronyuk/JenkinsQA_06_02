@@ -13,6 +13,7 @@ public class MultibranchPipelinePage extends BaseOtherFoldersPage<MultibranchPip
     @Override
     public MultibranchPipelineConfigPage clickConfigure() {
         setupClickConfigure();
+
         return new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver()));
     }
 }

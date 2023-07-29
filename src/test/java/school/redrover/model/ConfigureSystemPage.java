@@ -126,17 +126,20 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         TestUtils.scrollToElementByJavaScript(this, smtpServerFieldExtendedEmailNotifications);
         getWait10().until(ExpectedConditions.visibilityOf(smtpServerFieldExtendedEmailNotifications)).clear();
         smtpServerFieldExtendedEmailNotifications.sendKeys(smtpServer);
+
         return this;
     }
 
     public ConfigureSystemPage inputSmtpPortFieldExtendedEmailNotifications(String smtpPort) {
         getWait2().until(ExpectedConditions.visibilityOf(smtpPortFieldExtendedEmailNotifications)).clear();
         smtpPortFieldExtendedEmailNotifications.sendKeys(smtpPort);
+
         return this;
     }
 
     public ConfigureSystemPage clickAdvancedButtonExtendedEmailNotification() {
         advancedButtonExtendedEmailNotifications.click();
+
         return this;
     }
 
@@ -150,34 +153,40 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     public ConfigureSystemPage selectCreatedCredentials(String email) {
         credentialsDropdown.click();
         new Select(credentialsDropdown).selectByVisibleText(email + "/******");
+
         return this;
     }
 
     public ConfigureSystemPage inputUsernameIntoAddCredentialPopUpWindow(String username) {
         getWait5().until(ExpectedConditions.visibilityOf(usernameInputFieldInAddCredentialsPopUpWindow)).sendKeys(username);
+
         return this;
     }
 
     public ConfigureSystemPage inputPasswordIntoAddCredentialPopUpWindow(String password) {
         getWait5().until(ExpectedConditions.visibilityOf(passwordInputFieldInAddCredentialsPopUpWindow)).sendKeys(password);
+
         return this;
     }
 
     public ConfigureSystemPage clickAddButtonAddCredentialPopUp() {
         new Actions(getDriver()).scrollToElement(addButtonAddCredentialsPopUpWindow);
         getWait5().until(ExpectedConditions.elementToBeClickable(addButtonAddCredentialsPopUpWindow)).click();
+
         return this;
     }
 
     public ConfigureSystemPage checkUseSSLCheckbox() {
         new Actions(getDriver()).scrollToElement(useSSLCheckboxExtendedEmailNotifications).perform();
         getWait5().until(ExpectedConditions.visibilityOf(useSSLCheckboxExtendedEmailNotifications)).click();
+
         return this;
     }
 
     public ConfigureSystemPage clickDefaultTriggersButton() {
         TestUtils.scrollToElementByJavaScript(this, contentTokenReference);
         defaultTriggersButton.click();
+
         return this;
     }
 
@@ -187,6 +196,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
                 trigger.click();
             }
         }
+
         return this;
     }
 
@@ -196,6 +206,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
                 trigger.click();
             }
         }
+
         return this;
     }
 
@@ -203,51 +214,60 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         TestUtils.scrollToElementByJavaScript(this, smtpServerFieldEmailNotifications);
         getWait5().until(ExpectedConditions.visibilityOf(smtpServerFieldEmailNotifications)).clear();
         smtpServerFieldEmailNotifications.sendKeys(smtpServer);
+
         return this;
     }
 
     public ConfigureSystemPage clickAdvancedButtonEmailNotification() {
         advancedButtonEmailNotifications.click();
+
         return this;
     }
 
     public ConfigureSystemPage clickUseSMTPAuthenticationCheckbox() {
         getWait2().until(ExpectedConditions.elementToBeClickable(useSMTPAuthenticationCheckbox)).click();
+
         return this;
     }
 
     public ConfigureSystemPage inputUserNameAndPasswordSMTPAuthentication(String username, String password) {
         getWait5().until(ExpectedConditions.visibilityOf(userNameSMTPAuthentication)).sendKeys(username);
         passwordSMTPAuthentication.sendKeys(password);
+
         return this;
     }
 
     public ConfigureSystemPage checkUseSSLCheckboxEmailNotifications() {
         TestUtils.scrollToElementByJavaScript(this, useSSLEmailNotificationsCheckbox);
         getWait5().until(ExpectedConditions.elementToBeClickable(useSSLEmailNotificationsCheckbox)).click();
+
         return this;
     }
 
     public ConfigureSystemPage inputSmtpPortEmailNotificationsField(String port) {
         smtpPortFieldEmailNotifications.clear();
         smtpPortFieldEmailNotifications.sendKeys(port);
+
         return this;
     }
 
     public ConfigureSystemPage checkTestConfigurationBySendingTestEmailCheckbox() {
         testConfigurationBySendingTestEmailCheckbox.click();
+
         return this;
     }
 
     public ConfigureSystemPage inputEmailIntoTestEmailRecipientInputField(String email) {
         getWait2().until(ExpectedConditions.visibilityOf(testEmailRecipientInputField)).clear();
         testEmailRecipientInputField.sendKeys(email);
+
         return this;
     }
 
     public ConfigureSystemPage clickTestConfigurationButton() {
         TestUtils.scrollToElementByJavaScript(this, footer);
         testConfigurationButton.click();
+
         return this;
     }
 
@@ -258,6 +278,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     public MainPage clickSaveButton() {
         TestUtils.scrollToElementByJavaScript(this, saveButton);
         saveButton.click();
+
         return new MainPage(getDriver());
     }
 
@@ -266,6 +287,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         if (useSSLCheckboxExtendedEmailVerification.isSelected()) {
             useSSLCheckboxExtendedEmailNotifications.click();
         }
+
         return this;
     }
 
@@ -273,6 +295,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         if (defaultTriggerAlwaysVerification.isSelected()) {
             defaultTriggerAlwaysCheckbox.click();
         }
+
         return this;
     }
 
@@ -280,6 +303,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         if (defaultTriggerSuccessVerification.isSelected()) {
             defaultTriggerSuccessCheckbox.click();
         }
+
         return this;
     }
 
@@ -287,6 +311,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         if (useSMTPAuthenticationVerification.isSelected()) {
             useSMTPAuthenticationCheckbox.click();
         }
+
         return this;
     }
 
@@ -294,6 +319,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         if (useSSLEmailCheckboxVerification.isSelected()) {
             useSSLEmailNotificationsCheckbox.click();
         }
+
         return this;
     }
 

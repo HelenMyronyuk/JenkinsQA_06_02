@@ -23,16 +23,19 @@ public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseMainHea
     public RenamePage<JobTypePage> enterNewName(String name) {
         newName.clear();
         newName.sendKeys(name);
+
         return this;
     }
 
     public JobTypePage clickRenameButton() {
         renameButton.click();
+
         return jobTypePage;
     }
 
     public CreateItemErrorPage clickRenameButtonAndGoError() {
         renameButton.click();
+
         return new CreateItemErrorPage(getDriver());
     }
 }

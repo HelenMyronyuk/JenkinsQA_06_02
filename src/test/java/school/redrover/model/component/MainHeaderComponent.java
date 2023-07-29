@@ -258,6 +258,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     public UserPage sendSearchBoxUser(String name) {
         searchBox.sendKeys(name);
         searchBox.sendKeys(Keys.RETURN);
+
         return new UserPage(getDriver());
     }
 
@@ -280,6 +281,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
                 searchResult.add(webElement.getText());
             }
         }
+
         return searchResult;
     }
 
@@ -287,9 +289,11 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         List<String> searchResult = getListOfSearchResult();
         for (String str : searchResult) {
             if (!str.toLowerCase().contains(text.toLowerCase())) {
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -346,6 +350,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
     public RestApiPage clickOnRestApiLink() {
         restApi.click();
+
         return new RestApiPage(getDriver());
     }
 

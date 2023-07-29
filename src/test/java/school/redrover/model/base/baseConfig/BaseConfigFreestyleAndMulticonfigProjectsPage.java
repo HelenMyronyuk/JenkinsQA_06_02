@@ -143,17 +143,20 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     public Self clickAdvancedDropdownMenu() {
         getWait10().until(ExpectedConditions.elementToBeClickable(advancedDropdownMenu)).click();
         TestUtils.scrollToElementByJavaScript(this, advancedDropdownMenu);
+
         return (Self) this;
     }
 
     public Self clickQuietPeriod() {
         quietPeriod.click();
+
         return (Self) this;
     }
 
     public Self inputQuietPeriod(String number) {
         inputQuietPeriod.clear();
         inputQuietPeriod.sendKeys(number);
+
         return (Self) this;
     }
 
@@ -163,12 +166,14 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
     public Self clickRetryCount() {
         retryCount.click();
+
         return (Self) this;
     }
 
     public Self inputSCMCheckoutRetryCount(String count) {
         checkoutRetryCountSCM.clear();
         checkoutRetryCountSCM.sendKeys(count);
+
         return (Self) this;
     }
 
@@ -178,21 +183,25 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
     public Self clickBlockBuildWhenUpstreamProjectIsBuilding() {
         blockBuildWhenUpstreamProjectIsBuilding.click();
+
         return (Self) this;
     }
 
     public Self clickSourceCodeManagementLink() {
         getWait5().until(ExpectedConditions.elementToBeClickable(sourceCodeManagementLink)).click();
+
         return (Self) this;
     }
 
     public Self clickRadioButtonGit() {
         TestUtils.clickByJavaScript(this, radioButtonGit);
+
         return (Self) this;
     }
 
     public Self inputRepositoryUrl(String text) {
         getWait5().until(ExpectedConditions.visibilityOf(inputRepositoryUrl)).sendKeys(text);
+
         return (Self) this;
     }
 
@@ -203,23 +212,27 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     public Self correctMainBranchName() {
         getWait15().until(ExpectedConditions.visibilityOf(mainBranchInput)).clear();
         mainBranchInput.sendKeys("*/main");
+
         return (Self) this;
     }
 
     public Self clickAddBranchButton() {
         getWait5().until(ExpectedConditions.visibilityOf(addBranchButton)).click();
+
         return (Self) this;
     }
 
     public Self inputAddBranchName(String additionalBranchName) {
         getWait5().until(ExpectedConditions.visibilityOf(additionalBranchInput)).clear();
         additionalBranchInput.sendKeys("*/" + additionalBranchName);
+
         return (Self) this;
     }
 
     public Self openBuildStepOptionsDropdown() {
         TestUtils.scrollToElementByJavaScript(this, addBuildStepButton);
         getWait5().until(ExpectedConditions.elementToBeClickable(addBuildStepButton)).click();
+
         return (Self) this;
     }
 
@@ -295,16 +308,19 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
     public Self clickPostBuildActionsButton() {
         postBuildActionsButton.click();
+
         return (Self) this;
     }
 
     public Self clickAggregateDownstreamTestResults() {
         aggregateDownstreamTestResultsType.click();
+
         return (Self) this;
     }
 
     public Self selectEditableEmailNotification() {
         getWait2().until(ExpectedConditions.elementToBeClickable(editableEmailNotificationType)).click();
+
         return (Self) this;
     }
 
@@ -312,11 +328,13 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         new Actions(getDriver()).moveToElement(projectRecipientListInputField);
         getWait2().until(ExpectedConditions.elementToBeClickable(projectRecipientListInputField)).clear();
         projectRecipientListInputField.sendKeys(email);
+
         return (Self) this;
     }
 
     public Self clickArchiveTheArtifacts() {
         archiveTheArtifacts.click();
+
         return  (Self) this;
     }
 
@@ -326,18 +344,21 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
     public Self clickBuildOtherProjects() {
         buildOtherProjectsType.click();
+
         return (Self) this;
     }
 
     public Self setBuildOtherProjects(String projectName) {
         getHeader().scrollToFooter();
         getWait2().until(ExpectedConditions.elementToBeClickable(buildOtherProjectsInputField)).sendKeys(projectName);
+
         return (Self) this;
     }
 
     public Self clickGitPublisher() {
         getHeader().scrollToFooter();
         gitPublisher.click();
+
         return (Self) this;
     }
 
@@ -352,12 +373,14 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
     public Self  clickEmailNotification() {
         emailNotificationType.click();
+
         return (Self) this;
     }
 
     public Self  setEmailNotification(String email) {
         getHeader().scrollToFooter();
         getWait2().until(ExpectedConditions.elementToBeClickable(emailNotificationInputField)).sendKeys(email);
+
         return (Self) this;
     }
 
@@ -368,6 +391,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     public Self clickSetGitHubCommitStatus() {
         getHeader().scrollToFooter();
         gitHubCommitStatusType.click();
+
         return (Self) this;
     }
 
@@ -375,17 +399,20 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         getHeader().scrollToFooter();
         new Select(commitContextSelect).selectByVisibleText("Manually entered context name");
         getWait2().until(ExpectedConditions.elementToBeClickable(contextNameField)).sendKeys(status);
+
         return (Self) this;
     }
 
     public String getGitHubCommitStatus() {
         getHeader().scrollToFooter();
+
         return contextNameField.getAttribute("value");
     }
 
     public Self clickDeleteWorkspaceWhenBuildDone() {
         getHeader().scrollToFooter();
         deleteWorkspaceType.click();
+
         return (Self) this;
     }
     public Self clickAdvancedGeneral() {
@@ -393,6 +420,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
                 .scrollToElement(soursCodeManagement)
                 .perform();
         advancedDropdownMenu.click();
+
         return (Self) this;
     }
     public Self clickUseCustomWorkspace(String directoryName) {
@@ -401,7 +429,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
                 .perform();
         useCustomWorkspace.click();
         useDirectoryName.sendKeys(directoryName);
+
         return (Self) this;
     }
-
 }

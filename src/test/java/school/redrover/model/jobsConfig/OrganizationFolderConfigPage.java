@@ -27,17 +27,20 @@ public class OrganizationFolderConfigPage extends BaseConfigFoldersPage<Organiza
 
     public OrganizationFolderConfigPage clickDisableEnable() {
         disableEnableFromConfig.click();
+
         return this;
     }
 
     public OrganizationFolderConfigPage clickAppearance() {
         getWait5().until(ExpectedConditions.elementToBeClickable(appearanceButton)).click();
+
         return this;
     }
 
     public OrganizationFolderConfigPage selectDefaultIcon() {
         new Select(getWait5().until(ExpectedConditions.elementToBeClickable(defaultIcon)))
                 .selectByVisibleText("Default Icon");
+
         return this;
     }
 

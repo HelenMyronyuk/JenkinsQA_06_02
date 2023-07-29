@@ -31,11 +31,13 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
 
     public ManageJenkinsPage clickManageJenkinsPage() {
         manageJenkins.click();
+
         return new ManageJenkinsPage(getDriver());
     }
 
     public MyViewsPage clickMyViewsSideMenuLink() {
         getWait5().until(ExpectedConditions.elementToBeClickable(myViews)).click();
+
         return new MyViewsPage(getDriver());
     }
 
@@ -75,6 +77,7 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
 
     public MainPage refreshBrowser() {
         getDriver().navigate().refresh();
+
         return new MainPage(getDriver());
     }
 }

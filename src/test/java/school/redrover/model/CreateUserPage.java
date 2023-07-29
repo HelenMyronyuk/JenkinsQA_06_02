@@ -41,31 +41,37 @@ public class CreateUserPage extends BaseMainHeaderPage<CreateUserPage> {
 
     public CreateUserPage enterUsername(String name) {
         userNameInputField.sendKeys(name);
+
         return this;
     }
 
     public CreateUserPage enterPassword(String name) {
         passwordInputField.sendKeys(name);
+
         return this;
     }
 
     public CreateUserPage enterConfirmPassword(String name) {
         confirmPasswordInputField.sendKeys(name);
+
         return this;
     }
 
     public CreateUserPage enterFullName(String name) {
         fullNameInputField.sendKeys(name);
+
         return this;
     }
 
     public CreateUserPage enterEmail(String name) {
         emailInputField.sendKeys(name);
+
         return this;
     }
 
     public ManageUsersPage clickCreateUserButton() {
         createUserButton.click();
+
         return new ManageUsersPage(getDriver());
     }
 
@@ -79,6 +85,7 @@ public class CreateUserPage extends BaseMainHeaderPage<CreateUserPage> {
 
     public String getUserNameExistsError() {
         clickCreateUserButton();
+
         return getWait2().until(ExpectedConditions.visibilityOf(userExistsError)).getText();
     }
 
@@ -88,6 +95,7 @@ public class CreateUserPage extends BaseMainHeaderPage<CreateUserPage> {
 
     public String getInvalidEmailError() {
         clickCreateUserButton();
+
         return getWait2().until(ExpectedConditions.visibilityOf(invalidEmailError)).getText();
     }
 }

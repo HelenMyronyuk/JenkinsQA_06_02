@@ -16,6 +16,7 @@ public class ReplayPage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
 
     public ParentPage clickRunButton() {
         runButton.click();
+
         return parentPage;
     }
 }

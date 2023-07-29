@@ -45,6 +45,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
     public EditBuildInformationPage enterDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField))
                 .sendKeys(displayName);
+
         return this;
     }
 

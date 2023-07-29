@@ -48,16 +48,19 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
     public DeletePage<MainPage> clickDeleteJobLocatedOnMainPage() {
         deleteButton.click();
+
         return new DeletePage<>(new MainPage(getDriver()));
     }
 
     public DeletePage<FolderPage> clickDeleteJobLocatedOnFolderPage() {
         deleteButton.click();
+
         return new DeletePage<>(new FolderPage(getDriver()));
     }
 
     public Self clickDisableEnableButton() {
         disableEnableButton.click();
+
         return (Self) this;
     }
 
@@ -101,11 +104,13 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
     public PeoplePage clickPeopleFromSideMenu(){
         getWait5().until(ExpectedConditions.elementToBeClickable(peopleButton)).click();
+
         return new PeoplePage(getDriver());
     }
 
     public WelcomeBuildHistoryPage clickBuildHistoryWelcomeFromSideMenu(){
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistoryButton)).click();
+
         return new WelcomeBuildHistoryPage(getDriver());
     }
 }

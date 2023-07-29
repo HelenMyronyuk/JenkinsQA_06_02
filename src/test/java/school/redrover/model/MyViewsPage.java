@@ -53,6 +53,7 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
 
     public MyViewConfigPage clickEditView() {
         TestUtils.click(this, configureView);
+
         return new MyViewConfigPage(new ViewPage(getDriver()));
     }
 
@@ -83,6 +84,7 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
                 break;
             }
         }
+
         return status;
     }
 }

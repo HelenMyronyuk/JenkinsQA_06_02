@@ -22,17 +22,20 @@ public class FreestyleProjectPage extends BaseProjectPage<FreestyleProjectPage> 
     @Override
     public FreestyleProjectConfigPage clickConfigure() {
         setupClickConfigure();
+
         return new FreestyleProjectConfigPage(this);
     }
 
     public FreestyleProjectPage clickBuildNowButtonSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildNowButtonSideMenu)).click();
+
         return this;
     }
 
     public ConsoleOutputPage clickBuildIconStatus() {
         getWait5().until(ExpectedConditions.visibilityOf(buildIconStatus));
         getWait5().until(ExpectedConditions.elementToBeClickable(buildIconStatus)).click();
+
         return new ConsoleOutputPage(getDriver());
     }
 }

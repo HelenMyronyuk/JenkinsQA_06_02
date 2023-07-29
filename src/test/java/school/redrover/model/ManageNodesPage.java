@@ -34,6 +34,7 @@ public class ManageNodesPage extends BaseSubmenuPage<ManageNodesPage> {
 
     public NewNodePage clickNewNodeButton() {
         getWait2().until(ExpectedConditions.elementToBeClickable(newNodeButton)).click();
+
         return new NewNodePage(getDriver());
     }
 
@@ -51,6 +52,7 @@ public class ManageNodesPage extends BaseSubmenuPage<ManageNodesPage> {
                 break;
             }
         }
+
        return new NodePage(getDriver());
     }
 
@@ -60,6 +62,7 @@ public class ManageNodesPage extends BaseSubmenuPage<ManageNodesPage> {
         for (WebElement element : nodesList) {
           nodeNameList.add(element.getText());
         }
+
         return nodeNameList;
     }
 

@@ -27,6 +27,7 @@ public abstract class BaseModel {
         if (wait2 == null) {
             wait2 = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
         }
+
         return wait2;
     }
 
@@ -34,6 +35,7 @@ public abstract class BaseModel {
         if (wait5 == null) {
             wait5 = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
         }
+
         return wait5;
     }
 
@@ -41,6 +43,7 @@ public abstract class BaseModel {
         if (wait10 == null) {
             wait10 = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         }
+
         return wait10;
     }
 
@@ -48,6 +51,7 @@ public abstract class BaseModel {
         if (wait15 == null) {
             wait15 = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
         }
+
         return wait15;
     }
 }

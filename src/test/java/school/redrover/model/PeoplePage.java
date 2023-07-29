@@ -40,6 +40,7 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
     public UserPage clickUserName(String newUserName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(getDriver()
                 .findElement(By.xpath("//a[@href='/user/" + newUserName + "/']")))).click();
+
         return new UserPage(getDriver());
     }
 
@@ -51,16 +52,19 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
 
     public NewJobPage clickNewItem() {
         newItem.click();
+
         return new NewJobPage(getDriver());
     }
 
     public PeoplePage clickUserIDButton() {
         userIDButton.click();
+
         return new PeoplePage(getDriver());
     }
 
     public PeoplePage clickNameButton() {
         nameButton.click();
+
         return new PeoplePage(getDriver());
     }
 
@@ -85,6 +89,7 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
         for (WebElement element : elementList) {
             stringList.add(element.getText());
         }
+
         return stringList;
     }
 

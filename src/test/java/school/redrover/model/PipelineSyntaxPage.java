@@ -80,12 +80,14 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<PipelineSyntaxPage> {
     public PipelineSyntaxPage setSampleStep(String option) {
         Select dropdown = new Select(getWait15().until(ExpectedConditions.visibilityOf(sampleStepDropdown)));
         dropdown.selectByVisibleText(option);
+
         return this;
     }
 
     public PipelineSyntaxPage setUnit(String option) {
         Select dropdown = new Select(getWait15().until(ExpectedConditions.visibilityOf(unitDropdown)));
         dropdown.selectByVisibleText(option);
+
         return this;
     }
 }

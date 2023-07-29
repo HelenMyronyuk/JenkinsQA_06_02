@@ -42,23 +42,27 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
 
     public NewJobPage enterItemName(String jobName) {
         getWait5().until(ExpectedConditions.visibilityOf(itemName)).sendKeys(jobName);
+
         return this;
     }
 
     public NewJobPage selectJobType(TestUtils.JobType jobType) {
         getDriver().findElement(jobType.getLocator()).click();
         this.jobType = jobType;
+
         return this;
     }
 
     public <JobConfigPage extends BaseConfigPage<?, ?>> JobConfigPage clickOkButton(JobConfigPage jobConfigPage) {
         getWait5().until(ExpectedConditions.visibilityOf(okButton)).click();
+
         return jobConfigPage;
     }
 
     public CreateItemErrorPage selectJobAndOkAndGoError(TestUtils.JobType jobType) {
         selectJobType(jobType);
         clickOkButton(null);
+
         return new CreateItemErrorPage(getDriver());
     }
 
@@ -77,6 +81,7 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
     public CreateBugPage selectJobAndOkAndGoToBugPage(TestUtils.JobType jobType) {
         selectJobType(jobType);
         clickOkButton(null);
+
         return new CreateBugPage(getDriver());
     }
 

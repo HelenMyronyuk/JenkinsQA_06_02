@@ -44,9 +44,11 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
         String[] split = consoleText.split("\n");
         for (String str : split) {
             if (str.contains(containParameterText)) {
+
                 return str;
             }
         }
+
         return null;
     }
 
@@ -65,6 +67,7 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
     public BuildPage clickNumberBuild(int buildNumber) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(text() ,'#" + buildNumber +  "')]"))).click();
+
         return new BuildPage(getDriver());
     }
 

@@ -25,28 +25,33 @@ public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescriptio
     public ListViewConfigPage clickEditListView(String nameProject) {
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(String.format("//*[@href='/view/%s/configure']", nameProject.replaceAll(" ","%20"))))).click();
+
         return new ListViewConfigPage(new ViewPage(getDriver()));
     }
 
     public DeletePage<MainPage> clickDeleteView() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteView)).click();
+
         return new DeletePage<>(new MainPage(getDriver()));
     }
 
     public ViewPage clickEditView() {
         editViewSideMenu.click();
+
         return this;
     }
 
     public ViewPage clickDeleteViewSideMenu() {
         deleteView.click();
         yesButton.click();
+
         return this;
     }
 
     public ViewPage selectView(String viewName) {
         getWait2().until(ExpectedConditions.visibilityOf(getDriver().findElement(
                 By.xpath("//a[contains(@href, '/user/admin/my-views/view/"+ viewName +"')]")))).click();
+
         return this;
     }
 }

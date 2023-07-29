@@ -119,47 +119,55 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
                         By.xpath(String.format("//a[contains(@href,'job/%s/')]/button", jobName
                                 .replaceAll(" ", "%20")))))
                 .sendKeys(Keys.RETURN);
+
         return (Self) this;
     }
 
     public NewJobPage selectNewItemInJobDropDownMenu(String folderName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(String.format("//a[contains(@href,'/job/%s/newJob')]", folderName)))).click();
+
         return new NewJobPage(getDriver());
     }
 
     public Self dropDownMenuClickDelete(String jobName) {
         openJobDropDownMenu(jobName);
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteInDropDownMenu)).click();
+
         return (Self) this;
     }
 
     public <JobTypePage extends BasePage<?, ?>> RenamePage<JobTypePage> dropDownMenuClickRename(String jobName, JobTypePage jobTypePage) {
         openJobDropDownMenu(jobName);
         getWait5().until(ExpectedConditions.elementToBeClickable(renameInDropDownMenu)).click();
+
         return new RenamePage<>(jobTypePage);
     }
 
     public <JobTypePage extends BasePage<?, ?>> MovePage<JobTypePage> dropDownMenuClickMove(String jobName, JobTypePage jobTypePage) {
         openJobDropDownMenu(jobName);
         getWait5().until(ExpectedConditions.elementToBeClickable(moveInDropDownMenu)).click();
+
         return new MovePage<>(jobTypePage);
     }
 
     public Self clickJobDropdownMenuBuildNow(String jobName) {
         openJobDropDownMenu(jobName);
         getWait2().until(ExpectedConditions.elementToBeClickable(buildNowInDropDownMenu)).click();
+
         return (Self) this;
     }
 
     public <JobConfigPage extends BaseConfigPage<?, ?>> JobConfigPage clickConfigureDropDown(String jobName, JobConfigPage jobConfigPage) {
         openJobDropDownMenu(jobName);
         getWait5().until(ExpectedConditions.elementToBeClickable(configureInDropDownMenu)).click();
+
         return jobConfigPage;
     }
 
     public String getJobBuildStatusByWeatherIcon(String jobName) {
         WebElement buildStatus = getDriver().findElement(By.id(String.format("job_%s", jobName)))
                 .findElement(By.xpath(".//*[contains(@href, 'build-status-static')]/.."));
+
         return buildStatus.getAttribute("tooltip");
     }
 
@@ -171,42 +179,50 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public List<String> getListOfProjectMenuItems(String jobName) {
         openJobDropDownMenu(jobName);
+
         return TestUtils.getTexts(listOfJobMenuItems);
     }
 
     public String selectFromJobDropdownMenuTheGitHub(String jobName) {
         openJobDropDownMenu(jobName);
         gitHubFromDropDownMenu.click();
+
         return singInFromHubGitHub.getText();
     }
 
     public DeletePage<Self> dropDownMenuClickDeleteFolders(String jobName) {
         dropDownMenuClickDelete(jobName);
+
         return new DeletePage<>((Self) this);
     }
 
     public NewJobPage clickCreateAJob() {
         getWait2().until(ExpectedConditions.elementToBeClickable(createAJob)).click();
+
         return new NewJobPage(getDriver());
     }
 
     public NewJobPage clickNewItem() {
         newItem.click();
+
         return new NewJobPage(getDriver());
     }
 
     public NewJobPage clickCreateAJobArrow() {
         getWait2().until(ExpectedConditions.elementToBeClickable(createAJobArrow)).click();
+
         return new NewJobPage(getDriver());
     }
 
     public PeoplePage clickPeopleOnLeftSideMenu() {
         people.click();
+
         return new PeoplePage(getDriver());
     }
 
     public BuildHistoryPage clickBuildsHistoryButton() {
         TestUtils.click(this, buildHistory);
+
         return new BuildHistoryPage(getDriver());
     }
 
@@ -214,33 +230,39 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         WebElement job = getWait5().until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(String.format("//a[@href='job/%s/']", jobName.replaceAll(" ", "%20")))));
         new Actions(getDriver()).moveToElement(job).click(job).perform();
+
         return jobPage;
     }
 
     public Self acceptAlert() {
         getDriver().switchTo().alert().accept();
+
         return (Self) this;
     }
 
     public Self dismissAlert() {
         getDriver().switchTo().alert().dismiss();
+
         return (Self) this;
     }
 
     public NewViewPage createNewView() {
         getWait5().until(ExpectedConditions.elementToBeClickable(newView)).click();
+
         return new NewViewPage(getDriver());
     }
 
     public <ViewBasePage extends BaseDashboardPage<?>> ViewBasePage clickOnView(String viewName, ViewBasePage viewBasePage) {
         getWait2().until(ExpectedConditions.elementToBeClickable(
                 By.xpath(String.format("//a[@href='/view/%s/']", viewName)))).click();
+
         return viewBasePage;
     }
 
     public Self clickBuildByGreenArrow(String projectName) {
         TestUtils.click(this, getDriver().findElement(
                 By.xpath("//a[@href='job/" + projectName + "/build?delay=0sec']")));
+
         return (Self) this;
     }
 
@@ -257,7 +279,6 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     private WebElement getProjectStatusTable() {
-
         return getWait2().until(ExpectedConditions.presenceOfElementLocated(By.id("main-panel")))
                 .findElement(By.id("projectstatus"));
     }
@@ -289,6 +310,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
                 break;
             }
         }
+
         return status;
     }
 
@@ -303,6 +325,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
                 break;
             }
         }
+
         return status;
     }
 
@@ -317,16 +340,19 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
                 break;
             }
         }
+
         return status;
     }
 
     public Self clickSortByName() {
         getWait5().until(ExpectedConditions.elementToBeClickable(sortByName)).click();
+
         return (Self) this;
     }
 
     public ManageNodesPage clickBuildExecutorStatus() {
         getWait2().until(ExpectedConditions.elementToBeClickable(buildExecutorStatus)).click();
+
         return new ManageNodesPage(getDriver());
     }
 
@@ -344,12 +370,14 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         new Actions(getDriver())
                 .moveToElement(weather)
                 .perform();
+
         return (Self)this;
     }
 
     public DeletePage<Self> clickBuildDropdownMenuDeleteBuild(String buildNumber) {
         openBuildDropDownMenu(buildNumber);
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteBuildDropDown)).click();
+
         return new DeletePage<>((Self)this);
     }
 
@@ -357,6 +385,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         Actions act = new Actions(getDriver());
         act.moveToElement(dropDownBuildButton).perform();
         dropDownBuildButton.sendKeys(Keys.RETURN);
+
         return (Self)this;
     }
     public String getLastBuildIconStatus() {
@@ -365,16 +394,19 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public Self openLastBuildDropDownMenu() {
         getWait15().until(ExpectedConditions.visibilityOf(lastBuildDropDownMenuButton)).sendKeys(Keys.RETURN);
+
         return (Self)this;
     }
 
     public ConsoleOutputPage clickConsoleOutputLastBuildDropDown() {
         consoleOutputButtonFromBuildDropDown.click();
+
         return new ConsoleOutputPage(getDriver());
     }
 
     public WorkspacesBuildPage clickWorkspacesLastBuildDropDown() {
         workspacesButtonFromBuildDropDown.click();
+
         return new WorkspacesBuildPage(getDriver());
     }
 
@@ -396,6 +428,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public Self clickChangeJenkinsTableSize(String size) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@tooltip='" + size + "']"))).click();
+
         return (Self) this;
     }
 
@@ -407,6 +440,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         openBuildDropDownMenu(buildNumber);
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
                 "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
+
         return new PipelineStepsPage(getDriver());
     }
 }

@@ -41,6 +41,7 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
 
     public JenkinsVersionPage clickJenkinsVersionLink() {
         jenkinsVersionLink.click();
+
         return new JenkinsVersionPage(getDriver());
     }
 }

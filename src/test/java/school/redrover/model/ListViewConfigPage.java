@@ -37,21 +37,25 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
                 el.click();
             }
         }
+
         return this;
     }
 
     public ListViewConfigPage selectRecurseCheckbox() {
         getWait2().until(ExpectedConditions.elementToBeClickable(recurseCheckbox)).click();
+
         return this;
     }
 
     public ListViewConfigPage scrollToAddJobFilterDropDown() {
         new Actions(getDriver()).scrollToElement(addJobFilter).perform();
+
         return this;
     }
 
     public ListViewConfigPage clickHelpForFeatureDescription() {
         helpForFeatureDescription.click();
+
         return this;
     }
 

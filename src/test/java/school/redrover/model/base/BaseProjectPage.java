@@ -118,28 +118,33 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     public ChangesPage<Self> clickChangeOnLeftSideMenu() {
         getWait10().until(ExpectedConditions.visibilityOf(changesButton)).click();
+
         return new ChangesPage<>((Self) this);
     }
 
     public MainPage clickDeleteAndAccept() {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
         getDriver().switchTo().alert().accept();
+
         return new MainPage(getDriver());
     }
 
     public Self clickDeleteAndCancel() {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
         getDriver().switchTo().alert().dismiss();
+
         return (Self)this;
     }
 
     public Self clickDisable() {
         disableButton.click();
+
         return (Self) this;
     }
 
     public Self clickEnable() {
         getWait5().until(ExpectedConditions.elementToBeClickable(enableButton)).click();
+
         return (Self) this;
     }
 
@@ -158,22 +163,26 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public Self clickBuildNowFromSideMenu() {
         buildNowButton.click();
         getWait10().until(ExpectedConditions.visibilityOf(buildRowCell));
+
         return (Self) this;
     }
 
     public BuildWithParametersPage<Self> clickBuildWithParameters() {
         buildNowButton.click();
+
         return new BuildWithParametersPage<>((Self) this);
     }
 
     public ConsoleOutputPage clickIconBuildOpenConsoleOutput(int buildNumber) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(@href,'/" + buildNumber + "/console')]"))).click();
+
         return new ConsoleOutputPage(getDriver());
     }
 
     public int getSizeOfPermalinksList() {
         getWait2().until(ExpectedConditions.visibilityOf(permalinks));
+
         return permalinksList.size();
     }
 
@@ -181,16 +190,19 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         getWait10().until(ExpectedConditions.visibilityOf(lastBuildCompletedLink));
         getDriver().navigate().refresh();
         getWait10().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
+
         return new BuildPage(getDriver());
     }
 
     public ConsoleOutputPage clickIconAdditionalBranchBuild() {
         getWait15().until(ExpectedConditions.visibilityOf(iconAddBranchBuild)).click();
+
         return new ConsoleOutputPage(getDriver());
     }
 
     public TimelinePage clickTrend() {
         trend.click();
+
         return new TimelinePage(getDriver());
     }
 
@@ -221,12 +233,14 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     private Self openLastBuildDropDownMenu() {
         statusButton.click();
         lastBuildDropDownMenu.sendKeys(Keys.RETURN);
+
         return (Self) this;
     }
 
     public ChangesPage<Self> clickChangesViaLastBuildDropDownMenu() {
         openLastBuildDropDownMenu();
         changesFromLastBuild.click();
+
         return new ChangesPage<>((Self)this);
     }
 
@@ -293,12 +307,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public List<String> getTextBuildDropDownMenuOptions() {
-
         return TestUtils.getTexts(buildDropdownMenuOptions);
     }
 
     public boolean isIconLockIsDispalyed() {
-
         return iconLock.isDisplayed();
     }
 
@@ -317,11 +329,13 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public PipelineStepsPage clickPipelineStepsViaLastBuildDropDownMenu() {
         openLastBuildDropDownMenu();
         pipelineStepsDropDown.click();
+
         return new PipelineStepsPage(getDriver());
     }
 
     public Self refreshPage() {
         getDriver().navigate().refresh();
+
         return (Self) this;
     }
 
@@ -330,6 +344,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         Actions actions = new Actions(getDriver());
         actions.moveToElement(pipelineStepsDropDownFromSideMenu);
         actions.click().perform();
+
         return new PipelineStepsPage(getDriver());
     }
 }

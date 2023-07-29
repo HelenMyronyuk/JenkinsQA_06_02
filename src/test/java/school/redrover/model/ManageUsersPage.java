@@ -57,6 +57,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         getDriver()
                 .findElement(By.xpath("//a[@href='user/" + userName + "/']/button[@class='jenkins-menu-dropdown-chevron']"))
                         .sendKeys(Keys.ENTER);
+
         return this;
     }
 
@@ -69,9 +70,11 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     public boolean isUserExist(String userName) {
         for (WebElement el : users) {
             if (el.getText().equals(userName)) {
+
                 return true;
             }
         }
+
         return false;
     }
 

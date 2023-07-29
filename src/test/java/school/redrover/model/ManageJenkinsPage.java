@@ -72,28 +72,33 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
     public ManageJenkinsPage inputToSearchField(String text) {
         getWait2().until(ExpectedConditions.elementToBeClickable(searchBarOnManageJenkinsPage));
         searchBarOnManageJenkinsPage.sendKeys(text);
+
         return new ManageJenkinsPage(getDriver());
     }
 
     public ManageJenkinsPage inputToSearchFieldUsingKeyboardShortcut(String text) {
         page.sendKeys(Keys.chord("/"));
         new Actions(getDriver()).sendKeys(text).perform();
+
         return this;
     }
 
     public String getNoResultTextInSearchField() {
         Actions action = new Actions(getDriver());
         action.moveToElement(searchResultsIsVisible).perform();
+
         return searchResultsIsVisible.getText();
     }
 
     public ManageUsersPage clickManageUsers() {
         getWait2().until(ExpectedConditions.elementToBeClickable(manageUsersLink)).click();
+
         return new ManageUsersPage(getDriver());
     }
 
     public String getActualHeader() {
         getWait5().until(ExpectedConditions.visibilityOf(headline));
+
         return headline.getText();
     }
 
@@ -103,17 +108,20 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
 
     public NewJobPage clickNewItem() {
         newItemOnSideMenu.click();
+
         return new NewJobPage(getDriver());
     }
 
     public ConfigureGlobalSecurityPage clickConfigureGlobalSecurity() {
         getWait2().until(ExpectedConditions.elementToBeClickable(configureGlobalSecurityLink)).click();
+
         return new ConfigureGlobalSecurityPage(getDriver());
     }
 
     public ManageNodesPage clickManageNodes() {
         getWait2().until(ExpectedConditions.elementToBeClickable(manageNodesOnSideMenu));
         manageNodesOnSideMenu.click();
+
         return new ManageNodesPage(getDriver());
     }
 
@@ -121,11 +129,13 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         new Actions(getDriver())
                 .pause(Duration.ofMillis(300))
                 .click(getWait5().until(ExpectedConditions.elementToBeClickable(manageJenkinsLink))).perform();
+
         return new ManageJenkinsPage(getDriver());
     }
 
     public ManagePluginsPage clickManagePlugins() {
         getWait2().until(ExpectedConditions.elementToBeClickable(managePluginsLink)).click();
+
         return new ManagePluginsPage(getDriver());
     }
 
@@ -137,41 +147,49 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
                 break;
             }
         }
+
         return new ConfigureSystemPage(getDriver());
     }
 
     public ManageJenkinsPage selectAllDropdownResultsFromSearchField() {
         Actions action = new Actions(getDriver());
         action.moveToElement(searchResultsIsVisible).perform();
+
         return this;
     }
 
     public boolean isDropdownResultsFromSearchFieldContainsTextToSearch(String text) {
         for (WebElement option : listItemsInDropdownMenuSearchResultsWithTagA) {
             if (!option.getText().toLowerCase().contains(text)) {
+
                 return false;
             }
         }
+
         return true;
     }
 
     public boolean isDropdownResultsFromSearchFieldLinks() {
         for (WebElement option : listItemsInDropdownMenuSearchResultsWithTagA) {
             if (!"a".equals(option.getTagName())) {
+
                 return false;
             }
         }
+
         return true;
     }
 
     public ConfigureSystemPage clickConfigureSystemFromSearchDropdown() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(searchResults));
         configureSystemLinkInSearchResult.click();
+
         return new ConfigureSystemPage(getDriver());
     }
 
     public ConfigureSystemPage clickConfigureSystemLink() {
         getWait2().until(ExpectedConditions.elementToBeClickable(configureSystemLink)).click();
+
         return new ConfigureSystemPage(getDriver());
     }
 
@@ -179,11 +197,13 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath("//a[@href='/manage/computer/" + nodeName + "/']/button")))
                 .sendKeys(Keys.RETURN);
+
         return this;
     }
 
     public DeletePage<ManageNodesPage> selectDeleteAgentInDropdown() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
+
         return new DeletePage<>(new ManageNodesPage(getDriver()));
     }
 }

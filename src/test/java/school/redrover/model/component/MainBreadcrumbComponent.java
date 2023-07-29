@@ -60,6 +60,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
 
     public MainPage clickDashboardButton() {
         getWait2().until(ExpectedConditions.elementToBeClickable(dashboard)).click();
+
         return new MainPage(getDriver());
     }
 
@@ -69,6 +70,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .pause(Duration.ofMillis(300))
                 .perform();
         getWait2().until(ExpectedConditions.visibilityOf(dashboardButton)).sendKeys(Keys.RETURN);
+
         return this;
     }
 
@@ -76,6 +78,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
             if (listItemName.contains("Delete Pipeline"))
                  {clickOkOnPopUp();}
+
         return pageToReturn;
     }
 
@@ -87,6 +90,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]")))
                 .click()
                 .perform();
+
         return submenuPage;
     }
 
@@ -103,6 +107,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         for (WebElement el : dropDownMenu) {
             menuList.add(el.getAttribute("innerText"));
         }
+
         return menuList;
     }
 
@@ -127,6 +132,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .perform();
 
         getWait2().until(ExpectedConditions.visibilityOf(jobBreadcrumbChevron)).sendKeys(Keys.RETURN);
+
         return this;
     }
 
@@ -159,6 +165,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .perform();
 
         getWait2().until(ExpectedConditions.visibilityOf(lastBuildChevron)).sendKeys(Keys.RETURN);
+
         return this;
     }
 

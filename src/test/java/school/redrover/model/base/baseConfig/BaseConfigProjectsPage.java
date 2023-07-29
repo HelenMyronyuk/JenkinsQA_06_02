@@ -81,6 +81,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public Self clickSwitchEnableOrDisable() {
         getWait2().until(ExpectedConditions.elementToBeClickable(enableDisableSwitch)).click();
+
         return (Self) this;
     }
 
@@ -90,6 +91,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public Self clickOldBuildCheckBox() {
         TestUtils.clickByJavaScript(this, oldBuildCheckBox);
+
         return (Self) this;
     }
 
@@ -124,16 +126,19 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public Self clickGitHubProjectCheckbox() {
         checkBoxGitHubProject.click();
+
         return (Self) this;
     }
 
     public Self inputTextTheInputAreaProjectUrlInGitHubProject(String text) {
         inputLineProjectUrl.sendKeys(text);
+
         return (Self) this;
     }
 
     public Self checkProjectIsParametrized() {
         TestUtils.click(this, projectIsParametrized);
+
         return (Self) this;
     }
 
@@ -142,26 +147,31 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
         getWait10().until(ExpectedConditions.elementToBeClickable(projectIsParametrized));
         TestUtils.scrollToElementByJavaScript(this, projectIsParametrized);
         addParameterDropdown.click();
+
         return (Self) this;
     }
 
     public Self selectParameterInDropDownByType(String typeParameter) {
         getDriver().findElement(By.xpath(String.format("//li/a[text()='%s']", typeParameter))).click();
+
         return (Self) this;
     }
 
     public Self inputBooleanParameterName(String name) {
         inputParameterName.sendKeys(name);
+
         return (Self) this;
     }
 
     public Self selectCheckboxSetByDefault() {
         TestUtils.click(this, checkboxSetByDefault);
+
         return (Self) this;
     }
 
     public Self setBooleanParameterDescription(String description) {
         textareaBooleanParameterDescription.sendKeys(description);
+
         return (Self) this;
     }
 
@@ -169,11 +179,13 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
         for (String element : parameterChoices) {
             inputParameterChoices.sendKeys(element + "\n");
         }
+
         return (Self) this;
     }
 
     public Self inputParameterDesc(String description) {
         inputParameterDescription.sendKeys(description);
+
         return (Self) this;
     }
 
@@ -183,16 +195,19 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
 
     public Self scrollToBuildTriggers() {
         TestUtils.scrollToElementByJavaScript(this, throttleBuilds);
+
         return (Self) this;
     }
 
     public Self checkThrottleBuilds() {
        throttleBuilds.click();
+
         return (Self) this;
     }
 
     public Self selectTimePeriod(String timePeriod) {
         new Select(selectTimePeriod).selectByValue(timePeriod.toLowerCase());
+
         return (Self) this;
     }
 
@@ -203,11 +218,13 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     public Self clickBuildAfterOtherProjectsAreBuiltCheckBox() {
         TestUtils.scrollToElementByJavaScript(this, buildAfterOtherProjectsAreBuiltCheckBox);
         TestUtils.clickByJavaScript(this, buildAfterOtherProjectsAreBuiltCheckBox);
+
         return (Self) this;
     }
 
     public Self inputProjectsToWatch(String projectName) {
         getWait5().until(ExpectedConditions.visibilityOf(projectsToWatchField)).sendKeys(projectName);
+
         return (Self) this;
     }
 }

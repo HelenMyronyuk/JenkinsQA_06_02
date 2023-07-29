@@ -25,11 +25,13 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
 
     public NewViewPage setNewViewName(String viewName) {
         getWait2().until(ExpectedConditions.elementToBeClickable(nameInput)).sendKeys(viewName);
+
         return this;
     }
 
     private NewViewPage selectViewType(TestUtils.ViewType viewType) {
         getDriver().findElement(viewType.getLocator()).click();
+
         return this;
     }
 
@@ -37,6 +39,7 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
             TestUtils.ViewType viewType, Class<ViewConfigPage> clazz) {
         selectViewType(viewType);
         createButton.click();
+
         return (ViewConfigPage) viewType.createNextPage(getDriver());
     }
 }

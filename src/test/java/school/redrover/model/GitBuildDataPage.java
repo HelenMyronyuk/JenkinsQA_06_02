@@ -32,8 +32,10 @@ public class GitBuildDataPage extends BaseMainHeaderPage<GitBuildDataPage> {
             namesOfBuiltBranches.add(nameOfBranch[0]);
         }
         if (namesOfBuiltBranches.isEmpty()) {
+
             return "";
         }
+
         return String.join(", ", namesOfBuiltBranches);
     }
 }

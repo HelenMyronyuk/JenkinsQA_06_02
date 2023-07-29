@@ -23,6 +23,7 @@ public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfi
 
     public FreestyleProjectConfigPage setDisplayName(String displayName) {
         displayNameField.sendKeys(displayName);
+
         return this;
     }
 }

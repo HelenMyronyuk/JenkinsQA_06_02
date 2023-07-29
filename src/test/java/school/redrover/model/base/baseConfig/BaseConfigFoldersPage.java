@@ -48,11 +48,13 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
     public Self enterDisplayName(String displayName) {
         inputDisplayName.click();
         inputDisplayName.sendKeys(displayName);
+
         return (Self)this;
     }
 
     public Self clearDisplayName() {
         inputDisplayName.clear();
+
         return (Self)this;
     }
 
@@ -62,6 +64,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
                 .pause(Duration.ofMillis(1000))
                 .perform();
         getWait10().until(ExpectedConditions.elementToBeClickable(healthMetric)).click();
+
         return (Self)this;
     }
 
@@ -75,6 +78,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
     }
 
     public Boolean healthMetricIsVisible() {
+
         return getWait10().until(ExpectedConditions.visibilityOf(addedHealthMetric)).isDisplayed();
     }
 
@@ -101,6 +105,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         inputScriptPath.clear();
         inputScriptPath.click();
         inputScriptPath.sendKeys(scriptPath);
+
         return (Self)this;
     }
 

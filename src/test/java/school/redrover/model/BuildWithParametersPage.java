@@ -74,8 +74,10 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
             for (WebElement element : getChoiceParametersList()) {
                 valuesList.add(element.getText());
             }
+
             return valuesList;
         }
+
         return null;
     }
 
@@ -90,8 +92,10 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
     public boolean checkedTrue() {
         String checked = checkedTrue.getAttribute("checked");
         if(checked.equals("true")){
+
             return true;
         }
+
         return false;
     }
 }

@@ -45,6 +45,7 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
 
     public MultiConfigurationProjectPage refreshPage() {
         getDriver().navigate().refresh();
+
         return this;
     }
 }

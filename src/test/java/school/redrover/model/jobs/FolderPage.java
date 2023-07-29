@@ -35,21 +35,25 @@ public class FolderPage extends BaseJobPage<FolderPage> {
     @Override
     public FolderConfigPage clickConfigure() {
         setupClickConfigure();
+
         return new FolderConfigPage(new FolderPage(getDriver()));
     }
 
     public NewJobPage clickNewItem() {
         buttonNewItem.click();
+
         return new NewJobPage(getDriver());
     }
 
     public NewViewPage clickNewView() {
         buttonNewView.click();
+
         return new NewViewPage(getDriver());
     }
 
     public DeletePage<MainPage> clickDeleteJobThatIsMainPage() {
         deleteButton.click();
+
         return new DeletePage<>(new MainPage(getDriver()));
     }
 
@@ -58,7 +62,8 @@ public class FolderPage extends BaseJobPage<FolderPage> {
     }
 
     public boolean viewIsDisplayed(String viewName){
-       return getDriver().findElement(By.linkText(viewName)).isDisplayed();
+
+        return getDriver().findElement(By.linkText(viewName)).isDisplayed();
     }
 
     public List<String> getJobList() {
@@ -74,8 +79,10 @@ public class FolderPage extends BaseJobPage<FolderPage> {
 
     public boolean jobIsDisplayed(String viewName){
         try {
+
             return getDriver().findElement(By.linkText(viewName)).isDisplayed();
         } catch (Exception e){
+
             return false;
         }
     }

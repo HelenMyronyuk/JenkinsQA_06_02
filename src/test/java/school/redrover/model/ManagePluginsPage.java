@@ -29,6 +29,7 @@ public class ManagePluginsPage extends BaseMainHeaderPage<ManagePluginsPage> {
 
     public ManagePluginsAdvancedPage clickAdvancedSettings(){
         advancedSettings.click();
+
         return new ManagePluginsAdvancedPage(getDriver());
     }
 }

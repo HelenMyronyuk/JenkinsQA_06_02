@@ -23,22 +23,26 @@ public class CreateNodePage extends BaseMainHeaderPage<CreateNodePage> {
 
     public CreateNodePage clearNameField() {
         getWait2().until(ExpectedConditions.elementToBeClickable(inputName)).clear();
+
         return this;
     }
 
     public ErrorNodePage clickSaveButtonWhenNameFieldEmpty() {
         getWait2().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+
         return new ErrorNodePage(getDriver());
     }
 
     public ManageNodesPage clickSaveButton() {
         getWait10().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+
         return new ManageNodesPage(getDriver());
     }
 
     public CreateNodePage addDescription(String description) {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(descriptionTextarea)).sendKeys(description);
+
         return this;
     }
 }

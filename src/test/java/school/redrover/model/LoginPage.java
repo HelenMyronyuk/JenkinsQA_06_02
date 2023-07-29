@@ -25,16 +25,19 @@ public class  LoginPage extends BaseModel {
 
     public LoginPage enterUsername(String userName) {
         inputUserNameField.sendKeys(userName);
+
         return this;
     }
 
     public LoginPage enterPassword(String password) {
         inputPasswordField.sendKeys(password);
+
         return this;
     }
 
     public <Page extends BaseModel> Page enterSignIn(Page page) {
         signInButton.click();
+
         return page;
     }
 

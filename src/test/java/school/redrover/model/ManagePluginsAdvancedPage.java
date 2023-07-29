@@ -17,6 +17,7 @@ public class ManagePluginsAdvancedPage extends BaseMainHeaderPage<ManagePluginsA
 
     public ManagePluginsAdvancedPage clickExtraInfoServerIcon(){
         extraInfoServerIcon.click();
+
         return this;
     }
 

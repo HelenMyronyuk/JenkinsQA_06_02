@@ -30,6 +30,7 @@ public class TimelinePage extends BaseMainHeaderPage<TimelinePage> {
         for (int i = 1; i <= numbersOfBuild; i++) {
             buildNumber.add(getWait10().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='" + i + "/']"))).getText());
         }
+
         return buildNumber;
     }
 }

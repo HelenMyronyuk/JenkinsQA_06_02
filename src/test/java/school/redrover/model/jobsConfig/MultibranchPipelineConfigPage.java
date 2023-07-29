@@ -24,17 +24,20 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
 
     public MultibranchPipelineConfigPage clickDisable() {
         getWait5().until(ExpectedConditions.visibilityOf(disabledSwitch)).click();
+
         return this;
     }
 
     public MultibranchPipelineConfigPage clickAppearance() {
         getWait5().until(ExpectedConditions.elementToBeClickable(appearanceButton)).click();
+
         return this;
     }
 
     public MultibranchPipelineConfigPage selectDefaultIcon() {
         new Select(getWait5().until(ExpectedConditions.elementToBeClickable(defaultIcon)))
                 .selectByVisibleText("Default Icon");
+
         return this;
     }
 }

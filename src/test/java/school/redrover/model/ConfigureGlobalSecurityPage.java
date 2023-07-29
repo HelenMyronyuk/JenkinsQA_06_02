@@ -50,12 +50,10 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
     }
 
     public int getNumberOfTitles() {
-
         return listFormLabels.size();
     }
 
     public int getNumberOfHelpButtons() {
-
         return listHelpButtons.size();
     }
 
@@ -67,7 +65,6 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
     }
 
     public List<String> getDropDownMenuTexts() {
-
         return TestUtils.getTexts(menus);
     }
 
@@ -86,9 +83,11 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
                 new Actions(getDriver()).click(checkBox).perform();
             }
             if (!checkBox.isEnabled()) {
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -99,9 +98,11 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
                 new Actions(getDriver()).click(radioButton).perform();
             }
             if (!radioButton.isEnabled()) {
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -112,7 +113,6 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
     }
 
     public String getSavedNotificationText() {
-
         return getWait5().until(ExpectedConditions.visibilityOf(savedNotificationText)).getText();
     }
 

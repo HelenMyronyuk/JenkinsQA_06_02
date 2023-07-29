@@ -30,34 +30,40 @@ public class NewNodePage extends BaseMainHeaderPage<NewNodePage> {
     public NewNodePage inputNodeNameField(String text) {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(nodeNameField)).sendKeys(text);
+
         return this;
     }
 
     public NewNodePage clickPermanentAgentRadioButton() {
         getWait2().until(ExpectedConditions.elementToBeClickable(permanentAgentButton)).click();
+
         return this;
     }
 
     public NewNodePage clickCopyExistingNode(){
         getWait2().until(ExpectedConditions.elementToBeClickable(copyExistingNodeButton)).click();
+
         return this;
     }
 
     public NewNodePage inputExistingNode(String existingNodeName){
         getWait5().until(ExpectedConditions
                 .visibilityOf(existingNodeField)).sendKeys(existingNodeName);
+
         return this;
     }
 
     public CreateNodePage clickCreateButton() {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(createButton)).click();
+
         return new CreateNodePage(getDriver());
     }
 
     public ErrorNodePage clickCreateButtonAndGoError() {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(createButton)).click();
+
         return new ErrorNodePage(getDriver());
     }
 }

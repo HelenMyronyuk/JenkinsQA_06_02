@@ -46,16 +46,19 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
 
     public PipelineConfigPage scrollAndClickAdvancedButton() {
         new Actions(getDriver()).scrollToElement(scriptSection).moveToElement(advancedButton).click().perform();
+
         return this;
     }
 
     public PipelineConfigPage setDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(name)).sendKeys(displayName);
+
         return this;
     }
 
     public PipelineConfigPage scrollToPipelineSection() {
         TestUtils.scrollToElementByJavaScript(this, section);
+
         return this;
     }
 
@@ -68,32 +71,38 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
                 text = element.getText();
             }
         }
+
         return text;
     }
 
     public PipelinePage selectHelloWord() {
         new Select(selectScript).selectByValue("hello");
+
         return new PipelinePage(getDriver());
     }
 
     public PipelinePage selectScriptedPipeline() {
         new Select(selectScript).selectByValue("scripted");
+
         return new PipelinePage(getDriver());
     }
 
     public PipelineConfigPage clickPipelineLeftMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(pipeline)).click();
+
         return this;
     }
 
     public PipelineConfigPage sendAreContentInputString(String text) {
         TestUtils.clickByJavaScript(this, workflowEditor);
         workflowEditor.sendKeys(text);
+
         return this;
     }
 
     public PipelineConfigPage inputInScriptField(String scriptText){
         scriptInputField.sendKeys(scriptText);
+
         return this;
     }
 }
