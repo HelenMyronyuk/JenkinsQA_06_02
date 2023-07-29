@@ -308,7 +308,7 @@ public class ViewsTest extends BaseTest {
                 .createNewView()
                 .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .clickOnDescription()
+                .clickAddOrEditDescription()
                 .enterDescription(VIEW_DESCRIPTION)
                 .clickSaveButtonDescription()
                 .getDescriptionText();
