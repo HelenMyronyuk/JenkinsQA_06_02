@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,9 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
 
     @FindBy(name = "Submit")
     private WebElement createButton;
+
+    @FindBy(xpath = "//a[contains(@href, '/user/admin/my-views/view/View1')]")
+    private WebElement view;
 
     public NewViewPage(WebDriver driver) {
         super(driver);

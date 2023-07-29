@@ -12,6 +12,12 @@ public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescriptio
     @FindBy(xpath = "//a[@href='delete']")
     private WebElement deleteView;
 
+    @FindBy(xpath = "//a[contains(@href, '/configure')]")
+    private WebElement editViewSideMenu;
+
+    @FindBy(name = "Submit")
+    private WebElement yesButton;
+
     public ViewPage(WebDriver driver) {
         super(driver);
     }
@@ -27,4 +33,20 @@ public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescriptio
         return new DeletePage<>(new MainPage(getDriver()));
     }
 
+    public ViewPage clickEditView() {
+        editViewSideMenu.click();
+        return this;
+    }
+
+    public ViewPage clickDeleteViewSideMenu() {
+        deleteView.click();
+        yesButton.click();
+        return this;
+    }
+
+    public ViewPage selectView(String viewName) {
+        getWait2().until(ExpectedConditions.visibilityOf(getDriver().findElement(
+                By.xpath("//a[contains(@href, '/user/admin/my-views/view/"+ viewName +"')]")))).click();
+        return this;
+    }
 }

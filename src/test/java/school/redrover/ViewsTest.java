@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
+import org.testng.reporters.jq.Main;
 import school.redrover.model.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
@@ -314,5 +315,22 @@ public class ViewsTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
+    }
+
+    @Test
+    public void testDeleteViewFromConfigureOfMyViewsPage() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
+        Boolean isViewPresent = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .selectView(VIEW_NAME)
+                .clickEditView()
+                .clickDeleteViewSideMenu()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertFalse(isViewPresent, "Error");
     }
 }

@@ -23,5 +23,4 @@ public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage>
 
         return new MyViewsPage(getDriver());
     }
-
 }

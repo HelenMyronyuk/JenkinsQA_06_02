@@ -1,8 +1,10 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
 import school.redrover.runner.TestUtils;
 
@@ -68,5 +70,19 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
         }
 
         return list;
+    }
+
+    public boolean verifyViewIsPresent(String viewName) {
+        boolean status = false;
+
+        List<WebElement> views = getWait5().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='tabBar']")))
+                .findElements(By.xpath("//div[@class='tabBar']/div"));
+        for (WebElement view : views) {
+            if (view.getText().equals(viewName)) {
+                status = true;
+                break;
+            }
+        }
+        return status;
     }
 }
