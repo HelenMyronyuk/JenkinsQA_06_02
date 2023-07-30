@@ -13,13 +13,13 @@ import java.util.List;
 
 public class FolderPage extends BaseJobPage<FolderPage> {
 
-    @FindBy(css = "#tasks>:nth-child(3)")
-    private WebElement buttonNewItem;
+    @FindBy(xpath = "//a[contains(@href, '/newJob')]")
+    private WebElement newItemButton;
 
-    @FindBy(xpath = "//div[@class='tab']")
-    private WebElement buttonNewView;
+    @FindBy(xpath = "//a[contains(@href, '/newView')]")
+    private WebElement newViewButton;
 
-    @FindBy(partialLinkText = "Delete ")
+    @FindBy(xpath = "//a[contains(@href, '/delete')]")
     private WebElement deleteButton;
 
     @FindBy(id = "view-message")
@@ -40,13 +40,13 @@ public class FolderPage extends BaseJobPage<FolderPage> {
     }
 
     public NewJobPage clickNewItem() {
-        buttonNewItem.click();
+        newItemButton.click();
 
         return new NewJobPage(getDriver());
     }
 
     public NewViewPage clickNewView() {
-        buttonNewView.click();
+        newViewButton.click();
 
         return new NewViewPage(getDriver());
     }
@@ -61,11 +61,6 @@ public class FolderPage extends BaseJobPage<FolderPage> {
         return TestUtils.getText(this, folderDescription);
     }
 
-    public boolean viewIsDisplayed(String viewName){
-
-        return getDriver().findElement(By.linkText(viewName)).isDisplayed();
-    }
-
     public List<String> getJobList() {
         return jobList
                 .stream()
@@ -77,11 +72,11 @@ public class FolderPage extends BaseJobPage<FolderPage> {
         return getDriver().getTitle();
     }
 
-    public boolean jobIsDisplayed(String viewName){
+    public boolean jobIsDisplayed(String viewName) {
         try {
 
             return getDriver().findElement(By.linkText(viewName)).isDisplayed();
-        } catch (Exception e){
+        } catch (Exception e) {
 
             return false;
         }
