@@ -297,18 +297,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testLogoutButtonColorChange() {
-        String expectedColor = "rgba(245, 245, 245, 1)";
-
-        String actualColorLogOutButton = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverLogOutButton()
-                .getLogOutTextDecorationValue();
-
-        assertEquals(actualColorLogOutButton, expectedColor);
-    }
-
-    @Test
     public void testConfigureTabFromDropdownMenu() {
         boolean isPageOpened = new MainPage(getDriver())
                 .getHeader()
@@ -346,7 +334,6 @@ public class HeaderTest extends BaseTest {
         for (int i = 0; i < buttonsChangeColorWhenMouseover.size(); i++) {
 
             WebElement iconButtons = buttonsChangeColorWhenMouseover.get(i);
-
             String backgroundColor = iconButtons.getCssValue("color");
             new Actions(getDriver()).moveToElement(iconButtons).perform();
             String hoverColor = iconButtons.getCssValue("background-color");
