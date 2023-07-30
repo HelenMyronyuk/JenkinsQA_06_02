@@ -566,7 +566,7 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickJobName(NAME, new FolderPage(getDriver()))
-                .jobIsDisplayed(jobType.name());
+                .jobIsDisplayedF(jobType.name());
 
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }
@@ -584,7 +584,7 @@ public class FolderTest extends BaseTest {
                     .getHeader()
                     .clickLogo()
                     .clickJobName(NAME, new FolderPage(getDriver()))
-                    .jobIsDisplayed(jobType.name());
+                    .jobIsDisplayedF(jobType.name());
 
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }

@@ -100,6 +100,16 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 .findElement(By.xpath(String.format("//a[@href='job/%s/']", jobName.replaceAll(" ", "%20")))))).isDisplayed();
     }
 
+    default boolean jobIsDisplayedF(String viewName) {
+        try {
+
+            return getDriver().findElement(By.linkText(viewName)).isDisplayed();
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
     default String getJobName(String projectName) {
         return getWait2().until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath("//tr[@id='job_" + projectName + "']//a//span['" + projectName + "']")))
@@ -120,6 +130,11 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 .perform();
 
         return (Self)this;
+    }
+
+    default String getTooltipDescription(){
+        return getWait10().until(ExpectedConditions.visibilityOf(getDriver().findElement(
+                By.xpath("//div[@class='tippy-box']//td[@align='left' and not(contains(@class, 'jenkins-table__icon'))]")))).getText();
     }
 
     default boolean isIconFolderDisplayed() {
