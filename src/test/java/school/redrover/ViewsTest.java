@@ -26,12 +26,14 @@ public class ViewsTest extends BaseTest {
 
     private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
+    private static final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
+
     @DataProvider(name = "myView types")
     public Object[][] myViewType() {
         return new Object[][]{
                 {TestUtils.ViewType.IncludeAGlobalView, IncludeAGlobalViewConfigPage.class},
                 {TestUtils.ViewType.ListView, ListViewConfigPage.class},
-                {TestUtils.ViewType.MyView, ViewPage.class}
+                {TestUtils.ViewType.MyView, MyViewConfigPage.class}
         };
     }
 
@@ -315,6 +317,31 @@ public class ViewsTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
+    }
+
+    @Test(dataProvider = "myView types")
+    public void testEditDescription(TestUtils.ViewType viewType, Class clazz){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String descriptionText = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(viewType, clazz)
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
+                .clickEditView()
+                .enterDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription(NEW_VIEW_DESCRIPTION)
+                .clickSaveButtonDescription()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, NEW_VIEW_DESCRIPTION);
     }
 
     @Test

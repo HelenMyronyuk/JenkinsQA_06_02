@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.runner.TestUtils;
 
-public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage> {
+public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage> implements IDescription<MyViewConfigPage> {
 
     @FindBy(xpath = "//input[@name = 'name']")
     private WebElement nameView;
