@@ -619,4 +619,15 @@ public class MultibranchPipelineTest extends BaseTest {
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
+
+    @Test
+    public void testCreatingMultibranchProjectsLink() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String pageHeaderText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickMultibranchProject()
+                .getPageHeaderText();
+        Assert.assertEquals(pageHeaderText, "Branches and Pull Requests");
+    }
 }

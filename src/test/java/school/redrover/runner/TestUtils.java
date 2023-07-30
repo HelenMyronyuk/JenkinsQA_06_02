@@ -167,7 +167,6 @@ public class TestUtils {
     }
 
     public static void click(BaseModel baseModel, WebElement element) {
-        waitElementToBeVisible(baseModel, element);
         waitElementToBeClickable(baseModel, element).click();
     }
 
@@ -294,7 +293,6 @@ public class TestUtils {
     }
 
     public static void manageJenkinsEmailNotificationSetUp(BaseTest baseTest) {
-
         new MainPage(baseTest.getDriver())
                 .clickManageJenkinsPage()
                 .clickConfigureSystemLink()
@@ -320,7 +318,6 @@ public class TestUtils {
     }
 
     public static void manageJenkinsEmailNotificationGoingBackToOriginalSettings(BaseTest baseTest) {
-
         new MainPage(baseTest.getDriver())
                 .getBreadcrumb()
                 .clickDashboardButton()

@@ -12,9 +12,6 @@ import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
 
 public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFolderPage> {
 
-    @FindBy(xpath = "//a[@href='https://www.jenkins.io/doc/book/pipeline/multibranch/']")
-    private WebElement multibranchProject;
-
     @FindBy(xpath = "//a[contains(@href,'/computation/console')]")
     private WebElement scanButton;
 
@@ -50,12 +47,6 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new OrganizationFolderConfigPage(this);
     }
 
-    public DocBookPipelineMultibranchPage clickMultibranchProject() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(multibranchProject)).click();
-
-        return new DocBookPipelineMultibranchPage(getDriver());
-    }
-
     public ScanOtherFoldersLogPage clickScanOrgFolderLog() {
         getWait5().until(ExpectedConditions.elementToBeClickable(scanButton)).click();
 
@@ -81,6 +72,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
 
     public ScanOtherFoldersPage clickRerunTheFolderComputation() {
         getWait5().until(ExpectedConditions.elementToBeClickable(rerunFolderComputationLink)).click();
+
         return new ScanOtherFoldersPage(getDriver());
     }
 

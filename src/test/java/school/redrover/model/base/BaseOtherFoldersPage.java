@@ -42,6 +42,9 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     @FindBy(xpath = "//a[contains(@href,'/welcome/builds')]")
     private WebElement buildHistoryButton;
 
+    @FindBy(xpath = "//a[@href='https://www.jenkins.io/doc/book/pipeline/multibranch/']")
+    private WebElement multibranchProject;
+
     public BaseOtherFoldersPage(WebDriver driver) {
         super(driver);
     }
@@ -112,5 +115,11 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistoryButton)).click();
 
         return new WelcomeBuildHistoryPage(getDriver());
+    }
+
+    public DocBookPipelineMultibranchPage clickMultibranchProject() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(multibranchProject)).click();
+
+        return new DocBookPipelineMultibranchPage(getDriver());
     }
 }
