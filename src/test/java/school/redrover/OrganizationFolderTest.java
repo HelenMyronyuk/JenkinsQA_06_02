@@ -309,15 +309,15 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Test
-    public void testReRunFolderComputation() {
+    public void testRerunFolderComputation() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
 
-        String titleScanOrganizationFolder = new MainPage(getDriver())
+        String headerScanOrganizationFolder = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
                 .clickRerunTheFolderComputation()
-                .getTextFromTitle();
+                .getPageHeaderText();
 
-        Assert.assertEquals(titleScanOrganizationFolder, "Scan Organization Folder");
+        Assert.assertEquals(headerScanOrganizationFolder, "Scan Organization Folder");
     }
 
     @Test

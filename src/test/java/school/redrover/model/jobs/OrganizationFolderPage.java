@@ -5,14 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.DocBookPipelineMultibranchPage;
-import school.redrover.model.CredentialsPage;
-import school.redrover.model.OtherFoldersEventsPage;
-import school.redrover.model.ScanOtherFoldersLogPage;
+import school.redrover.model.*;
 
 import school.redrover.model.base.BaseOtherFoldersPage;
 import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
-import school.redrover.model.DocBookPipelinePage;
 
 public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFolderPage> {
 
@@ -35,7 +31,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
     private WebElement configureProject;
 
     @FindBy(xpath = "//span[(text() = 'Re-run the Folder Computation')]")
-    private WebElement reRunFolderComputationLink;
+    private WebElement rerunFolderComputationLink;
 
     public OrganizationFolderPage(WebDriver driver) {
         super(driver);
@@ -83,9 +79,9 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return getWait5().until(ExpectedConditions.elementToBeClickable(linkBookCreatingJenkinsPipeline)).getText();
     }
 
-    public ScanOtherFoldersLogPage clickRerunTheFolderComputation() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(reRunFolderComputationLink)).click();
-        return new ScanOtherFoldersLogPage(getDriver());
+    public ScanOtherFoldersPage clickRerunTheFolderComputation() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(rerunFolderComputationLink)).click();
+        return new ScanOtherFoldersPage(getDriver());
     }
 
     public DocBookPipelinePage clickPipelineOneTutorial() {
