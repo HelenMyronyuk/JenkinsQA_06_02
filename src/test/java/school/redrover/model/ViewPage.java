@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
 
-public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage> {
+public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage>, IDashboard<ViewPage> {
 
     @FindBy(xpath = "//a[@href='delete']")
     private WebElement deleteView;

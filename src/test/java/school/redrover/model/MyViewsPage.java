@@ -11,7 +11,7 @@ import school.redrover.runner.TestUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDescription<MyViewsPage> {
+public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDescription<MyViewsPage>, IDashboard<MyViewsPage> {
 
     public MyViewsPage(WebDriver driver) {
         super(driver);

@@ -1,14 +1,11 @@
 package school.redrover.model;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.*;
 
-import java.time.Duration;
-
-public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>{
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboard<MainPage> {
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;
