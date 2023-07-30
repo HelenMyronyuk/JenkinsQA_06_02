@@ -341,4 +341,16 @@ public class HeaderTest extends BaseTest {
             assertNotEquals(backgroundColor, hoverColor);
         }
     }
+
+    @Test
+    public void testSearchHelpButton() {
+        final String expectedResult = "Search Box";
+
+        String actualResult = new MainPage(getDriver())
+                .getHeader()
+                .clickHelpIcon()
+                .getTitleText();
+
+        assertEquals(actualResult, expectedResult);
+    }
 }

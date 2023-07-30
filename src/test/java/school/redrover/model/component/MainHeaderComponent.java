@@ -376,4 +376,10 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
                 .perform();
         return this;
     }
+
+    public SearchBoxPage clickHelpIcon() {
+        helpIcon.click();
+
+        return new SearchBoxPage(getDriver());
+    }
 }
