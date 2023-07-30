@@ -333,4 +333,19 @@ public class ViewsTest extends BaseTest {
 
         Assert.assertFalse(isViewPresent, "Error");
     }
+
+    @Test
+    public void testDeleteViewFromConfigureOfNewViewPage() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean viewIsPresent = new MainPage(getDriver())
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .clickDeleteViewLink()
+                .clickYesButton()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertFalse(viewIsPresent, "Error: view should not be present on Home page");
+    }
 }

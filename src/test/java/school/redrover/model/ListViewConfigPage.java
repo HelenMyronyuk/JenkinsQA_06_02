@@ -26,6 +26,9 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
     @FindBy(xpath = "//div[@class='help-area tr']/div/div")
     private WebElement textHelpDescription;
 
+    @FindBy(xpath = "//span[text()='Delete View']/..")
+    private WebElement deleteViewLink;
+
     public ListViewConfigPage(ViewPage viewPage) {
         super(viewPage);
     }
@@ -61,5 +64,11 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
 
     public String getTextHelpFeatureDescription() {
         return getWait5().until(ExpectedConditions.elementToBeClickable(textHelpDescription)).getText();
+    }
+
+    public DeletePage<MainPage> clickDeleteViewLink() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
+
+        return new DeletePage<>(new MainPage(getDriver()));
     }
 }
