@@ -297,4 +297,19 @@ public class HeaderTest extends BaseTest {
 
         Assert.assertEquals(actualHeaderPage, pageHeaderText);
     }
+
+    @Test
+    public void testSearchJobWithFullJobName() {
+        final String projectName = "SearchProject";
+
+        TestUtils.createJob(this, projectName, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String actualProjectName = new MainPage(getDriver())
+                .getHeader()
+                .sendSearchBoxProjectName(projectName)
+                .getJobName();
+
+        assertEquals("Project "+projectName,actualProjectName);
+
+    }
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
 
 import java.time.Duration;
@@ -387,5 +388,12 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         securityButtonIcon.click();
 
         return this;
+    }
+
+    public MultiConfigurationProjectPage sendSearchBoxProjectName(String name) {
+        searchBox.sendKeys(name);
+        searchBox.sendKeys(Keys.RETURN);
+
+        return new MultiConfigurationProjectPage(getDriver());
     }
 }
