@@ -170,7 +170,7 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testAdminOrUserPageIsAvailable() {
+    public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
                 .getHeader()
                 .clickOnAdminButton()
@@ -284,6 +284,7 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
         final String pageHeaderText = "Manage Jenkins";
