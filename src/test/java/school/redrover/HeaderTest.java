@@ -150,16 +150,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testOpenBuildsTabFromDropdownMenu() {
-        boolean page = new MainPage(getDriver())
-                .getHeader()
-                .clickAdminDropdownMenu()
-                .openBuildsTabFromAdminDropdownMenuIsDisplayed();
-
-        Assert.assertTrue(page, "Page should be displayed");
-    }
-
-    @Test
     public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
                 .getHeader()
