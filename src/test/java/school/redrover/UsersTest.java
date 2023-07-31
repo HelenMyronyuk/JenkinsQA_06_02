@@ -40,7 +40,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testErrorIfCreateNewUserWithInvalidEmail() {
+    public void testCreateUsingInvalidEmail() {
         String errorEmail = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
