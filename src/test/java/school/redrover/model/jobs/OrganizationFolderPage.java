@@ -18,9 +18,6 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
     @FindBy(xpath = "//a[contains(@href, '/events')]")
     private WebElement eventButton;
 
-    @FindBy(xpath = "//a[contains(@href,'/credentials')]")
-    private WebElement credentialsButton;
-
     @FindBy(xpath = "//*[@href='https://www.jenkins.io/doc/book/pipeline/']")
     private WebElement linkBookCreatingJenkinsPipeline;
 
@@ -57,12 +54,6 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         getWait5().until(ExpectedConditions.elementToBeClickable(eventButton)).click();
 
         return new OtherFoldersEventsPage(getDriver());
-    }
-
-    public CredentialsPage clickCredentials() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(credentialsButton)).click();
-
-        return new CredentialsPage(getDriver());
     }
 
     public String getTextCreatingJenkinsPipeline() {

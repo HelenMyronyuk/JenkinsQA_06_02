@@ -388,6 +388,18 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testCredentials(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String credentialsText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickCredentials()
+                .getPageHeaderText();
+
+        Assert.assertEquals(credentialsText, "Credentials");
+    }
+
+    @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
