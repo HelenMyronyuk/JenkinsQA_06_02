@@ -40,6 +40,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
 
         return new CreateUserPage(getDriver());
     }
+
     public String getButtonText() {
         return createUser.getText().trim();
     }
@@ -53,10 +54,10 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return new UserPage(getDriver());
     }
 
-    public ManageUsersPage openUserIDDropDownMenu(String userName){
+    public ManageUsersPage openUserIDDropDownMenu(String userName) {
         getDriver()
                 .findElement(By.xpath("//a[@href='user/" + userName + "/']/button[@class='jenkins-menu-dropdown-chevron']"))
-                        .sendKeys(Keys.ENTER);
+                .sendKeys(Keys.ENTER);
 
         return this;
     }
@@ -97,6 +98,12 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         configureAdminUser.click();
 
         return new UserConfigPage(new StatusUserPage(getDriver()));
+    }
+
+    public UserPage selectConfigureButton(String newUserName) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='user/" + newUserName + "/configure']"))).click();
+
+        return new UserPage(getDriver());
     }
 }
 

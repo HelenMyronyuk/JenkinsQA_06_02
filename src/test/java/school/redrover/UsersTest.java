@@ -428,7 +428,7 @@ public class UsersTest extends BaseTest {
         String actualFullBreadcrumbText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserIDName(USER_NAME)
+                .selectConfigureButton(USER_NAME)
                 .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
                 .getBreadcrumb()
                 .getFullBreadcrumbText();
