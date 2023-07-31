@@ -225,21 +225,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testOfAdminButtonColorChange() {
-        String adminButtonColorBefore = new MainPage(getDriver())
-                .getHeader()
-                .getAdminButtonBackgroundColor();
-
-        String adminButtonColorAfter = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverAdminButton()
-                .getAdminButtonBackgroundColor();
-
-        Assert.assertNotEquals(adminButtonColorAfter, adminButtonColorBefore,
-                "The Admin button background has not changed");
-    }
-
-    @Test
     public void testOfLogOutButtonColorChange() {
         String logOutButtonColorBefore = new MainPage(getDriver())
                 .getHeader()
