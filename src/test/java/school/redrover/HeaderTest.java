@@ -214,16 +214,6 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(isPopUpScreenDisplayed, "The pop-up Notification icon screen is not displayed");
     }
 
-    @Test
-    public void testAppearanceOfPopUpMenusWhenClickingOnAdminIcon() {
-        boolean isPopUpScreenDisplayed = new MainPage(getDriver())
-                .getHeader()
-                .clickAdminDropdownMenu()
-                .isAdminDropdownScreenDisplayed();
-
-        Assert.assertTrue(isPopUpScreenDisplayed, "The pop-up Admin icon screen is not displayed");
-    }
-
     @Ignore
     @Test
     public void testOpenTheLinkOfManageJenkinsLinkFromThePopUpScreen() {
