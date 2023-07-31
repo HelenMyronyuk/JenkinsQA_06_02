@@ -130,6 +130,20 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    public void testPreviewDescriptionFromConfigurePage() {
+        String descriptionText = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickUserEditButton()
+                .clearDescriptionArea()
+                .addDescription("Description text")
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals("Description text", descriptionText);
+    }
+
+    @Test
     public void testEditEmailOnTheUserProfilePageByDropDown() {
         final String displayedEmail = "testedited@test.com";
 
