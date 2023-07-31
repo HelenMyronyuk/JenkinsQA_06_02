@@ -224,7 +224,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteUserViaPeopleMenu() {
+    public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
