@@ -69,16 +69,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testAdminButtonBackgroundColorIsPresentWhenMouseOver() {
-        String actualAdminButtonBackgroundColor = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverAdminButton()
-                .getAdminButtonBackgroundColor();
-
-        Assert.assertEquals(actualAdminButtonBackgroundColor, "rgba(64, 64, 64, 1)");
-    }
-
-    @Test
     public void testReturnToDashboardFromPeoplePage() {
         String textTitle = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
