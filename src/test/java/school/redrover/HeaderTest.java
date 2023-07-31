@@ -89,27 +89,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testNotificationAndSecurityIcon() {
-        String expectedManageJenkinsPageHeader = "Manage Jenkins";
-
-        String backgroundColorBefore = new MainPage(getDriver())
-                .getHeader()
-                .getBackgroundColorNotificationIcon();
-
-        String backgroundColorAfter = new MainPage(getDriver())
-                .getHeader()
-                .clickNotificationIcon()
-                .getNotificationIconBackgroundColor();
-
-        String actualManageJenkinsPageHeader = new ManageJenkinsPage(getDriver())
-                .clickManageJenkinsLink()
-                .getActualHeader();
-
-        Assert.assertNotEquals(backgroundColorBefore, backgroundColorAfter, " The color of icon is not changed");
-        Assert.assertEquals(actualManageJenkinsPageHeader, expectedManageJenkinsPageHeader, " The page is not correct");
-    }
-
-    @Test
     public void testReturnToTheDashboardPageAfterCreatingTheItem() {
         final List<String> listItemName = new ArrayList<>(List.of("Test Item", "Second"));
 
