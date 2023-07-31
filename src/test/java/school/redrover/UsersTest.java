@@ -116,7 +116,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testAddDescriptionToUserOnTheUserProfilePage() {
+    public void testAddDescriptionFromConfigure() {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
