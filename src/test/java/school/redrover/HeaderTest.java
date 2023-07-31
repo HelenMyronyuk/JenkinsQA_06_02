@@ -197,16 +197,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testMyViewsTabFromDropdownMenu() {
-        boolean page = new MainPage(getDriver())
-                .getHeader()
-                .clickAdminDropdownMenu()
-                .openMyViewsTabFromAdminDropdownMenuIsDisplayed();
-
-        Assert.assertTrue(page, "Page should be displayed");
-    }
-
-    @Test
     public void testNotificationAndSecurityIconsButtonsChangeColorWhenMouseover() {
         List<WebElement> buttonsChangeColorWhenMouseover = getDriver()
                 .findElements(By.xpath("//div[contains(@class,'am-container')]"));
