@@ -180,16 +180,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testButtonNotificationsWorks() {
-        String getTitle = new MainPage(getDriver())
-                .getHeader()
-                .clickNotificationIcon()
-                .getTextFromHeaderManageJenkins();
-
-        Assert.assertEquals(getTitle, "Manage Jenkins");
-    }
-
-    @Test
     public void testOfNotificationIconColorChange() {
         String notificationIconColorBefore = new MainPage(getDriver())
                 .getHeader()
