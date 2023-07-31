@@ -1,14 +1,18 @@
 package school.redrover;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class UsersTest extends BaseTest {
 
@@ -425,5 +429,34 @@ public class UsersTest extends BaseTest {
                 .isSearchResultContainsText("built");
 
         Assert.assertTrue(isSearchResultContainsText, "Wrong search result");
+    }
+
+
+    @DataProvider(name = "sideMenuItem")
+    public Object[][] provideSideMenuItem() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "asynchPeople", "Dashboard > People"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "testuser", "Dashboard > Manage Jenkins > Jenkins’ own user database > Test User"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "builds", "Dashboard > Test User > Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "configure", "Dashboard > Test User > Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "my-views", "Dashboard > Test User > My Views > All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "delete", "Dashboard > Test User > Delete"},
+        };
+    }
+
+    @Test(dataProvider = "sideMenuItem")
+    public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String actualFullBreadcrumbText = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickUserIDName(USER_NAME)
+                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 }
