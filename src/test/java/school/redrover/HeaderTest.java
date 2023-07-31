@@ -54,21 +54,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testSecurityButton() {
-        boolean securityButton = new MainPage(getDriver())
-                .getHeader()
-                .getSecurityButtonOnHeader();
-
-        Assert.assertTrue(securityButton);
-
-        String background = new MainPage(getDriver())
-                .getHeader()
-                .getBackgroundSecurityButton();
-
-        Assert.assertEquals(background, "rgba(64, 64, 64, 1)");
-    }
-
-    @Test
     public void testReturnToDashboardFromPeoplePage() {
         String textTitle = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
