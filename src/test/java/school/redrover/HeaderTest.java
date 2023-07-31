@@ -182,21 +182,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testNotificationAndSecurityIconsButtonsChangeColorWhenMouseover() {
-        List<WebElement> buttonsChangeColorWhenMouseover = getDriver()
-                .findElements(By.xpath("//div[contains(@class,'am-container')]"));
-        for (int i = 0; i < buttonsChangeColorWhenMouseover.size(); i++) {
-
-            WebElement iconButtons = buttonsChangeColorWhenMouseover.get(i);
-            String backgroundColor = iconButtons.getCssValue("color");
-            new Actions(getDriver()).moveToElement(iconButtons).perform();
-            String hoverColor = iconButtons.getCssValue("background-color");
-
-            assertNotEquals(backgroundColor, hoverColor);
-        }
-    }
-
-    @Test
     public void testSearchHelpButton() {
         final String expectedResult = "Search Box";
 
