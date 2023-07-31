@@ -9,7 +9,7 @@ import school.redrover.model.base.baseConfig.BaseConfigPage;
 import java.util.List;
 import java.util.Objects;
 
-public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, ViewPage> {
+public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, ViewPage> implements IDescription<ListViewConfigPage> {
 
     @FindBy(xpath = "//div[@class = 'listview-jobs']/span")
     private List<WebElement> viewJobList;
