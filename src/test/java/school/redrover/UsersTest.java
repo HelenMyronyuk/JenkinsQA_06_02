@@ -50,7 +50,7 @@ public class UsersTest extends BaseTest {
 
 
     @Test
-    public void testErrorWhenCreateDuplicatedUser() {
+    public void testCreateWithExistingName() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         String errorDuplicatedUser = new MainPage(getDriver())
