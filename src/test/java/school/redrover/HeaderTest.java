@@ -69,7 +69,7 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testSearchField() {
+    public void testPressEnterButtonSearchField() {
         String textPageFromSearchBox = new MainPage(getDriver())
                 .getHeader()
                 .sendSearchBox()
