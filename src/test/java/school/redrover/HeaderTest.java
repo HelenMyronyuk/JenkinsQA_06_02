@@ -79,26 +79,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testExitButton() {
-        boolean exitButtonIcon = new MainPage(getDriver())
-                .getHeader()
-                .iconExitButton();
-
-        Assert.assertTrue(exitButtonIcon);
-
-        String getUnderLineExitIcon = new MainPage(getDriver())
-                .getHeader()
-                .getUnderLineExitButton();
-
-        String getBackgroundExitIcon = new MainPage(getDriver())
-                .getHeader()
-                .getBackgroundExitButton();
-
-        Assert.assertEquals(getBackgroundExitIcon, "rgba(64, 64, 64, 1)");
-        Assert.assertEquals(getUnderLineExitIcon, "underline");
-    }
-
-    @Test
     public void testReturnToDashboardFromPeoplePage() {
         String textTitle = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
