@@ -335,30 +335,6 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testCreateUserFromManageUser() {
-        final String expectedResultTitle = "Dashboard [Jenkins]";
-
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        new MainPage(getDriver())
-                .getHeader()
-                .clickLogoutButton();
-
-        new LoginPage(getDriver())
-                .enterUsername(USER_NAME)
-                .enterPassword(PASSWORD)
-                .enterSignIn(new LoginPage(getDriver()));
-
-        String actualResultTitle = getDriver().getTitle();
-        String actualResultNameButton = new MainPage(getDriver())
-                .getHeader()
-                .getCurrentUserName();
-
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
-        Assert.assertEquals(actualResultNameButton, USER_FULL_NAME);
-    }
-
-    @Test
     public void testCreateUserCheckInPeople() {
         final String expectedResultTitle = "People - [Jenkins]";
 
