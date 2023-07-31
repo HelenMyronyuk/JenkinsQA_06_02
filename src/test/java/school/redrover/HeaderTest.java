@@ -353,4 +353,17 @@ public class HeaderTest extends BaseTest {
 
         assertEquals(actualResult, expectedResult);
     }
+
+    @Test
+    public void testSecurityPopUpClickManageJenkinsLink() {
+        final String pageHeaderText = "Manage Jenkins";
+
+        String actualHeaderPage = new MainPage(getDriver())
+                .getHeader()
+                .clickSecurityIcon()
+                .clickManageLinkFromPopUp()
+                .getActualHeader();
+
+        Assert.assertEquals(actualHeaderPage, pageHeaderText);
+    }
 }

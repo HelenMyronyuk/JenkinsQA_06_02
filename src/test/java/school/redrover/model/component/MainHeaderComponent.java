@@ -382,4 +382,10 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
         return new SearchBoxPage(getDriver());
     }
+
+    public MainHeaderComponent<Page> clickSecurityIcon() {
+        securityButtonIcon.click();
+
+        return this;
+    }
 }
