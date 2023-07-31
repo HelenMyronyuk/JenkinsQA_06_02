@@ -35,7 +35,7 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testSearchTextField() {
+    public void testSearchPresent() {
         String placeholder = new MainPage(getDriver())
                 .getHeader()
                 .getAttributeFromSearchBox();
