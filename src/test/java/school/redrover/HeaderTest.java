@@ -21,7 +21,7 @@ import static org.testng.Assert.*;
 public class HeaderTest extends BaseTest {
 
     @Test
-    public void testHeaderLogoIcon() {
+    public void testHeaderLogoIconPresent() {
         boolean logoIcon = new MainPage(getDriver())
                 .getHeader()
                 .isDisplayedLogoIcon();
@@ -248,7 +248,7 @@ public class HeaderTest extends BaseTest {
                 .sendSearchBoxProjectName(projectName)
                 .getJobName();
 
-        assertEquals("Project "+projectName,actualProjectName);
+        assertEquals("Project " + projectName, actualProjectName);
 
     }
 }
