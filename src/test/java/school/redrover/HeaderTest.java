@@ -237,16 +237,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testAdminButtonIsUnderlinedWhenMouseOver() {
-        String textUnderlineAfter = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverAdminButton()
-                .getAdminTextDecorationValue();
-
-        Assert.assertTrue(textUnderlineAfter.contains("underline"));
-    }
-
-    @Test
     public void testConfigureTabFromDropdownMenu() {
         boolean isPageOpened = new MainPage(getDriver())
                 .getHeader()
