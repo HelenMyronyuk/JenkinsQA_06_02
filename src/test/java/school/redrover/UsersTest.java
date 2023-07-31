@@ -241,7 +241,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteUserViaManageUsersByDeleteButton() {
+    public void testDeleteFromBin() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userNotFound = new MainPage(getDriver())
