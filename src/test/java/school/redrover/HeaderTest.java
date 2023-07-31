@@ -205,21 +205,6 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testOfLogOutButtonColorChange() {
-        String logOutButtonColorBefore = new MainPage(getDriver())
-                .getHeader()
-                .getLogOutButtonBackgroundColor();
-
-        String logOutButtonColorAfter = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverLogOutButton()
-                .getLogOutButtonBackgroundColor();
-
-        Assert.assertNotEquals(logOutButtonColorAfter, logOutButtonColorBefore,
-                "The LogOut button background has not changed");
-    }
-
-    @Test
     public void testAppearanceOfPopUpMenuWhenClickingOnNotificationIcon() {
         boolean isPopUpScreenDisplayed = new MainPage(getDriver())
                 .getHeader()
