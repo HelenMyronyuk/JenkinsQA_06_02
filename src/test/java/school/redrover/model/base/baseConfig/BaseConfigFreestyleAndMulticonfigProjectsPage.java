@@ -136,6 +136,9 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     @FindBy(xpath = "//*[@id='source-code-management']")
     private WebElement soursCodeManagement;
 
+    @FindBy(xpath = "//div[text()='Additional Behaviours']")
+    private WebElement additionalBehavioursText;
+
     public BaseConfigFreestyleAndMulticonfigProjectsPage(ProjectPage projectPage) {
         super(projectPage);
     }
@@ -210,6 +213,11 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public Self correctMainBranchName() {
+        new Actions(getDriver())
+                .scrollToElement(additionalBehavioursText)
+                .pause(300)
+                .perform();
+
         getWait15().until(ExpectedConditions.visibilityOf(mainBranchInput)).clear();
         mainBranchInput.sendKeys("*/main");
 
@@ -217,6 +225,11 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public Self clickAddBranchButton() {
+        new Actions(getDriver())
+                .scrollToElement(additionalBehavioursText)
+                .pause(300)
+                .perform();
+
         getWait5().until(ExpectedConditions.visibilityOf(addBranchButton)).click();
 
         return (Self) this;

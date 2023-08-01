@@ -1144,7 +1144,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(repositoryUrl, GITHUB_URL);
     }
-    @Ignore
+
     @Test
     public void testAddBranchFromSourceCodeManagement() {
         final String branchName = "for_jenkins_build";
