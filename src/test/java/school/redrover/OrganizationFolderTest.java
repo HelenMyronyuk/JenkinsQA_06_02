@@ -303,7 +303,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String configurationHeaderText = new OrganizationFolderPage(getDriver())
                 .clickConfigureProject()
-                .getConfigurationHeaderText();
+                .getPageHeaderText();
 
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
@@ -351,7 +351,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String titleScanOrgFolderLogPage = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickScanOrgFolderLog()
+                .clickScanLog()
                 .getTextFromTitle();
 
         Assert.assertEquals(titleScanOrgFolderLogPage, "Scan Organization Folder Log");
@@ -363,7 +363,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String eventTitle = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickOrgFolderEvents()
+                .clickEventsLink()
                 .getPageHeaderText();
 
         Assert.assertEquals(eventTitle, "Organization Folder Events");

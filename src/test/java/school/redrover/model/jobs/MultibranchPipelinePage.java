@@ -24,6 +24,13 @@ public class MultibranchPipelinePage extends BaseOtherFoldersPage<MultibranchPip
         return new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver()));
     }
 
+    @Override
+    public MultibranchPipelineConfigPage clickConfigureProject() {
+        setupClickConfigureProject();
+
+        return new MultibranchPipelineConfigPage(this);
+    }
+
     public ScanOtherFoldersPage clickReindexBranchesLink() {
         getWait10().until(ExpectedConditions.elementToBeClickable(reindexBranchesLink)).click();
 
