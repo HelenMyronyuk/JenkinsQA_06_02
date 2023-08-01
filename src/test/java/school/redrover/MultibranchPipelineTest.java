@@ -308,6 +308,18 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testConfigureProject() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String configurationHeaderText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigureProject()
+                .getPageHeaderText();
+
+        Assert.assertEquals(configurationHeaderText, "Configuration");
+    }
+
+    @Test
     public void testReindexBranches() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
