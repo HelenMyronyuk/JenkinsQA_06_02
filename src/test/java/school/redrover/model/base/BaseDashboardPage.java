@@ -1,5 +1,6 @@
 package school.redrover.model.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,6 +44,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return new NewJobPage(getDriver());
     }
 
+    @Step("Click on 'New Item' in the side menu")
     public NewJobPage clickNewItem() {
         newItem.click();
 

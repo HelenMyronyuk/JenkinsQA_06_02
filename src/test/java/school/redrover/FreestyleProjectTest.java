@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -54,7 +55,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(freestyleProjectNameIsAppeared, "Error! Job Is Not Displayed");
     }
 
-    @Test
+    @Test(description = "creating a job by clicking on 'New Item' button")
+    @Description("Verify job creation when clicking on 'New Item' button")
     public void testCreateFromNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickNewItem()

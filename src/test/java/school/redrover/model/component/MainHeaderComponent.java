@@ -1,5 +1,6 @@
 package school.redrover.model.component;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -119,6 +120,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return webElement.getCssValue("background-color");
     }
 
+    @Step("Click 'Logo' button and move to main page")
     public MainPage clickLogo() {
         getWait2().until(ExpectedConditions.visibilityOf(logoIcon)).click();
 
