@@ -24,16 +24,11 @@ public class UsersTest extends BaseTest {
 
     @Test
     public void testCreateNewUser() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
         boolean newUser = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickCreateUser()
-                .enterUsername(USER_NAME)
-                .enterPassword(PASSWORD)
-                .enterConfirmPassword(PASSWORD)
-                .enterFullName(USER_FULL_NAME)
-                .enterEmail(EMAIL)
-                .clickCreateUserButton()
                 .isUserExist(USER_NAME);
 
         Assert.assertTrue(newUser);
