@@ -1,10 +1,11 @@
-package school.redrover.model;
+package school.redrover.model.interfaces;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.base.BaseProjectPage;
@@ -14,7 +15,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePage {
+public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IBasePage {
 
     default NewJobPage clickCreateAJob() {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='newJob']"))).click();
@@ -290,21 +291,5 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
 
         return new PipelineStepsPage(getDriver());
-    }
-
-    default String getPopUp(){
-        return getDriver().switchTo().alert().getText();
-    }
-
-    default Self acceptAlert() {
-        getDriver().switchTo().alert().accept();
-
-        return (Self) this;
-    }
-
-    default Self dismissAlert() {
-        getDriver().switchTo().alert().dismiss();
-
-        return (Self) this;
     }
 }

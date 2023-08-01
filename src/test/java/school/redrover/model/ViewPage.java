@@ -6,10 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
+import school.redrover.model.interfaces.IDashboardTable;
+import school.redrover.model.interfaces.IDescription;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.runner.TestUtils;
 
-public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage>, IDashboard<ViewPage> {
+public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage>, IDashboardTable<ViewPage> {
 
     @FindBy(xpath = "//a[@href='delete']")
     private WebElement deleteView;

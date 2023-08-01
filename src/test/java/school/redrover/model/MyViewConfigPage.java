@@ -3,6 +3,7 @@ package school.redrover.model;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
+import school.redrover.model.interfaces.IDescription;
 import school.redrover.runner.TestUtils;
 
 public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage> implements IDescription<MyViewConfigPage> {

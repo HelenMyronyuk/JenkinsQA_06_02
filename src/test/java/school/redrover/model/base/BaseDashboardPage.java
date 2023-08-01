@@ -112,4 +112,20 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
         return (Self) this;
     }
+
+    public String getPopUp(){
+        return getDriver().switchTo().alert().getText();
+    }
+
+    public Self acceptAlert() {
+        getDriver().switchTo().alert().accept();
+
+        return (Self) this;
+    }
+
+    public Self dismissAlert() {
+        getDriver().switchTo().alert().dismiss();
+
+        return (Self) this;
+    }
 }

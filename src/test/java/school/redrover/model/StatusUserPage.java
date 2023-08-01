@@ -5,8 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.interfaces.IDescription;
 
-public class StatusUserPage extends BaseMainHeaderPage<StatusUserPage> implements IDescription<StatusUserPage>{
+public class StatusUserPage extends BaseMainHeaderPage<StatusUserPage> implements IDescription<StatusUserPage> {
 
     @FindBy(css = "[href$='/configure']")
     private WebElement configureSideMenu;

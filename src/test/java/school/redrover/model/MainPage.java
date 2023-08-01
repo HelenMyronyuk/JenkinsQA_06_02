@@ -4,8 +4,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.*;
+import school.redrover.model.interfaces.IDashboardTable;
+import school.redrover.model.interfaces.IDescription;
 
-public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboard<MainPage> {
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage> {
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;
