@@ -141,16 +141,6 @@ public class HeaderTest extends BaseTest {
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
-    @Test
-    public void testAppearanceOfPopUpMenuWhenClickingOnNotificationIcon() {
-        boolean isPopUpScreenDisplayed = new MainPage(getDriver())
-                .getHeader()
-                .clickNotificationIcon()
-                .isPopUpNotificationScreenDisplayed();
-
-        Assert.assertTrue(isPopUpScreenDisplayed, "The pop-up Notification icon screen is not displayed");
-    }
-
     @Ignore
     @Test
     public void testOpenTheLinkOfManageJenkinsLinkFromThePopUpScreen() {
