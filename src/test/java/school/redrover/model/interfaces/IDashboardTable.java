@@ -17,15 +17,8 @@ import java.util.List;
 
 public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IBasePage {
 
-    default NewJobPage clickCreateAJob() {
+    default NewJobPage clickCreateAJobAndArrow() {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='newJob']"))).click();
-
-        return new NewJobPage(getDriver());
-    }
-
-    default NewJobPage clickCreateAJobArrow() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//a[@href='newJob']/span[@class = 'trailing-icon']"))).click();
 
         return new NewJobPage(getDriver());
     }

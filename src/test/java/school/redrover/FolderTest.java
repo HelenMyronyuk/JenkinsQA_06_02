@@ -39,7 +39,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Folder)
                 .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
@@ -48,19 +48,6 @@ public class FolderTest extends BaseTest {
 
         Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "Error: was not show name folder");
         Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
-    }
-
-    @Test
-    public void testCreateFromCreateAJobArrow() {
-        String newFolderName = new MainPage(getDriver())
-                .clickCreateAJobArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.Folder)
-                .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
-                .clickSaveButton()
-                .getJobName();
-
-        Assert.assertEquals(newFolderName, NAME);
     }
 
     @Test
@@ -138,23 +125,7 @@ public class FolderTest extends BaseTest {
     public void testCreateFromMyViewsCreateAJob(){
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.Folder)
-                .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from Home page");
-        Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Test
-    public void testCreateFromMyViewsCreateAJobArrow(){
-        MainPage projectName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Folder)
                 .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
@@ -196,7 +167,7 @@ public class FolderTest extends BaseTest {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
 
         String actualError = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.Folder)
                 .getItemNameRequiredErrorText();
 
@@ -215,7 +186,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCreateWithDotInsteadOfName() {
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(".")
                 .selectJobType(TestUtils.JobType.Folder);
 

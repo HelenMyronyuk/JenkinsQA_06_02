@@ -81,7 +81,7 @@ public class ViewsTest extends BaseTest {
     public void testCreateAJobFromMyViewsPage() {
         FreestyleProjectPage project = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))

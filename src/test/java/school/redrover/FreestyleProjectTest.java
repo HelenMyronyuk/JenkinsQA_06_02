@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -30,7 +29,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -44,7 +43,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJobArrow() {
         boolean freestyleProjectNameIsAppeared = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -116,7 +115,7 @@ public class FreestyleProjectTest extends BaseTest {
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -126,21 +125,6 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
                 .jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Test
-    public void testCreateFromMyViewsCreateAJobArrow() {
-        MainPage mainPage = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobArrow()
-                .enterItemName(FREESTYLE_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(mainPage.jobIsDisplayed(FREESTYLE_NAME));
-        Assert.assertTrue(mainPage.clickMyViewsSideMenuLink().verifyJobIsPresent(FREESTYLE_NAME));
     }
 
     @Test
@@ -195,7 +179,7 @@ public class FreestyleProjectTest extends BaseTest {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
 
         String actualError = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .getItemNameRequiredErrorText();
 
@@ -205,7 +189,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testOKButtonIsDisabledWhenEmptyName() {
         boolean okButton = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .isOkButtonEnabled();
 

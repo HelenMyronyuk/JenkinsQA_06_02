@@ -269,7 +269,7 @@ public class TestUtils {
 
     public static NewJobPage createFolderUsingInvalidData(BaseTest baseTest, String invalidData, JobType jobType) {
         return new MainPage(baseTest.getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(invalidData)
                 .selectJobType(jobType);
     }

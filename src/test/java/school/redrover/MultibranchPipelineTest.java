@@ -22,7 +22,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
@@ -31,20 +31,6 @@ public class MultibranchPipelineTest extends BaseTest {
 
         Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
-    }
-
-    @Test
-    public void testCreateFromCreateAJobArrow() {
-        boolean multibranchProjectNameIsAppeared = new MainPage(getDriver())
-                .clickCreateAJobArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(NAME);
-
-        Assert.assertTrue(multibranchProjectNameIsAppeared, "Error! Job Is Not Displayed");
     }
 
     @Test
@@ -107,7 +93,7 @@ public class MultibranchPipelineTest extends BaseTest {
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
@@ -117,21 +103,6 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
                 .jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Test
-    public void testCreateFromMyViewsCreateAJobArrow() {
-        MainPage mainPage = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME));
-        Assert.assertTrue(mainPage.clickMyViewsSideMenuLink().verifyJobIsPresent(NAME));
     }
 
     @Test
@@ -181,7 +152,7 @@ public class MultibranchPipelineTest extends BaseTest {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
 
         String actualError = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .getItemNameRequiredErrorText();
 
