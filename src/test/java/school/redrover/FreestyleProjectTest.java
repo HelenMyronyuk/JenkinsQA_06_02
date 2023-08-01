@@ -1378,7 +1378,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .selectEditableEmailNotification()
                 .inputEmailIntoProjectRecipientListInputField(username)
                 .clickSaveButton()
-                .clickBuildNowButtonSideMenu()
+                .clickBuildNowFromSideMenu()
                 .clickBuildIconStatus()
                 .getConsoleOutputText();
 
