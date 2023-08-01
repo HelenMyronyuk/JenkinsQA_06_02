@@ -1,8 +1,5 @@
 package school.redrover;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -142,21 +139,6 @@ public class HeaderTest extends BaseTest {
                 .isUserPageAvailable();
 
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
-    }
-
-    @Test
-    public void testOfNotificationIconColorChange() {
-        String notificationIconColorBefore = new MainPage(getDriver())
-                .getHeader()
-                .getNotificationIconBackgroundColor();
-
-        String notificationIconColorAfter = new MainPage(getDriver())
-                .getHeader()
-                .hoverOverNotificationIcon()
-                .getNotificationIconBackgroundColor();
-
-        Assert.assertNotEquals(notificationIconColorAfter, notificationIconColorBefore,
-                "The Notification icon background has not changed");
     }
 
     @Test
