@@ -353,4 +353,18 @@ public class HeaderTest extends BaseTest {
 
         assertEquals(actualResult, expectedResult);
     }
+
+    @Test
+    public void testSearchPeople() {
+        final String USER_NAME = "testuser";
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, "p@ssword123", "Test User", "test@test.com");
+
+        String actualUserName = new MainPage(getDriver())
+                .getHeader()
+                .sendSearchBoxUser(USER_NAME)
+                .getActualNameUser();
+
+        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
+    }
 }
