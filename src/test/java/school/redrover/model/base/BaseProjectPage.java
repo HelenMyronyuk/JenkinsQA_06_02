@@ -159,7 +159,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public String getDisabledMessageText() {
-        return disabledMessage.getText().trim().substring(0, 34);
+        return getWait10().until(ExpectedConditions.visibilityOf(disabledMessage)).getText().trim().substring(0, 34);
     }
 
     public Self clickBuildNowFromSideMenu() {

@@ -754,17 +754,25 @@ public class FreestyleProjectTest extends BaseTest {
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        FreestyleProjectPage projectName = new MainPage(getDriver())
+        FreestyleProjectPage projectPage = new MainPage(getDriver())
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickDisable();
 
-        List<String> dropDownMenu = new MainPage(getDriver())
+        String disabledMessageText = projectPage
+                .getDisabledMessageText();
+
+        String enableButtonText = projectPage
+                .getEnableButtonText();
+
+        List<String> dropDownMenu = projectPage
+                .getHeader()
+                .clickLogo()
                 .getListOfProjectMenuItems(FREESTYLE_NAME);
 
         SoftAssert soft = new SoftAssert();
         soft.assertFalse(dropDownMenu.contains("Build Now"), "'Build Now' option is present in drop-down menu");
-        soft.assertEquals(projectName.getDisabledMessageText(), "This project is currently disabled");
-        soft.assertEquals(projectName.getEnableButtonText(), "Enable");
+        soft.assertEquals(disabledMessageText, "This project is currently disabled");
+        soft.assertEquals(enableButtonText, "Enable");
         soft.assertAll();
     }
 
