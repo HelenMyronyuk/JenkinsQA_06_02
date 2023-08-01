@@ -282,20 +282,20 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(invalidMessage, "Invalid username or password");
     }
 
-    @Test(dependsOnMethods = "testSearchPeople")
+    @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
         String nameProject = "Engineer";
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+         MainPage actualResult = new MainPage(getDriver())
                 .getHeader()
                 .clickLogoutButton()
                 .enterUsername(USER_NAME)
                 .enterPassword(PASSWORD)
                 .enterSignIn(new MainPage(getDriver()));
         TestUtils.createJob(this, nameProject, TestUtils.JobType.FreestyleProject, true);
-        String actualResult = new MainPage(getDriver()).getJobName(nameProject);
 
-        Assert.assertEquals(actualResult, nameProject);
+        Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
     }
 
     @Test
