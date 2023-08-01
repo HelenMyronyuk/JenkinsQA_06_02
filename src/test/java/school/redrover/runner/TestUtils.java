@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.*;
@@ -13,6 +14,8 @@ import school.redrover.model.jobs.*;
 import school.redrover.model.jobsConfig.*;
 
 import java.util.*;
+
+import static school.redrover.runner.CucumberDriver.getDriver;
 
 public class TestUtils {
 
@@ -352,5 +355,12 @@ public class TestUtils {
         tableSizeMap.put("Large", 102);
 
         return tableSizeMap;
+    }
+
+    public static void scrollWithPauseByActions(BaseModel baseModel, WebElement element, int mls) {
+        new Actions(baseModel.getDriver())
+                .scrollToElement(element)
+                .pause(mls)
+                .perform();
     }
 }

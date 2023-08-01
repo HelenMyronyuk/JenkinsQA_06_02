@@ -1035,7 +1035,6 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testAllowParallelBuilds() {
-
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         final boolean statusExecuteConcurrentBuilds = new MainPage(getDriver())

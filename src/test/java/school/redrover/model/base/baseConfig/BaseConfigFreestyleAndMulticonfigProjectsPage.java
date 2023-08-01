@@ -64,6 +64,9 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     @FindBy(xpath = "//input[@name='_.concurrentBuild']")
     private WebElement checkBoxExecuteConcurrentBuilds;
 
+    @FindBy(xpath = "//label[text()='Execute concurrent builds if necessary']")
+    private WebElement checkBoxExecuteConcurrentBuildsWithText;
+
     @FindBy(xpath = "//a[text()='Invoke top-level Maven targets']")
     private WebElement invokeMavenTargetsButton;
 
@@ -213,11 +216,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public Self correctMainBranchName() {
-        new Actions(getDriver())
-                .scrollToElement(additionalBehavioursText)
-                .pause(300)
-                .perform();
-
+        TestUtils.scrollWithPauseByActions(this, additionalBehavioursText, 300);
         getWait15().until(ExpectedConditions.visibilityOf(mainBranchInput)).clear();
         mainBranchInput.sendKeys("*/main");
 
@@ -225,11 +224,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public Self clickAddBranchButton() {
-        new Actions(getDriver())
-                .scrollToElement(additionalBehavioursText)
-                .pause(300)
-                .perform();
-
+        TestUtils.scrollWithPauseByActions(this, additionalBehavioursText, 300);
         getWait5().until(ExpectedConditions.visibilityOf(addBranchButton)).click();
 
         return (Self) this;
@@ -288,10 +283,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public Self clickCheckBoxExecuteConcurrentBuilds() {
-        new Actions(getDriver())
-                .scrollToElement(checkBoxExecuteConcurrentBuilds)
-                .click(checkBoxExecuteConcurrentBuilds)
-                .perform();
+        checkBoxExecuteConcurrentBuildsWithText.click();
 
         return (Self) this;
     }
@@ -376,10 +368,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public String getGitPublisherText() {
-        new Actions(getDriver())
-                .scrollToElement(textTagsFromPostBuildActions)
-                .pause(300)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, textTagsFromPostBuildActions, 300);
 
         return gitPublisherHandle.getText();
     }
@@ -429,17 +418,13 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         return (Self) this;
     }
     public Self clickAdvancedGeneral() {
-        new Actions(getDriver())
-                .scrollToElement(soursCodeManagement)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
         advancedDropdownMenu.click();
 
         return (Self) this;
     }
     public Self clickUseCustomWorkspace(String directoryName) {
-        new Actions(getDriver())
-                .scrollToElement(soursCodeManagement)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
         useCustomWorkspace.click();
         useDirectoryName.sendKeys(directoryName);
 

@@ -1,10 +1,10 @@
 package school.redrover.model;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
+import school.redrover.runner.TestUtils;
 import school.redrover.model.interfaces.IDescription;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
     }
 
     public ListViewConfigPage scrollToAddJobFilterDropDown() {
-        new Actions(getDriver()).scrollToElement(addJobFilter).perform();
+        TestUtils.scrollWithPauseByActions(this, addJobFilter, 100);
 
         return this;
     }

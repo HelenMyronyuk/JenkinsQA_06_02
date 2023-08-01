@@ -45,7 +45,8 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
     }
 
     public PipelineConfigPage scrollAndClickAdvancedButton() {
-        new Actions(getDriver()).scrollToElement(scriptSection).moveToElement(advancedButton).click().perform();
+        TestUtils.scrollWithPauseByActions(this, scriptSection, 500);
+        getWait2().until(ExpectedConditions.elementToBeClickable(advancedButton)).click();
 
         return this;
     }

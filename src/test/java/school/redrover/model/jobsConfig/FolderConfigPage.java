@@ -5,8 +5,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.Test;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.base.baseConfig.BaseConfigFoldersPage;
+import school.redrover.runner.TestUtils;
 
 public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, FolderPage> {
 
@@ -45,31 +47,23 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     }
 
     public FolderConfigPage inputNameLibrary() {
-        new Actions(getDriver())
-                .scrollToElement(footer)
-                .click(addButton)
-                .perform();
-
+        TestUtils.scrollWithPauseByActions(this, footer, 500);
+        getWait2().until(ExpectedConditions.elementToBeClickable(addButton)).click();
         nameField.sendKeys("shared-library");
 
         return this;
     }
 
     public FolderConfigPage inputDefaultVersion(String defaultVersion) {
-        new Actions(getDriver())
-                .scrollToElement(cacheFetchedLabel)
-                .perform();
-
+       TestUtils.scrollWithPauseByActions(this, cacheFetchedLabel, 100);
        getWait2().until(ExpectedConditions.elementToBeClickable(defaultVersionField)).sendKeys(defaultVersion);
 
         return this;
     }
 
     public FolderConfigPage pushSourceCodeManagementButton() {
-        new Actions(getDriver())
-                .scrollToElement(sourceCodeManagementOptions)
-                .click(sourceCodeManagementOptions)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, sourceCodeManagementOptions, 300);
+        getWait2().until(ExpectedConditions.elementToBeClickable(sourceCodeManagementOptions)).click();
 
         return this;
     }
@@ -81,10 +75,7 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     }
 
     public FolderConfigPage inputLibraryRepoUrl(String repoUrl) {
-        new Actions(getDriver())
-                .scrollToElement(repositoryScanRadio)
-                .perform();
-
+        TestUtils.scrollWithPauseByActions(this, repositoryScanRadio, 100);
         getWait2().until(ExpectedConditions.elementToBeClickable(repositoryField)).sendKeys(repoUrl);
 
         return this;
@@ -97,9 +88,7 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
     }
 
     public Boolean libraryDefaultVersionValidated() {
-        new Actions(getDriver())
-                .scrollToElement(cacheFetchedLabel)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, cacheFetchedLabel, 100);
 
         return getWait5().until(ExpectedConditions.visibilityOf(currentDefaultVersion)).getText().contains("Currently maps to revision");
     }

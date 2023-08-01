@@ -374,9 +374,8 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public MainHeaderComponent<Page> scrollToFooter() {
-        new Actions(getDriver())
-                .scrollToElement(footer)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, footer, 100);
+
         return this;
     }
 
