@@ -55,6 +55,12 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return new PeoplePage(getDriver());
     }
 
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionOnLeftSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span/a[@href='" + sideMenuLink + "']"))).click();
+
+        return pageToReturn;
+    }
+
     public BuildHistoryPage clickBuildsHistoryButton() {
         TestUtils.click(this, buildHistory);
 

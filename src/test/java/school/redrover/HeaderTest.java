@@ -1,10 +1,13 @@
 package school.redrover;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
@@ -12,6 +15,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.testng.Assert.*;
 
@@ -50,10 +54,21 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(searchIcon);
     }
 
-    @Test
-    public void testReturnToDashboardFromPeoplePage() {
+    @DataProvider(name = "sideMenuOptions")
+    public Object[][] provideSubsection() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) NewJobPage::new, "/view/all/newJob"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PeoplePage::new, "/asynchPeople/"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) BuildHistoryPage::new, "/view/all/builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ManageJenkinsPage::new, "/manage"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) MyViewsPage::new, "/me/my-views"},
+        };
+    }
+
+    @Test(dataProvider = "sideMenuOptions")
+    public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
         String textTitle = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickOptionOnLeftSideMenu(pageFromSideMenu.apply(getDriver()), sideMenuLink)
                 .getHeader()
                 .clickLogo()
                 .getTitle();
