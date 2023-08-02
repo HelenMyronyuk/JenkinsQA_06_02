@@ -23,7 +23,7 @@ public class OrganizationFolderTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(ORGANIZATION_FOLDER_NAME)
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
                 .clickOkButton(new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
@@ -32,20 +32,6 @@ public class OrganizationFolderTest extends BaseTest {
 
         Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
         Assert.assertEquals(mainPage.getJobName(ORGANIZATION_FOLDER_NAME), ORGANIZATION_FOLDER_NAME);
-    }
-
-    @Test
-    public void testCreateFromCreateAJobArrow() {
-        boolean projectPageFromCreateAJobArrow = new MainPage(getDriver())
-                .clickCreateAJobArrow()
-                .enterItemName(ORGANIZATION_FOLDER_NAME)
-                .selectJobType(TestUtils.JobType.OrganizationFolder)
-                .clickOkButton(new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(ORGANIZATION_FOLDER_NAME);
-
-        Assert.assertTrue(projectPageFromCreateAJobArrow, "Error: the Organization Folder name is not displayed on Dashboard");
     }
 
     @Test
@@ -128,7 +114,7 @@ public class OrganizationFolderTest extends BaseTest {
     public void testCreateFromMyViewsCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(ORGANIZATION_FOLDER_NAME)
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
                 .clickOkButton(new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
@@ -138,22 +124,6 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(mainPage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(mainPage.clickMyViewsSideMenuLink()
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Test
-    public void testCreateFromMyViewsCreateAJobArrow() {
-        MainPage projectName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobArrow()
-                .enterItemName(ORGANIZATION_FOLDER_NAME)
-                .selectJobType(TestUtils.JobType.OrganizationFolder)
-                .clickOkButton(new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(projectName.jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder name is not displayed on Dashboard from Home page");
-        Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder name is not displayed on Dashboard from MyViews page");
     }
 
     @Test
@@ -187,7 +157,7 @@ public class OrganizationFolderTest extends BaseTest {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
 
         String actualError = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
                 .getItemNameRequiredErrorText();
 
@@ -303,7 +273,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String configurationHeaderText = new OrganizationFolderPage(getDriver())
                 .clickConfigureProject()
-                .getConfigurationHeaderText();
+                .getPageHeaderText();
 
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
@@ -351,7 +321,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String titleScanOrgFolderLogPage = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickScanOrgFolderLog()
+                .clickScanLog()
                 .getTextFromTitle();
 
         Assert.assertEquals(titleScanOrgFolderLogPage, "Scan Organization Folder Log");
@@ -363,7 +333,7 @@ public class OrganizationFolderTest extends BaseTest {
 
         String eventTitle = new MainPage(getDriver())
                 .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
-                .clickOrgFolderEvents()
+                .clickEventsLink()
                 .getPageHeaderText();
 
         Assert.assertEquals(eventTitle, "Organization Folder Events");

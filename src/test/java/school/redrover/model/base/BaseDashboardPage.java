@@ -1,5 +1,6 @@
 package school.redrover.model.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,6 +44,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return new NewJobPage(getDriver());
     }
 
+    @Step("Click on 'New Item' in the side menu")
     public NewJobPage clickNewItem() {
         newItem.click();
 
@@ -53,6 +55,12 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         people.click();
 
         return new PeoplePage(getDriver());
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionOnLeftSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span/a[@href='" + sideMenuLink + "']"))).click();
+
+        return pageToReturn;
     }
 
     public BuildHistoryPage clickBuildsHistoryButton() {
@@ -101,6 +109,22 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public Self clickChangeJenkinsTableSize(String size) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@tooltip='" + size + "']"))).click();
+
+        return (Self) this;
+    }
+
+    public String getPopUp(){
+        return getDriver().switchTo().alert().getText();
+    }
+
+    public Self acceptAlert() {
+        getDriver().switchTo().alert().accept();
+
+        return (Self) this;
+    }
+
+    public Self dismissAlert() {
+        getDriver().switchTo().alert().dismiss();
 
         return (Self) this;
     }

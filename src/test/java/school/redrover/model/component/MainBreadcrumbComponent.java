@@ -54,6 +54,9 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(xpath = "//div[@class='bd']//span[contains(text(), 'Delete build')]")
     private WebElement deleteBuildLastBuildDropDownButton;
 
+    @FindBy(xpath =  "//li/a/span[contains(text(), 'Build Now')]")
+    private WebElement buildNowDropDownButton;
+
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
@@ -172,6 +175,13 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickDeleteFromLastBuildDropDownMenu(
             ReturnedPage pageToReturn) {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteBuildLastBuildDropDownButton)).click();
+
+        return pageToReturn;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildNowFromDashboardDropdownMenu(
+            ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(buildNowDropDownButton)).click();
 
         return pageToReturn;
     }

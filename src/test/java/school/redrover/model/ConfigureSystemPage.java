@@ -170,14 +170,14 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     }
 
     public ConfigureSystemPage clickAddButtonAddCredentialPopUp() {
-        new Actions(getDriver()).scrollToElement(addButtonAddCredentialsPopUpWindow);
+        TestUtils.scrollWithPauseByActions(this, addButtonAddCredentialsPopUpWindow, 100);
         getWait5().until(ExpectedConditions.elementToBeClickable(addButtonAddCredentialsPopUpWindow)).click();
 
         return this;
     }
 
     public ConfigureSystemPage checkUseSSLCheckbox() {
-        new Actions(getDriver()).scrollToElement(useSSLCheckboxExtendedEmailNotifications).perform();
+        TestUtils.scrollWithPauseByActions(this, useSSLCheckboxExtendedEmailNotifications, 100);
         getWait5().until(ExpectedConditions.visibilityOf(useSSLCheckboxExtendedEmailNotifications)).click();
 
         return this;
@@ -283,7 +283,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
     }
 
     public ConfigureSystemPage unCheckUseSSLCheckboxExtendedEmailNotifications() {
-        new Actions(getDriver()).scrollToElement(useSSLCheckboxExtendedEmailNotifications).perform();
+        TestUtils.scrollWithPauseByActions(this, useSSLCheckboxExtendedEmailNotifications, 100);
         if (useSSLCheckboxExtendedEmailVerification.isSelected()) {
             useSSLCheckboxExtendedEmailNotifications.click();
         }

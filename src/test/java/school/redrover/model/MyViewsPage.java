@@ -6,12 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
+import school.redrover.model.interfaces.IDashboardTable;
+import school.redrover.model.interfaces.IDescription;
 import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDescription<MyViewsPage>, IDashboard<MyViewsPage> {
+public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDescription<MyViewsPage>, IDashboardTable<MyViewsPage> {
 
     public MyViewsPage(WebDriver driver) {
         super(driver);

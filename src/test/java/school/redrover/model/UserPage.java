@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.runner.TestUtils;
 
@@ -45,6 +46,13 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
     public List<WebElement> getListMenu() {
         return tasks;
     }
+
+    public <SidePage extends BaseMainHeaderPage<?>> SidePage selectItemFromTheSideMenu(String itemName, SidePage sidePage) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href, '/" + itemName + "')]"))).click();
+
+        return sidePage;
+    }
+
 }
 
 

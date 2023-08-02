@@ -1,17 +1,15 @@
 package school.redrover.model.jobs;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.*;
+import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.jobsConfig.FolderConfigPage;
 import school.redrover.model.base.BaseJobPage;
 import school.redrover.runner.TestUtils;
 
-import java.util.List;
-
-public class FolderPage extends BaseJobPage<FolderPage> {
+public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTable<FolderPage> {
 
     @FindBy(xpath = "//a[contains(@href, '/newJob')]")
     private WebElement newItemButton;
@@ -24,9 +22,6 @@ public class FolderPage extends BaseJobPage<FolderPage> {
 
     @FindBy(id = "view-message")
     private WebElement folderDescription;
-
-    @FindBy(css = ".jenkins-table__link")
-    private List<WebElement> jobList;
 
     public FolderPage(WebDriver driver) {
         super(driver);
@@ -61,24 +56,7 @@ public class FolderPage extends BaseJobPage<FolderPage> {
         return TestUtils.getText(this, folderDescription);
     }
 
-    public List<String> getJobList() {
-        return jobList
-                .stream()
-                .map(WebElement::getText)
-                .toList();
-    }
-
     public String getTitle() {
         return getDriver().getTitle();
-    }
-
-    public boolean jobIsDisplayed(String viewName) {
-        try {
-
-            return getDriver().findElement(By.linkText(viewName)).isDisplayed();
-        } catch (Exception e) {
-
-            return false;
-        }
     }
 }

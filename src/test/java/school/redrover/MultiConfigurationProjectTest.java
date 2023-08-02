@@ -24,7 +24,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
@@ -32,20 +32,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo();
 
         Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "error was not show name project");
-    }
-
-    @Test
-    public void testCreateFromCreateAJobArrow() {
-        boolean multiConfigNameIsAppeared = new MainPage(getDriver())
-                .clickCreateAJobArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultiConfigurationProject)
-                .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(NAME);
-
-        Assert.assertTrue(multiConfigNameIsAppeared, "Error! Job Is Not Displayed");
     }
 
     @Test
@@ -107,7 +93,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
@@ -117,21 +103,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
                 .jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Test
-    public void testCreateFromMyViewsCreateAJobArrow() {
-        MainPage mainPage = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultiConfigurationProject)
-                .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME));
-        Assert.assertTrue(mainPage.clickMyViewsSideMenuLink().verifyJobIsPresent(NAME));
     }
 
     @Test
@@ -182,7 +153,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
 
         String actualError = new MainPage(getDriver())
-                .clickCreateAJobArrow()
+                .clickCreateAJobAndArrow()
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .getItemNameRequiredErrorText();
 
@@ -203,7 +174,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Test
     public void testCreateWithDotInsteadOfName() {
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickCreateAJob()
+                .clickCreateAJobAndArrow()
                 .enterItemName(".")
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject);
 

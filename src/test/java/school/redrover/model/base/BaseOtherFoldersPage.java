@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
+import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.jobs.FolderPage;
 
 public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends BaseJobPage<Self> {
@@ -41,6 +42,18 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
 
     @FindBy(xpath = "//a[contains(@href,'/welcome/builds')]")
     private WebElement buildHistoryButton;
+
+    @FindBy(xpath = "//a[contains(@href,'/credentials')]")
+    private WebElement credentialsButton;
+
+    @FindBy(xpath = "//a[@href='./configure']")
+    private WebElement configureProject;
+
+    @FindBy(xpath = "//*[@href='https://www.jenkins.io/doc/book/pipeline/']")
+    private WebElement linkBookCreatingJenkinsPipeline;
+
+    @FindBy(xpath = "//a[@href='https://www.jenkins.io/doc/book/pipeline/multibranch/']")
+    private WebElement multibranchProject;
 
     public BaseOtherFoldersPage(WebDriver driver) {
         super(driver);
@@ -102,15 +115,43 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
         return new PipelineSyntaxPage(getDriver());
     }
 
-    public PeoplePage clickPeopleFromSideMenu(){
+    public PeoplePage clickPeopleFromSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(peopleButton)).click();
 
         return new PeoplePage(getDriver());
     }
 
-    public WelcomeBuildHistoryPage clickBuildHistoryWelcomeFromSideMenu(){
+    public WelcomeBuildHistoryPage clickBuildHistoryWelcomeFromSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistoryButton)).click();
 
         return new WelcomeBuildHistoryPage(getDriver());
+    }
+
+    public CredentialsPage clickCredentials() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(credentialsButton)).click();
+
+        return new CredentialsPage(getDriver());
+    }
+
+    protected void setupClickConfigureProject() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(configureProject)).click();
+    }
+
+    public abstract BaseConfigPage<?, ?> clickConfigureProject();
+
+    public DocBookPipelinePage clickPipelineOneTutorial() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(linkBookCreatingJenkinsPipeline)).click();
+
+        return new DocBookPipelinePage(getDriver());
+    }
+
+    public String getTextCreatingJenkinsPipeline() {
+        return getWait5().until(ExpectedConditions.elementToBeClickable(linkBookCreatingJenkinsPipeline)).getText();
+    }
+
+    public DocBookPipelineMultibranchPage clickMultibranchProject() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(multibranchProject)).click();
+
+        return new DocBookPipelineMultibranchPage(getDriver());
     }
 }

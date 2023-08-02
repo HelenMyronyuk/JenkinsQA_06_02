@@ -1,14 +1,18 @@
 package school.redrover;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class UsersTest extends BaseTest {
 
@@ -20,23 +24,18 @@ public class UsersTest extends BaseTest {
 
     @Test
     public void testCreateNewUser() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
         boolean newUser = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickCreateUser()
-                .enterUsername(USER_NAME)
-                .enterPassword(PASSWORD)
-                .enterConfirmPassword(PASSWORD)
-                .enterFullName(USER_FULL_NAME)
-                .enterEmail(EMAIL)
-                .clickCreateUserButton()
                 .isUserExist(USER_NAME);
 
         Assert.assertTrue(newUser);
     }
 
     @Test
-    public void testErrorIfCreateNewUserWithInvalidEmail() {
+    public void testCreateUsingInvalidEmail() {
         String errorEmail = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
@@ -50,7 +49,7 @@ public class UsersTest extends BaseTest {
 
 
     @Test
-    public void testErrorWhenCreateDuplicatedUser() {
+    public void testCreateWithExistingName() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         String errorDuplicatedUser = new MainPage(getDriver())
@@ -112,7 +111,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testAddDescriptionToUserOnTheUserProfilePage() {
+    public void testAddDescriptionFromConfigure() {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
@@ -121,6 +120,20 @@ public class UsersTest extends BaseTest {
                 .addDescription("Description text")
                 .clickSaveButton()
                 .getDescriptionText();
+
+        Assert.assertEquals("Description text", descriptionText);
+    }
+
+    @Test
+    public void testPreviewDescriptionFromConfigurePage() {
+        String descriptionText = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickUserEditButton()
+                .clearDescriptionArea()
+                .addDescription("Description text")
+                .clickPreview()
+                .getPreviewText();
 
         Assert.assertEquals("Description text", descriptionText);
     }
@@ -208,7 +221,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteUserViaPeopleMenu() {
+    public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -225,7 +238,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteUserViaManageUsersByDeleteButton() {
+    public void testDeleteFromBin() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userNotFound = new MainPage(getDriver())
@@ -257,20 +270,20 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(invalidMessage, "Invalid username or password");
     }
 
-    @Test(dependsOnMethods = "testSearchPeople")
+    @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
         String nameProject = "Engineer";
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+         MainPage actualResult = new MainPage(getDriver())
                 .getHeader()
                 .clickLogoutButton()
                 .enterUsername(USER_NAME)
                 .enterPassword(PASSWORD)
                 .enterSignIn(new MainPage(getDriver()));
         TestUtils.createJob(this, nameProject, TestUtils.JobType.FreestyleProject, true);
-        String actualResult = new MainPage(getDriver()).getJobName(nameProject);
 
-        Assert.assertEquals(actualResult, nameProject);
+        Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
     }
 
     @Test
@@ -316,30 +329,6 @@ public class UsersTest extends BaseTest {
                 .getTextAlertIncorrectUsernameOrPassword();
 
         Assert.assertEquals(actualTextAlertIncorrectUsernameAndPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
-    }
-
-    @Test
-    public void testCreateUserFromManageUser() {
-        final String expectedResultTitle = "Dashboard [Jenkins]";
-
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        new MainPage(getDriver())
-                .getHeader()
-                .clickLogoutButton();
-
-        new LoginPage(getDriver())
-                .enterUsername(USER_NAME)
-                .enterPassword(PASSWORD)
-                .enterSignIn(new LoginPage(getDriver()));
-
-        String actualResultTitle = getDriver().getTitle();
-        String actualResultNameButton = new MainPage(getDriver())
-                .getHeader()
-                .getCurrentUserName();
-
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
-        Assert.assertEquals(actualResultNameButton, USER_FULL_NAME);
     }
 
     @Test
@@ -413,5 +402,34 @@ public class UsersTest extends BaseTest {
                 .isSearchResultContainsText("built");
 
         Assert.assertTrue(isSearchResultContainsText, "Wrong search result");
+    }
+
+
+    @DataProvider(name = "sideMenuItem")
+    public Object[][] provideSideMenuItem() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "asynchPeople", "Dashboard > People"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "testuser", "Dashboard > Manage Jenkins > Jenkins’ own user database > Test User"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "builds", "Dashboard > Test User > Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "configure", "Dashboard > Test User > Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "my-views", "Dashboard > Test User > My Views > All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "delete", "Dashboard > Test User > Delete"},
+        };
+    }
+
+    @Test(dataProvider = "sideMenuItem")
+    public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String actualFullBreadcrumbText = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .selectConfigureButton(USER_NAME)
+                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 }

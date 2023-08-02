@@ -721,4 +721,23 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
+
+    @Test
+    public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
+        String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
+        String expectedWarningText = "This Pipeline has run successfully, but does not define any stages. " +
+                "Please use the stage step to define some stages in this Pipeline.";
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, true);
+        String actualWarningText = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new PipelinePage(getDriver()))
+                .getBreadcrumb()
+                .getJobBreadcrumbDropdownMenu()
+                .clickBuildNowFromDashboardDropdownMenu(new PipelinePage(getDriver()))
+                .refreshPage()
+                .getAlert();
+
+        Assert.assertNotEquals(DisplayedAlertText, expectedWarningText);
+        Assert.assertEquals(actualWarningText, expectedWarningText);
+    }
 }

@@ -1,5 +1,6 @@
 package school.redrover.model.base.baseConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,6 +40,7 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
         return jobPage;
     }
 
+    @Step("Click 'Save' button on the BaseConfigPage page")
     public JobPage clickSaveButton() {
         getWait10().until(ExpectedConditions.elementToBeClickable(saveButton)).click();
 

@@ -4,17 +4,16 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.*;
+import school.redrover.model.interfaces.IDashboardTable;
+import school.redrover.model.interfaces.IDescription;
 
-public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboard<MainPage> {
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage> {
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;
 
     @FindBy(xpath = "//a[@href='/me/my-views']")
     private WebElement myViews;
-
-    @FindBy(xpath = "//div[@class='tippy-box']//td[@align='left' and not(contains(@class, 'jenkins-table__icon'))]")
-    private WebElement tooltipDescription;
 
     @FindBy(xpath = "//h1[text()='Welcome to Jenkins!']")
     private WebElement welcomeToJenkins;
@@ -44,10 +43,6 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
 
     public String getTitle() {
         return getDriver().getTitle();
-    }
-
-    public String getTooltipDescription(){
-        return getWait10().until(ExpectedConditions.visibilityOf(tooltipDescription)).getText();
     }
 
     public boolean isWelcomeDisplayed() {

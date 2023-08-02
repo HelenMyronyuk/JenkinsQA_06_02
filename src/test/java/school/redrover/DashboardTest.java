@@ -41,6 +41,17 @@ public class DashboardTest extends BaseTest {
     }
 
     @Test
+    public void testPreviewDescriptionOnMainPage(){
+        String preview = new MainPage(getDriver())
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION)
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
+
+        Assert.assertEquals(preview,DESCRIPTION);
+    }
+
+    @Test
     public void testAddDescriptionOnMainPage(){
         String textDescription = new MainPage(getDriver())
                 .clickAddOrEditDescription()

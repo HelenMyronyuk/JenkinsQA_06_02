@@ -1,10 +1,11 @@
-package school.redrover.model;
+package school.redrover.model.interfaces;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.base.BaseProjectPage;
@@ -14,17 +15,10 @@ import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePage {
+public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IBasePage {
 
-    default NewJobPage clickCreateAJob() {
+    default NewJobPage clickCreateAJobAndArrow() {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='newJob']"))).click();
-
-        return new NewJobPage(getDriver());
-    }
-
-    default NewJobPage clickCreateAJobArrow() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//a[@href='newJob']/span[@class = 'trailing-icon']"))).click();
 
         return new NewJobPage(getDriver());
     }
@@ -100,6 +94,16 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 .findElement(By.xpath(String.format("//a[@href='job/%s/']", jobName.replaceAll(" ", "%20")))))).isDisplayed();
     }
 
+    default boolean jobIsDisplayedF(String viewName) {
+        try {
+
+            return getDriver().findElement(By.linkText(viewName)).isDisplayed();
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
     default String getJobName(String projectName) {
         return getWait2().until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath("//tr[@id='job_" + projectName + "']//a//span['" + projectName + "']")))
@@ -120,6 +124,11 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 .perform();
 
         return (Self)this;
+    }
+
+    default String getTooltipDescription(){
+        return getWait10().until(ExpectedConditions.visibilityOf(getDriver().findElement(
+                By.xpath("//div[@class='tippy-box']//td[@align='left' and not(contains(@class, 'jenkins-table__icon'))]")))).getText();
     }
 
     default boolean isIconFolderDisplayed() {
@@ -275,21 +284,5 @@ public interface IDashboard <Self extends BaseMainHeaderPage<?>> extends IBasePa
                 "//a[contains(@href, 'lastSuccessfulBuild')]/span[text()='Pipeline Steps']"))).click();
 
         return new PipelineStepsPage(getDriver());
-    }
-
-    default String getPopUp(){
-        return getDriver().switchTo().alert().getText();
-    }
-
-    default Self acceptAlert() {
-        getDriver().switchTo().alert().accept();
-
-        return (Self) this;
-    }
-
-    default Self dismissAlert() {
-        getDriver().switchTo().alert().dismiss();
-
-        return (Self) this;
     }
 }

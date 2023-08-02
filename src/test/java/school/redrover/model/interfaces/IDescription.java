@@ -1,4 +1,4 @@
-package school.redrover.model;
+package school.redrover.model.interfaces;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;

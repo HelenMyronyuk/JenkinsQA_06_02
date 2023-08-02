@@ -1,6 +1,8 @@
 package school.redrover.model.jobs;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +12,9 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
 
     @FindBy(css = ".stage-header-name-0")
     private WebElement stage;
+
+    @FindBy(xpath = "//div[@id='pipeline-box']/div")
+    private WebElement alertWarning;
 
     public PipelinePage(WebDriver driver) {
         super(driver);
@@ -24,5 +29,12 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
 
     public String getStage() {
         return stage.getText();
+    }
+
+    public String getAlert() {
+        getWait10().until(ExpectedConditions.visibilityOf(
+                getDriver().findElement(By.xpath("//a[@href='lastBuild/']"))));
+
+        return getWait2().until(ExpectedConditions.visibilityOf(alertWarning)).getText().trim();
     }
 }

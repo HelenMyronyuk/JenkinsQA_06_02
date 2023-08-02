@@ -1,5 +1,6 @@
 package school.redrover.model.component;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
 
 import java.time.Duration;
@@ -34,7 +36,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(id = "breadcrumb-menu")
     private WebElement adminDropdownMenu;
 
-    @FindBy(xpath = "//a[contains(text(),'Manage Jenkins')]")
+    @FindBy(xpath = "//div[@class='am-list']//a[contains(text(),'Manage Jenkins')]")
     private WebElement manageJenkinsLinkFromPopUp;
 
     @FindBy(xpath = "//div[@id='breadcrumb-menu']//span[.='Builds']")
@@ -79,7 +81,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(css = "#visible-am-list > p > a")
     private WebElement headerManageJenkins;
 
-    @FindBy(css = "#visible-sec-am-button > svg")
+    @FindBy(xpath = "//div[@id='visible-sec-am-container']")
     private WebElement securityButtonIcon;
 
     @FindBy(xpath = "//*[@id='visible-sec-am-button']")
@@ -118,6 +120,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return webElement.getCssValue("background-color");
     }
 
+    @Step("Click 'Logo' button and move to main page")
     public MainPage clickLogo() {
         getWait2().until(ExpectedConditions.visibilityOf(logoIcon)).click();
 
@@ -133,7 +136,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public MainHeaderComponent<Page> clickNotificationIcon() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(notificationIcon)).click();
+        getWait5().until(ExpectedConditions.elementToBeClickable(notificationIcon)).click();
 
         return this;
     }
@@ -196,7 +199,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public ManageJenkinsPage clickManageLinkFromPopUp() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
 
         return new ManageJenkinsPage(getDriver());
     }
@@ -371,9 +374,8 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public MainHeaderComponent<Page> scrollToFooter() {
-        new Actions(getDriver())
-                .scrollToElement(footer)
-                .perform();
+        TestUtils.scrollWithPauseByActions(this, footer, 100);
+
         return this;
     }
 
@@ -381,5 +383,18 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         helpIcon.click();
 
         return new SearchBoxPage(getDriver());
+    }
+
+    public MainHeaderComponent<Page> clickSecurityIcon() {
+        securityButtonIcon.click();
+
+        return this;
+    }
+
+    public MultiConfigurationProjectPage sendSearchBoxProjectName(String name) {
+        searchBox.sendKeys(name);
+        searchBox.sendKeys(Keys.RETURN);
+
+        return new MultiConfigurationProjectPage(getDriver());
     }
 }

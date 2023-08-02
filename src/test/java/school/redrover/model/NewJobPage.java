@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,12 +41,14 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return getWait5().until(ExpectedConditions.visibilityOf(okButton)).isEnabled();
     }
 
+    @Step("Input the New Item name")
     public NewJobPage enterItemName(String jobName) {
         getWait5().until(ExpectedConditions.visibilityOf(itemName)).sendKeys(jobName);
 
         return this;
     }
 
+    @Step("Select Job Type on NewJobPage")
     public NewJobPage selectJobType(TestUtils.JobType jobType) {
         getDriver().findElement(jobType.getLocator()).click();
         this.jobType = jobType;
@@ -53,6 +56,7 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return this;
     }
 
+    @Step("Click 'OK' button")
     public <JobConfigPage extends BaseConfigPage<?, ?>> JobConfigPage clickOkButton(JobConfigPage jobConfigPage) {
         getWait5().until(ExpectedConditions.visibilityOf(okButton)).click();
 

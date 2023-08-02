@@ -8,7 +8,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
-import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
@@ -23,6 +22,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     @FindBy(xpath = "//form[@id='disable-project']/button")
     private WebElement disableButton;
+
+    @FindBy(css = "form#enable-project")
+    private List<WebElement> disabledMessageList;
 
     @FindBy(xpath = "//form[@id='enable-project']/button")
     private WebElement enableButton;
@@ -99,6 +101,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//a[not(contains(tooltip, 'In progress > Console Output'))]/ancestor::div/a[contains(@href,'/2/')]")
     private WebElement iconAddBranchBuild;
 
+    @FindBy(xpath = "//a[@tooltip='Success > Console Output']")
+    private WebElement buildIconStatus;
+
     @FindBy(xpath = "//div[@id='breadcrumb-menu-target']//span[text()='Changes']")
     private WebElement changesBuildButton;
 
@@ -133,7 +138,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
         getDriver().switchTo().alert().dismiss();
 
-        return (Self)this;
+        return (Self) this;
     }
 
     public Self clickDisable() {
@@ -156,12 +161,16 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return enableButton.getText();
     }
 
+    public boolean isDisabledMessageNotDisplayed(){
+        return disabledMessageList.size() == 0;
+    }
+
     public String getDisabledMessageText() {
-        return disabledMessage.getText().trim().substring(0, 34);
+        return getWait10().until(ExpectedConditions.visibilityOf(disabledMessage)).getText().trim().substring(0, 34);
     }
 
     public Self clickBuildNowFromSideMenu() {
-        buildNowButton.click();
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildNowButton)).click();
         getWait10().until(ExpectedConditions.visibilityOf(buildRowCell));
 
         return (Self) this;
@@ -200,6 +209,13 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return new ConsoleOutputPage(getDriver());
     }
 
+    public ConsoleOutputPage clickBuildIconStatus() {
+        getWait5().until(ExpectedConditions.visibilityOf(buildIconStatus));
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildIconStatus)).click();
+
+        return new ConsoleOutputPage(getDriver());
+    }
+
     public TimelinePage clickTrend() {
         trend.click();
 
@@ -209,14 +225,14 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public Self openBuildsDropDownMenu() {
         getWait10().until(ExpectedConditions.visibilityOf(buildsDropDownMenu)).sendKeys(Keys.RETURN);
 
-        return (Self)this;
+        return (Self) this;
     }
 
     public DeletePage<Self> clickDeleteBuildFromDropDownMenu() {
         openBuildsDropDownMenu();
         deleteBuildButtonDropDownMenu.click();
 
-        return new DeletePage<>((Self)this);
+        return new DeletePage<>((Self) this);
     }
 
     public boolean isNoBuildsDisplayed() {
@@ -227,7 +243,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         openBuildsDropDownMenu();
         changesButtonDropDownMenu.click();
 
-        return new ChangesPage<>((Self)this);
+        return new ChangesPage<>((Self) this);
     }
 
     private Self openLastBuildDropDownMenu() {
@@ -241,7 +257,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         openLastBuildDropDownMenu();
         changesFromLastBuild.click();
 
-        return new ChangesPage<>((Self)this);
+        return new ChangesPage<>((Self) this);
     }
 
     public WorkspacePage clickWorkspaceFromSideMenu() {
@@ -250,7 +266,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return new WorkspacePage(getDriver());
     }
 
-    public EditBuildInformationPage clickEditBuildInformFromProjectPage(){
+    public EditBuildInformationPage clickEditBuildInformFromProjectPage() {
         openBuildsDropDownMenu();
         editBuildInformFromDropDownOfBuild.click();
 
@@ -264,26 +280,26 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return new ChangesBuildPage(getDriver());
     }
 
-    public ConsoleOutputPage clickConsoleOutputType(){
+    public ConsoleOutputPage clickConsoleOutputType() {
         consoleOutputType.click();
 
         return new ConsoleOutputPage(getDriver());
     }
 
     public BuildPage clickBuildFromSideMenu(String jobName, int buildName) {
-       getDriver().findElement(By.xpath("//a[@href='/job/" + jobName + "/"+ buildName + "/']")).click();
+        getDriver().findElement(By.xpath("//a[@href='/job/" + jobName + "/" + buildName + "/']")).click();
 
         return new BuildPage(getDriver());
     }
 
-    public String getLastBuildNumber(){
+    public String getLastBuildNumber() {
         return getWait10().until(ExpectedConditions.elementToBeClickable(lastBuildCompletedLink)).getText();
     }
 
     public Self openPermalinksLastBuildsDropDownMenu() {
         getWait10().until(ExpectedConditions.visibilityOf(permalinksLastBuildDropDown)).sendKeys(Keys.RETURN);
 
-        return (Self)this;
+        return (Self) this;
     }
 
     public EditBuildInformationPage editBuildInfoPermalinksLastBuildDropDown() {
@@ -297,7 +313,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         openPermalinksLastBuildsDropDownMenu();
         deleteBuildButtonDropDownMenu.click();
 
-        return new DeletePage<>((Self)this);
+        return new DeletePage<>((Self) this);
     }
 
     public BuildPage clickBuildDateFromBuildRow() {
@@ -317,7 +333,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public ReplayPage<Self> clickReplayFromDropDownMenu() {
         getWait2().until(ExpectedConditions.elementToBeClickable(replayButton)).click();
 
-        return new ReplayPage<>((Self)this);
+        return new ReplayPage<>((Self) this);
     }
 
     public WorkspacesBuildPage clickWorkspaceButtonFromBuildDropDown() {
