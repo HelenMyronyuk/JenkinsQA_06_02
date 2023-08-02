@@ -24,7 +24,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(id = "jenkins-name-icon")
     private WebElement logoText;
 
-    @FindBy(xpath = "//a[@href='/user/admin']/button")
+    @FindBy(xpath = "//a[contains(@href, '/user/')]/button")
     private WebElement adminDropdown;
 
     @FindBy(id = "visible-am-list")
@@ -213,7 +213,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     public UserConfigPage openConfigureTabFromAdminDropdownMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureTabFromAdminDropdownMenu)).click();
 
-        return new UserConfigPage(new StatusUserPage(getDriver()));
+        return new UserConfigPage(new UserPage(getDriver()));
     }
 
     public boolean openMyViewsTabFromAdminDropdownMenuIsDisplayed() {

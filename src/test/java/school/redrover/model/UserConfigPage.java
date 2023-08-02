@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.runner.TestUtils;
 
-public class UserConfigPage extends BaseConfigPage<UserConfigPage,StatusUserPage> {
+public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
 
     @FindBy(xpath = "//input[@name='email.address']")
     private WebElement inputEmail;
@@ -14,7 +14,7 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage,StatusUserPage
     @FindBy(xpath = "//input[@name='insensitiveSearch']")
     private WebElement insensitiveSearchCheckbox;
 
-    public UserConfigPage(StatusUserPage statusUserPage) {
+    public UserConfigPage(UserPage statusUserPage) {
         super(statusUserPage);
     }
 

@@ -67,12 +67,10 @@ public class UsersTest extends BaseTest {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        String actualDisplayedDescriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserIDName(USER_NAME);
-
-        String actualDisplayedDescriptionText = new StatusUserPage(getDriver())
+                .clickUserIDName(USER_NAME)
                 .clickAddOrEditDescription()
                 .clearDescriptionField()
                 .enterDescription(displayedDescriptionText)
@@ -93,7 +91,7 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .clickUserIDName(USER_NAME);
 
-        StatusUserPage statusUserPage = new StatusUserPage(getDriver());
+        UserPage statusUserPage = new UserPage(getDriver());
         String existingDescriptionText = statusUserPage
                 .clickAddOrEditDescription()
                 .getDescriptionField();
@@ -148,7 +146,7 @@ public class UsersTest extends BaseTest {
                 .openUserIDDropDownMenu(USER_NAME)
                 .selectConfigureUserIDDropDownMenu();
 
-        UserConfigPage configureUserPage = new UserConfigPage(new StatusUserPage(getDriver()));
+        UserConfigPage configureUserPage = new UserConfigPage(new UserPage(getDriver()));
 
         String oldEmail = configureUserPage.getEmailValue("value");
 
@@ -407,15 +405,14 @@ public class UsersTest extends BaseTest {
         String previewDescriptionText = new MainPage(getDriver())
                 .getHeader()
                 .clickOnAdminButton()
-                .clickAddDescription()
-                .clearDescriptionArea()
-                .addUserDescription("User Description")
-                .clickPreviewButton()
-                .getPreviewText();
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription("User Description")
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
 
         Assert.assertEquals(previewDescriptionText, expectedPreviewDescriptionText);
     }
-
 
     @Test
     public void testSearchBoxInsensitive() {
@@ -430,7 +427,6 @@ public class UsersTest extends BaseTest {
 
         Assert.assertTrue(isSearchResultContainsText, "Wrong search result");
     }
-
 
     @DataProvider(name = "sideMenuItem")
     public Object[][] provideSideMenuItem() {

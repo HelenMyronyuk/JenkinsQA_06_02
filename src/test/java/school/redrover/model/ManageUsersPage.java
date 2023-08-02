@@ -28,7 +28,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     @FindBy(xpath = "//a[contains(@href,'/delete')]")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//a[@href='user/admin/configure']")
+    @FindBy(xpath = "//td//a[contains(@href, 'configure')]")
     private WebElement configureAdminUser;
 
     public ManageUsersPage(WebDriver driver) {
@@ -97,7 +97,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     public UserConfigPage clickUserEditButton() {
         configureAdminUser.click();
 
-        return new UserConfigPage(new StatusUserPage(getDriver()));
+        return new UserConfigPage(new UserPage(getDriver()));
     }
 
     public UserPage selectConfigureButton(String newUserName) {

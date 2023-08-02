@@ -7,11 +7,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.interfaces.IDescription;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public class UserPage extends BaseSubmenuPage<UserPage> {
+public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<UserPage> {
 
     @FindBy(xpath = "//div[contains(text(), 'Jenkins User ID:')]")
     private WebElement actualNameUser;
@@ -19,17 +20,8 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
     @FindBy(className = "task")
     private List<WebElement> tasks;
 
-    @FindBy(xpath = "//*[@id='description-link']")
-    private WebElement addDescriptionButton;
-
-    @FindBy(xpath = "//*[@id='description']//textarea")
-    private WebElement descriptionTextBox;
-
-    @FindBy(xpath = "//*[@id='description']/form//a[1]")
-    private WebElement previewButton;
-
-    @FindBy(xpath = "//div[@class ='textarea-preview']")
-    private WebElement previewText;
+    @FindBy(css = "[href$='/configure']")
+    private WebElement configureSideMenu;
 
     public UserPage(WebDriver driver) {
         super(driver);
@@ -48,12 +40,10 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
     }
 
     public String getActualNameUser() {
-
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText();
     }
 
     public boolean isUserPageAvailable() {
-
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText().contains("Jenkins User ID:");
     }
 
@@ -67,37 +57,9 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
         return sidePage;
     }
 
-    public UserPage clickAddDescription() {
-        addDescriptionButton.click();
+    public UserConfigPage clickConfigureSideMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(configureSideMenu)).click();
 
-        return this;
-    }
-
-
-    public UserPage addUserDescription(String description) {
-        getWait5().until(ExpectedConditions.visibilityOf(descriptionTextBox)).sendKeys(description);
-
-        return this;
-    }
-
-    public UserPage clickPreviewButton() {
-        previewButton.click();
-
-        return this;
-    }
-
-    public String getPreviewText() {
-
-        return previewText.getText();
-    }
-
-    public UserPage clearDescriptionArea() {
-        descriptionTextBox.clear();
-
-        return this;
+        return new UserConfigPage(new UserPage(getDriver()));
     }
 }
-
-
-
-
