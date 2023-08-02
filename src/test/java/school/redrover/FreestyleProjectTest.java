@@ -929,6 +929,23 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
+    public void testEnableFromConfigurationPage(){
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject,true);
+
+        FreestyleProjectPage freestyleProjectPageDisabled = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickConfigure()
+                .clickSwitchEnableOrDisable()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickSwitchEnableOrDisable()
+                .clickSaveButton();
+
+        Assert.assertEquals(freestyleProjectPageDisabled.getDisableButtonText(), "Disable Project");
+        Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed());
+    }
+
+    @Test
     public void testSetParametersToDiscardOldBuilds() {
         final int daysToKeepBuilds = 3;
         final int maxOfBuildsToKeep = 5;

@@ -23,6 +23,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//form[@id='disable-project']/button")
     private WebElement disableButton;
 
+    @FindBy(css = "form#enable-project")
+    private List<WebElement> disabledMessageList;
+
     @FindBy(xpath = "//form[@id='enable-project']/button")
     private WebElement enableButton;
 
@@ -156,6 +159,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     public String getEnableButtonText() {
         return enableButton.getText();
+    }
+
+    public boolean isDisabledMessageNotDisplayed(){
+        return disabledMessageList.size() == 0;
     }
 
     public String getDisabledMessageText() {
