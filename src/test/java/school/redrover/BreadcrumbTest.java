@@ -62,7 +62,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test(dataProvider = "subsections")
-    public  void testNavigateToManageJenkinsSubsection(
+    public void testNavigateToManageJenkinsSubsection(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
 
         String actualResult = new MainPage(getDriver())
@@ -99,7 +99,7 @@ public class BreadcrumbTest extends BaseTest {
 
     @DataProvider(name = "job-type")
     public Object[][] provideJobTypes() {
-        return new Object[][]{{TestUtils.JobType.FreestyleProject},{TestUtils.JobType.Pipeline},
+        return new Object[][]{{TestUtils.JobType.FreestyleProject}, {TestUtils.JobType.Pipeline},
                 {TestUtils.JobType.MultiConfigurationProject}, {TestUtils.JobType.Folder},
                 {TestUtils.JobType.MultibranchPipeline}, {TestUtils.JobType.OrganizationFolder}};
     }
@@ -142,7 +142,7 @@ public class BreadcrumbTest extends BaseTest {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
 
         String actualHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, jobType.createJobPage(getDriver()) )
+                .clickJobName(PROJECT_NAME, jobType.createJobPage(getDriver()))
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("Build History", new BuildHistoryPage(getDriver()))
@@ -165,7 +165,7 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test
     public void testReturnToDashboardPageFromPeoplePage() {
-       boolean welcomeJenkins = new MainPage(getDriver())
+        boolean welcomeJenkins = new MainPage(getDriver())
                 .clickPeopleOnLeftSideMenu()
                 .getBreadcrumb()
                 .clickDashboardButton()
@@ -291,7 +291,7 @@ public class BreadcrumbTest extends BaseTest {
         List<String> jobNameList = new ArrayList<>(jobMap.keySet());
         List<String> jobNameActualList = new ArrayList<>();
 
-        for (Map.Entry<String, BaseJobPage<?>> jobNameAndJobTypeMap: jobMap.entrySet()) {
+        for (Map.Entry<String, BaseJobPage<?>> jobNameAndJobTypeMap : jobMap.entrySet()) {
             jobNameActualList.add(new MainPage(getDriver())
                     .clickBuildsHistoryButton()
                     .getBreadcrumb()
@@ -326,7 +326,7 @@ public class BreadcrumbTest extends BaseTest {
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
         TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String pageText = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
@@ -340,7 +340,7 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test
     public void testSubmenuDeleteMultiConfigBuild() {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         boolean lastBuild = new MainPage(getDriver())
                 .clickBuildByGreenArrow(PROJECT_NAME)
@@ -360,7 +360,7 @@ public class BreadcrumbTest extends BaseTest {
         final String optionName = "Delete Multi-configuration project";
         final String alertText = "Delete Multi-configuration project: are you sure?";
 
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String actualAlertText = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
@@ -376,7 +376,7 @@ public class BreadcrumbTest extends BaseTest {
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow() {
         final String optionName = "Build Now";
 
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         boolean isBuildDisplayed = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
@@ -539,7 +539,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @DataProvider(name = "pipesubmenu")
-    public Object[][] pipeDropDownBreadcrumb (){
+    public Object[][] pipeDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new ChangesPage<>(new PipelinePage(driver)), "Changes", "Changes"},
@@ -554,7 +554,7 @@ public class BreadcrumbTest extends BaseTest {
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new RenamePage<>(new PipelinePage(driver)), "Rename", "Rename Pipeline " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PipelineSyntaxPage(driver), "Pipeline Syntax","Overview"}};
+                        driver -> new PipelineSyntaxPage(driver), "Pipeline Syntax", "Overview"}};
     }
 
     @Test(dataProvider = "pipesubmenu")
@@ -657,7 +657,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @DataProvider(name = "userDropDownMenu")
-    public Object[][] userDropDownBreadcrumbToMyViews2 (){
+    public Object[][] userDropDownBreadcrumbToMyViews2() {
         return new Object[][]{
                 {"builds", (Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new BuildPage(driver), "Dashboard > admin > Builds"},
@@ -672,7 +672,7 @@ public class BreadcrumbTest extends BaseTest {
 
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
-            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText){
+            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText) {
 
         String actualFullBreadcrumbText =
                 new MainPage(getDriver())
@@ -681,7 +681,7 @@ public class BreadcrumbTest extends BaseTest {
                         .clickMyViewsTabFromAdminDropdownMenu()
                         .getBreadcrumb()
                         .getUserBreadcrumbDropdownMenu()
-                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
+                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), "admin")
                         .getBreadcrumb()
                         .getFullBreadcrumbText();
 
@@ -739,5 +739,44 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertNotEquals(DisplayedAlertText, expectedWarningText);
         Assert.assertEquals(actualWarningText, expectedWarningText);
+    }
+
+    @DataProvider(name = "testuserDropDownMenu")
+    public Object[][] userDropDownBreadcrumb() {
+        return new Object[][]{
+                {"builds", (Function<WebDriver, BaseMainHeaderPage<?>>) BuildPage::new, "Dashboard > testuser > Builds"},
+                {"configure", (Function<WebDriver, BaseMainHeaderPage<?>>) ConfigureSystemPage::new, "Dashboard > testuser > Configure"},
+                {"my-views", (Function<WebDriver, BaseMainHeaderPage<?>>) MyViewsPage::new, "Dashboard > testuser > My Views > All"},
+                {"credentials", (Function<WebDriver, BaseMainHeaderPage<?>>) CredentialsPage::new, "Dashboard > testuser > Credentials"},
+        };
+    }
+
+    @Test(dataProvider = "testuserDropDownMenu")
+    public void testNavigateToSubMenuUserFromDropDownOnBreadcrumb(
+            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
+        final String user = "tuser";
+        final String pass = "p@ssword123";
+        final String email = "test@test.com";
+        final String userFullName = "testuser";
+
+        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
+        TestUtils.createUserAndReturnToMainPage(this, user, pass, userFullName, email);
+
+        String actualPageHeaderText =
+                new MainPage(getDriver())
+                        .getHeader()
+                        .clickLogoutButton()
+                        .enterUsername(user)
+                        .enterPassword(pass)
+                        .enterSignIn(new MainPage(getDriver()))
+                        .getHeader()
+                        .clickOnAdminButton()
+                        .getBreadcrumb()
+                        .getUserBreadcrumbDropdownMenu()
+                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), user)
+                        .getBreadcrumb()
+                        .getFullBreadcrumbText();
+
+        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 }
