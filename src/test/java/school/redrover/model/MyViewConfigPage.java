@@ -1,7 +1,9 @@
 package school.redrover.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import school.redrover.model.base.BasePage;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.interfaces.IDescription;
 import school.redrover.runner.TestUtils;

@@ -67,9 +67,9 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
         return getWait5().until(ExpectedConditions.elementToBeClickable(textHelpDescription)).getText();
     }
 
-    public DeletePage<MainPage> clickDeleteViewLink() {
+    public DeletePage<MyViewsPage> clickDeleteViewLink() {
         getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
 
-        return new DeletePage<>(new MainPage(getDriver()));
+        return new DeletePage<>(new MyViewsPage(getDriver()));
     }
 }

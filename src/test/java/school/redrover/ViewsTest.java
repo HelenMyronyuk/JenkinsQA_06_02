@@ -17,15 +17,10 @@ import java.util.List;
 public class ViewsTest extends BaseTest {
 
     private static final String PROJECT_NAME = "Project1";
-
     private static final String NEW_PROJECT_NAME = "Project2";
-
     private static final String VIEW_NAME = "View1";
-
     private static final String NEW_VIEW_NAME = "View2";
-
     private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
-
     private static final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
     @DataProvider(name = "myView types")
@@ -317,6 +312,21 @@ public class ViewsTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, NEW_VIEW_DESCRIPTION);
+    }
+
+    @Test
+    public void testCancelDeletingFromConfigurationPage(){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, TestUtils.ViewType.ListView, false);
+
+        Boolean isViewPresent = new ListViewConfigPage(new ViewPage(getDriver()))
+                .clickDeleteViewLink()
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertTrue(isViewPresent,"View is not displayed");
     }
 
     @Test
