@@ -1,7 +1,6 @@
 package school.redrover;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,7 +9,6 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -164,21 +162,21 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualEmail, displayedEmail);
     }
 
-    @Test
-    public void testVerifyUserPageMenu() {
-        final List<String> listMenuExpected = Arrays.asList("People", "Status", "Builds", "Configure", "My Views", "Delete");
+    @Test(dataProvider = "sideMenuItem")
+    public void testNavigateToSideMenuUserFromUsersPage(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        List<WebElement> listMenu = new MainPage(getDriver())
+        String actualFullBreadcrumbText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .clickUserIDName(USER_NAME)
-                .getListMenu();
+                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
 
-        for (int i = 0; i < listMenu.size(); i++) {
-            Assert.assertEquals(listMenu.get(i).getText(), listMenuExpected.get(i));
-        }
+        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 
     @Test
@@ -287,7 +285,7 @@ public class UsersTest extends BaseTest {
         String nameProject = "Engineer";
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-         MainPage actualResult = new MainPage(getDriver())
+        MainPage actualResult = new MainPage(getDriver())
                 .getHeader()
                 .clickLogoutButton()
                 .enterUsername(USER_NAME)
