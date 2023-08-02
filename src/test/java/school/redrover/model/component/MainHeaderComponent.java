@@ -36,7 +36,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(id = "breadcrumb-menu")
     private WebElement adminDropdownMenu;
 
-    @FindBy(xpath = "//div[@id='visible-sec-am-list']//a[contains(text(),'Manage Jenkins')]")
+    @FindBy(xpath = "//div[@class='am-list']//a[contains(text(),'Manage Jenkins')]")
     private WebElement manageJenkinsLinkFromPopUp;
 
     @FindBy(xpath = "//div[@id='breadcrumb-menu']//span[.='Builds']")
@@ -136,7 +136,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public MainHeaderComponent<Page> clickNotificationIcon() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(notificationIcon)).click();
+        getWait5().until(ExpectedConditions.elementToBeClickable(notificationIcon)).click();
 
         return this;
     }
@@ -199,7 +199,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public ManageJenkinsPage clickManageLinkFromPopUp() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
 
         return new ManageJenkinsPage(getDriver());
     }
