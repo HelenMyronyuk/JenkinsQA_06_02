@@ -1,9 +1,8 @@
 package school.redrover.model;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import school.redrover.model.base.BasePage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.interfaces.IDescription;
 import school.redrover.runner.TestUtils;
@@ -22,7 +21,7 @@ public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage>
 
     public MyViewsPage editMyViewNameAndClickSubmitButton(String editedMyViewName) {
         TestUtils.sendTextToInput(this, nameView, editedMyViewName);
-        TestUtils.click(this, submitView);
+        getWait5().until(ExpectedConditions.elementToBeClickable(submitView)).click();
 
         return new MyViewsPage(getDriver());
     }

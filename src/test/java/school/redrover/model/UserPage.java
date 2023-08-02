@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.interfaces.IDescription;
-import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -33,8 +32,7 @@ public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<
     }
 
     public UserDeletePage clickDeleteUserBtnFromUserPage(String newUserName) {
-        TestUtils.click(this, getDriver().
-                findElement(By.xpath("//a[@href='/user/" + newUserName + "/delete']")));
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/user/" + newUserName + "/delete']"))).click();
 
         return new UserDeletePage(getDriver());
     }

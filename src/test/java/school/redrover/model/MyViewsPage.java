@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.interfaces.IDescription;
-import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
             String link = e.getAttribute("href");
             String linkName = link.substring(link.length() - viewName.length() - 1, link.length() - 1);
             if(linkName.equals(viewName)) {
-                TestUtils.click(this, e);
+                getWait5().until(ExpectedConditions.elementToBeClickable(e)).click();
 
                 return this;
             }
@@ -54,13 +53,13 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
     }
 
     public MyViewConfigPage clickEditView() {
-        TestUtils.click(this, configureView);
+        getWait5().until(ExpectedConditions.elementToBeClickable(configureView)).click();
 
         return new MyViewConfigPage(new ViewPage(getDriver()));
     }
 
     public DeletePage<MyViewsPage> clickDeleteViewButton() {
-        TestUtils.click(this, deleteViewButton);
+        getWait5().until(ExpectedConditions.elementToBeClickable(deleteViewButton)).click();
 
         return new DeletePage<>(this);
     }

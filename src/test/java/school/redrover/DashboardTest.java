@@ -10,6 +10,7 @@ import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,10 @@ public class DashboardTest extends BaseTest {
 
     @Test
     public void testDashboardTableSize() {
-        Map<String, Integer> tableSizeMap = TestUtils.getJenkinsTableSizeMap();
+        Map<String, Integer> tableSizeMap = new LinkedHashMap<>();
+        tableSizeMap.put("Small", 71);
+        tableSizeMap.put("Medium", 86);
+        tableSizeMap.put("Large", 102);
 
         List<Integer> sizeList = new ArrayList<>(tableSizeMap.values());
         List<Integer> tableSizeActualList = new ArrayList<>();

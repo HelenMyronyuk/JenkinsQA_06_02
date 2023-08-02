@@ -1,6 +1,5 @@
 package school.redrover.runner;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +14,6 @@ import school.redrover.model.jobsConfig.*;
 
 import java.util.*;
 
-import static school.redrover.runner.CucumberDriver.getDriver;
 
 public class TestUtils {
 
@@ -169,59 +167,21 @@ public class TestUtils {
         return texts;
     }
 
-    public static void click(BaseModel baseModel, WebElement element) {
-        waitElementToBeClickable(baseModel, element).click();
-    }
-
-    protected static void clear(BaseModel baseModel, WebElement element) {
-        waitElementToBeClickable(baseModel, element).clear();
-    }
-
-    protected static void input(BaseModel baseModel, String text, WebElement element) {
-        click(baseModel, element);
-        element.sendKeys(text);
-    }
-
     public static void sendTextToInput(BaseModel baseModel, WebElement element, String text) {
-        click(baseModel, element);
-        clear(baseModel, element);
-        input(baseModel, text, element);
-    }
-
-    private static WebElement waitElementToBeClickable(BaseModel baseModel, WebElement element) {
-
-        return baseModel.getWait5().until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    private static void waitElementToBeVisible(BaseModel baseModel, WebElement element) {
-        baseModel.getWait5().until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public static String getText(BaseModel baseModel, WebElement element) {
-        if (!element.getText().isEmpty()) {
-            waitElementToBeVisible(baseModel, element);
-        }
-        return element.getText();
+        baseModel.getWait5().until(ExpectedConditions.elementToBeClickable(element)).click();
+        baseModel.getWait5().until(ExpectedConditions.elementToBeClickable(element)).clear();
+        baseModel.getWait5().until(ExpectedConditions.elementToBeClickable(element)).click();
+        element.sendKeys(text);
     }
 
     public static void scrollToElementByJavaScript(BaseModel baseModel, WebElement element) {
         JavascriptExecutor jsc = (JavascriptExecutor) baseModel.getDriver();
-        jsc.executeScript("arguments[0].scrollIntoView();", waitElementToBeClickable(baseModel, element));
+        jsc.executeScript("arguments[0].scrollIntoView();", baseModel.getWait5().until(ExpectedConditions.elementToBeClickable(element)));
     }
 
     public static void clickByJavaScript(BaseModel baseModel, WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) baseModel.getDriver();
         executor.executeScript("arguments[0].click();", element);
-    }
-
-    public static void clickBreadcrumbLinkItem(BaseTest baseTest, String breadcrumbLinkName) {
-        List<WebElement> breadcrumbTree = baseTest.getDriver().findElements(By.xpath("//li[@class='jenkins-breadcrumbs__list-item']/a"));
-        for (WebElement el : breadcrumbTree) {
-            if (el.getText().equals(breadcrumbLinkName)) {
-                el.click();
-                break;
-            }
-        }
     }
 
     public static void createFreestyleProjectInsideFolderAndView(BaseTest baseTest, String jobName, String viewName, String folderName) {
@@ -233,12 +193,13 @@ public class TestUtils {
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(baseTest.getDriver())))
                 .clickSaveButton();
 
-        clickBreadcrumbLinkItem(baseTest, viewName);
-    }
-
-    public static String getRandomStr(int length) {
-        return RandomStringUtils.random(length,
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+        List<WebElement> breadcrumbTree = baseTest.getDriver().findElements(By.xpath("//li[@class='jenkins-breadcrumbs__list-item']/a"));
+        for (WebElement el : breadcrumbTree) {
+            if (el.getText().equals(viewName)) {
+                el.click();
+                break;
+            }
+        }
     }
 
     public static void createUserAndReturnToMainPage(BaseTest baseTest, String username, String password, String fullName, String email) {
@@ -261,13 +222,6 @@ public class TestUtils {
                 .clickNewItem()
                 .enterItemName(jobName)
                 .selectJobAndOkAndGoError(jobType);
-    }
-
-    public static NewJobPage createJobWithExistingNameWithoutClickOk(BaseTest baseTest, String jobName, JobType jobType) {
-        return new MainPage(baseTest.getDriver())
-                .clickNewItem()
-                .enterItemName(jobName)
-                .selectJobType(jobType);
     }
 
     public static NewJobPage createFolderUsingInvalidData(BaseTest baseTest, String invalidData, JobType jobType) {
@@ -295,66 +249,11 @@ public class TestUtils {
         );
     }
 
-    public static void manageJenkinsEmailNotificationSetUp(BaseTest baseTest) {
-        new MainPage(baseTest.getDriver())
-                .clickManageJenkinsPage()
-                .clickConfigureSystemLink()
-                .inputSmtpServerFieldExtendedEmailNotifications("smtp.gmail.com")
-                .inputSmtpPortFieldExtendedEmailNotifications("465")
-                .clickAdvancedButtonExtendedEmailNotification()
-                .clickAddCredentialButton()
-                .inputUsernameIntoAddCredentialPopUpWindow("jenkins05test@gmail.com")
-                .inputPasswordIntoAddCredentialPopUpWindow("bfdzlscazepasstj")
-                .clickAddButtonAddCredentialPopUp()
-                .selectCreatedCredentials("jenkins05test@gmail.com")
-                .checkUseSSLCheckbox()
-                .clickDefaultTriggersButton()
-                .checkAlwaysDefaultTriggers()
-                .checkSuccessDefaultTriggers()
-                .inputSmtpServerFieldEmailNotifications("smtp.gmail.com")
-                .clickAdvancedButtonEmailNotification()
-                .clickUseSMTPAuthenticationCheckbox()
-                .inputUserNameAndPasswordSMTPAuthentication("jenkins05test@gmail.com", "bfdzlscazepasstj")
-                .checkUseSSLCheckboxEmailNotifications()
-                .inputSmtpPortEmailNotificationsField("465")
-                .clickSaveButton();
-    }
-
-    public static void manageJenkinsEmailNotificationGoingBackToOriginalSettings(BaseTest baseTest) {
-        new MainPage(baseTest.getDriver())
-                .getBreadcrumb()
-                .clickDashboardButton()
-                .clickManageJenkinsPage()
-                .clickConfigureSystemLink()
-                .inputSmtpServerFieldExtendedEmailNotifications("")
-                .inputSmtpPortFieldExtendedEmailNotifications("25")
-                .clickAdvancedButtonExtendedEmailNotification()
-                .unCheckUseSSLCheckboxExtendedEmailNotifications()
-                .clickDefaultTriggersButton()
-                .unCheckDefaultTriggerAlwaysCheckbox()
-                .unCheckDefaultTriggerSuccessCheckbox()
-                .inputSmtpServerFieldEmailNotifications("")
-                .clickAdvancedButtonEmailNotification()
-                .unCheckSMTPAuthenticationCheckbox()
-                .unCheckUseSSLCheckboxEmailNotifications()
-                .inputSmtpPortEmailNotificationsField("25")
-                .clickSaveButton();
-    }
-
     public static void checkMoveOptionAndCreateFolder(
             String optionName, BaseTest baseTest, Boolean goToMainPage) {
         if (optionName.equals("Move")) {
             createJob(baseTest, "Folder", JobType.Folder, goToMainPage);
         }
-    }
-
-    public static Map<String, Integer> getJenkinsTableSizeMap() {
-        Map<String, Integer> tableSizeMap = new LinkedHashMap<>();
-        tableSizeMap.put("Small", 71);
-        tableSizeMap.put("Medium", 86);
-        tableSizeMap.put("Large", 102);
-
-        return tableSizeMap;
     }
 
     public static void scrollWithPauseByActions(BaseModel baseModel, WebElement element, int mls) {

@@ -1,6 +1,6 @@
 package school.redrover;
 
-import org.openqa.selenium.WebElement;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -11,20 +11,10 @@ import school.redrover.runner.BaseTest;
 
 import java.util.List;
 
-import static school.redrover.runner.TestUtils.getRandomStr;
-
 public class ManageJenkinsTest extends BaseTest {
 
-    final String NAME_NEW_NODE = "testNameNewNode";
-    private static final String NODE_NAME = "NodeName";
-
-    public boolean isTitleAppeared(List<WebElement> titleTexts, String title) {
-        for (WebElement element : titleTexts) {
-            if (element.getText().equals(title)) {
-                return true;
-            }
-        }
-        return false;
+    private static String getRandomStr(int length) {
+        return RandomStringUtils.random(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
     }
 
     @Test
@@ -74,7 +64,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .clickManageNodes()
                 .clickNewNodeButton()
-                .inputNodeNameField(NAME_NEW_NODE)
+                .inputNodeNameField("testNameNewNode")
                 .clickPermanentAgentRadioButton()
                 .clickCreateButton()
                 .clearNameField()

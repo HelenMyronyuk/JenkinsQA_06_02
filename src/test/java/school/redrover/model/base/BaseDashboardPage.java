@@ -5,7 +5,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
-import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -64,7 +63,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     public BuildHistoryPage clickBuildsHistoryButton() {
-        TestUtils.click(this, buildHistory);
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildHistory)).click();
 
         return new BuildHistoryPage(getDriver());
     }
@@ -104,7 +103,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     public String getActiveViewName() {
-        return TestUtils.getText(this, activeViewTab);
+        return getWait5().until(ExpectedConditions.visibilityOf(activeViewTab)).getText();
     }
 
     public Self clickChangeJenkinsTableSize(String size) {
