@@ -401,6 +401,23 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    public void testPreviewDescriptionFromUserPage() {
+        final String expectedPreviewDescriptionText = "User Description";
+
+        String previewDescriptionText = new MainPage(getDriver())
+                .getHeader()
+                .clickOnAdminButton()
+                .clickAddDescription()
+                .clearDescriptionArea()
+                .addUserDescription("User Description")
+                .clickPreviewButton()
+                .getPreviewText();
+
+        Assert.assertEquals(previewDescriptionText, expectedPreviewDescriptionText);
+    }
+
+
+    @Test
     public void testSearchBoxInsensitive() {
         boolean isSearchResultContainsText = new MainPage(getDriver()).getHeader()
                 .clickAdminDropdownMenu()

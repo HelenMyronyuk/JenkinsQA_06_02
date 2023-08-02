@@ -19,6 +19,18 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
     @FindBy(className = "task")
     private List<WebElement> tasks;
 
+    @FindBy(xpath = "//*[@id='description-link']")
+    private WebElement addDescriptionButton;
+
+    @FindBy(xpath = "//*[@id='description']//textarea")
+    private WebElement descriptionTextBox;
+
+    @FindBy(xpath = "//*[@id='description']/form//a[1]")
+    private WebElement previewButton;
+
+    @FindBy(xpath = "//div[@class ='textarea-preview']")
+    private WebElement previewText;
+
     public UserPage(WebDriver driver) {
         super(driver);
     }
@@ -36,10 +48,12 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
     }
 
     public String getActualNameUser() {
+
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText();
     }
 
     public boolean isUserPageAvailable() {
+
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText().contains("Jenkins User ID:");
     }
 
@@ -53,6 +67,37 @@ public class UserPage extends BaseSubmenuPage<UserPage> {
         return sidePage;
     }
 
+    public UserPage clickAddDescription() {
+        addDescriptionButton.click();
+
+        return this;
+    }
+
+
+    public UserPage addUserDescription(String description) {
+        getWait5().until(ExpectedConditions.visibilityOf(descriptionTextBox)).sendKeys(description);
+
+        return this;
+    }
+
+    public UserPage clickPreviewButton() {
+        previewButton.click();
+
+        return this;
+    }
+
+    public String getPreviewText() {
+
+        return previewText.getText();
+    }
+
+    public UserPage clearDescriptionArea() {
+        descriptionTextBox.clear();
+
+        return this;
+    }
 }
+
+
 
 
