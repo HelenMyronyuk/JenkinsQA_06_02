@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ public class SearchBoxPage extends BaseMainHeaderPage<SearchBoxPage> {
         super(driver);
     }
 
+    @Step("Get Title text")
     public String getTitleText() {
         return getWait2().until(ExpectedConditions.visibilityOf(pageHeaderText)).getText();
     }
