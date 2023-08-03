@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ public class RestApiPage extends BaseMainHeaderPage<RestApiPage> {
         super(driver);
     }
 
+    @Step("Get title text 'REST API' ")
     public String getRestApiPageTitle(){
        return getWait2().until(ExpectedConditions.elementToBeClickable(title)).getText();
     }
