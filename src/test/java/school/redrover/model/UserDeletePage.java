@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ public class UserDeletePage extends BaseMainHeaderPage<UserDeletePage> {
         super(driver);
     }
 
+    @Step("Click on 'Yes' button")
     public MainPage clickOnYesButton() {
         getWait5().until(ExpectedConditions.elementToBeClickable(yesButton)).click();
 
