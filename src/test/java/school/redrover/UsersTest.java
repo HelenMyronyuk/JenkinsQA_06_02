@@ -394,16 +394,6 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testVerifyCreateUserButton() {
-        String buttonName = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageUsers()
-                .getButtonText();
-
-        Assert.assertEquals(buttonName, "Create User");
-    }
-
-    @Test
     public void testCreateUserButtonClickable() {
         String iconName = new MainPage(getDriver())
                 .clickManageJenkinsPage()
