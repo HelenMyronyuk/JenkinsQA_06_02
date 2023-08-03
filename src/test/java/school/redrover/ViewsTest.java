@@ -351,9 +351,10 @@ public class ViewsTest extends BaseTest {
         createNewView(true, VIEW_NAME, TestUtils.ViewType.MyView, false);
 
         Boolean isViewPresent = new ViewPage(getDriver())
-                .selectView(VIEW_NAME)
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()) )
                 .clickEditView()
-                .clickDeleteViewSideMenu()
+                .clickDeleteView(new MainPage(getDriver()))
+                .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
         Assert.assertFalse(isViewPresent, "Error");
