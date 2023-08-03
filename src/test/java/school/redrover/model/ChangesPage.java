@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,9 +12,6 @@ public class ChangesPage<JobTypePage extends BasePage<?, ?>> extends BaseMainHea
     @FindBy(xpath = "//div[@id='main-panel']")
     private WebElement mainPanel;
 
-    @FindBy(xpath = "//span[@class='jenkins-icon-adjacent']")
-    private WebElement pageTitle;
-
     private final JobTypePage jobTypePage;
 
     public ChangesPage(JobTypePage jobTypePage) {
@@ -21,11 +19,8 @@ public class ChangesPage<JobTypePage extends BasePage<?, ?>> extends BaseMainHea
         this.jobTypePage = jobTypePage;
     }
 
+    @Step("Get Heading text from Changes page")
     public String getTextOfPage() {
         return getWait5().until(ExpectedConditions.visibilityOf(mainPanel)).getText();
-    }
-
-    public String getPageTitle() {
-        return getWait5().until(ExpectedConditions.visibilityOf(pageTitle)).getText();
     }
 }
