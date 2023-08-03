@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
@@ -258,11 +259,11 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return new BuiltInNodePage(getDriver());
     }
 
-    public UserPage sendSearchBoxUser(String name) {
+    public <Page extends BaseMainHeaderPage<?>> Page sendKeysSearchBox(String name, Page page){
         searchBox.sendKeys(name);
         searchBox.sendKeys(Keys.RETURN);
 
-        return new UserPage(getDriver());
+        return page;
     }
 
     public String getAttributeFromSearchBox() {
