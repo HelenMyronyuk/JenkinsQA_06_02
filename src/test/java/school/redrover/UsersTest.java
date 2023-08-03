@@ -260,6 +260,22 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    public void testDeleteFromDropDown() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean isUserDeleted = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .openUserIDDropDownMenu(USER_NAME)
+                .selectDeleteUserInDropDownMenu()
+                .clickYesButton()
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasDeleted(USER_NAME);
+
+        Assert.assertTrue(isUserDeleted, "The user was not deleted");
+    }
+
+    @Test
     public void testLogInWithDeletedUserCredentials() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 

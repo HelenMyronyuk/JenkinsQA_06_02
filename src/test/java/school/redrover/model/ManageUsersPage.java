@@ -19,6 +19,9 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     @FindBy(xpath = "//span[contains(text(), 'Configure')]")
     private WebElement configureInDropDownMenu;
 
+    @FindBy(xpath = "//span[contains(text(), 'Delete')]")
+    private WebElement deleteInDropDownMenu;
+
     @FindBy(xpath = "//a[@class ='jenkins-table__link model-link inside']")
     private List<WebElement> users;
 
@@ -66,6 +69,12 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureInDropDownMenu)).click();
 
         return this;
+    }
+
+    public DeletePage<MainPage> selectDeleteUserInDropDownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(deleteInDropDownMenu)).click();
+
+        return new DeletePage<>(new MainPage(getDriver()));
     }
 
     public boolean isUserExist(String userName) {
