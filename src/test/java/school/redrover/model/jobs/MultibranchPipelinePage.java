@@ -1,5 +1,6 @@
 package school.redrover.model.jobs;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,7 @@ public class MultibranchPipelinePage extends BaseOtherFoldersPage<MultibranchPip
         super(driver);
     }
 
+    @Step("Click on the 'Configure' button on side menu")
     @Override
     public MultibranchPipelineConfigPage clickConfigure() {
         setupClickConfigure();
@@ -24,6 +26,7 @@ public class MultibranchPipelinePage extends BaseOtherFoldersPage<MultibranchPip
         return new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver()));
     }
 
+    @Step("Click on the 'Configure' button on side menu")
     @Override
     public MultibranchPipelineConfigPage clickConfigureProject() {
         setupClickConfigureProject();
@@ -31,6 +34,7 @@ public class MultibranchPipelinePage extends BaseOtherFoldersPage<MultibranchPip
         return new MultibranchPipelineConfigPage(this);
     }
 
+    @Step("Click on the 'Re-index branches' link on the Multibranch Pipeline page")
     public ScanOtherFoldersPage clickReindexBranchesLink() {
         getWait10().until(ExpectedConditions.elementToBeClickable(reindexBranchesLink)).click();
 
