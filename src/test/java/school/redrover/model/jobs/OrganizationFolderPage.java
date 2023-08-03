@@ -1,5 +1,6 @@
 package school.redrover.model.jobs;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         super(driver);
     }
 
+    @Step("Click on the 'Configure' button on side menu")
     @Override
     public OrganizationFolderConfigPage clickConfigure() {
         setupClickConfigure();
@@ -26,6 +28,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new OrganizationFolderConfigPage(this);
     }
 
+    @Step("Click on the 'Configure' button on side menu")
     @Override
     public OrganizationFolderConfigPage clickConfigureProject() {
         setupClickConfigureProject();
@@ -33,6 +36,7 @@ public class OrganizationFolderPage extends BaseOtherFoldersPage<OrganizationFol
         return new OrganizationFolderConfigPage(this);
     }
 
+    @Step("Click on the 'Re-run the Folder Computation' link on the Organization Folder page")
     public ScanOtherFoldersPage clickRerunTheFolderComputation() {
         getWait5().until(ExpectedConditions.elementToBeClickable(rerunFolderComputationLink)).click();
 
