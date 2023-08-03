@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +20,7 @@ public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage>
         super(viewPage);
     }
 
+    @Step("Edit MyView's name and click 'Submit' ")
     public MyViewsPage editMyViewNameAndClickSubmitButton(String editedMyViewName) {
         TestUtils.sendTextToInput(this, nameView, editedMyViewName);
         getWait5().until(ExpectedConditions.elementToBeClickable(submitView)).click();
