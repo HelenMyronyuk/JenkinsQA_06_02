@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,8 +21,8 @@ public class CredentialsPage extends BaseSubmenuPage<CredentialsPage> {
         return "Manage Credentials";
     }
 
+    @Step("Get Heading text from Credentials page")
     public String getTitleText() {
         return getWait2().until(ExpectedConditions.visibilityOf(pageHeader)).getText();
     }
-
 }
