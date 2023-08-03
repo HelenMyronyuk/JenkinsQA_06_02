@@ -76,7 +76,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     public <ViewBasePage extends BaseDashboardPage<?>> ViewBasePage clickOnView(String viewName, ViewBasePage viewBasePage) {
         getWait2().until(ExpectedConditions.elementToBeClickable(
-                By.xpath(String.format("//a[@href='/view/%s/']", viewName)))).click();
+                By.xpath(String.format("//a[contains(@href,'/view/%s/')]", viewName)))).click();
 
         return viewBasePage;
     }

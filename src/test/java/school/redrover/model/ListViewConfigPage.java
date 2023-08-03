@@ -3,6 +3,7 @@ package school.redrover.model;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import school.redrover.model.base.BasePage;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.runner.TestUtils;
 import school.redrover.model.interfaces.IDescription;
@@ -10,7 +11,7 @@ import school.redrover.model.interfaces.IDescription;
 import java.util.List;
 import java.util.Objects;
 
-public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, ViewPage> implements IDescription<ListViewConfigPage> {
+public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewPage> implements IDescription<ListViewConfigPage> {
 
     @FindBy(xpath = "//div[@class = 'listview-jobs']/span")
     private List<WebElement> viewJobList;
@@ -34,7 +35,7 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
         super(viewPage);
     }
 
-    public ListViewConfigPage selectJobsInJobFilters (String name) {
+    public ListViewConfigPage selectJobsInJobFilters(String name) {
 
         for (WebElement el : viewJobList) {
             if (Objects.equals(el.getText(), name)) {
@@ -67,9 +68,9 @@ public class ListViewConfigPage extends BaseConfigPage <ListViewConfigPage, View
         return getWait5().until(ExpectedConditions.elementToBeClickable(textHelpDescription)).getText();
     }
 
-    public DeletePage<MyViewsPage> clickDeleteViewLink() {
+    public <RedirectPage extends BasePage<?,?>> DeletePage<RedirectPage> clickDeleteView(RedirectPage redirectPage) {
         getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
 
-        return new DeletePage<>(new MyViewsPage(getDriver()));
+        return new DeletePage<>(redirectPage);
     }
 }
