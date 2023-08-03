@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,6 +23,7 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
         super(driver);
     }
 
+    @Step("Set a View Name")
     public NewViewPage setNewViewName(String viewName) {
         getWait2().until(ExpectedConditions.elementToBeClickable(nameInput)).sendKeys(viewName);
 
@@ -34,6 +36,7 @@ public class NewViewPage extends BaseMainHeaderPage<NewViewPage> {
         return this;
     }
 
+    @Step("Select View Type and click 'Create'")
     public <ViewConfigPage extends BaseMainHeaderPage<?>> ViewConfigPage selectTypeViewClickCreate(
             TestUtils.ViewType viewType, Class<ViewConfigPage> clazz) {
         selectViewType(viewType);
