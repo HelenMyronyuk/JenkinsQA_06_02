@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +19,7 @@ public class ErrorNodePage extends BaseMainHeaderPage<ErrorNodePage> {
         super(driver);
     }
 
+    @Step("Get Error text from Error Node page")
     public String getErrorMessage() {
         getWait2().until(ExpectedConditions
                 .textToBePresentInElement(error, "Error"));
