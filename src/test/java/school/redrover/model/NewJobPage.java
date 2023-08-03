@@ -33,10 +33,12 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         super(driver);
     }
 
+    @Step("Get job type")
     public TestUtils.JobType getJobType() {
         return jobType;
     }
 
+    @Step("The button is enabled")
     public boolean isOkButtonEnabled() {
         return getWait5().until(ExpectedConditions.visibilityOf(okButton)).isEnabled();
     }
@@ -63,6 +65,7 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return jobConfigPage;
     }
 
+    @Step("Create a project and get an error")
     public CreateItemErrorPage selectJobAndOkAndGoError(TestUtils.JobType jobType) {
         selectJobType(jobType);
         clickOkButton(null);
@@ -70,18 +73,22 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return new CreateItemErrorPage(getDriver());
     }
 
+    @Step("Get an error message that invalid data is being used")
     public String getItemInvalidMessage() {
         return getWait5().until(ExpectedConditions.visibilityOf(getItemInvalidNameMessage())).getText();
     }
 
+    @Step("Get message with invalid data ")
     private WebElement getItemInvalidNameMessage() {
         return itemInvalidNameMessage;
     }
 
+    @Step("Get an error text with invalid name")
     public String getItemNameRequiredErrorText() {
         return getWait2().until(ExpectedConditions.visibilityOf(itemNameRequiredMessage)).getText();
     }
 
+    @Step("Select Job Type on NewJobPage, Click 'OK' button ang go To Bug Page")
     public CreateBugPage selectJobAndOkAndGoToBugPage(TestUtils.JobType jobType) {
         selectJobType(jobType);
         clickOkButton(null);
@@ -89,6 +96,7 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return new CreateBugPage(getDriver());
     }
 
+    @Step("Get header text")
     public String getHeaderText () {
         return header.getText();
     }
