@@ -12,7 +12,6 @@ public class ChangesBuildPage extends BaseSubmenuPage<ChangesBuildPage> {
         super(driver);
     }
 
-    @Step("Call name by menu Item")
     @Override
     public String callByMenuItemName() {
         return "changes";
