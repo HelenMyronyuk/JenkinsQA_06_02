@@ -177,7 +177,6 @@ public class ManageJenkinsTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(nodeDescription, description);
-
     }
 
     @Test
@@ -236,7 +235,7 @@ public class ManageJenkinsTest extends BaseTest {
     }
 
     @Test
-    public void testServerHelpInfo(){
+    public void testServerHelpInfo() {
         final String expectedServerHelpInfo = """
                 If your Jenkins server sits behind a firewall and does not have the direct access to the internet, and if your server JVM is not configured appropriately ( See JDK networking properties for more details ) to enable internet connection, you can specify the HTTP proxy server name in this field to allow Jenkins to install plugins on behalf of you. Note that Jenkins uses HTTPS to communicate with the update center to download plugins.
                 Leaving this field empty means Jenkins will try to connect to the internet directly.
@@ -255,7 +254,7 @@ public class ManageJenkinsTest extends BaseTest {
     public void testDeleteNodeBySideMenuOnNodePage() {
         final String nodeName = "NameDeleteSideMenu";
 
-        List<String> nodeNameList= new MainPage(getDriver())
+        List<String> nodeNameList = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageNodes()
                 .clickNewNodeButton()
