@@ -23,7 +23,7 @@ public class ManagePluginsPage extends BaseMainHeaderPage<ManagePluginsPage> {
     }
 
     @Step("check tasks on the Left side panel from Manage Plugins Page")
-    public List<String> checkFourTasksOnTheLeftSidePanel() {
+    public List<String> checkTasksOnTheLeftSidePanel() {
         List<WebElement> listOfTasks = getWait5().until(ExpectedConditions.visibilityOfAllElements(fourTasksOnTheLeftSidePanel));
 
         return TestUtils.getTexts(listOfTasks);

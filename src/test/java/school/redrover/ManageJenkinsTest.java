@@ -229,7 +229,7 @@ public class ManageJenkinsTest extends BaseTest {
         List<String> actualListOfTasks = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManagePlugins()
-                .checkFourTasksOnTheLeftSidePanel();
+                .checkTasksOnTheLeftSidePanel();
 
         Assert.assertEquals(actualListOfTasks, expectedListOfTasks);
     }
