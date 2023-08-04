@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +21,7 @@ public class PipelineStepsPage extends BaseSubmenuPage<PipelineStepsPage> {
         return null;
     }
 
+    @Step("Get title pipeline step from Breadcrumb")
     public String getTitlePipelineFromBreadcrumb(){
         return getWait5().until(ExpectedConditions.visibilityOf(titlePipelineStep)).getText();
     }
