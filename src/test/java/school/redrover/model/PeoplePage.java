@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,43 +44,49 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
 
         return new UserPage(getDriver());
     }
-
+    @Step("Check if User '{newUserName}' was deleted")
     public boolean checkIfUserWasDeleted(String newUserName) {
         return ExpectedConditions.not(ExpectedConditions
                         .presenceOfAllElementsLocatedBy(By.xpath("//a[@href='/user/" + newUserName + "/']")))
                 .apply(getDriver());
     }
-
+    @Step("Click on the 'New Item' button on the People page")
     public NewJobPage clickNewItem() {
         newItem.click();
 
         return new NewJobPage(getDriver());
     }
 
+    @Step("Click on the 'User ID' button on the People page")
     public PeoplePage clickUserIDButton() {
         userIDButton.click();
 
         return new PeoplePage(getDriver());
     }
 
+    @Step("Click on the 'Name' button on the People page")
     public PeoplePage clickNameButton() {
         nameButton.click();
 
         return new PeoplePage(getDriver());
     }
 
+    @Step("Check if the 'User ID' button without arrow")
     public boolean isUserIDButtonWithoutArrow() {
         return userIDButtonArrow.getText().isEmpty();
     }
 
+    @Step("Check if the 'User ID' button with up arrow")
     public boolean isUserIDButtonWithUpArrow() {
         return userIDButtonArrow.getText().trim().contains("↑");
     }
 
+    @Step("Check if the 'User ID' button with down arrow")
     public boolean isUserIDButtonWithDownArrow() {
         return userIDButtonArrow.getText().trim().contains("↓");
     }
 
+    @Step("Check if User '{userName}' was added")
     public boolean checkIfUserWasAdded(String userName) {
         return user.getText().contains(userName);
     }
@@ -93,10 +100,12 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
         return stringList;
     }
 
+    @Step("Get Icon buttons List")
     public List<String> getIconButtonsList() {
         return listText(iconButtons);
     }
 
+    @Step("Get Heading text from People Page")
     public String getPageTitle() {
         return pageTitle.getText();
     }
