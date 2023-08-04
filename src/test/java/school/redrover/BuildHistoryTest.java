@@ -136,7 +136,7 @@ public class BuildHistoryTest extends BaseTest {
                 .scrollToBuildTriggers()
                 .clickBuildAfterOtherProjectsAreBuiltCheckBox()
                 .scrollToPipelineSection()
-                .sendAreContentInputString(textToPipelineScript)
+                .inputInScriptField(textToPipelineScript)
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
