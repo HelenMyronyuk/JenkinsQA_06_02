@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +19,7 @@ public class PluginsPage extends BaseSubmenuPage<PluginsPage> {
         return "Manage Plugins";
     }
 
+    @Step("Get Heading text from Plugins page")
     public String getPageTitle() {
         return pageTitle.getText();
     }
