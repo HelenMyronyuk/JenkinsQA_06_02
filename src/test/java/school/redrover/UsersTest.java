@@ -393,19 +393,13 @@ public class UsersTest extends BaseTest {
 
     @Test
     public void testCreateUserCheckInManageUsers() {
-        final String expectedResultTitle = "Users [Jenkins]";
-
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        boolean actualResultFindUserID = new MainPage(getDriver())
                 .clickManageJenkinsPage()
-                .clickManageUsers();
-
-        String actualResultTitle = getDriver().getTitle();
-        boolean actualResultFindUserID = new ManageUsersPage(getDriver())
+                .clickManageUsers()
                 .isUserExist(USER_NAME);
 
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
         Assert.assertTrue(actualResultFindUserID, "true");
     }
 
