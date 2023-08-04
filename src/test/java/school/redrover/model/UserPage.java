@@ -33,10 +33,10 @@ public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<
     }
 
     @Step("Click 'Delete User' button from UserPage")
-    public UserDeletePage clickDeleteUserBtnFromUserPage(String newUserName) {
+    public DeletePage<MainPage> clickDeleteUserBtnFromUserPage(String newUserName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/user/" + newUserName + "/delete']"))).click();
 
-        return new UserDeletePage(getDriver());
+        return new DeletePage(new MainPage(getDriver()));
     }
 
     @Step("Get User name  '{USER_NAME}' ")

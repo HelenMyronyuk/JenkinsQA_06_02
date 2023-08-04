@@ -238,7 +238,7 @@ public class UsersTest extends BaseTest {
                 .clickPeopleOnLeftSideMenu()
                 .clickUserName(newUserName)
                 .clickDeleteUserBtnFromUserPage(newUserName)
-                .clickOnYesButton()
+                .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
                 .checkIfUserWasDeleted(newUserName);
 
