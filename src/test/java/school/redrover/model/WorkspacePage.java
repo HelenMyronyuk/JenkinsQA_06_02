@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,7 @@ public class WorkspacePage extends BaseMainHeaderPage<WorkspacePage> {
         super(driver);
     }
 
+    @Step("Get Heading text from Workspaces Page ")
     public String getTextFromWorkspacePage() {
         return getWait5().until(ExpectedConditions.visibilityOf(headerText)).getText();
     }
