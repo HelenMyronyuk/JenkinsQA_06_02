@@ -6,10 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.interfaces.IDashboardTable;
+import school.redrover.model.interfaces.IViewBar;
 import school.redrover.model.jobsConfig.FolderConfigPage;
 import school.redrover.model.base.BaseJobPage;
 
-public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTable<FolderPage> {
+public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTable<FolderPage>, IViewBar {
 
     @FindBy(xpath = "//a[contains(@href, '/newJob')]")
     private WebElement newItemButton;
@@ -38,12 +39,6 @@ public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTab
         newItemButton.click();
 
         return new NewJobPage(getDriver());
-    }
-
-    public NewViewPage clickNewView() {
-        newViewButton.click();
-
-        return new NewViewPage(getDriver());
     }
 
     public DeletePage<MainPage> clickDeleteJobThatIsMainPage() {

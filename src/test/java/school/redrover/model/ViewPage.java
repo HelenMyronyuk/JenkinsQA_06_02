@@ -8,11 +8,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseDashboardPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.base.IBasePage;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.interfaces.IDescription;
+import school.redrover.model.interfaces.IViewBar;
 import school.redrover.runner.TestUtils;
 
-public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage>, IDashboardTable<ViewPage> {
+public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescription<ViewPage>, IDashboardTable<ViewPage>, IViewBar {
 
     @FindBy(xpath = "//a[@href='delete']")
     private WebElement deleteViewLink;

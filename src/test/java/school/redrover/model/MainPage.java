@@ -6,8 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.*;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.interfaces.IDescription;
+import school.redrover.model.interfaces.IViewBar;
 
-public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage> {
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage>, IViewBar {
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;
