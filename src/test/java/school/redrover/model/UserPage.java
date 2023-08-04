@@ -39,7 +39,7 @@ public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<
         return new UserDeletePage(getDriver());
     }
 
-    @Step("Get name 'testuser' ")
+    @Step("Get User name  '{USER_NAME}' ")
     public String getActualNameUser() {
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText();
     }
@@ -47,10 +47,6 @@ public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<
     @Step("Get 'Jenkins User ID:' text is not displayed!' ")
     public boolean isUserPageAvailable() {
         return getWait2().until(ExpectedConditions.visibilityOf(actualNameUser)).getText().contains("Jenkins User ID:");
-    }
-
-    public List<WebElement> getListMenu() {
-        return tasks;
     }
 
     @Step("Select item from the side Menu ")
