@@ -114,7 +114,7 @@ public class DashboardTest extends BaseTest {
 
         String newView = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .clickNewView()
+                .createNewView()
                 .setNewViewName(VIEW_NAME)
                 .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
                 .getActiveViewName();
