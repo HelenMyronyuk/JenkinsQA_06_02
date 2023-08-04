@@ -1,7 +1,6 @@
 package school.redrover;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,7 +9,6 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -69,12 +67,10 @@ public class UsersTest extends BaseTest {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        String actualDisplayedDescriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserIDName(USER_NAME);
-
-        String actualDisplayedDescriptionText = new StatusUserPage(getDriver())
+                .clickUserIDName(USER_NAME)
                 .clickAddOrEditDescription()
                 .clearDescriptionField()
                 .enterDescription(displayedDescriptionText)
@@ -95,7 +91,7 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .clickUserIDName(USER_NAME);
 
-        StatusUserPage statusUserPage = new StatusUserPage(getDriver());
+        UserPage statusUserPage = new UserPage(getDriver());
         String existingDescriptionText = statusUserPage
                 .clickAddOrEditDescription()
                 .getDescriptionField();
@@ -150,7 +146,7 @@ public class UsersTest extends BaseTest {
                 .openUserIDDropDownMenu(USER_NAME)
                 .selectConfigureUserIDDropDownMenu();
 
-        UserConfigPage configureUserPage = new UserConfigPage(new StatusUserPage(getDriver()));
+        UserConfigPage configureUserPage = new UserConfigPage(new UserPage(getDriver()));
 
         String oldEmail = configureUserPage.getEmailValue("value");
 
@@ -164,21 +160,21 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualEmail, displayedEmail);
     }
 
-    @Test
-    public void testVerifyUserPageMenu() {
-        final List<String> listMenuExpected = Arrays.asList("People", "Status", "Builds", "Configure", "My Views", "Delete");
+    @Test(dataProvider = "sideMenuItem")
+    public void testNavigateToSideMenuUserFromUsersPage(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        List<WebElement> listMenu = new MainPage(getDriver())
+        String actualFullBreadcrumbText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .clickUserIDName(USER_NAME)
-                .getListMenu();
+                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
 
-        for (int i = 0; i < listMenu.size(); i++) {
-            Assert.assertEquals(listMenu.get(i).getText(), listMenuExpected.get(i));
-        }
+        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 
     @Test
@@ -221,6 +217,18 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    public void testSearchPeople() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String actualUserName = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
+                .getActualNameUser();
+
+        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
+    }
+
+    @Test
     public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
 
@@ -252,6 +260,22 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    public void testDeleteFromDropDown() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean isUserDeleted = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .openUserIDDropDownMenu(USER_NAME)
+                .selectDeleteUserInDropDownMenu()
+                .clickYesButton()
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasDeleted(USER_NAME);
+
+        Assert.assertTrue(isUserDeleted, "The user was not deleted");
+    }
+
+    @Test
     public void testLogInWithDeletedUserCredentials() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
@@ -275,7 +299,7 @@ public class UsersTest extends BaseTest {
         String nameProject = "Engineer";
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-         MainPage actualResult = new MainPage(getDriver())
+        MainPage actualResult = new MainPage(getDriver())
                 .getHeader()
                 .clickLogoutButton()
                 .enterUsername(USER_NAME)
@@ -370,16 +394,6 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testVerifyCreateUserButton() {
-        String buttonName = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageUsers()
-                .getButtonText();
-
-        Assert.assertEquals(buttonName, "Create User");
-    }
-
-    @Test
     public void testCreateUserButtonClickable() {
         String iconName = new MainPage(getDriver())
                 .clickManageJenkinsPage()
@@ -388,6 +402,22 @@ public class UsersTest extends BaseTest {
                 .getActualIconName();
 
         Assert.assertEquals(iconName, "Create User");
+    }
+
+    @Test
+    public void testPreviewDescriptionFromUserPage() {
+        final String expectedPreviewDescriptionText = "User Description";
+
+        String previewDescriptionText = new MainPage(getDriver())
+                .getHeader()
+                .clickOnAdminButton()
+                .clickAddOrEditDescription()
+                .clearDescriptionField()
+                .enterDescription("User Description")
+                .clickPreviewDescription()
+                .getPreviewDescriptionText();
+
+        Assert.assertEquals(previewDescriptionText, expectedPreviewDescriptionText);
     }
 
     @Test
@@ -403,7 +433,6 @@ public class UsersTest extends BaseTest {
 
         Assert.assertTrue(isSearchResultContainsText, "Wrong search result");
     }
-
 
     @DataProvider(name = "sideMenuItem")
     public Object[][] provideSideMenuItem() {

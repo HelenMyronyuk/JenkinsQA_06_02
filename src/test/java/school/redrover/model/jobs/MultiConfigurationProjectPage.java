@@ -1,5 +1,6 @@
 package school.redrover.model.jobs;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,6 +21,7 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
         super(driver);
     }
 
+    @Step("Click on the 'Configure' button on side menu")
     @Override
     public MultiConfigurationProjectConfigPage clickConfigure() {
         setupClickConfigure();
@@ -27,6 +29,7 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
         return new MultiConfigurationProjectConfigPage(this);
     }
 
+    @Step("Get Build Status of Job")
     public String getJobBuildStatus() {
         WebElement buildStatus = getWait5().until(ExpectedConditions.visibilityOf(jobBuildStatus));
         new Actions(getDriver()).moveToElement(buildStatus).perform();
@@ -35,14 +38,17 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
         return buildStatus.getAttribute("tooltip");
     }
 
+    @Step("Get a text alert about confirmation of deletion")
     public String getDeleteAlertText() {
         return getDriver().switchTo().alert().getText();
     }
 
+    @Step("Get 'true' if Build Icon is displayed on the present")
     public boolean isLastBuildIconDisplayed() {
         return getWait2().until(ExpectedConditions.visibilityOf(lastBuildIcon)).isDisplayed();
     }
 
+    @Step("Make refresh page")
     public MultiConfigurationProjectPage refreshPage() {
         getDriver().navigate().refresh();
 

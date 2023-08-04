@@ -91,6 +91,16 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
+    public void testSearchError(){
+        String errorText = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox("p",new SearchPage(getDriver()))
+                .getErrorText();
+
+        Assert.assertEquals(errorText,"Nothing seems to match.");
+    }
+
+    @Test
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
                 .getHeader()

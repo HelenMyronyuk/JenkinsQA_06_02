@@ -1378,9 +1378,29 @@ public class FreestyleProjectTest extends BaseTest {
         String expectedConsoleOutputText = "Sending email to: jenkins05test@gmail.com";
 
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-        TestUtils.manageJenkinsEmailNotificationSetUp(this);
 
         String emailSentLog = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickConfigureSystemLink()
+                .inputSmtpServerFieldExtendedEmailNotifications("smtp.gmail.com")
+                .inputSmtpPortFieldExtendedEmailNotifications("465")
+                .clickAdvancedButtonExtendedEmailNotification()
+                .clickAddCredentialButton()
+                .inputUsernameIntoAddCredentialPopUpWindow("jenkins05test@gmail.com")
+                .inputPasswordIntoAddCredentialPopUpWindow("bfdzlscazepasstj")
+                .clickAddButtonAddCredentialPopUp()
+                .selectCreatedCredentials("jenkins05test@gmail.com")
+                .checkUseSSLCheckbox()
+                .clickDefaultTriggersButton()
+                .checkAlwaysDefaultTriggers()
+                .checkSuccessDefaultTriggers()
+                .inputSmtpServerFieldEmailNotifications("smtp.gmail.com")
+                .clickAdvancedButtonEmailNotification()
+                .clickUseSMTPAuthenticationCheckbox()
+                .inputUserNameAndPasswordSMTPAuthentication("jenkins05test@gmail.com", "bfdzlscazepasstj")
+                .checkUseSSLCheckboxEmailNotifications()
+                .inputSmtpPortEmailNotificationsField("465")
+                .clickSaveButton()
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickConfigure()
                 .clickPostBuildActionsButton()
@@ -1394,7 +1414,24 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertTrue(emailSentLog.contains(expectedConsoleOutputText), "Error: Email report wasn't sent");
 
-        TestUtils.manageJenkinsEmailNotificationGoingBackToOriginalSettings(this);
+        new MainPage(getDriver())
+                .getBreadcrumb()
+                .clickDashboardButton()
+                .clickManageJenkinsPage()
+                .clickConfigureSystemLink()
+                .inputSmtpServerFieldExtendedEmailNotifications("")
+                .inputSmtpPortFieldExtendedEmailNotifications("25")
+                .clickAdvancedButtonExtendedEmailNotification()
+                .unCheckUseSSLCheckboxExtendedEmailNotifications()
+                .clickDefaultTriggersButton()
+                .unCheckDefaultTriggerAlwaysCheckbox()
+                .unCheckDefaultTriggerSuccessCheckbox()
+                .inputSmtpServerFieldEmailNotifications("")
+                .clickAdvancedButtonEmailNotification()
+                .unCheckSMTPAuthenticationCheckbox()
+                .unCheckUseSSLCheckboxEmailNotifications()
+                .inputSmtpPortEmailNotificationsField("25")
+                .clickSaveButton();
     }
 
     @Test

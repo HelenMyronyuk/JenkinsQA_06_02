@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,13 +23,14 @@ public class MovePage<JobTypePage extends BasePage<?, ?>> extends BaseMainHeader
 
         this.jobTypePage = jobTypePage;
     }
-
+    @Step("select destination for move a folder")
     public MovePage<JobTypePage> selectDestinationFolder(String folderName) {
         new Select(getWait5().until(ExpectedConditions.elementToBeClickable(destinationFolder))).selectByValue("/" + folderName);
 
         return this;
     }
 
+    @Step("Click 'Move' button")
     public JobTypePage clickMoveButton() {
         moveButton.click();
 

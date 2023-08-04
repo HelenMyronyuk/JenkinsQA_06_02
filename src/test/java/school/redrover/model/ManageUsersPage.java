@@ -19,6 +19,9 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     @FindBy(xpath = "//span[contains(text(), 'Configure')]")
     private WebElement configureInDropDownMenu;
 
+    @FindBy(xpath = "//span[contains(text(), 'Delete')]")
+    private WebElement deleteInDropDownMenu;
+
     @FindBy(xpath = "//a[@class ='jenkins-table__link model-link inside']")
     private List<WebElement> users;
 
@@ -28,7 +31,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     @FindBy(xpath = "//a[contains(@href,'/delete')]")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//a[@href='user/admin/configure']")
+    @FindBy(xpath = "//td//a[contains(@href, 'configure')]")
     private WebElement configureAdminUser;
 
     public ManageUsersPage(WebDriver driver) {
@@ -68,6 +71,12 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return this;
     }
 
+    public DeletePage<MainPage> selectDeleteUserInDropDownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(deleteInDropDownMenu)).click();
+
+        return new DeletePage<>(new MainPage(getDriver()));
+    }
+
     public boolean isUserExist(String userName) {
         for (WebElement el : users) {
             if (el.getText().equals(userName)) {
@@ -97,7 +106,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
     public UserConfigPage clickUserEditButton() {
         configureAdminUser.click();
 
-        return new UserConfigPage(new StatusUserPage(getDriver()));
+        return new UserConfigPage(new UserPage(getDriver()));
     }
 
     public UserPage selectConfigureButton(String newUserName) {

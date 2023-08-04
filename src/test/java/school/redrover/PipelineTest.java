@@ -126,8 +126,10 @@ public class PipelineTest extends BaseTest {
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        NewJobPage newJobPage =
-                TestUtils.createJobWithExistingNameWithoutClickOk(this, NAME, TestUtils.JobType.Pipeline);
+        NewJobPage newJobPage = new MainPage(getDriver())
+                .clickNewItem()
+                .enterItemName(NAME)
+                .selectJobType(TestUtils.JobType.Pipeline);
 
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» A job already exists with the name " + "‘" + NAME + "’");
         Assert.assertTrue(newJobPage.isOkButtonEnabled(), "error OK button is disabled");

@@ -1,5 +1,6 @@
 package school.redrover.model.jobsConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,18 +23,21 @@ public class OrganizationFolderConfigPage extends BaseConfigFoldersPage<Organiza
         super(organizationFolderPage);
     }
 
+    @Step("Click on the 'Disable/Enable' button on Configuration page")
     public OrganizationFolderConfigPage clickDisableEnable() {
         disableEnableFromConfig.click();
 
         return this;
     }
 
+    @Step("Click on the 'Appearance' button on the Configuration page to select the option")
     public OrganizationFolderConfigPage clickAppearance() {
         getWait5().until(ExpectedConditions.elementToBeClickable(appearanceButton)).click();
 
         return this;
     }
 
+    @Step("Select an option the 'Default Icon' from the Configuration page")
     public OrganizationFolderConfigPage selectDefaultIcon() {
         new Select(getWait5().until(ExpectedConditions.elementToBeClickable(defaultIcon)))
                 .selectByVisibleText("Default Icon");

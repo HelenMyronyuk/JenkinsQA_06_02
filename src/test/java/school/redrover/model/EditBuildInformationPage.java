@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,12 +37,15 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return "configure";
     }
 
+    @Step("Click on the 'Save' button")
     public BuildPage clickSaveButton() {
         saveButton.click();
 
         return new BuildPage(getDriver());
     }
 
+    @Step("Input the display name '{displayName} in the 'Display Name' field" +
+            " on the Edit Build Information page")
     public EditBuildInformationPage enterDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField))
                 .sendKeys(displayName);
@@ -49,6 +53,8 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return this;
     }
 
+    @Step("Input the description '{description} in the 'Description' field" +
+            " on the Edit Build Information page")
     public EditBuildInformationPage enterDescription(String description) {
         getWait5().until(ExpectedConditions.visibilityOf(buildDescriptionTextArea)).clear();
         buildDescriptionTextArea.sendKeys(description);
@@ -56,20 +62,25 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return this;
     }
 
+    @Step("Click on the 'Preview' button on the Edit Build Information page")
     public EditBuildInformationPage clickPreviewButton() {
         previewButton.click();
 
         return this;
     }
 
+    @Step("Get Preview text on the Edit Build Information page")
     public String getPreviewText() {
         return getWait5().until(ExpectedConditions.visibilityOf(previewTextarea)).getText();
     }
 
+    @Step("Get Heading text on the Edit Build Information page")
     public String getHeaderText(){
         return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
 
+    @Step("Edit and input new display name '{displayName} in the 'Display Name' field" +
+            " on the Edit Build Information page")
     public EditBuildInformationPage editDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField)).clear();
         displayNameField.sendKeys(displayName);

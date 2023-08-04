@@ -1,5 +1,6 @@
 package school.redrover.model.jobsConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.baseConfig.BaseConfigFreestyleAndMulticonfigProjectsPage;
@@ -17,10 +18,13 @@ public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfi
         super(freestyleProjectPage);
     }
 
+    @Step("Get a mark from the option 'Block build when upstream project is building' in the 'General' " +
+            "section on the Configuration page")
     public boolean getTrueBlockBuildWhenUpstreamProjectIsBuilding() {
         return trueBlockBuildWhenUpstreamProjectIsBuilding.isSelected();
     }
 
+    @Step("Input the name '{displayName}' into the 'Display name' field")
     public FreestyleProjectConfigPage setDisplayName(String displayName) {
         displayNameField.sendKeys(displayName);
 

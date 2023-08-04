@@ -137,7 +137,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     }
 
     public Self checkProjectIsParametrized() {
-        TestUtils.click(this, projectIsParametrized);
+        getWait5().until(ExpectedConditions.elementToBeClickable(projectIsParametrized)).click();
 
         return (Self) this;
     }
@@ -164,7 +164,7 @@ public abstract class BaseConfigProjectsPage<Self extends BaseConfigPage<?, ?>, 
     }
 
     public Self selectCheckboxSetByDefault() {
-        TestUtils.click(this, checkboxSetByDefault);
+        getWait5().until(ExpectedConditions.elementToBeClickable(checkboxSetByDefault)).click();
 
         return (Self) this;
     }

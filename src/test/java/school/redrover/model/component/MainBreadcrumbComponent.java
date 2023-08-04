@@ -153,9 +153,9 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     }
 
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickPageFromUserBreadcrumbDropdownMenu(
-            String listItemName, ReturnedPage pageToReturn) {
+            String listItemName, ReturnedPage pageToReturn, String userName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@id='breadcrumb-menu']//a[@href='/user/admin/" + listItemName + "']")))
+                        By.xpath("//div[@id='breadcrumb-menu']//a[@href='/user/" + userName + "/" + listItemName + "']")))
                 .click();
 
         return pageToReturn;

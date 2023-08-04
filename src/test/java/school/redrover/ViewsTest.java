@@ -17,15 +17,10 @@ import java.util.List;
 public class ViewsTest extends BaseTest {
 
     private static final String PROJECT_NAME = "Project1";
-
     private static final String NEW_PROJECT_NAME = "Project2";
-
     private static final String VIEW_NAME = "View1";
-
     private static final String NEW_VIEW_NAME = "View2";
-
     private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
-
     private static final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
     @DataProvider(name = "myView types")
@@ -61,7 +56,6 @@ public class ViewsTest extends BaseTest {
             newViewPage = mainPage
                     .clickMyViewsSideMenuLink()
                     .createNewView();
-
         } else {
             newViewPage = mainPage
                     .createNewView();
@@ -130,35 +124,6 @@ public class ViewsTest extends BaseTest {
                 .contains(NEW_VIEW_NAME);
 
         Assert.assertTrue(actualViewName, "The new name is not displayed");
-    }
-
-    @Test(dataProvider = "myView types")
-    public void testDeleteMyViewTypesFromViewPage(TestUtils.ViewType viewType) {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-        createNewView(true, VIEW_NAME, viewType, true);
-
-        boolean isDeletedViewPresent = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickInactiveLastCreatedMyView(VIEW_NAME)
-                .clickDeleteViewButton()
-                .clickYesButton()
-                .verifyViewIsPresent(VIEW_NAME);
-
-        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
-    }
-
-    @Test(dataProvider = "mainView types")
-    public void testDeleteViewTypesFromViewPage(TestUtils.ViewType viewType) {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-        createNewView(false, VIEW_NAME, viewType, true);
-
-        boolean isDeletedViewPresent = new MainPage(getDriver())
-                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
-                .clickDeleteView()
-                .clickYesButton()
-                .verifyViewIsPresent(VIEW_NAME);
-
-        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
     }
 
     @Ignore
@@ -319,15 +284,77 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, NEW_VIEW_DESCRIPTION);
     }
 
+    @Test(dataProvider = "myView types")
+    public void testCancelDeletingFromViewPage(TestUtils.ViewType viewType){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, viewType, true);
+
+        boolean viewIsPresent = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
+                .clickDeleteView(new MyViewsPage(getDriver()))
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertTrue(viewIsPresent,"View is not present on My Views page");
+    }
+
+    @Test
+    public void testCancelDeletingFromConfigurationPage(){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, TestUtils.ViewType.ListView, false);
+
+        Boolean isViewPresent = new ListViewConfigPage(new ViewPage(getDriver()))
+                .clickDeleteView(new MyViewsPage(getDriver()))
+                .getHeader()
+                .clickLogo()
+                .clickMyViewsSideMenuLink()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertTrue(isViewPresent,"View is not displayed");
+    }
+
+    @Test(dataProvider = "myView types")
+    public void testDeleteMyViewTypesFromViewPage(TestUtils.ViewType viewType) {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, viewType, true);
+
+        boolean isDeletedViewPresent = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
+                .clickDeleteViewButton()
+                .clickYesButton()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
+    }
+
+    @Test(dataProvider = "mainView types")
+    public void testDeleteViewTypesFromViewPage(TestUtils.ViewType viewType) {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(false, VIEW_NAME, viewType, true);
+
+        boolean isDeletedViewPresent = new MainPage(getDriver())
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
+                .clickDeleteView(new MainPage(getDriver()))
+                .clickYesButton()
+                .verifyViewIsPresent(VIEW_NAME);
+
+        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
+    }
+
     @Test
     public void testDeleteViewFromConfigureOfMyViewsPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
         createNewView(true, VIEW_NAME, TestUtils.ViewType.MyView, false);
 
         Boolean isViewPresent = new ViewPage(getDriver())
-                .selectView(VIEW_NAME)
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()) )
                 .clickEditView()
-                .clickDeleteViewSideMenu()
+                .clickDeleteView(new MainPage(getDriver()))
+                .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
         Assert.assertFalse(isViewPresent, "Error");
@@ -339,10 +366,10 @@ public class ViewsTest extends BaseTest {
         createNewView(false, VIEW_NAME, TestUtils.ViewType.ListView, false);
 
         boolean viewIsPresent = new ListViewConfigPage(new ViewPage(getDriver()))
-                .clickDeleteViewLink()
+                .clickDeleteView(new MainPage(getDriver()))
                 .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertFalse(viewIsPresent, "Error: view should not be present on Home page");
+        Assert.assertFalse(viewIsPresent, "View is present on Main page");
     }
 }

@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,7 @@ public class ScanOtherFoldersLogPage extends BaseMainHeaderPage<ScanOtherFolders
         super(driver);
     }
 
+    @Step("Get title 'Scan Organization Folder Log' ")
     public String getTextFromTitle() {
         return title.getText();
     }

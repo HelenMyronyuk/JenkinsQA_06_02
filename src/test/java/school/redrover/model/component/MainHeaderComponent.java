@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.runner.TestUtils;
@@ -24,7 +25,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(id = "jenkins-name-icon")
     private WebElement logoText;
 
-    @FindBy(xpath = "//a[@href='/user/admin']/button")
+    @FindBy(xpath = "//a[contains(@href, '/user/')]/button")
     private WebElement adminDropdown;
 
     @FindBy(id = "visible-am-list")
@@ -213,7 +214,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     public UserConfigPage openConfigureTabFromAdminDropdownMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureTabFromAdminDropdownMenu)).click();
 
-        return new UserConfigPage(new StatusUserPage(getDriver()));
+        return new UserConfigPage(new UserPage(getDriver()));
     }
 
     public boolean openMyViewsTabFromAdminDropdownMenuIsDisplayed() {
@@ -258,11 +259,11 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return new BuiltInNodePage(getDriver());
     }
 
-    public UserPage sendSearchBoxUser(String name) {
+    public <Page extends BaseMainHeaderPage<?>> Page sendKeysSearchBox(String name, Page page){
         searchBox.sendKeys(name);
         searchBox.sendKeys(Keys.RETURN);
 
-        return new UserPage(getDriver());
+        return page;
     }
 
     public String getAttributeFromSearchBox() {

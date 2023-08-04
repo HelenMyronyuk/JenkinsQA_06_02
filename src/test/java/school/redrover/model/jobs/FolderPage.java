@@ -3,11 +3,11 @@ package school.redrover.model.jobs;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.jobsConfig.FolderConfigPage;
 import school.redrover.model.base.BaseJobPage;
-import school.redrover.runner.TestUtils;
 
 public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTable<FolderPage> {
 
@@ -53,7 +53,10 @@ public class FolderPage extends BaseJobPage<FolderPage> implements IDashboardTab
     }
 
     public String getFolderDescription() {
-        return TestUtils.getText(this, folderDescription);
+        if (!folderDescription.getText().isEmpty()) {
+            getWait5().until(ExpectedConditions.visibilityOf(folderDescription));
+        }
+        return folderDescription.getText();
     }
 
     public String getTitle() {

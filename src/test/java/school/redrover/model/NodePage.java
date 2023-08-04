@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,10 +12,12 @@ public class NodePage extends BaseMainHeaderPage<NodePage> implements IDescripti
     @FindBy(xpath = "//a[contains(@href, '/delete')]")
     private WebElement deleteAgent;
 
+
     public NodePage(WebDriver driver) {
         super(driver);
     }
 
+    @Step("Click on 'Delete Agent' button")
     public DeletePage<ManageNodesPage> clickOnDeleteAgent() {
         deleteAgent.click();
 

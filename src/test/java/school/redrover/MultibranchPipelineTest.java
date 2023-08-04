@@ -623,6 +623,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickMultibranchProject()
                 .getPageHeaderText();
+
         Assert.assertEquals(pageHeaderText, "Branches and Pull Requests");
     }
 }
