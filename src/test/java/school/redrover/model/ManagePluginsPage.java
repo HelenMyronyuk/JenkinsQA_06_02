@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,12 +22,14 @@ public class ManagePluginsPage extends BaseMainHeaderPage<ManagePluginsPage> {
         super(driver);
     }
 
+    @Step("check tasks on the Left side panel from Manage Plugins Page")
     public List<String> checkFourTasksOnTheLeftSidePanel() {
         List<WebElement> listOfTasks = getWait5().until(ExpectedConditions.visibilityOfAllElements(fourTasksOnTheLeftSidePanel));
 
         return TestUtils.getTexts(listOfTasks);
     }
 
+    @Step("Click on the 'Advanced Settings' link on the Manage Plugins Page")
     public ManagePluginsAdvancedPage clickAdvancedSettings(){
         advancedSettings.click();
 
