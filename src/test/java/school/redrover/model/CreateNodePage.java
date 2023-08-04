@@ -43,7 +43,7 @@ public class CreateNodePage extends BaseMainHeaderPage<CreateNodePage> {
         return new ManageNodesPage(getDriver());
     }
 
-    @Step("Input '{Description}' into 'Description' field")
+    @Step("Input '{description}' into 'Description' field")
     public CreateNodePage addDescription(String description) {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(descriptionTextarea)).sendKeys(description);

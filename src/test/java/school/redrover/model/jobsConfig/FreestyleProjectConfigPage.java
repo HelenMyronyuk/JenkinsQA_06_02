@@ -24,7 +24,7 @@ public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfi
         return trueBlockBuildWhenUpstreamProjectIsBuilding.isSelected();
     }
 
-    @Step("Input the name '{name}' into the 'Display name' field")
+    @Step("Input the name '{displayName}' into the 'Display name' field")
     public FreestyleProjectConfigPage setDisplayName(String displayName) {
         displayNameField.sendKeys(displayName);
 
