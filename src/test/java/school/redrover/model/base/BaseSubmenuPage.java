@@ -1,5 +1,6 @@
 package school.redrover.model.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,6 +24,7 @@ public abstract class BaseSubmenuPage<Self extends BaseSubmenuPage<?>> extends B
         return heading.getText();
     }
 
+    @Step("Get text 'Edit Build Information' from BreadCrumb")
     public String getTextEditBuildInformFromBreadCrumb(){
             return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
