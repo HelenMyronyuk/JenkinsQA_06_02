@@ -3,7 +3,6 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -171,7 +170,7 @@ public class HeaderTest extends BaseTest {
         String screenManageFromPopUp = new MainPage(getDriver())
                 .getHeader()
                 .clickNotificationIcon()
-                .clickManageLinkFromPopUp()
+                .clickManageLinkFromNotificationPopUp()
                 .getActualHeader();
 
         Assert.assertEquals(screenManageFromPopUp, "Manage Jenkins");
@@ -189,7 +188,6 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
-    @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
         final String pageHeaderText = "Manage Jenkins";
@@ -197,7 +195,7 @@ public class HeaderTest extends BaseTest {
         String actualHeaderPage = new MainPage(getDriver())
                 .getHeader()
                 .clickSecurityIcon()
-                .clickManageLinkFromPopUp()
+                .clickManageLinkFromSecurityPopUp()
                 .getActualHeader();
 
         Assert.assertEquals(actualHeaderPage, pageHeaderText);

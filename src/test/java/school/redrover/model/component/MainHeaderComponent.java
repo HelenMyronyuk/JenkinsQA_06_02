@@ -1,6 +1,7 @@
 package school.redrover.model.component;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -34,11 +35,14 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(id = "visible-am-button")
     private WebElement notificationIcon;
 
+    @FindBy(xpath = "//div[@id='visible-am-list']//a[text()='Manage Jenkins']")
+    private WebElement manageJenkinsFromNotificationPopUp;
+
+    @FindBy(xpath = "//div[@id='visible-sec-am-list']//a[text()='Manage Jenkins']")
+    private WebElement manageJenkinsFromSecurityPopUp;
+
     @FindBy(id = "breadcrumb-menu")
     private WebElement adminDropdownMenu;
-
-    @FindBy(xpath = "//div[@class='am-list']//a[contains(text(),'Manage Jenkins')]")
-    private WebElement manageJenkinsLinkFromPopUp;
 
     @FindBy(xpath = "//div[@id='breadcrumb-menu']//span[.='Builds']")
     private WebElement buildsTabFromAdminDropdownMenu;
@@ -199,8 +203,14 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return logoutLink.getCssValue("color");
     }
 
-    public ManageJenkinsPage clickManageLinkFromPopUp() {
-        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
+    public ManageJenkinsPage clickManageLinkFromNotificationPopUp() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsFromNotificationPopUp)).click();
+
+        return new ManageJenkinsPage(getDriver());
+    }
+
+    public ManageJenkinsPage clickManageLinkFromSecurityPopUp() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsFromSecurityPopUp)).click();
 
         return new ManageJenkinsPage(getDriver());
     }
