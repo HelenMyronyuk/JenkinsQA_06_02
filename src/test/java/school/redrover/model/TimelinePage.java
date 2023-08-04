@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,12 +20,14 @@ public class TimelinePage extends BaseMainHeaderPage<TimelinePage> {
         super(driver);
     }
 
+    @Step("Click on the 'Build' icon on the Timeline page")
     public ConsoleOutputPage clickBuildIcon() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildIcon)).click();
 
         return new ConsoleOutputPage(getDriver());
     }
 
+    @Step("Get numbers of build '{numbersOfBuild}' ")
     public List<String> getBuildNumbers(int numbersOfBuild) {
         List<String> buildNumber = new ArrayList<>();
         for (int i = 1; i <= numbersOfBuild; i++) {
