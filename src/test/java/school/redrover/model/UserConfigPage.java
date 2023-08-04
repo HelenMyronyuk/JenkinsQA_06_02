@@ -15,6 +15,9 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
     @FindBy(xpath = "//input[@name='insensitiveSearch']")
     private WebElement insensitiveSearchCheckbox;
 
+    @FindBy(xpath = "//a[contains(@href, 'delete')]")
+    private WebElement deleteButton;
+
     public UserConfigPage(UserPage statusUserPage) {
         super(statusUserPage);
     }
@@ -47,5 +50,11 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
         }
 
         return this;
+    }
+
+    public DeletePage<MainPage> clickDeleteUser() {
+        deleteButton.click();
+
+        return new DeletePage<>(new MainPage(getDriver()));
     }
 }

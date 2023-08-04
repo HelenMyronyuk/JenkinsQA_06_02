@@ -111,7 +111,7 @@ public class UsersTest extends BaseTest {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserEditButton()
+                .clickFirstUserEditButton()
                 .clearDescriptionArea()
                 .addDescription("Description text")
                 .clickSaveButton()
@@ -125,7 +125,7 @@ public class UsersTest extends BaseTest {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserEditButton()
+                .clickFirstUserEditButton()
                 .clearDescriptionArea()
                 .addDescription("Description text")
                 .clickPreview()
@@ -268,6 +268,22 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .openUserIDDropDownMenu(USER_NAME)
                 .selectDeleteUserInDropDownMenu()
+                .clickYesButton()
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasDeleted(USER_NAME);
+
+        Assert.assertTrue(isUserDeleted, "The user was not deleted");
+    }
+
+    @Test
+    public void testDeleteFromConfigure() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean isUserDeleted = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickUserEditButton(USER_NAME)
+                .clickDeleteUser()
                 .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
                 .checkIfUserWasDeleted(USER_NAME);
