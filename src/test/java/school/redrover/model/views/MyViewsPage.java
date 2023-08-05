@@ -1,5 +1,6 @@
 package school.redrover.model.views;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,6 +36,7 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
         return statusMessage.getText();
     }
 
+    @Step("Click on the last created view name '{viewName}' button on the MyViews page")
     public MyViewsPage clickInactiveLastCreatedMyView(String viewName) {
         for(WebElement e : allViewLinks) {
             String link = e.getAttribute("href");
@@ -49,12 +51,14 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
         return this;
     }
 
+    @Step("Click on the 'Edit View' button on the side menu")
     public MyViewConfigPage clickEditView() {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureView)).click();
 
         return new MyViewConfigPage(new ViewPage(getDriver()));
     }
 
+    @Step("Click on the 'Delete View' button on the side menu")
     public DeletePage<MyViewsPage> clickDeleteViewButton() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteViewButton)).click();
 
