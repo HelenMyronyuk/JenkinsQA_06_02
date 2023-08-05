@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -38,16 +39,14 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         super(driver);
     }
 
+    @Step("Click the 'Create User' button")
     public CreateUserPage clickCreateUser() {
         createUser.click();
 
         return new CreateUserPage(getDriver());
     }
 
-    public String getButtonText() {
-        return createUser.getText().trim();
-    }
-
+    @Step("Click '{userName}' name")
     public UserPage clickUserIDName(String userName) {
         WebElement userIDNameLink = getWait2()
                 .until(ExpectedConditions.elementToBeClickable(
@@ -57,6 +56,7 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return new UserPage(getDriver());
     }
 
+    @Step("Open Dropdown menu for '{userName}' user")
     public ManageUsersPage openUserIDDropDownMenu(String userName) {
         getDriver()
                 .findElement(By.xpath("//a[@href='user/" + userName + "/']/button[@class='jenkins-menu-dropdown-chevron']"))
@@ -65,18 +65,21 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return this;
     }
 
+    @Step("Select 'Configure' option in User ID Dropdown menu")
     public ManageUsersPage selectConfigureUserIDDropDownMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureInDropDownMenu)).click();
 
         return this;
     }
 
+    @Step("Select 'Delete' option in User ID Dropdown menu")
     public DeletePage<MainPage> selectDeleteUserInDropDownMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteInDropDownMenu)).click();
 
         return new DeletePage<>(new MainPage(getDriver()));
     }
 
+    @Step("Verify if '{userName}' user is exist")
     public boolean isUserExist(String userName) {
         for (WebElement el : users) {
             if (el.getText().equals(userName)) {
@@ -88,36 +91,43 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return false;
     }
 
+    @Step("Click 'Delete' button")
     public DeletePage<ManageUsersPage> clickDeleteUser() {
         deleteButton.click();
 
         return new DeletePage<>(this);
     }
 
+    @Step("Verify if '{username}' User is deleted")
     public boolean getUserDeleted(String username) {
         for (WebElement user : people) {
             if (user.getText().equals(username)) {
                 break;
             }
         }
+
         return false;
     }
 
+    @Step("Click Gear 'Configure' button for Admin user")
     public UserConfigPage clickFirstUserEditButton() {
         configureAdminButton.click();
 
         return new UserConfigPage(new UserPage(getDriver()));
     }
 
-    public UserConfigPage clickUserEditButton(String userName) {
+    @Step("Click Gear 'Configure' button for '{userName}' User and redirect to UserConfigPage")
+    public UserConfigPage clickConfigureButton(String userName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//td//a[contains(@href, '" + userName + "/configure')]"))).click();
 
         return new UserConfigPage(new UserPage(getDriver()));
     }
 
+    @Step("Select Gear 'Configure' button for '{userName}' User and redirect to UserPage")
     public UserPage selectConfigureButton(String newUserName) {
-        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='user/" + newUserName + "/configure']"))).click();
+        getWait5().until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//a[@href='user/" + newUserName + "/configure']"))).click();
 
         return new UserPage(getDriver());
     }

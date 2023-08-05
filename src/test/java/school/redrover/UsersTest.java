@@ -282,7 +282,7 @@ public class UsersTest extends BaseTest {
         boolean isUserDeleted = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserEditButton(USER_NAME)
+                .clickConfigureButton(USER_NAME)
                 .clickDeleteUser()
                 .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
