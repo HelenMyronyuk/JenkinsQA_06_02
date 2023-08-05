@@ -93,13 +93,13 @@ public class HeaderTest extends BaseTest {
     }
 
     @Test
-    public void testSearchError(){
+    public void testSearchError() {
         String errorText = new MainPage(getDriver())
                 .getHeader()
-                .sendKeysSearchBox("p",new SearchPage(getDriver()))
+                .sendKeysSearchBox("p", new SearchPage(getDriver()))
                 .getErrorText();
 
-        Assert.assertEquals(errorText,"Nothing seems to match.");
+        Assert.assertEquals(errorText, "Nothing seems to match.");
     }
 
     @Test
