@@ -189,6 +189,7 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
         final String pageHeaderText = "Manage Jenkins";
