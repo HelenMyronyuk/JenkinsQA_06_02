@@ -6,7 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
+import school.redrover.model.builds.WelcomeBuildHistoryPage;
 import school.redrover.model.jobs.FolderPage;
+import school.redrover.model.jobsSidemenu.CredentialsPage;
+import school.redrover.model.jobsSidemenu.OtherFoldersEventsPage;
+import school.redrover.model.jobsSidemenu.PipelineSyntaxPage;
 
 public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends BaseJobPage<Self> {
 

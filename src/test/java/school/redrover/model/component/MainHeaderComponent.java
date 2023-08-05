@@ -1,7 +1,6 @@
 package school.redrover.model.component;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,6 +11,10 @@ import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.users.UserConfigPage;
+import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.TestUtils;
 
 import java.time.Duration;

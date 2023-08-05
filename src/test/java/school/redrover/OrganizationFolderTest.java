@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

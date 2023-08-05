@@ -10,6 +10,8 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

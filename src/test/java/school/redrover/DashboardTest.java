@@ -4,7 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
-import school.redrover.model.ViewPage;
+import school.redrover.model.views.ViewPage;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;

@@ -11,6 +11,9 @@ import school.redrover.model.base.*;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.jobs.*;
 import school.redrover.model.jobsConfig.*;
+import school.redrover.model.views.IncludeAGlobalViewConfigPage;
+import school.redrover.model.views.ListViewConfigPage;
+import school.redrover.model.views.ViewPage;
 
 import java.util.*;
 

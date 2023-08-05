@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.ConfigureSystemPage;
 import school.redrover.model.MainPage;
-import school.redrover.model.ManageJenkinsPage;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
 import school.redrover.runner.BaseTest;
 
 import java.util.List;

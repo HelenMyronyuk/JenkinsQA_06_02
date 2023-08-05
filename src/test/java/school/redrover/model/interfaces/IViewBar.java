@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.NewViewPage;
+import school.redrover.model.views.NewViewPage;
 import school.redrover.model.base.BaseDashboardPage;
 import school.redrover.model.base.IBasePage;
 

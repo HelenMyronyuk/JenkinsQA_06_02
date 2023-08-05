@@ -6,6 +6,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.users.UserConfigPage;
+import school.redrover.model.users.UserPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 

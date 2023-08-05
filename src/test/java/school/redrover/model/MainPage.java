@@ -7,6 +7,9 @@ import school.redrover.model.base.*;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.interfaces.IDescription;
 import school.redrover.model.interfaces.IViewBar;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.manageJenkins.ManageNodesPage;
+import school.redrover.model.views.MyViewsPage;
 
 public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage>, IViewBar {
 

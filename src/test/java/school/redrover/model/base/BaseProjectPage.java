@@ -8,6 +8,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
+import school.redrover.model.builds.*;
+import school.redrover.model.jobsSidemenu.ChangesPage;
+import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
