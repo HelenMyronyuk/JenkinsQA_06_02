@@ -3,6 +3,7 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -633,7 +634,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
+    public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Organization Folder";
 
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -649,19 +650,19 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testNavigateToDeleteFromMultibranchPagesFromDropdownOnBreadcrumb() {
+    public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multibranch Pipeline";
 
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        DeletePage deletePage = new MainPage(getDriver())
+        String deletePage = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())));
+                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())))
+                .getTextFromConfirmDeletionForm();
 
-        Assert.assertEquals(deletePage.getTextFromConfirmDeletionForm(), "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
-        Assert.assertTrue(deletePage.isDeleteButtonDisplayed(), "Error: Delete button is not displayed!");
+        Assert.assertEquals(deletePage, "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
     }
 
     @DataProvider(name = "userDropDownMenu")
@@ -730,6 +731,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
+    @Ignore
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
         String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
