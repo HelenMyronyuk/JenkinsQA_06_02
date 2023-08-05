@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,34 +30,41 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
         super(driver);
     }
 
+    @Step("click 'kManage Jenkins' link from Main page")
     public ManageJenkinsPage clickManageJenkinsPage() {
         manageJenkins.click();
 
         return new ManageJenkinsPage(getDriver());
     }
 
+    @Step("click 'My Views' link from side menu")
     public MyViewsPage clickMyViewsSideMenuLink() {
         getWait5().until(ExpectedConditions.elementToBeClickable(myViews)).click();
 
         return new MyViewsPage(getDriver());
     }
 
+    @Step("Check if Main page is open")
     public boolean isMainPageOpen() {
         return getWait5().until(ExpectedConditions.titleContains("Dashboard [Jenkins]"));
     }
 
+    @Step("Get Heading text on Main page")
     public String getTitle() {
         return getDriver().getTitle();
     }
 
+    @Step("Check if 'Welcome' is displayed on Main page")
     public boolean isWelcomeDisplayed() {
         return welcomeToJenkins.isDisplayed();
     }
 
+    @Step("Get text 'Welcome' on Main page")
     public String getWelcomeText() {
         return welcomeToJenkins.getText();
     }
 
+    @Step("click '{nodeName}' link from Dropdown menu")
     public MainPage clickNodeDropdownMenu(String nodeName) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath("//tr/th/a[@href='/manage/computer/" + nodeName + "/']/button")))
@@ -65,15 +73,10 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
         return this;
     }
 
+    @Step("Select 'DeleteAgent' link from Dropdown menu")
     public DeletePage<ManageNodesPage> selectDeleteAgentInDropdown() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
 
         return new DeletePage<>(new ManageNodesPage(getDriver()));
-    }
-
-    public MainPage refreshBrowser() {
-        getDriver().navigate().refresh();
-
-        return new MainPage(getDriver());
     }
 }

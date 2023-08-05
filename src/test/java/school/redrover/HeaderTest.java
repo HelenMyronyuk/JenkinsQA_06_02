@@ -3,6 +3,7 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -167,7 +168,6 @@ public class HeaderTest extends BaseTest {
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
-    @Ignore
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
