@@ -1,5 +1,6 @@
 package school.redrover.model.views;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,6 +37,7 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
         super(viewPage);
     }
 
+    @Step("Select Jobs name '{name}' in 'Job Filters' ")
     public ListViewConfigPage selectJobsInJobFilters(String name) {
 
         for (WebElement el : viewJobList) {
@@ -47,28 +49,33 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
         return this;
     }
 
+    @Step("Select and click checkBox 'Recurse in subfolders'")
     public ListViewConfigPage selectRecurseCheckbox() {
         getWait2().until(ExpectedConditions.elementToBeClickable(recurseCheckbox)).click();
 
         return this;
     }
 
+    @Step("Scroll option 'Add Job Filter'")
     public ListViewConfigPage scrollToAddJobFilterDropDown() {
         TestUtils.scrollWithPauseByActions(this, addJobFilter, 100);
 
         return this;
     }
 
+    @Step("Click on the '?' icon of field 'Description'")
     public ListViewConfigPage clickHelpForFeatureDescription() {
         helpForFeatureDescription.click();
 
         return this;
     }
 
+    @Step("Get text from '?' icon of field 'Description'")
     public String getTextHelpFeatureDescription() {
         return getWait5().until(ExpectedConditions.elementToBeClickable(textHelpDescription)).getText();
     }
 
+    @Step("Click on the 'Delete View' button on side menu")
     public <RedirectPage extends BasePage<?,?>> DeletePage<RedirectPage> clickDeleteView(RedirectPage redirectPage) {
         getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
 
