@@ -207,14 +207,17 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     public ManageJenkinsPage clickManageLinkFromNotificationPopUp() {
-        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsFromNotificationPopUp)).click();
+        new Actions(getDriver())
+                .pause(1200)
+                .click(manageJenkinsFromNotificationPopUp)
+                .perform();
 
         return new ManageJenkinsPage(getDriver());
     }
 
     public ManageJenkinsPage clickManageLinkFromSecurityPopUp() {
         new Actions(getDriver())
-                .pause(800)
+                .pause(1200)
                 .click(manageJenkinsFromSecurityPopUp)
                 .perform();
 
