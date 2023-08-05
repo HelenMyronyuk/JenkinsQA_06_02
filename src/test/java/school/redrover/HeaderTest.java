@@ -168,6 +168,33 @@ public class HeaderTest extends BaseTest {
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
+    @DataProvider(name = "userDropDown")
+    public Object[][] userDropDown() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildPage(getDriver()),"Builds" ,"Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new UserConfigPage(new UserPage(getDriver())),"Configure" ,"Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MyViewsPage(getDriver()), "My Views" ,"All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(getDriver()),"Credentials", "Credentials"}};
+    }
+
+    @Test(dataProvider = "userDropDown")
+    public void testSubMenuUserFromHeader(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String menu, String expectedPageName) {
+
+        String pageNameFromBreadcrumb = new MainPage(getDriver())
+                .getHeader()
+                .clickOnUserDropDownMenu()
+                .getPageFromUserDropdownMenu(menu, pageFromDataConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getPageNameFromBreadcrumb();
+
+        Assert.assertEquals(pageNameFromBreadcrumb, expectedPageName);
+
+    }
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())

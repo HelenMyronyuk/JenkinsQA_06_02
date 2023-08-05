@@ -107,6 +107,9 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(xpath = "//div[@class='login page-header__hyperlinks']//a[contains(@href,'/user/')]")
     private WebElement adminOrUserButton;
 
+    @FindBy(xpath="//div[@class='login page-header__hyperlinks']//a[contains(@href,'/user/')]//button[@class='jenkins-menu-dropdown-chevron']")
+    private WebElement userDropDownMenu;
+
     @FindBy(xpath = "//a[contains(@href,'api')]")
     private WebElement restApi;
 
@@ -369,6 +372,18 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         getWait2().until(ExpectedConditions.visibilityOf(adminOrUserButton)).click();
 
         return new UserPage(getDriver());
+    }
+
+    public MainHeaderComponent<Page> clickOnUserDropDownMenu() {
+        getWait2().until(ExpectedConditions.visibilityOf(userDropDownMenu)).sendKeys(Keys.RETURN);;
+
+        return this;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromUserDropdownMenu(String listMenuName, ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listMenuName + "')]"))).click();
+
+        return pageToReturn;
     }
 
     public RestApiPage clickOnRestApiLink() {

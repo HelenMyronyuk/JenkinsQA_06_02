@@ -105,6 +105,13 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .trim();
     }
 
+    public String getPageNameFromBreadcrumb(){
+        String fullBreadcrumbText = getFullBreadcrumbText();
+        int index = fullBreadcrumbText.lastIndexOf(">");
+
+        return fullBreadcrumbText.substring(index + 2);
+    }
+
     public List<String> getMenuList() {
         List<String> menuList = new ArrayList<>();
         for (WebElement el : dropDownMenu) {
