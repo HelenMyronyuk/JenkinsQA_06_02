@@ -1,5 +1,6 @@
 package school.redrover.model.builds;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,9 +31,6 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
     @FindBy(xpath = "//input[@name='value']")
     private WebElement booleanParameterCheckbox;
 
-    @FindBy(xpath = "//input[@checked='true']")
-    private WebElement checkedTrue;
-
     @FindBy(xpath = "//table[contains(@class, 'jenkins-pane')]//tr")
     private List<WebElement> buildList;
 
@@ -43,6 +41,7 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
         this.jobTypePage = jobTypePage;
     }
 
+    @Step("Click to build")
     public JobTypePage clickBuild(){
         buildButton.click();
         if (buildList.size() < 2) {
@@ -53,16 +52,19 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
         return jobTypePage;
     }
 
+    @Step("Check if the name of the added parameter is displayed")
     public boolean isParameterNameDisplayed(String parameterName) {
         return getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String
                         .format("//div[@class = 'jenkins-form-label help-sibling' and text() = '%s']", parameterName))))
                 .isDisplayed();
     }
 
+    @Step("Get description of the parameter")
     public String getParameterDescription() {
         return parameterDescription.getText();
     }
 
+    @Step("Get list of parameters")
     public List<WebElement> getChoiceParametersList() {
         return choiceParametersList;
     }
@@ -81,17 +83,19 @@ public class BuildWithParametersPage<JobTypePage extends BaseProjectPage<?>> ext
         return null;
     }
 
+    @Step("Get name of the boolean parameter")
     public String getBooleanParameterName() {
         return booleanParameterName.getText();
     }
 
+    @Step("Get 'checked' attribute of the boolean parameter")
     public String getBooleanParameterCheckbox() {
         return booleanParameterCheckbox.getAttribute("checked");
     }
 
+    @Step("Get state of the boolean parameter")
     public boolean checkedTrue() {
-        String checked = checkedTrue.getAttribute("checked");
-        if(checked.equals("true")){
+        if(getBooleanParameterCheckbox().equals("true")){
 
             return true;
         }
