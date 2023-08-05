@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,10 +22,12 @@ public class GitBuildDataPage extends BaseMainHeaderPage<GitBuildDataPage> {
         super(driver);
     }
 
+    @Step("Get repository name")
     public String getRepositoryName() {
         return getWait5().until(ExpectedConditions.visibilityOf(repositoryNameLink)).getText();
     }
 
+    @Step("Get names of built branches")
     public String getNamesOfBuiltBranches() {
         List<String> namesOfBuiltBranches = new ArrayList<>();
         for (WebElement branch : builtBranchesList) {
