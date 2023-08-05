@@ -459,7 +459,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testBuildChangesFromBuildPage(){
+    public void testBuildChangesFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String text = new MainPage(getDriver())
@@ -838,7 +838,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testNavigateToWorkspaceFromProjectPage(){
+    public void testNavigateToWorkspaceFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String workspacePage = new MainPage(getDriver())
@@ -932,8 +932,8 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testEnableFromConfigurationPage(){
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject,true);
+    public void testEnableFromConfigurationPage() {
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         FreestyleProjectPage freestyleProjectPageDisabled = new MainPage(getDriver())
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
@@ -1218,7 +1218,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Test
-    public void testBuildStepsExecuteWindowsBatchCommand(){
+    public void testBuildStepsExecuteWindowsBatchCommand() {
         final String commandFieldText = "echo Hello";
         final String cmdCommand = "$ cmd /c call";
 
@@ -1505,8 +1505,8 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Test
     public void testDeleteItemFromDropDown() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject,true);
-        MainPage welcomeIsDisplayed= new MainPage(getDriver())
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+        MainPage welcomeIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDelete(FREESTYLE_NAME)
                 .acceptAlert();
 
@@ -1547,4 +1547,5 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
     }
+
 }

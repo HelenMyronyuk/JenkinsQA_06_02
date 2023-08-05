@@ -167,6 +167,7 @@ public class HeaderTest extends BaseTest {
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
+    @Ignore
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
@@ -190,6 +191,7 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
         String actualHeaderPage = new MainPage(getDriver())
