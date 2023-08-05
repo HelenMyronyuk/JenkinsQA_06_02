@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,25 +28,28 @@ public class NewNodePage extends BaseMainHeaderPage<NewNodePage> {
         super(driver);
     }
 
+    @Step("Input Node name '{text}' in field")
     public NewNodePage inputNodeNameField(String text) {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(nodeNameField)).sendKeys(text);
 
         return this;
     }
-
+    @Step("Click on the 'Permanent Agent' Radio button on the New node page")
     public NewNodePage clickPermanentAgentRadioButton() {
         getWait2().until(ExpectedConditions.elementToBeClickable(permanentAgentButton)).click();
 
         return this;
     }
 
+    @Step("Click on the 'Copy Existing Node' Radio button on the New node page")
     public NewNodePage clickCopyExistingNode(){
         getWait2().until(ExpectedConditions.elementToBeClickable(copyExistingNodeButton)).click();
 
         return this;
     }
 
+    @Step("Input existing Node '{existingNodeName}' ")
     public NewNodePage inputExistingNode(String existingNodeName){
         getWait5().until(ExpectedConditions
                 .visibilityOf(existingNodeField)).sendKeys(existingNodeName);
@@ -53,6 +57,7 @@ public class NewNodePage extends BaseMainHeaderPage<NewNodePage> {
         return this;
     }
 
+    @Step("Click on the 'Create' button on the New node page")
     public CreateNodePage clickCreateButton() {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(createButton)).click();
@@ -60,6 +65,7 @@ public class NewNodePage extends BaseMainHeaderPage<NewNodePage> {
         return new CreateNodePage(getDriver());
     }
 
+    @Step("Click on the 'Create' button on the New node page and go error")
     public ErrorNodePage clickCreateButtonAndGoError() {
         getWait2().until(ExpectedConditions
                 .elementToBeClickable(createButton)).click();
