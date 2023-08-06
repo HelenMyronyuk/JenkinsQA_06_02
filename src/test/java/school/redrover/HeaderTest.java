@@ -250,4 +250,20 @@ public class HeaderTest extends BaseTest {
         assertEquals("Project " + projectName, actualProjectName);
 
     }
+
+    @Test
+    public void testSearchJobWithOneLetter() {
+        final String projectName = "Project";
+
+        TestUtils.createJob(this, projectName, TestUtils.JobType.FreestyleProject, false);
+
+        String actualResult = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox("p", new SearchPage(getDriver()))
+                .clickSearchResult(projectName)
+                .getJobName();
+
+        assertEquals("Project " + projectName, actualResult);
+
+    }
 }
