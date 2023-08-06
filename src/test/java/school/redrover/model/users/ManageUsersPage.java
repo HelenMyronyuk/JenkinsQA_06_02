@@ -10,11 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.DeletePage;
 import school.redrover.model.MainPage;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
 
 import java.util.List;
 
-public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
+public class ManageUsersPage extends BaseSubmenuPage<ManageUsersPage> {
 
     @FindBy(xpath = "//a[@href='addUser']")
     private WebElement createUser;
@@ -39,6 +40,11 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
 
     public ManageUsersPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Users";
     }
 
     @Step("Click the 'Create User' button")
@@ -67,18 +73,11 @@ public class ManageUsersPage extends BaseMainHeaderPage<ManageUsersPage> {
         return this;
     }
 
-    @Step("Select 'Configure' option in User ID Dropdown menu")
-    public ManageUsersPage selectConfigureUserIDDropDownMenu() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(configureInDropDownMenu)).click();
+    @Step("Select '{optionName}' menu item in User ID Dropdown menu")
+    public <RedirectPage> RedirectPage selectItemInUserIDDropDownMenu(String optionName, RedirectPage redirectPage) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '" + optionName +"')]"))).click();
 
-        return this;
-    }
-
-    @Step("Select 'Delete' option in User ID Dropdown menu")
-    public DeletePage<MainPage> selectDeleteUserInDropDownMenu() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(deleteInDropDownMenu)).click();
-
-        return new DeletePage<>(new MainPage(getDriver()));
+        return redirectPage;
     }
 
     @Step("Verify if '{userName}' user is exist")

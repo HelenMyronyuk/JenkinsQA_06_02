@@ -6,8 +6,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.builds.UserBuildsPage;
+import school.redrover.model.users.ManageUsersPage;
 import school.redrover.model.users.UserConfigPage;
 import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -142,13 +145,11 @@ public class UsersTest extends BaseTest {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        UserConfigPage configureUserPage = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .openUserIDDropDownMenu(USER_NAME)
-                .selectConfigureUserIDDropDownMenu();
-
-        UserConfigPage configureUserPage = new UserConfigPage(new UserPage(getDriver()));
+                .selectItemInUserIDDropDownMenu("Configure", new UserConfigPage(new UserPage(getDriver())));
 
         String oldEmail = configureUserPage.getEmailValue("value");
 
@@ -269,7 +270,7 @@ public class UsersTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .openUserIDDropDownMenu(USER_NAME)
-                .selectDeleteUserInDropDownMenu()
+                .selectItemInUserIDDropDownMenu("Delete", new DeletePage<>(new MainPage(getDriver())))
                 .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
                 .checkIfUserWasDeleted(USER_NAME);
@@ -463,5 +464,32 @@ public class UsersTest extends BaseTest {
                 .getFullBreadcrumbText();
 
         Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+    }
+
+    @DataProvider(name = "dropDownOnUsersPageMenu")
+    public Object[][] provideDropDownMenuItem() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserBuildsPage(driver), "Builds", "Dashboard > Test User > Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Configure", "Dashboard > Test User > Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new MyViewsPage(driver), "My Views", "Dashboard > Test User > My Views > All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new DeletePage<>(new ManageUsersPage(driver)), "Delete", "Dashboard > Test User > Delete"},
+        };
+    }
+
+    @Test(dataProvider = "dropDownOnUsersPageMenu")
+    public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedBreadcrumbText) throws InterruptedException {
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String breadcrumbText = new MainPage(getDriver())
+                .getBreadcrumb()
+                .selectAnOptionFromDashboardManageJenkinsSubmenuList(new ManageUsersPage(getDriver()))
+                .openUserIDDropDownMenu(USER_NAME)
+                .selectItemInUserIDDropDownMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertEquals(breadcrumbText, expectedBreadcrumbText);
+
     }
 }
