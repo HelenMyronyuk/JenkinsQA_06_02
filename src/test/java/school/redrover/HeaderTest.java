@@ -10,6 +10,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.BuildPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.jobsSidemenu.CredentialsPage;
 import school.redrover.model.manageJenkins.ManageJenkinsPage;
@@ -110,7 +111,7 @@ public class HeaderTest extends BaseTest {
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
                 .getHeader()
-                .clickLogOUTButton()
+                .clickLogoutButton()
                 .isSignInButtonPresent();
 
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
@@ -127,7 +128,7 @@ public class HeaderTest extends BaseTest {
         String backgroundColorAfter = new MainPage(getDriver())
                 .getHeader()
                 .clickNotificationIcon()
-                .getNotificationIconBackgroundColor();
+                .getBackgroundColorNotificationIcon();
 
         String actualManageJenkinsPageHeader = new ManageJenkinsPage(getDriver())
                 .clickManageJenkinsLink()
@@ -176,13 +177,13 @@ public class HeaderTest extends BaseTest {
     public Object[][] userDropDown() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new BuildPage(getDriver()),"Builds" ,"Builds"},
+                        driver -> new BuildPage(getDriver()), "Builds", "Builds"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new UserConfigPage(new UserPage(getDriver())),"Configure" ,"Configure"},
+                        driver -> new UserConfigPage(new UserPage(getDriver())), "Configure", "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MyViewsPage(getDriver()), "My Views" ,"All"},
+                        driver -> new MyViewsPage(getDriver()), "My Views", "All"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new CredentialsPage(getDriver()),"Credentials", "Credentials"}};
+                        driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}};
     }
 
     @Test(dataProvider = "userDropDown")
@@ -199,6 +200,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(pageNameFromBreadcrumb, expectedPageName);
 
     }
+
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
@@ -242,7 +244,7 @@ public class HeaderTest extends BaseTest {
 
         String actualProjectName = new MainPage(getDriver())
                 .getHeader()
-                .sendSearchBoxProjectName(projectName)
+                .sendKeysSearchBox(projectName, new MultiConfigurationProjectPage(getDriver()))
                 .getJobName();
 
         assertEquals("Project " + projectName, actualProjectName);

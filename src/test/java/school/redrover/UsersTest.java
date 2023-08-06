@@ -427,8 +427,8 @@ public class UsersTest extends BaseTest {
     @Test
     public void testSearchBoxInsensitive() {
         boolean isSearchResultContainsText = new MainPage(getDriver()).getHeader()
-                .clickAdminDropdownMenu()
-                .openConfigureTabFromAdminDropdownMenu()
+                .clickUserDropdownMenu()
+                .openConfigureTabFromUserDropdownMenu()
                 .selectInsensitiveSearch()
                 .clickSaveButton()
                 .getHeader()

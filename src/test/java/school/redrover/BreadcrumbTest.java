@@ -685,8 +685,8 @@ public class BreadcrumbTest extends BaseTest {
         String actualFullBreadcrumbText =
                 new MainPage(getDriver())
                         .getHeader()
-                        .clickAdminDropdownMenu()
-                        .clickMyViewsTabFromAdminDropdownMenu()
+                        .clickUserDropdownMenu()
+                        .clickMyViewsTabFromUserDropdownMenu()
                         .getBreadcrumb()
                         .getUserBreadcrumbDropdownMenu()
                         .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), "admin")
