@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,48 +39,56 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
         super(driver);
     }
 
+    @Step("Click build console output on the Jenkins table")
     public ConsoleOutputPage clickProjectBuildConsole(String projectBuildName) {
         getDriver().findElement(By.xpath("//a[contains(@href, '" + projectBuildName + "')  and contains(@href, 'console') and not(contains(@href, 'default'))]")).click();
 
         return new ConsoleOutputPage(getDriver());
     }
 
+    @Step("Get build status on the Jenkins table")
     public String getStatusMessageText() {
         getDriver().navigate().refresh();
 
         return statusMessage.getText();
     }
 
+    @Step("Click build name on timeline")
     public BuildHistoryPage clickBuildNameOnTimeline(String projectBuildName) {
         getDriver().findElement(By.xpath("//div[contains(text(), '" + projectBuildName + "')]")).click();
 
         return this;
     }
 
+    @Step("Get bubble title on timeline")
     public String getBubbleTitleOnTimeline() {
         getWait5().until(ExpectedConditions.visibilityOf(bubbleContainer));
 
         return bubbleTitle.getText();
     }
 
+    @Step("Get number of items on the Jenkins table")
     public int getNumberOfLinesInBuildHistoryTable() {
         getWait5().until(ExpectedConditions.visibilityOf(pageHeader));
 
         return buildHistoryTable.size();
     }
 
+    @Step("Click build link badge on the Jenkins table")
     public BuildPage clickNameOfBuildLink() {
         getWait10().until(ExpectedConditions.elementToBeClickable(nameOfBuildLink)).click();
 
         return new BuildPage(getDriver());
     }
 
+    @Step("Click New Item button on the Build history page")
     public NewJobPage clickNewItem() {
         newItem.click();
 
         return new NewJobPage(getDriver());
     }
 
+    @Step("Get Page header")
     public String getHeaderText(){
         return pageHeader.getText();
     }

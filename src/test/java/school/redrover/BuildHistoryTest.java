@@ -144,6 +144,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildByGreenArrow("NewBuilds")
                 .clickBuildsHistoryButton()
                 .getStatusMessageText();
+
         Assert.assertEquals(actualStatusMessageText, expectedStatusMessageText);
     }
 
@@ -163,6 +164,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildsHistoryButton()
                 .clickBuildNameOnTimeline(itemName + " #1")
                 .getBubbleTitleOnTimeline();
+
         Assert.assertEquals(projectNameOnBuildHistoryTimeline, itemName + " #1");
     }
 
