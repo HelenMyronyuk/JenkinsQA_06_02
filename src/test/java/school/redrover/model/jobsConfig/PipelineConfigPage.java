@@ -2,7 +2,6 @@ package school.redrover.model.jobsConfig;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -78,16 +77,9 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
         return text;
     }
 
-    @Step("Select 'Hello Word' sample of Pipeline script ")
-    public PipelinePage selectHelloWord() {
-        new Select(selectScript).selectByValue("hello");
-
-        return new PipelinePage(getDriver());
-    }
-
-    @Step("Select 'Scripted Pipeline' sample of Pipeline script ")
-    public PipelinePage selectScriptedPipeline() {
-        new Select(selectScript).selectByValue("scripted");
+    @Step("Select sample of Pipeline script by value")
+    public PipelinePage selectScriptSample(String value) {
+        new Select(selectScript).selectByValue(value);
 
         return new PipelinePage(getDriver());
     }
