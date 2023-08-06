@@ -3,7 +3,6 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.BuildPage;
@@ -976,7 +975,6 @@ public class PipelineTest extends BaseTest {
                 "In the Pipeline Changes chapter, not displayed status of the latest build.");
     }
 
-    @Ignore
     @Test
     public void testPipelineBuildingAfterChangesInCode() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);

@@ -199,9 +199,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public BuildPage clickLastBuildLink() {
-        getWait10().until(ExpectedConditions.visibilityOf(lastBuildCompletedLink));
+        getWait15().until(ExpectedConditions.visibilityOf(lastBuildCompletedLink));
         getDriver().navigate().refresh();
-        getWait10().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
+        getWait15().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
 
         return new BuildPage(getDriver());
     }
