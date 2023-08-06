@@ -1,7 +1,6 @@
 package school.redrover.model.jobs;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
@@ -16,6 +15,9 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
 
     @FindBy(xpath = "//div[@id='pipeline-box']/div")
     private WebElement alertWarning;
+
+    @FindBy(xpath = "//a[@href='lastCompletedBuild/']")
+    private WebElement lastCompletedBuildLinkFromPermalinks;
 
     public PipelinePage(WebDriver driver) {
         super(driver);
@@ -36,9 +38,8 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
 
     @Step("Get a text alert")
     public String getAlert() {
-        getWait10().until(ExpectedConditions.visibilityOf(
-                getDriver().findElement(By.xpath("//a[@href='lastBuild/']"))));
+        getWait10().until(ExpectedConditions.visibilityOf(lastCompletedBuildLinkFromPermalinks));
 
-        return getWait2().until(ExpectedConditions.visibilityOf(alertWarning)).getText().trim();
+        return getWait10().until(ExpectedConditions.visibilityOf(alertWarning)).getText().trim();
     }
 }

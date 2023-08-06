@@ -3,7 +3,6 @@ package school.redrover;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -731,7 +730,6 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
-    @Ignore
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
         String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
