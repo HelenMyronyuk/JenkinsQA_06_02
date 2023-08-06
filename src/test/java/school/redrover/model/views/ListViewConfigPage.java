@@ -33,12 +33,16 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
     @FindBy(xpath = "//span[text()='Delete View']/..")
     private WebElement deleteViewLink;
 
+    @FindBy(xpath = "//div[contains(text(), 'Columns')]")
+    private WebElement columnsText;
+
     public ListViewConfigPage(ViewPage viewPage) {
         super(viewPage);
     }
 
     @Step("Select Jobs name '{name}' in 'Job Filters' ")
     public ListViewConfigPage selectJobsInJobFilters(String name) {
+        TestUtils.scrollWithPauseByActions(this, columnsText, 500);
 
         for (WebElement el : viewJobList) {
             if (Objects.equals(el.getText(), name)) {

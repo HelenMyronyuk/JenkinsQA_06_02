@@ -3,7 +3,6 @@ package school.redrover;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
@@ -127,7 +126,6 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(actualViewName, "The new name is not displayed");
     }
 
-    @Ignore
     @Test
     public void testMoveFolderToNewViewList() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
@@ -146,7 +144,6 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(viewPage.getJobName(PROJECT_NAME), PROJECT_NAME);
     }
 
-    @Ignore
     @Test
     public void testCreateNewViewWithJobFilters() {
         final String jobName1 = "job1";
