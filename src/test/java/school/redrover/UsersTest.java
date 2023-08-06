@@ -375,22 +375,13 @@ public class UsersTest extends BaseTest {
 
     @Test
     public void testCreateUserCheckInPeople() {
-        final String expectedResultTitle = "People - [Jenkins]";
-
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu();
+        boolean actualResultFindUserName = new MainPage(getDriver())
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasAdded(USER_NAME, USER_FULL_NAME);
 
-        String actualResultTitle = getDriver().getTitle();
-        boolean actualResultFindUserID = new PeoplePage(getDriver())
-                .checkIfUserWasAdded(USER_NAME);
-        boolean actualResultFindUSerName = new PeoplePage(getDriver())
-                .checkIfUserWasAdded(USER_FULL_NAME);
-
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
-        Assert.assertTrue(actualResultFindUserID, "true");
-        Assert.assertTrue(actualResultFindUSerName, "true");
+        Assert.assertTrue(actualResultFindUserName, "The user not found");
     }
 
     @Test

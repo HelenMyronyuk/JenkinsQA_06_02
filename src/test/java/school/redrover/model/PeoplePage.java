@@ -88,8 +88,8 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
     }
 
     @Step("Check if User '{userName}' was added")
-    public boolean checkIfUserWasAdded(String userName) {
-        return user.getText().contains(userName);
+    public boolean checkIfUserWasAdded(String userName, String userFullName) {
+        return user.getText().contains(userName) && user.getText().contains(userFullName);
     }
 
     public static List<String> listText(List<WebElement> elementList) {
