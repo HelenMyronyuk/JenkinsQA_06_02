@@ -1244,15 +1244,24 @@ public class PipelineTest extends BaseTest {
     public void testAddDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
 
-        PipelinePage pipelinePage = new PipelinePage(getDriver())
+        String pipelineName = new PipelinePage(getDriver())
                 .clickConfigure()
                 .scrollAndClickAdvancedButton()
                 .setDisplayName(NEW_NAME)
-                .clickSaveButton();
+                .clickSaveButton()
+                .getJobName();
 
-        Assert.assertEquals(pipelinePage.getJobName(), "Pipeline " + NEW_NAME);
-        Assert.assertEquals(pipelinePage.getProjectNameSubtitleWithDisplayName(), NAME);
-        Assert.assertEquals(pipelinePage.getHeader().clickLogo().getJobName(NAME), NEW_NAME);
+        String projectName = new PipelinePage(getDriver())
+                .getProjectNameSubtitleWithDisplayName();
+
+        String jobName = new MainPage(getDriver())
+                .getHeader()
+                .clickLogo()
+                .getJobName(NAME);
+
+        Assert.assertEquals(pipelineName, "Pipeline " + NEW_NAME);
+        Assert.assertEquals(projectName, NAME);
+        Assert.assertEquals(jobName, NEW_NAME);
     }
 
     @Test
