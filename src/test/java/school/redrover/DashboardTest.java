@@ -1,11 +1,10 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
-import school.redrover.model.views.ViewPage;
-import school.redrover.model.jobs.FolderPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -14,15 +13,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
-
 public class DashboardTest extends BaseTest {
 
-    private static final String PROJECT_NAME = RandomStringUtils.randomAlphanumeric(7);
-    private static final String VIEW_NAME = RandomStringUtils.randomAlphanumeric(5);
     private static final String DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
     private static final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
+    @Description("Verify of the dashboard table size")
     @Test
     public void testDashboardTableSize() {
         Map<String, Integer> tableSizeMap = new LinkedHashMap<>();
@@ -35,7 +31,7 @@ public class DashboardTest extends BaseTest {
 
         TestUtils.createJob(this, "JOB", TestUtils.JobType.Pipeline, true);
 
-        for (Map.Entry<String, Integer> tableSizeNameAndTableSizeMap: tableSizeMap.entrySet()) {
+        for (Map.Entry<String, Integer> tableSizeNameAndTableSizeMap : tableSizeMap.entrySet()) {
             tableSizeActualList.add(new MainPage(getDriver())
                     .clickChangeJenkinsTableSize(tableSizeNameAndTableSizeMap.getKey())
                     .getJenkinsTableHeight());
@@ -44,19 +40,21 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(tableSizeActualList, sizeList);
     }
 
+    @Description("Verification of the presence of a description preview on the main page")
     @Test
-    public void testPreviewDescriptionOnMainPage(){
+    public void testPreviewDescriptionOnMainPage() {
         String preview = new MainPage(getDriver())
                 .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
                 .clickPreviewDescription()
                 .getPreviewDescriptionText();
 
-        Assert.assertEquals(preview,DESCRIPTION);
+        Assert.assertEquals(preview, DESCRIPTION);
     }
 
+    @Description("Verification of adding of a description on the main page")
     @Test
-    public void testAddDescriptionOnMainPage(){
+    public void testAddDescriptionOnMainPage() {
         String textDescription = new MainPage(getDriver())
                 .clickAddOrEditDescription()
                 .enterDescription(DESCRIPTION)
@@ -66,6 +64,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(textDescription, DESCRIPTION);
     }
 
+    @Description("Verification of the presence of a description preview from My View page")
     @Test
     public void testPreviewDescriptionFromMyViewsPage() {
         String previewDescription = new MainPage(getDriver())
@@ -79,6 +78,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Description("Verification of adding of a description from My View page")
     @Test
     public void testAddDescriptionFromMyViewsPage() {
         String description = new MainPage(getDriver())
@@ -92,6 +92,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(description, DESCRIPTION);
     }
 
+    @Description("Verify of description field editing")
     @Test
     public void testEditDescription() {
         String description = new MainPage(getDriver())
@@ -106,19 +107,5 @@ public class DashboardTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(description, NEW_DESCRIPTION);
-    }
-
-    @Test
-    public void testCreateMyViewInFolder() {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
-
-        String newView = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .createNewView()
-                .setNewViewName(VIEW_NAME)
-                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
-                .getActiveViewName();
-
-        assertEquals(newView, VIEW_NAME);
     }
 }

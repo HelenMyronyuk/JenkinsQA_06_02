@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.views.*;
@@ -13,6 +14,8 @@ import school.redrover.runner.TestUtils;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 
 public class ViewsTest extends BaseTest {
 
@@ -82,6 +85,20 @@ public class ViewsTest extends BaseTest {
                 .clickSaveButton();
 
         Assert.assertEquals(project.getJobName(), "Project " + PROJECT_NAME);
+    }
+
+    @Test
+    public void testCreateMyViewInFolder() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+
+        String newView = new MainPage(getDriver())
+                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
+                .createNewView()
+                .setNewViewName(VIEW_NAME)
+                .selectTypeViewClickCreate(TestUtils.ViewType.MyView, ViewPage.class)
+                .getActiveViewName();
+
+        assertEquals(newView, VIEW_NAME);
     }
 
     @Test(dataProvider = "mainView types")
@@ -262,10 +279,10 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
-    @Test (dataProvider = "myView types")
-    public void testAddDescription(TestUtils.ViewType viewType){
+    @Test(dataProvider = "myView types")
+    public void testAddDescription(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-        createNewView(true,VIEW_NAME, viewType, true);
+        createNewView(true, VIEW_NAME, viewType, true);
 
         String descriptionTest = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
@@ -278,7 +295,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test(dataProvider = "myView types")
-    public void testEditDescription(TestUtils.ViewType viewType){
+    public void testEditDescription(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         createNewView(true, VIEW_NAME, viewType, true);
 
@@ -298,7 +315,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test(dataProvider = "myView types")
-    public void testCancelDeletingFromViewPage(TestUtils.ViewType viewType){
+    public void testCancelDeletingFromViewPage(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         createNewView(true, VIEW_NAME, viewType, true);
 
@@ -311,11 +328,11 @@ public class ViewsTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertTrue(viewIsPresent,"View is not present on My Views page");
+        Assert.assertTrue(viewIsPresent, "View is not present on My Views page");
     }
 
     @Test
-    public void testCancelDeletingFromConfigurationPage(){
+    public void testCancelDeletingFromConfigurationPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         createNewView(true, VIEW_NAME, TestUtils.ViewType.ListView, false);
 
@@ -326,7 +343,7 @@ public class ViewsTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertTrue(isViewPresent,"View is not displayed");
+        Assert.assertTrue(isViewPresent, "View is not displayed");
     }
 
     @Test(dataProvider = "myView types")
@@ -364,7 +381,7 @@ public class ViewsTest extends BaseTest {
         createNewView(true, VIEW_NAME, TestUtils.ViewType.MyView, false);
 
         Boolean isViewPresent = new ViewPage(getDriver())
-                .clickOnView(VIEW_NAME, new ViewPage(getDriver()) )
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
                 .clickEditView()
                 .clickDeleteView(new MainPage(getDriver()))
                 .clickYesButton()
