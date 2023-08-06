@@ -1,5 +1,6 @@
 package school.redrover.model.manageJenkins;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -71,6 +72,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         super(driver);
     }
 
+    @Step("Input '{text}' in the search field on ManageJenkins Page")
     public ManageJenkinsPage inputToSearchField(String text) {
         getWait2().until(ExpectedConditions.elementToBeClickable(searchBarOnManageJenkinsPage));
         searchBarOnManageJenkinsPage.sendKeys(text);
@@ -78,6 +80,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ManageJenkinsPage(getDriver());
     }
 
+    @Step("Input '{text}' in the search field using keyboard shortcut on ManageJenkins Page")
     public ManageJenkinsPage inputToSearchFieldUsingKeyboardShortcut(String text) {
         page.sendKeys(Keys.chord("/"));
         new Actions(getDriver()).sendKeys(text).perform();
@@ -85,6 +88,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return this;
     }
 
+    @Step("Get no result text in search field on ManageJenkins Page")
     public String getNoResultTextInSearchField() {
         Actions action = new Actions(getDriver());
         action.moveToElement(searchResultsIsVisible).perform();
@@ -92,34 +96,40 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return searchResultsIsVisible.getText();
     }
 
+    @Step("Click Manage Users on ManageJenkins Page")
     public ManageUsersPage clickManageUsers() {
         getWait2().until(ExpectedConditions.elementToBeClickable(manageUsersLink)).click();
 
         return new ManageUsersPage(getDriver());
     }
 
+    @Step("Get header text from ManageJenkins Page")
     public String getActualHeader() {
         getWait5().until(ExpectedConditions.visibilityOf(headline));
 
         return headline.getText();
     }
 
+    @Step("Get dropdown results in search field on ManageJenkins Page")
     public String getDropdownResultsInSearchField() {
         return getWait10().until(ExpectedConditions.elementToBeClickable(searchResults)).getText();
     }
 
+    @Step("Click +New item on ManageJenkins Page")
     public NewJobPage clickNewItem() {
         newItemOnSideMenu.click();
 
         return new NewJobPage(getDriver());
     }
 
+    @Step("Click Configure Global Security on ManageJenkins Page")
     public ConfigureGlobalSecurityPage clickConfigureGlobalSecurity() {
         getWait2().until(ExpectedConditions.elementToBeClickable(configureGlobalSecurityLink)).click();
 
         return new ConfigureGlobalSecurityPage(getDriver());
     }
 
+    @Step("Click Manage Nodes on ManageJenkins Page")
     public ManageNodesPage clickManageNodes() {
         getWait2().until(ExpectedConditions.elementToBeClickable(manageNodesOnSideMenu));
         manageNodesOnSideMenu.click();
@@ -127,6 +137,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ManageNodesPage(getDriver());
     }
 
+    @Step("Click Manage Jenkins Link on ManageJenkins Page")
     public ManageJenkinsPage clickManageJenkinsLink() {
         new Actions(getDriver())
                 .pause(Duration.ofMillis(300))
@@ -135,12 +146,14 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ManageJenkinsPage(getDriver());
     }
 
+    @Step("Click Manage Plugins on ManageJenkins Page")
     public ManagePluginsPage clickManagePlugins() {
         getWait2().until(ExpectedConditions.elementToBeClickable(managePluginsLink)).click();
 
         return new ManagePluginsPage(getDriver());
     }
 
+    @Step("Get result of search '{text}' from drop down on ManageJenkins Page")
     public ConfigureSystemPage selectOnTheFirstLineInDropdown(String text) {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(itemInDropdownSearchResults));
         for (WebElement option : listItemsInDropdownMenuSearchResults) {
@@ -153,6 +166,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ConfigureSystemPage(getDriver());
     }
 
+    @Step("Select all drop down results from search field on ManageJenkins Page")
     public ManageJenkinsPage selectAllDropdownResultsFromSearchField() {
         Actions action = new Actions(getDriver());
         action.moveToElement(searchResultsIsVisible).perform();
@@ -160,6 +174,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return this;
     }
 
+    @Step("If result of search from drop down contains '{text}' on ManageJenkins Page")
     public boolean isDropdownResultsFromSearchFieldContainsTextToSearch(String text) {
         for (WebElement option : listItemsInDropdownMenuSearchResultsWithTagA) {
             if (!option.getText().toLowerCase().contains(text)) {
@@ -171,6 +186,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return true;
     }
 
+    @Step("If drop down results from search field links on ManageJenkins Page")
     public boolean isDropdownResultsFromSearchFieldLinks() {
         for (WebElement option : listItemsInDropdownMenuSearchResultsWithTagA) {
             if (!"a".equals(option.getTagName())) {
@@ -182,6 +198,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return true;
     }
 
+    @Step("Click Configure System from search dropdown on ManageJenkins Page")
     public ConfigureSystemPage clickConfigureSystemFromSearchDropdown() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(searchResults));
         configureSystemLinkInSearchResult.click();
@@ -189,12 +206,14 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return new ConfigureSystemPage(getDriver());
     }
 
+    @Step("Click Configure System link on ManageJenkins Page")
     public ConfigureSystemPage clickConfigureSystemLink() {
         getWait2().until(ExpectedConditions.elementToBeClickable(configureSystemLink)).click();
 
         return new ConfigureSystemPage(getDriver());
     }
 
+    @Step("Click '{nodeName}' from drop down on ManageJenkins Page")
     public ManageJenkinsPage clickNodeDropdownMenu(String nodeName) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath("//a[@href='/manage/computer/" + nodeName + "/']/button")))
@@ -203,6 +222,7 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         return this;
     }
 
+    @Step("Click Delete Agent from drop down on ManageJenkins Page")
     public DeletePage<ManageNodesPage> selectDeleteAgentInDropdown() {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
 
