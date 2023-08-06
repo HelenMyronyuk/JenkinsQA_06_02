@@ -265,6 +265,21 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
+    @Test (dataProvider = "myView types")
+    public void testAddDescription(TestUtils.ViewType viewType){
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true,VIEW_NAME, viewType, true);
+
+        String descriptionTest = new MainPage(getDriver())
+                .clickMyViewsSideMenuLink()
+                .clickInactiveLastCreatedMyView(VIEW_NAME)
+                .clickEditView()
+                .enterDescription(VIEW_DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+        Assert.assertEquals(descriptionTest, VIEW_DESCRIPTION);
+    }
+
     @Test(dataProvider = "myView types")
     public void testEditDescription(TestUtils.ViewType viewType){
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
