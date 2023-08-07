@@ -249,6 +249,28 @@ public class ViewsTest extends BaseTest {
 
     @Feature("Function")
     @Test
+    public void testDeleteColumn() {
+        final List<String> optionsList = List.of(
+                "Status", "Weather", "Name", "Last Success",
+                "Last Failure", "Last Duration", "Build Button");
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(false, VIEW_NAME, TestUtils.ViewType.ListView, true);
+
+        String column = optionsList.get((int)(Math.random() * (optionsList.size() - 1)) + 1);
+
+        boolean isColumnDelete = new MainPage(getDriver())
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
+                .clickEditView(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .deleteColumn(column)
+                .clickSaveButton()
+                .clickEditView(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .isColumnDeleted(column);
+
+        Assert.assertFalse(isColumnDelete, "Column " + column + " is not delete!");
+    }
+
+    @Test
     public void testAddViewDescriptionPreview() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         createNewView(false, VIEW_NAME, TestUtils.ViewType.ListView, false);

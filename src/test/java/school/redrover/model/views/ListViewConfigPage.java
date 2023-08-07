@@ -1,7 +1,9 @@
 package school.redrover.model.views;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.DeletePage;
@@ -45,6 +47,9 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
 
     @FindBy(xpath = "//div[@class='bd']//li")
     private List<WebElement> addColumnOptions;
+
+    @FindBy(xpath = "//div[@class='help-sibling']")
+    private List<WebElement> activeColumnList;
 
     public ListViewConfigPage(ViewPage viewPage) {
         super(viewPage);
@@ -109,5 +114,32 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
             addColumnOptionList.add(element.getText());
         }
         return addColumnOptionList;
+    }
+
+    private List<String> getActiveColumnOptionList() {
+        List<String> activeColumnOptionList = new ArrayList<>();
+
+        for (WebElement element : activeColumnList) {
+            activeColumnOptionList.add(element.getText());
+        }
+
+        return activeColumnOptionList;
+    }
+
+    public ListViewConfigPage deleteColumn(String columnName) {
+        TestUtils.scrollWithPauseByActions(this, addColumnButton, 1000);
+
+        new Actions(getDriver())
+                .click(getDriver().findElement(By.xpath("//div[contains(text(), '" + columnName + "')]//button")))
+                .pause(600)
+                .perform();
+
+        return this;
+    }
+
+    public boolean isColumnDeleted(String columnName) {
+        TestUtils.scrollWithPauseByActions(this, addColumnButton, 1000);
+
+        return getActiveColumnOptionList().contains(columnName);
     }
 }
