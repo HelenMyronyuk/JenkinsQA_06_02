@@ -509,4 +509,21 @@ public class UsersTest extends BaseTest {
 
         Assert.assertTrue(userIsExist, "User is not exist");
     }
+    @Test
+    public void testCancelDeletingFromConfigurePage(){
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean userIsExist = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickConfigureButton(USER_NAME)
+                .clickDeleteUser()
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .isUserExist(USER_NAME);
+
+        Assert.assertTrue(userIsExist, "User is not exist");
+    }
 }
