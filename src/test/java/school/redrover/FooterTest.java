@@ -2,6 +2,8 @@ package school.redrover;
 
 import io.qameta.allure.Feature;
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
@@ -9,6 +11,7 @@ import school.redrover.runner.BaseTest;
 
 public class FooterTest extends BaseTest {
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Description("Verification that the link on the footer contains 'Jenkins 2.387.2")
     @Test
@@ -20,6 +23,7 @@ public class FooterTest extends BaseTest {
         Assert.assertEquals(linkVersion, "Jenkins 2.387.2");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Description("Verification that the link redirect to the 'Jenkins' page " +
             "and getting title from the Jenkins page'")
@@ -33,6 +37,7 @@ public class FooterTest extends BaseTest {
         Assert.assertEquals(jenkinsText, "Jenkins");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Description("Verification that the link on the footer redirect to the 'API' page")
     @Test
