@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -28,6 +29,7 @@ import static org.testng.Assert.*;
 
 public class HeaderTest extends BaseTest {
 
+    @Feature("UI")
     @Test
     public void testHeaderLogoIconPresent() {
         boolean logoIcon = new MainPage(getDriver())
@@ -42,6 +44,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(logoText);
     }
 
+    @Feature("UI")
     @Test
     public void testSearchPresent() {
         String placeholder = new MainPage(getDriver())
@@ -72,6 +75,7 @@ public class HeaderTest extends BaseTest {
         };
     }
 
+    @Feature("UI")
     @Test(dataProvider = "sideMenuOptions")
     public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
         String textTitle = new MainPage(getDriver())
@@ -87,6 +91,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textFromMainPage, "Welcome to Jenkins!");
     }
 
+    @Feature("UI")
     @Test
     public void testPressEnterButtonSearchField() {
         String textPageFromSearchBox = new MainPage(getDriver())
@@ -97,6 +102,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textPageFromSearchBox, "Built-In Node");
     }
 
+    @Feature("UI")
     @Test
     public void testSearchError() {
         String errorText = new MainPage(getDriver())
@@ -107,6 +113,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(errorText, "Nothing seems to match.");
     }
 
+    @Feature("UI")
     @Test
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
@@ -117,6 +124,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
     }
 
+    @Feature("UI")
     @Test
     public void testNotificationAndSecurityIcon() {
         String expectedManageJenkinsPageHeader = "Manage Jenkins";
@@ -138,6 +146,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(actualManageJenkinsPageHeader, expectedManageJenkinsPageHeader, " The page is not correct");
     }
 
+    @Feature("Function")
     @Test
     public void testReturnToDashboardFromProjectAndConfigPage() {
         final List<String> listItemName = new ArrayList<>(List.of("Test Item", "Second"));
@@ -163,6 +172,7 @@ public class HeaderTest extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Feature("UI")
     @Test
     public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
@@ -186,6 +196,7 @@ public class HeaderTest extends BaseTest {
                         driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "userDropDown")
     public void testSubMenuUserFromHeader(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String menu, String expectedPageName) {
@@ -201,6 +212,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Feature("UI")
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
@@ -212,6 +224,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(screenManageFromPopUp, "Manage Jenkins");
     }
 
+    @Feature("UI")
     @Test
     public void testSearchHelpButton() {
         final String expectedResult = "Search Box";
@@ -224,6 +237,7 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Feature("UI")
     @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
@@ -236,6 +250,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(actualHeaderPage, "Manage Jenkins");
     }
 
+    @Feature("Function")
     @Test
     public void testSearchJobWithFullJobName() {
         final String projectName = "SearchProject";
@@ -251,6 +266,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Feature("Function")
     @Test
     public void testSearchJobWithOneLetter() {
         final String projectName = "Project";
