@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -26,6 +28,7 @@ public class UsersTest extends BaseTest {
     protected static final String USER_FULL_NAME = "Test User";
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateNewUser() {
@@ -39,6 +42,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(newUser);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateUsingInvalidEmail() {
@@ -53,6 +57,7 @@ public class UsersTest extends BaseTest {
                 "The error message is incorrect or missing");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
@@ -69,6 +74,7 @@ public class UsersTest extends BaseTest {
                 "The error message is incorrect or missing");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionToUserOnUserStatusPage() {
@@ -89,6 +95,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualDisplayedDescriptionText, displayedDescriptionText);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testEditDescriptionToUserOnUserStatusPage() {
@@ -116,6 +123,7 @@ public class UsersTest extends BaseTest {
         Assert.assertNotEquals(actualDisplayedDescriptionText, existingDescriptionText);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigure() {
@@ -131,6 +139,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals("Description text", descriptionText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurePage() {
@@ -146,6 +155,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals("Description text", descriptionText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditEmailOnTheUserProfilePageByDropDown() {
@@ -171,6 +181,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualEmail, displayedEmail);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Navigation")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToSideMenuUserFromUsersPage(
@@ -189,6 +200,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testViewIconButtonsPeoplePage() {
@@ -201,7 +213,8 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualIconButtonsNames, expectedIconButtonsNames);
     }
 
-    @Feature("Function")
+    @Severity(SeverityLevel.MINOR)
+    @Feature("UI")
     @Test
     public void testSortArrowModeChangesAfterClickingSortHeaderButton() {
 
@@ -230,6 +243,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIDButtonNotContainsArrow, "UserID button has sort arrow");
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testSearchPeople() {
@@ -243,6 +257,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteFromSideMenu() {
@@ -261,6 +276,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteFromBin() {
@@ -276,6 +292,7 @@ public class UsersTest extends BaseTest {
         Assert.assertFalse(userNotFound);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteFromDropDown() {
@@ -293,6 +310,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteFromConfigure() {
@@ -310,6 +328,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testLogInWithDeletedUserCredentials() {
@@ -330,6 +349,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(invalidMessage, "Invalid username or password");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
@@ -347,6 +367,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testInputtingAnIncorrectUsername() {
@@ -363,6 +384,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectUsername, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testInputtingAnIncorrectPassword() {
@@ -379,6 +401,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testInputtingAnIncorrectUsernameAndPassword() {
@@ -395,6 +418,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectUsernameAndPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateUserCheckInPeople() {
@@ -407,6 +431,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResultFindUserName, "The user not found");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateUserCheckInManageUsers() {
@@ -420,6 +445,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResultFindUserID, "true");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testCreateUserButtonClickable() {
@@ -432,6 +458,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(iconName, "Create User");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromUserPage() {
@@ -449,6 +476,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, expectedPreviewDescriptionText);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Test
     public void testSearchBoxInsensitive() {
@@ -476,6 +504,7 @@ public class UsersTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
@@ -503,6 +532,7 @@ public class UsersTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test(dataProvider = "dropDownOnUsersPageMenu")
     public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedBreadcrumbText) throws InterruptedException {
@@ -521,6 +551,7 @@ public class UsersTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromBin(){
@@ -539,6 +570,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIsExist, "User is not exist");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromConfigurePage(){
