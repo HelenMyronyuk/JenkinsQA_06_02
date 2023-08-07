@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
@@ -7,6 +8,7 @@ import school.redrover.runner.BaseTest;
 
 public class FooterTest extends BaseTest {
 
+    @Description("Verification that the link on the footer contains 'Jenkins 2.387.2")
     @Test
     public void testJenkinsVersion() {
         String linkVersion = new MainPage(getDriver())
@@ -16,6 +18,8 @@ public class FooterTest extends BaseTest {
         Assert.assertEquals(linkVersion, "Jenkins 2.387.2");
     }
 
+    @Description("Verification that the link redirect to the 'Jenkins' page " +
+            "and getting title from the Jenkins page'")
     @Test
     public void testLinkJenkinsVersion() {
         String jenkinsText = new MainPage(getDriver())
@@ -26,6 +30,7 @@ public class FooterTest extends BaseTest {
         Assert.assertEquals(jenkinsText, "Jenkins");
     }
 
+    @Description("Verification that the link on the footer redirect to the 'API' page")
     @Test
     public void testLinkRestApi() {
         String mainPage = new MainPage(getDriver())
