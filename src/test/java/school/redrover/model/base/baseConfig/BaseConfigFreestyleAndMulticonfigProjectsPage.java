@@ -11,7 +11,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extends BaseConfigProjectsPage<?, ?>, ProjectPage extends BaseProjectPage<?>> extends BaseConfigProjectsPage<Self, ProjectPage> {
+public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends BaseConfigProjectsPage<?, ?>, ProjectPage extends BaseProjectPage<?>> extends BaseConfigProjectsPage<Self, ProjectPage> {
 
     @FindBy(xpath = "(//button[contains(text(),'Advanced')])[3]")
     private WebElement advancedDropdownMenu;
@@ -276,7 +276,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         return (Self) this;
     }
 
-    public Self  clickAddPostBuildActionDropDown() {
+    public Self clickAddPostBuildActionDropDown() {
         getHeader().scrollToFooter();
         getWait2().until(ExpectedConditions.elementToBeClickable(addPostBuildActionButton)).click();
         return (Self) this;
@@ -288,7 +288,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
         return (Self) this;
     }
 
-    public boolean isExecuteConcurrentBuildsSelected(){
+    public boolean isExecuteConcurrentBuildsSelected() {
         return checkBoxExecuteConcurrentBuilds.isSelected();
     }
 
@@ -340,7 +340,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     public Self clickArchiveTheArtifacts() {
         archiveTheArtifacts.click();
 
-        return  (Self) this;
+        return (Self) this;
     }
 
     public String getTextArchiveArtifacts() {
@@ -368,18 +368,18 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
     }
 
     public String getGitPublisherText() {
-        TestUtils.scrollWithPauseByActions(this, textTagsFromPostBuildActions, 300);
+        TestUtils.scrollWithPauseByActions(this, textTagsFromPostBuildActions, 3000);
 
         return gitPublisherHandle.getText();
     }
 
-    public Self  clickEmailNotification() {
+    public Self clickEmailNotification() {
         emailNotificationType.click();
 
         return (Self) this;
     }
 
-    public Self  setEmailNotification(String email) {
+    public Self setEmailNotification(String email) {
         getHeader().scrollToFooter();
         getWait2().until(ExpectedConditions.elementToBeClickable(emailNotificationInputField)).sendKeys(email);
 
@@ -417,12 +417,14 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage <Self extend
 
         return (Self) this;
     }
+
     public Self clickAdvancedGeneral() {
         TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
         advancedDropdownMenu.click();
 
         return (Self) this;
     }
+
     public Self clickUseCustomWorkspace(String directoryName) {
         TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
         useCustomWorkspace.click();

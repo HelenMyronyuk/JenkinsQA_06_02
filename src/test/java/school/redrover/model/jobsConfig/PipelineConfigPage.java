@@ -1,7 +1,7 @@
 package school.redrover.model.jobsConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -16,7 +16,7 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
     @FindBy(xpath = "//div[@class='ace_content']")
     private WebElement scriptSection;
 
-    @FindBy(xpath = "//textarea[@class='ace_text-input']")
+    @FindBy(xpath = "//div[@id='workflow-editor-1']//textarea")
     private WebElement scriptInputField;
 
     @FindBy(xpath = "//div[@class='jenkins-section']//button[@type='button']")
@@ -37,13 +37,11 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
     @FindBy(xpath = "//div[@class='samples']/select")
     private WebElement selectScript;
 
-    @FindBy(xpath = "//div[@id='workflow-editor-1']//textarea")
-    private WebElement workflowEditor;
-
     public PipelineConfigPage(PipelinePage pipelinePage) {
         super(pipelinePage);
     }
 
+    @Step("Click on the 'Advanced' arrow in the Advanced Project Options section")
     public PipelineConfigPage scrollAndClickAdvancedButton() {
         TestUtils.scrollWithPauseByActions(this, scriptSection, 500);
         getWait2().until(ExpectedConditions.elementToBeClickable(advancedButton)).click();
@@ -51,18 +49,21 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
         return this;
     }
 
+    @Step("Fill in '{displayName}' Display Name in the Advanced Project Options section")
     public PipelineConfigPage setDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(name)).sendKeys(displayName);
 
         return this;
     }
 
+    @Step("Scroll to the Pipeline section")
     public PipelineConfigPage scrollToPipelineSection() {
         TestUtils.scrollToElementByJavaScript(this, section);
 
         return this;
     }
 
+    @Step("Get the name of the selected definition in the Pipeline section")
     public String getOptionTextInDefinitionField() {
         String text = "";
 
@@ -76,31 +77,21 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
         return text;
     }
 
-    public PipelinePage selectHelloWord() {
-        new Select(selectScript).selectByValue("hello");
+    @Step("Select sample of Pipeline script by value")
+    public PipelinePage selectScriptSample(String value) {
+        new Select(selectScript).selectByValue(value);
 
         return new PipelinePage(getDriver());
     }
 
-    public PipelinePage selectScriptedPipeline() {
-        new Select(selectScript).selectByValue("scripted");
-
-        return new PipelinePage(getDriver());
-    }
-
+    @Step("Click on the 'Pipeline' item on the side menu")
     public PipelineConfigPage clickPipelineLeftMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(pipeline)).click();
 
         return this;
     }
 
-    public PipelineConfigPage sendAreContentInputString(String text) {
-        TestUtils.clickByJavaScript(this, workflowEditor);
-        workflowEditor.sendKeys(text);
-
-        return this;
-    }
-
+    @Step("Input text of the script")
     public PipelineConfigPage inputInScriptField(String scriptText){
         scriptInputField.sendKeys(scriptText);
 

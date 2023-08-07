@@ -8,6 +8,10 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.builds.BuildPage;
+import school.redrover.model.builds.ChangesBuildPage;
+import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.builds.EditBuildInformationPage;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
@@ -15,6 +19,10 @@ import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.*;
 import school.redrover.model.jobsConfig.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.jobsSidemenu.*;
+import school.redrover.model.manageJenkins.*;
+import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -625,7 +633,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
+    public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Organization Folder";
 
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -641,19 +649,19 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Test
-    public void testNavigateToDeleteFromMultibranchPagesFromDropdownOnBreadcrumb() {
+    public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multibranch Pipeline";
 
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        DeletePage deletePage = new MainPage(getDriver())
+        String deletePage = new MainPage(getDriver())
                 .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())));
+                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())))
+                .getTextFromConfirmDeletionForm();
 
-        Assert.assertEquals(deletePage.getTextFromConfirmDeletionForm(), "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
-        Assert.assertTrue(deletePage.isDeleteButtonDisplayed(), "Error: Delete button is not displayed!");
+        Assert.assertEquals(deletePage, "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
     }
 
     @DataProvider(name = "userDropDownMenu")
@@ -677,8 +685,8 @@ public class BreadcrumbTest extends BaseTest {
         String actualFullBreadcrumbText =
                 new MainPage(getDriver())
                         .getHeader()
-                        .clickAdminDropdownMenu()
-                        .clickMyViewsTabFromAdminDropdownMenu()
+                        .clickUserDropdownMenu()
+                        .clickMyViewsTabFromUserDropdownMenu()
                         .getBreadcrumb()
                         .getUserBreadcrumbDropdownMenu()
                         .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), "admin")
@@ -778,5 +786,19 @@ public class BreadcrumbTest extends BaseTest {
                         .getFullBreadcrumbText();
 
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
+    }
+
+    @Test(dataProvider = "subsections")
+    public void testNavigateToManageJenkinsSubsectionFromSideMenu(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+
+        String actualResult = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .getBreadcrumb()
+                .getManageJenkinsDropdownMenu()
+                .selectOptionFromManageJenkinsDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getHeading();
+
+        Assert.assertEquals(actualResult, expectedResult);
     }
 }

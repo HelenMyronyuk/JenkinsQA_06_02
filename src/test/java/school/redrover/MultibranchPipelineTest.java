@@ -564,6 +564,23 @@ public class MultibranchPipelineTest extends BaseTest {
     }
 
     @Test
+    public void testAddHealthOfThePrimaryBranchOfARepository() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        boolean IsHealthMetricVisible =  new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigure()
+                .clickHealthMetrics()
+                .addHealthMetricPrimaryBranchRepository()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickHealthMetrics()
+                .healthMetricIsVisible();
+
+        Assert.assertTrue(IsHealthMetricVisible, "Health metric is not displayed!");
+    }
+
+    @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 

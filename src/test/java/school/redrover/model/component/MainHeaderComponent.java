@@ -1,6 +1,7 @@
 package school.redrover.model.component;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -10,10 +11,12 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
-import school.redrover.model.jobs.MultiConfigurationProjectPage;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.users.UserConfigPage;
+import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.TestUtils;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,48 +29,30 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     private WebElement logoText;
 
     @FindBy(xpath = "//a[contains(@href, '/user/')]/button")
-    private WebElement adminDropdown;
-
-    @FindBy(id = "visible-am-list")
-    private WebElement popUpScreenNotification;
+    private WebElement userDropdown;
 
     @FindBy(id = "visible-am-button")
     private WebElement notificationIcon;
 
-    @FindBy(id = "breadcrumb-menu")
-    private WebElement adminDropdownMenu;
+    @FindBy(xpath = "//div[@id='visible-am-list']//a[text()='Manage Jenkins']")
+    private WebElement manageJenkinsFromNotificationPopUp;
 
-    @FindBy(xpath = "//div[@class='am-list']//a[contains(text(),'Manage Jenkins')]")
-    private WebElement manageJenkinsLinkFromPopUp;
+    @FindBy(xpath = "//div[@id='visible-sec-am-list']//a[text()='Manage Jenkins']")
+    private WebElement manageJenkinsFromSecurityPopUp;
 
-    @FindBy(xpath = "//div[@id='breadcrumb-menu']//span[.='Builds']")
-    private WebElement buildsTabFromAdminDropdownMenu;
-
-    @FindBy(xpath = "//h1[.='Builds for admin']")
-    private WebElement buildsTableTitle;
-
-    @FindBy(xpath = "//span[. ='Configure']")
-    private WebElement configureTabFromAdminDropdownMenu;
+    @FindBy(xpath = "//span[contains(text(),'Configure')]")
+    private WebElement configureTabFromUserDropdownMenu;
 
     @FindBy(xpath = "//div[@class='bd']//span[.='My Views']")
-    private WebElement myViewsTabFromAdminDropdownMenu;
-
-    @FindBy(xpath = "//li/a[@href='/user/admin/my-views/']")
-    private WebElement myViewsLink;
-
-    @FindBy(xpath = "//span[.='Credentials']")
-    private WebElement credentialsTabFromAdminDropdownMenu;
-
-    @FindBy(xpath = "//h1[.='Credentials']")
-    private WebElement credentialsTitle;
+    private WebElement myViewsTabFromUserDropdownMenu;
 
     @FindBy(xpath = "//a[@class='model-link']/span[contains(@class,'hidden-xs')]")
     private WebElement currentUserName;
 
-    @FindBy(xpath = "//a[text()='Jenkins 2.387.2']")
+    @FindBy(xpath = "//a[@rel='noopener noreferrer']")
     private WebElement jenkinsVersionLink;
 
-    @FindBy(id = "search-box")
+    @FindBy(xpath = "//input[@id='search-box']")
     private WebElement searchBox;
 
     @FindBy(css = ".main-search__icon-trailing svg")
@@ -76,29 +61,20 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     @FindBy(css = ".main-search__icon-leading svg")
     private WebElement searchBoxIcon;
 
-    @FindBy(xpath = "//div[@id='search-box-completion']//li")
+    @FindBy(xpath = "//div[@id='search-box-completion']")
     private List<WebElement> searchResultList;
-
-    @FindBy(css = "#visible-am-list > p > a")
-    private WebElement headerManageJenkins;
 
     @FindBy(xpath = "//div[@id='visible-sec-am-container']")
     private WebElement securityButtonIcon;
-
-    @FindBy(xpath = "//*[@id='visible-sec-am-button']")
-    private WebElement headerSecurityButton;
-
-    @FindBy(css = "#page-header > div.login.page-header__hyperlinks > a:nth-child(4) > svg")
-    private WebElement exitButtonIcon;
-
-    @FindBy(xpath = "//*[@id='page-header']/div[3]/a[2]")
-    private WebElement logOutLink;
 
     @FindBy(xpath = "//a[@href='/logout']")
     private WebElement logOutButton;
 
     @FindBy(xpath = "//div[@class='login page-header__hyperlinks']//a[contains(@href,'/user/')]")
-    private WebElement adminOrUserButton;
+    private WebElement userButton;
+
+    @FindBy(xpath = "//div[@class='login page-header__hyperlinks']//a[contains(@href,'/user/')]//button[@class='jenkins-menu-dropdown-chevron']")
+    private WebElement userDropDownMenu;
 
     @FindBy(xpath = "//a[contains(@href,'api')]")
     private WebElement restApi;
@@ -108,17 +84,6 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
     public MainHeaderComponent(Page page) {
         super(page);
-    }
-
-    private void hoverOver(WebElement webElement) {
-        new Actions(getDriver())
-                .moveToElement(webElement)
-                .pause(Duration.ofMillis(300))
-                .perform();
-    }
-
-    private String getIconBackgroundColor(WebElement webElement) {
-        return webElement.getCssValue("background-color");
     }
 
     @Step("Click 'Logo' button and move to main page")
@@ -142,91 +107,34 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return this;
     }
 
-    public MainHeaderComponent<Page> clickAdminDropdownMenu() {
-        TestUtils.clickByJavaScript(this, adminDropdown);
+    public MainHeaderComponent<Page> clickUserDropdownMenu() {
+        TestUtils.clickByJavaScript(this, userDropdown);
 
         return this;
     }
 
-    public boolean isPopUpNotificationScreenDisplayed() {
-        return getWait2().until(ExpectedConditions.visibilityOf(popUpScreenNotification)).isDisplayed();
-    }
-
-    public boolean isAdminDropdownScreenDisplayed() {
-        return getWait2().until(ExpectedConditions.visibilityOf(adminDropdownMenu)).isDisplayed();
-    }
-
-    public MainHeaderComponent<Page> hoverOverNotificationIcon() {
-        hoverOver(notificationIcon);
-
-        return this;
-    }
-
-    public MainHeaderComponent<Page> hoverOverAdminButton() {
-        hoverOver(adminOrUserButton);
-
-        return this;
-    }
-
-    public MainHeaderComponent<Page> hoverOverLogOutButton() {
-        hoverOver(logOutButton);
-
-        return this;
-    }
-
-    public String getNotificationIconBackgroundColor() {
-        return getIconBackgroundColor(notificationIcon);
-    }
-
-    public String getAdminButtonBackgroundColor() {
-        return getIconBackgroundColor(adminOrUserButton);
-    }
-
-    public String getLogOutButtonBackgroundColor() {
-        return getIconBackgroundColor(logOutButton);
-    }
-
-    public String getAdminTextDecorationValue() {
-        WebElement adminLink = getWait5().until(ExpectedConditions.visibilityOf(adminOrUserButton));
-
-        return adminLink.getCssValue("text-decoration");
-    }
-
-    public String getLogOutTextDecorationValue() {
-        WebElement logoutLink = logOutButton;
-        getWait5().until(ExpectedConditions.attributeToBeNotEmpty(logoutLink, "text-decoration"));
-
-        return logoutLink.getCssValue("color");
-    }
-
-    public ManageJenkinsPage clickManageLinkFromPopUp() {
-        getWait10().until(ExpectedConditions.elementToBeClickable(manageJenkinsLinkFromPopUp)).click();
+    public ManageJenkinsPage clickManageLinkFromNotificationPopUp() {
+        new Actions(getDriver())
+                .pause(1200)
+                .click(manageJenkinsFromNotificationPopUp)
+                .perform();
 
         return new ManageJenkinsPage(getDriver());
     }
 
-    public boolean openBuildsTabFromAdminDropdownMenuIsDisplayed() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(buildsTabFromAdminDropdownMenu)).click();
+    public ManageJenkinsPage clickManageLinkFromSecurityPopUp() {
+        new Actions(getDriver())
+                .pause(1200)
+                .click(manageJenkinsFromSecurityPopUp)
+                .perform();
 
-        return getWait5().until(ExpectedConditions.visibilityOf(buildsTableTitle)).isDisplayed();
+        return new ManageJenkinsPage(getDriver());
     }
 
-    public UserConfigPage openConfigureTabFromAdminDropdownMenu() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(configureTabFromAdminDropdownMenu)).click();
+    public UserConfigPage openConfigureTabFromUserDropdownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(configureTabFromUserDropdownMenu)).click();
 
         return new UserConfigPage(new UserPage(getDriver()));
-    }
-
-    public boolean openMyViewsTabFromAdminDropdownMenuIsDisplayed() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(myViewsTabFromAdminDropdownMenu)).click();
-
-        return getWait5().until(ExpectedConditions.visibilityOf(myViewsLink)).isDisplayed();
-    }
-
-    public boolean openCredentialsTabFromAdminDropdownMenuIsDisplayed() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(credentialsTabFromAdminDropdownMenu)).click();
-
-        return getWait5().until(ExpectedConditions.visibilityOf(credentialsTitle)).isDisplayed();
     }
 
     public String getCurrentUserName() {
@@ -259,7 +167,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return new BuiltInNodePage(getDriver());
     }
 
-    public <Page extends BaseMainHeaderPage<?>> Page sendKeysSearchBox(String name, Page page){
+    public <Page extends BaseMainHeaderPage<?>> Page sendKeysSearchBox(String name, Page page) {
         searchBox.sendKeys(name);
         searchBox.sendKeys(Keys.RETURN);
 
@@ -301,55 +209,22 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return true;
     }
 
-    public String getTextFromHeaderManageJenkins() {
-        return getWait5().until(ExpectedConditions.elementToBeClickable(headerManageJenkins)).getText();
-    }
-
-    public boolean getSecurityButtonOnHeader() {
-        return securityButtonIcon.isDisplayed();
-    }
-
-    public String getBackgroundSecurityButton() {
-        WebElement securityButton = headerSecurityButton;
-
-        Actions hover = new Actions(getDriver());
-        hover.moveToElement(securityButton).perform();
-
-        return securityButton.getCssValue("background-color");
-    }
-
-    public boolean iconExitButton() {
-        return exitButtonIcon.isDisplayed();
-    }
-
-    public String getUnderLineExitButton() {
-        WebElement exitButton = logOutLink;
-
-        Actions hover = new Actions(getDriver());
-        hover.moveToElement(exitButton).perform();
-
-        return exitButton.getCssValue("text-decoration-line");
-    }
-
-    public String getBackgroundExitButton() {
-        WebElement exitButton = logOutLink;
-
-        Actions hover = new Actions(getDriver());
-        hover.moveToElement(exitButton).perform();
-
-        return exitButton.getCssValue("background-color");
-    }
-
-    public LoginPage clickLogOUTButton() {
-        logOutButton.click();
-
-        return new LoginPage(getDriver());
-    }
-
     public UserPage clickOnAdminButton() {
-        getWait2().until(ExpectedConditions.visibilityOf(adminOrUserButton)).click();
+        getWait2().until(ExpectedConditions.visibilityOf(userButton)).click();
 
         return new UserPage(getDriver());
+    }
+
+    public MainHeaderComponent<Page> clickOnUserDropDownMenu() {
+        getWait2().until(ExpectedConditions.visibilityOf(userDropDownMenu)).sendKeys(Keys.RETURN);
+
+        return this;
+    }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromUserDropdownMenu(String listMenuName, ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listMenuName + "')]"))).click();
+
+        return pageToReturn;
     }
 
     public RestApiPage clickOnRestApiLink() {
@@ -368,16 +243,14 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         return new MainPage(getDriver());
     }
 
-    public MyViewsPage clickMyViewsTabFromAdminDropdownMenu() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(myViewsTabFromAdminDropdownMenu)).click();
+    public MyViewsPage clickMyViewsTabFromUserDropdownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(myViewsTabFromUserDropdownMenu)).click();
 
         return new MyViewsPage(getDriver());
     }
 
-    public MainHeaderComponent<Page> scrollToFooter() {
+    public void scrollToFooter() {
         TestUtils.scrollWithPauseByActions(this, footer, 100);
-
-        return this;
     }
 
     public SearchBoxPage clickHelpIcon() {
@@ -390,12 +263,5 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         securityButtonIcon.click();
 
         return this;
-    }
-
-    public MultiConfigurationProjectPage sendSearchBoxProjectName(String name) {
-        searchBox.sendKeys(name);
-        searchBox.sendKeys(Keys.RETURN);
-
-        return new MultiConfigurationProjectPage(getDriver());
     }
 }

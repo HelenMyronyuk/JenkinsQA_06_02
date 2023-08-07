@@ -1,11 +1,13 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.MultiConfigurationProjectConfigPage;
@@ -21,6 +23,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     private static final String DESCRIPTION = "Description";
     private static final String NEW_DESCRIPTION = "New Description";
 
+    @Description("Verification of creating MultiConfiguration project by clicking Create a job button")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -34,6 +37,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "error was not show name project");
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking +New Item button")
     @Test
     public void testCreateFromNewItem() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -47,6 +51,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(new MainPage(getDriver()).getJobName(NAME), NAME);
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking +New Item button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -61,6 +66,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -74,6 +80,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
         boolean jobIsDisplayed = new MainPage(getDriver())
@@ -89,6 +96,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(jobIsDisplayed, "Error: the MultiConfiguration Project's name is not displayed on Dashboard");
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking Create a job button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -105,6 +113,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Description("Verification of creating MultiConfiguration project by clicking +New Item button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -119,6 +128,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the project name is not displayed");
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with existing name")
     @Test
     public void testCreateWithExistingName() {
         final String errorMessageName = "A job already exists with the name " + "‘" + NAME + "’";
@@ -139,6 +149,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 {'<'}, {'>'}, {'/'}, {'?'}};
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with name using unsafe characters")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(char invalidCharacters) {
         NewJobPage newJobPage = TestUtils.createFolderUsingInvalidData
@@ -148,6 +159,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’" + " is an unsafe character");
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -160,6 +172,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Description("Verification of showing error message on Error Page while creating MultiConfiguration project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -171,6 +184,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -182,6 +196,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with long name")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -195,6 +210,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCheckExceptionOfNameToMultiConfiguration() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -207,6 +223,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(exceptionMessage, "» This field cannot be empty, please enter a valid name");
     }
 
+    @Description("Verification of possibility to rename MultiConfiguration project from drop-down menu")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -222,6 +239,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newNameProject, NEW_NAME);
     }
 
+    @Description("Verification of possibility to rename MultiConfiguration project from side menu")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -236,6 +254,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newName, "Project " + NEW_NAME);
     }
 
+    @Description("Verification of impossibility to rename MultiConfiguration project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -255,6 +274,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Description("Verification of impossibility to rename MultiConfiguration project with unsafe data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -269,6 +289,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Description("Verification of possibility to build  MultiConfiguration project from drop-down menu")
     @Test
     public void testCreateBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -283,6 +304,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(jobBuildStatus, "Success");
     }
 
+    @Description("Verification of possibility to build  MultiConfiguration project from side menu")
     @Test
     public void testCreateBuildNowFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -296,6 +318,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
     }
 
+    @Description("Verification of possibility to build  MultiConfiguration project by clicking green arrow")
     @Test
     public void testCreateBuildNowFromArrow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -309,6 +332,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
     }
 
+    @Description("Verification of presence display name for build of MultiConfiguration project")
     @Test
     public void testAddDisplayNameForBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -325,6 +349,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 "Error: The Display Name for the Build has not been changed.");
     }
 
+    @Description("Verification of presence of preview description for build of MultiConfiguration project")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -340,6 +365,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Description("Verification of possibility to rename description for build of MultiConfiguration project")
     @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.FreestyleProject, true);
@@ -360,6 +386,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION);
     }
 
+    @Description("Verification of possibility to build changes of MultiConfiguration project")
     @Test
     public void testBuildChangesFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -375,6 +402,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Description("Verification of possibility to build changes from last build of MultiConfiguration project")
     @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -387,6 +415,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(text.contains("No changes."));
     }
 
+    @Description("Verification of possibility to make console output from MultiConfiguration Project Page")
     @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -401,6 +430,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Description("Verification of possibility to make console output from last build of MultiConfiguration project")
     @Test
     public void testConsoleOutputFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -424,6 +454,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @Description("Verification of possibility to make console output for MultiConfiguration from Build Page")
     @Test
     public void testConsoleOutputFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -438,6 +469,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
     }
 
+    @Description("Verification of possibility to edit build information from drop-down menu for MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -453,6 +485,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Description("Verification of possibility to edit build information from MultiConfiguration Project Page")
     @Test
     public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -466,6 +499,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Description("Verification of possibility to edit build information from last build of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -479,6 +513,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
 
+    @Description("Verification of possibility to edit build information from Build Page of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -493,6 +528,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
 
+    @Description("Verification of presence preview description of build from Edit Information Page for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -524,6 +560,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
+    @Description("Verification of possibility to delete build from drop-down menu for MultiConfiguration Project")
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -540,6 +577,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "Error");
     }
 
+    @Description("Verification of presence description for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -555,6 +593,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Description("Verification of presence description added from MultiConfiguration Project Page")
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
@@ -569,6 +608,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getDescription, DESCRIPTION);
     }
 
+    @Description("Verification of possibility to disable MultiConfiguration Project from Project Page")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -581,6 +621,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(disabled.getEnableButtonText(), "Enable");
     }
 
+    @Description("Verification of disabled icon of MultiConfiguration Project on Dashboard")
     @Test
     public void testCheckDisableIconOnDashboard() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -595,6 +636,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(statusIcon, "Disabled");
     }
 
+    @Description("Verification of impossibility to build for disabled MultiConfiguration Project")
     @Test
     public void testBuildNowOptionNotPresentInDisabledProject() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -609,6 +651,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(dropDownMenuItems.contains("Build Now"), "'Build Now' option is present in drop-down menu");
     }
 
+    @Description("Verification for general parameters are visible and clickable for MultiConfiguration Project drop-down menu")
     @Test
     public void testCheckGeneralParametersDisplayedAndClickable() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -627,6 +670,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(checkboxesVisibleClickable);
     }
 
+    @Description("Verification of possibility to enable disabled MultiConfiguration Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -645,6 +689,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(projectPage, "Not built");
     }
 
+    @Description("Verification of possibility to navigate to Changes Page from side menu for MultiConfiguration Project")
     @Test
     public void testNavigateToChangesPageFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -659,6 +704,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
     }
 
+    @Description("Verification of possibility to navigate to Workspaces from Project Page for MultiConfiguration Project")
     @Test
     public void testNavigateToWorkspaceFromProjectPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -672,6 +718,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(workspacePage, "Workspace of MULTI_CONFIGURATION_NAME on Built-In Node");
     }
 
+    @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -684,6 +731,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configure");
     }
 
+    @Description("Verification of possibility to navigate to Configuration Page from side menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
@@ -695,6 +743,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(multiConfigurationProjectConfigPage.getHeaderText(), "Configure");
     }
 
+    @Description("Verification of possibility to disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -716,6 +765,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(NAME), "Error: disabled project cannot be built");
     }
 
+    @Description("Verification of possibility to enable disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -728,6 +778,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(enabledButtonText, "'Enabled' is not displayed");
     }
 
+    @Description("Verification of possibility to configure old build for MultiConfiguration Project")
     @Test
     public void testConfigureOldBuildForProject() {
         final int displayedDaysToKeepBuilds = 5;
@@ -750,6 +801,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 multiConfigurationProjectConfigPage.getMaxNumOfBuildsToKeep()), displayedMaxNumOfBuildsToKeep);
     }
 
+    @Description("Verification of possibility to add MultiConfiguration Project on GitHub")
     @Test
     public void testAddingAProjectOnGithubToTheMultiConfigurationProject() {
         final String gitHubUrl = "https://github.com/ArtyomDulya/TestRepo";
@@ -771,6 +823,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
 
+    @Description("Verification of presence parameters for MultiConfiguration Project on GitHub")
     @Test
     public void testThisProjectIsParameterizedOptionsCollectToList() {
         List<String> expectedOptionsProjectIsParameterizedList = List.of("Boolean Parameter", "Choice Parameter",
@@ -789,6 +842,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsProjectIsParameterizedList, expectedOptionsProjectIsParameterizedList);
     }
 
+    @Description("Verification of possibility to add build steps options for MultiConfiguration Project")
     @Test
     public void testAddBuildStepsOptionsCollectToList() {
         List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
@@ -806,6 +860,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
     }
 
+    @Description("Verification of possibility to cancel deleting from drop-down menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -820,6 +875,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectIsPresent, "Error: the name of the MultiConfiguration project is not shown");
     }
 
+    @Description("Verification of possibility to cancel deleting from side menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -834,6 +890,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
     }
 
+    @Description("Verification of possibility to delete MultiConfiguration Project from drop-down menu")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -846,6 +903,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(deleteProject.size(), 0);
     }
 
+    @Description("Verification of possibility to delete MultiConfiguration Project from side menu")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);

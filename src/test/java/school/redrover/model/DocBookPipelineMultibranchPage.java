@@ -1,5 +1,6 @@
 package school.redrover.model;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,7 @@ public class DocBookPipelineMultibranchPage extends BaseMainHeaderPage<DocBookPi
         super(driver);
     }
 
+    @Step("Get text 'Branches and Pull Requests' ")
     public String getBranchesAndPullRequestsTutorial() {
         return branchesAndPullRequestsTutorial.getText();
     }

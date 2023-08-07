@@ -1,5 +1,6 @@
 package school.redrover.model.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,20 +24,24 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
         super(driver);
     }
 
+    @Step("Get Header")
     @Override
     public MainHeaderComponent<Self> getHeader() {
         return new MainHeaderComponent<>( (Self)this);
     }
 
+    @Step("Get Breadcrumb")
     @Override
     public MainBreadcrumbComponent<Self> getBreadcrumb() {
         return new MainBreadcrumbComponent<>( (Self)this);
     }
 
+    @Step("Get text from Heading page")
     public String getPageHeaderText() {
         return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
     }
 
+    @Step("Click on the 'Jenkins' link on the Footer")
     public JenkinsVersionPage clickJenkinsVersionLink() {
         jenkinsVersionLink.click();
 

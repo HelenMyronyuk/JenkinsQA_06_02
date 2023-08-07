@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -7,6 +8,7 @@ import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.OrganizationFolderPage;
 import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -20,6 +22,7 @@ public class OrganizationFolderTest extends BaseTest {
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
     private static final String DISPLAY_NAME = "This is Display Name of Folder";
 
+    @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -34,6 +37,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(ORGANIZATION_FOLDER_NAME), ORGANIZATION_FOLDER_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromNewItem() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -44,6 +48,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(actualNewFolderName, "error was not show name folder");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -58,6 +63,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
         boolean newProjectFromBuildHistoryPage = new MainPage(getDriver())
@@ -73,6 +79,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage, "Error: the Organization Folder name is not displayed on Dashboard");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
         List<String> organizationFolderName = new MainPage(getDriver())
@@ -89,6 +96,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(organizationFolderName.contains(ORGANIZATION_FOLDER_NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
         String newOrganizationFolderName = new MainPage(getDriver())
@@ -110,6 +118,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(newOrganizationFolderNameIsDisplayed);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -126,6 +135,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -141,6 +151,7 @@ public class OrganizationFolderTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testCreateUsingInvalidData(String invalidData) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -152,6 +163,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidData + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -164,6 +176,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -173,6 +186,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
         String errorMessage = new MainPage(getDriver())
@@ -183,6 +197,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "» “.” is not an allowed name");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -195,6 +210,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -208,6 +224,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedName, ORGANIZATION_FOLDER_RENAMED);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -222,6 +239,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedFolderName, ORGANIZATION_FOLDER_RENAMED);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -235,6 +253,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "The new name is the same as the current name.");
     }
 
+    @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData) {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -254,6 +273,7 @@ public class OrganizationFolderTest extends BaseTest {
         }
     }
 
+    @Feature("Function")
     @Test
     public void testRenameWithDotName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -267,6 +287,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "“.” is not an allowed name");
     }
 
+    @Feature("Function")
     @Test
     public void testConfigureProject() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -278,6 +299,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
+    @Feature("Function")
     @Test
     public void testRerunFolderComputation() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -290,6 +312,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(headerScanOrganizationFolder, "Scan Organization Folder");
     }
 
+    @Feature("Function")
     @Test
     public void testCreatingJenkinsPipeline() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -304,6 +327,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineOneTutorial, "Pipeline");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateMultibranchProject() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -315,6 +339,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(createMultibranchProject, "Branches and Pull Requests");
     }
 
+    @Feature("Function")
     @Test
     public void testScanOrgFolderLog() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -327,6 +352,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleScanOrgFolderLogPage, "Scan Organization Folder Log");
     }
 
+    @Feature("Function")
     @Test
     public void testOrganizationFolderEvents() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -339,6 +365,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(eventTitle, "Organization Folder Events");
     }
 
+    @Feature("Function")
     @Test
     public void testOrganizationFolderConfigPipelineSyntax() {
         final String expectedText = "echo '" + PRINT_MESSAGE_PIPELINE_SYNTAX + "'";
@@ -355,6 +382,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedText);
     }
 
+    @Feature("Function")
     @Test
     public void testCredentials() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -367,6 +395,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleCredentials, "Credentials");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -381,6 +410,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -393,6 +423,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(disabledText.substring(0, 46), "This Organization Folder is currently disabled");
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -410,6 +441,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(iconOrgFolder, "the dispayеd icon OrganizationFolder exists");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -422,6 +454,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -434,6 +467,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -448,6 +482,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(disabledText.contains("This Organization Folder is currently disabled"));
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -465,6 +500,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(enableOrgFolder.trim(), "Disable Organization Folder");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -479,6 +515,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -492,6 +529,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(textFromDescription, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -506,6 +544,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(orgFolderPage.getHeader().clickLogo().getJobName(ORGANIZATION_FOLDER_NAME), DISPLAY_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteDisplayName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -523,6 +562,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(orgFolderName, ORGANIZATION_FOLDER_NAME);
     }
 
+    @Feature("UI")
     @Test
     public void testAppearanceIconHasChanged() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -538,6 +578,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "The appearance icon was not changed to the default icon");
     }
 
+    @Feature("Function")
     @Test
     public void testAddHealthMetricsFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -554,6 +595,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testConfigureProjectsEditScriptPath() {
         final String scriptPath = "Test Script Path";
@@ -571,6 +613,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(organizationFolderProjectIsPresent, scriptPath);
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -584,6 +627,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -598,6 +642,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, "OrgFolder", TestUtils.JobType.OrganizationFolder, true);
@@ -611,6 +656,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(welcomeToJenkinsIsDisplayed, "error, Welcome to Jenkins! is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, "OrgFolder", TestUtils.JobType.OrganizationFolder, true);

@@ -1,10 +1,14 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.builds.BuildPage;
+import school.redrover.model.builds.BuildWithParametersPage;
+import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
@@ -20,6 +24,7 @@ public class PipelineTest extends BaseTest {
     private static final String DESCRIPTION = "This is a test description";
     private static final String DISPLAYED_BUILD_NAME = "New Build Name";
 
+    @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -34,6 +39,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromNewItem() {
         String projectName = new MainPage(getDriver())
@@ -49,6 +55,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectName, NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -63,6 +70,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -76,6 +84,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
         List<String> jobList = new MainPage(getDriver())
@@ -92,6 +101,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(jobList.contains(NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -108,6 +118,7 @@ public class PipelineTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the FPipeline Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -122,6 +133,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the pipeline name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -140,6 +152,7 @@ public class PipelineTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidDate(String invalidCharacters) {
         NewJobPage newJobPage =
@@ -149,6 +162,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -161,6 +175,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage createItemErrorPage =
@@ -170,6 +185,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(createItemErrorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
         String getMessage = new MainPage(getDriver())
@@ -180,6 +196,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(getMessage, "» “.” is not an allowed name");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -193,6 +210,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithAllowedCharacters() {
         final String allowedChar = "_-+=”{},";
@@ -210,6 +228,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectNameDashboard, allowedChar);
     }
 
+    @Feature("Function")
     @Test
     public void testSortingPipelineProjectAlphabetically() {
         List<String> namesOfJobs = Arrays.asList("UProject", "SProject", "AProject");
@@ -225,6 +244,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(listNamesOfJobs, namesOfJobs);
     }
 
+    @Feature("Function")
     @Test
     public void testCreatingBasicPipelineProjectThroughJenkinsUI() {
         String resultOptionDefinitionFieldText = new MainPage(getDriver())
@@ -238,6 +258,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(resultOptionDefinitionFieldText, "Pipeline script");
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -253,6 +274,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(renamedPipeline, NEW_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -269,6 +291,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectName, NEW_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -288,6 +311,7 @@ public class PipelineTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -302,6 +326,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildWithParameters() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -316,6 +341,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputPage.isDisplayedBuildTitle(), "Not found build");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -329,6 +355,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(createBuildNow, "Success");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -342,6 +369,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromArrow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -355,6 +383,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayNameForBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -372,6 +401,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(newDisplayedBuildName, "Added Name for the Build is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -388,6 +418,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -404,6 +435,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -424,6 +456,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -439,6 +472,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -452,6 +486,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(text, "Changes");
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromProjectPage() {
         final String title = "Changes";
@@ -466,6 +501,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(changesTitle, title);
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -480,6 +516,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -494,6 +531,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testConsoleOutputFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -517,6 +555,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -531,6 +570,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -546,6 +586,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -559,6 +600,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -572,6 +614,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textPageFromBreadcrumb, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -586,6 +629,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(testPageFromBreadcrumb, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -601,6 +645,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -617,6 +662,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -633,6 +679,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "Error");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -648,6 +695,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -662,6 +710,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildMessage, "error! No builds message is not display");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -677,6 +726,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Feature("Function")
     @Test
     public void testReplayBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -693,6 +743,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Feature("Function")
     @Test
     public void testReplayBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -709,6 +760,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Feature("Function")
     @Test
     public void testReplayBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -727,6 +779,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#3");
     }
 
+    @Feature("Function")
     @Test
     public void testReplayBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -743,6 +796,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -758,6 +812,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -771,6 +826,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -787,6 +843,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -801,6 +858,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textFromStepsBuild, "Pipeline Steps");
     }
 
+    @Feature("Function")
     @Test
     public void testWorkspacesBuildFromDropDown() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -818,6 +876,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Feature("Function")
     @Test
     public void testWorkspacesBuildFromProjectPage() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -834,6 +893,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Feature("Function")
     @Test
     public void testWorkspacesBuildFromLastBuild() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -850,6 +910,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Feature("Function")
     @Test
     public void testMakeSeveralBuilds() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -868,6 +929,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(buildNumber, buildNumberExpected);
     }
 
+    @Feature("Function")
     @Test
     public void testSelectHelloAndConsoleOutputSuccess() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -875,7 +937,7 @@ public class PipelineTest extends BaseTest {
         String textSuccessBuild = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .selectHelloWord()
+                .selectScriptSample("hello")
                 .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .clickIconBuildOpenConsoleOutput(1)
@@ -884,6 +946,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(textSuccessBuild.contains("Finished: SUCCESS"), "Job does not finished success");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -898,6 +961,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineBuildNow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -905,7 +969,7 @@ public class PipelineTest extends BaseTest {
         String stageName = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .selectHelloWord()
+                .selectScriptSample("hello")
                 .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .getStage();
@@ -913,6 +977,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(stageName, "Hello");
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -926,6 +991,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(resultDescriptionText, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -940,6 +1006,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobStatus, "Disabled");
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -958,6 +1025,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobStatus, "Not built");
     }
 
+    @Feature("Function")
     @Test
     public void testProjectChangesFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -972,6 +1040,7 @@ public class PipelineTest extends BaseTest {
                 "In the Pipeline Changes chapter, not displayed status of the latest build.");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineBuildingAfterChangesInCode() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -980,7 +1049,7 @@ public class PipelineTest extends BaseTest {
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
                 .clickPipelineLeftMenu()
-                .selectHelloWord()
+                .selectScriptSample("hello")
                 .clickSaveButtonDescription()
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink();
@@ -989,6 +1058,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "Build #1 failed");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1000,6 +1070,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(configPageHeaderText, "Configure");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
@@ -1011,6 +1082,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineConfigPage.getHeaderText(), "Configure");
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1026,6 +1098,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertFalse(projectDisable, "Pipeline is enabled");
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1041,6 +1114,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(disableButtonText, "Disable Project");
     }
 
+    @Feature("Function")
     @Test
     public void testEditDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1060,6 +1134,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobDescription, newDescription);
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1073,6 +1148,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textPreview, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1087,6 +1163,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobDescription, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testDiscardOldBuildsIsChecked() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1102,6 +1179,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(discardOldBuildsCheckbox);
     }
 
+    @Feature("Function")
     @Test
     public void testDiscardOldBuildsPipeline() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1117,6 +1195,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobName, "Pipeline " + NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testDiscardOldBuildsParams() {
         final int days = 7;
@@ -1136,6 +1215,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineConfigPage.getMaxNumOfBuildsToKeep(), String.valueOf(builds));
     }
 
+    @Feature("Function")
     @Test
     public void testDiscardOldBuilds0Days() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1150,6 +1230,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "Not a positive integer");
     }
 
+    @Feature("Function")
     @Test
     public void testAddingAProjectOnGithubToThePipelineProject() {
         final String gitHubUrl = "https://github.com/ArtyomDulya/TestRepo";
@@ -1170,6 +1251,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
+    @Feature("Function")
     @Test
     public void testAddBooleanParameterWithDescription() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1196,6 +1278,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(buildParametersPagePage.getParameterDescription(), description);
     }
 
+    @Feature("Function")
     @Test
     public void testAddBooleanParameter() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1218,6 +1301,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertNull(buildParametersPage.getBooleanParameterCheckbox());
     }
 
+    @Feature("Function")
     @Test
     public void testThisProjectIsParameterizedCheckAllParameters() {
         List<String> expectedOptionsOfAddParameterDropdown = List.of(
@@ -1235,21 +1319,32 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualOptionsOfAddParameterDropdown, expectedOptionsOfAddParameterDropdown);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
 
-        PipelinePage pipelinePage = new PipelinePage(getDriver())
+        String pipelineName = new PipelinePage(getDriver())
                 .clickConfigure()
                 .scrollAndClickAdvancedButton()
                 .setDisplayName(NEW_NAME)
-                .clickSaveButton();
+                .clickSaveButton()
+                .getJobName();
 
-        Assert.assertEquals(pipelinePage.getJobName(), "Pipeline " + NEW_NAME);
-        Assert.assertEquals(pipelinePage.getProjectNameSubtitleWithDisplayName(), NAME);
-        Assert.assertEquals(pipelinePage.getHeader().clickLogo().getJobName(NAME), NEW_NAME);
+        String projectName = new PipelinePage(getDriver())
+                .getProjectNameSubtitleWithDisplayName();
+
+        String jobName = new MainPage(getDriver())
+                .getHeader()
+                .clickLogo()
+                .getJobName(NAME);
+
+        Assert.assertEquals(pipelineName, "Pipeline " + NEW_NAME);
+        Assert.assertEquals(projectName, NAME);
+        Assert.assertEquals(jobName, NEW_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateNewPipelineWithScript() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1257,7 +1352,7 @@ public class PipelineTest extends BaseTest {
         boolean projectIsPresent = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickConfigure()
-                .selectScriptedPipeline()
+                .selectScriptSample("scripted")
                 .clickSaveButtonDescription()
                 .getHeader()
                 .clickLogo()
@@ -1266,6 +1361,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectIsPresent);
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1278,6 +1374,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectIsPresent);
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1292,6 +1389,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1304,6 +1402,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);

@@ -47,36 +47,43 @@ public abstract class BaseConfigPage<Self extends BaseConfigPage<?, ?>, JobPage 
         return getJobPage();
     }
 
+    @Step("Get description")
     public String getDescription() {
         return descriptionTextBox.getText();
     }
 
+    @Step("Add description")
     public Self addDescription(String description) {
         getWait5().until(ExpectedConditions.visibilityOf(descriptionTextBox)).sendKeys(description);
 
         return (Self) this;
     }
 
+    @Step("Click preview")
     public Self clickPreview() {
         preview.click();
 
         return (Self) this;
     }
 
+    @Step("Get text from preview")
     public String getPreviewText() {
         return previewTextarea.getText();
     }
 
+    @Step("Clear description`s field")
     public Self clearDescriptionArea() {
         descriptionTextBox.clear();
 
         return (Self) this;
     }
 
-    public String getHeaderText(){
+    @Step("Get header text")
+    public String getHeaderText() {
         return title.getText();
     }
 
+    @Step("Push the 'Apply' button")
     public Self pushApply() {
         applyButton.click();
         getWait2().until(ExpectedConditions.visibilityOf(notificationSuccess));

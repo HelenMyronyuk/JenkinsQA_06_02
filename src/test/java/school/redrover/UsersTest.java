@@ -1,11 +1,17 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.builds.UserBuildsPage;
+import school.redrover.model.users.ManageUsersPage;
+import school.redrover.model.users.UserConfigPage;
+import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -20,6 +26,7 @@ public class UsersTest extends BaseTest {
     protected static final String USER_FULL_NAME = "Test User";
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
 
+    @Feature("Function")
     @Test
     public void testCreateNewUser() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -32,6 +39,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(newUser);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateUsingInvalidEmail() {
         String errorEmail = new MainPage(getDriver())
@@ -45,7 +53,7 @@ public class UsersTest extends BaseTest {
                 "The error message is incorrect or missing");
     }
 
-
+    @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -61,6 +69,7 @@ public class UsersTest extends BaseTest {
                 "The error message is incorrect or missing");
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionToUserOnUserStatusPage() {
         final String displayedDescriptionText = "Test User Description";
@@ -80,6 +89,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualDisplayedDescriptionText, displayedDescriptionText);
     }
 
+    @Feature("Function")
     @Test
     public void testEditDescriptionToUserOnUserStatusPage() {
         final String displayedDescriptionText = "User Description Updated";
@@ -106,12 +116,13 @@ public class UsersTest extends BaseTest {
         Assert.assertNotEquals(actualDisplayedDescriptionText, existingDescriptionText);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigure() {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserEditButton()
+                .clickFirstUserEditButton()
                 .clearDescriptionArea()
                 .addDescription("Description text")
                 .clickSaveButton()
@@ -120,12 +131,13 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals("Description text", descriptionText);
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurePage() {
         String descriptionText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
-                .clickUserEditButton()
+                .clickFirstUserEditButton()
                 .clearDescriptionArea()
                 .addDescription("Description text")
                 .clickPreview()
@@ -134,19 +146,18 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals("Description text", descriptionText);
     }
 
+    @Feature("Function")
     @Test
     public void testEditEmailOnTheUserProfilePageByDropDown() {
         final String displayedEmail = "testedited@test.com";
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        UserConfigPage configureUserPage = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .openUserIDDropDownMenu(USER_NAME)
-                .selectConfigureUserIDDropDownMenu();
-
-        UserConfigPage configureUserPage = new UserConfigPage(new UserPage(getDriver()));
+                .selectItemInUserIDDropDownMenu("Configure", new UserConfigPage(new UserPage(getDriver())));
 
         String oldEmail = configureUserPage.getEmailValue("value");
 
@@ -160,6 +171,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualEmail, displayedEmail);
     }
 
+    @Feature("Navigation")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToSideMenuUserFromUsersPage(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
@@ -177,6 +189,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
     }
 
+    @Feature("UI")
     @Test
     public void testViewIconButtonsPeoplePage() {
         List<String> expectedIconButtonsNames = List.of("S" + "\n" + "mall", "M" + "\n" + "edium", "L" + "\n" + "arge");
@@ -188,6 +201,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualIconButtonsNames, expectedIconButtonsNames);
     }
 
+    @Feature("Function")
     @Test
     public void testSortArrowModeChangesAfterClickingSortHeaderButton() {
 
@@ -216,6 +230,20 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIDButtonNotContainsArrow, "UserID button has sort arrow");
     }
 
+    @Feature("UI")
+    @Test
+    public void testSearchPeople() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String actualUserName = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
+                .getActualNameUser();
+
+        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
+    }
+
+    @Feature("Function")
     @Test
     public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
@@ -226,13 +254,14 @@ public class UsersTest extends BaseTest {
                 .clickPeopleOnLeftSideMenu()
                 .clickUserName(newUserName)
                 .clickDeleteUserBtnFromUserPage(newUserName)
-                .clickOnYesButton()
+                .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
                 .checkIfUserWasDeleted(newUserName);
 
         Assert.assertTrue(isUserDeleted);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteFromBin() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -247,6 +276,7 @@ public class UsersTest extends BaseTest {
         Assert.assertFalse(userNotFound);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteFromDropDown() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -255,7 +285,7 @@ public class UsersTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .openUserIDDropDownMenu(USER_NAME)
-                .selectDeleteUserInDropDownMenu()
+                .selectItemInUserIDDropDownMenu("Delete", new DeletePage<>(new MainPage(getDriver())))
                 .clickYesButton()
                 .clickPeopleOnLeftSideMenu()
                 .checkIfUserWasDeleted(USER_NAME);
@@ -263,6 +293,24 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
     }
 
+    @Feature("Function")
+    @Test
+    public void testDeleteFromConfigure() {
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean isUserDeleted = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickConfigureButton(USER_NAME)
+                .clickDeleteUser()
+                .clickYesButton()
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasDeleted(USER_NAME);
+
+        Assert.assertTrue(isUserDeleted, "The user was not deleted");
+    }
+
+    @Feature("Function")
     @Test
     public void testLogInWithDeletedUserCredentials() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -282,6 +330,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(invalidMessage, "Invalid username or password");
     }
 
+    @Feature("Function")
     @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
         String nameProject = "Engineer";
@@ -298,6 +347,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
     }
 
+    @Feature("Function")
     @Test
     public void testInputtingAnIncorrectUsername() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -313,6 +363,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectUsername, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Feature("Function")
     @Test
     public void testInputtingAnIncorrectPassword() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -328,6 +379,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Feature("Function")
     @Test
     public void testInputtingAnIncorrectUsernameAndPassword() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -343,44 +395,32 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(actualTextAlertIncorrectUsernameAndPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateUserCheckInPeople() {
-        final String expectedResultTitle = "People - [Jenkins]";
-
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu();
+        boolean actualResultFindUserName = new MainPage(getDriver())
+                .clickPeopleOnLeftSideMenu()
+                .checkIfUserWasAdded(USER_NAME, USER_FULL_NAME);
 
-        String actualResultTitle = getDriver().getTitle();
-        boolean actualResultFindUserID = new PeoplePage(getDriver())
-                .checkIfUserWasAdded(USER_NAME);
-        boolean actualResultFindUSerName = new PeoplePage(getDriver())
-                .checkIfUserWasAdded(USER_FULL_NAME);
-
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
-        Assert.assertTrue(actualResultFindUserID, "true");
-        Assert.assertTrue(actualResultFindUSerName, "true");
+        Assert.assertTrue(actualResultFindUserName, "The user not found");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateUserCheckInManageUsers() {
-        final String expectedResultTitle = "Users [Jenkins]";
-
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        new MainPage(getDriver())
+        boolean actualResultFindUserID = new MainPage(getDriver())
                 .clickManageJenkinsPage()
-                .clickManageUsers();
-
-        String actualResultTitle = getDriver().getTitle();
-        boolean actualResultFindUserID = new ManageUsersPage(getDriver())
+                .clickManageUsers()
                 .isUserExist(USER_NAME);
 
-        Assert.assertEquals(actualResultTitle, expectedResultTitle);
         Assert.assertTrue(actualResultFindUserID, "true");
     }
 
+    @Feature("UI")
     @Test
     public void testCreateUserButtonClickable() {
         String iconName = new MainPage(getDriver())
@@ -392,6 +432,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(iconName, "Create User");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromUserPage() {
         final String expectedPreviewDescriptionText = "User Description";
@@ -408,11 +449,12 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, expectedPreviewDescriptionText);
     }
 
+    @Feature("UI")
     @Test
     public void testSearchBoxInsensitive() {
         boolean isSearchResultContainsText = new MainPage(getDriver()).getHeader()
-                .clickAdminDropdownMenu()
-                .openConfigureTabFromAdminDropdownMenu()
+                .clickUserDropdownMenu()
+                .openConfigureTabFromUserDropdownMenu()
                 .selectInsensitiveSearch()
                 .clickSaveButton()
                 .getHeader()
@@ -434,6 +476,7 @@ public class UsersTest extends BaseTest {
         };
     }
 
+    @Feature("Navigation")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
 
@@ -448,5 +491,70 @@ public class UsersTest extends BaseTest {
                 .getFullBreadcrumbText();
 
         Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+    }
+
+    @DataProvider(name = "dropDownOnUsersPageMenu")
+    public Object[][] provideDropDownMenuItem() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserBuildsPage(driver), "Builds", "Dashboard > Test User > Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Configure", "Dashboard > Test User > Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new MyViewsPage(driver), "My Views", "Dashboard > Test User > My Views > All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new DeletePage<>(new ManageUsersPage(driver)), "Delete", "Dashboard > Test User > Delete"},
+        };
+    }
+
+    @Feature("Navigation")
+    @Test(dataProvider = "dropDownOnUsersPageMenu")
+    public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedBreadcrumbText) throws InterruptedException {
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        String breadcrumbText = new MainPage(getDriver())
+                .getBreadcrumb()
+                .selectAnOptionFromDashboardManageJenkinsSubmenuList(new ManageUsersPage(getDriver()))
+                .openUserIDDropDownMenu(USER_NAME)
+                .selectItemInUserIDDropDownMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        Assert.assertEquals(breadcrumbText, expectedBreadcrumbText);
+
+    }
+
+    @Feature("Function")
+    @Test
+    public void testCancelDeletingFromBin(){
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean userIsExist = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickDeleteUser()
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .isUserExist(USER_NAME);
+
+        Assert.assertTrue(userIsExist, "User is not exist");
+    }
+
+    @Feature("Function")
+    @Test
+    public void testCancelDeletingFromConfigurePage(){
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean userIsExist = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickConfigureButton(USER_NAME)
+                .clickDeleteUser()
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .isUserExist(USER_NAME);
+
+        Assert.assertTrue(userIsExist, "User is not exist");
     }
 }

@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -8,8 +9,15 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.builds.BuildPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
+import school.redrover.model.jobsSidemenu.CredentialsPage;
+import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.users.UserConfigPage;
+import school.redrover.model.users.UserPage;
+import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
@@ -21,6 +29,7 @@ import static org.testng.Assert.*;
 
 public class HeaderTest extends BaseTest {
 
+    @Feature("UI")
     @Test
     public void testHeaderLogoIconPresent() {
         boolean logoIcon = new MainPage(getDriver())
@@ -35,6 +44,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(logoText);
     }
 
+    @Feature("UI")
     @Test
     public void testSearchPresent() {
         String placeholder = new MainPage(getDriver())
@@ -65,6 +75,7 @@ public class HeaderTest extends BaseTest {
         };
     }
 
+    @Feature("Function")
     @Test(dataProvider = "sideMenuOptions")
     public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
         String textTitle = new MainPage(getDriver())
@@ -80,6 +91,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textFromMainPage, "Welcome to Jenkins!");
     }
 
+    @Feature("UI")
     @Test
     public void testPressEnterButtonSearchField() {
         String textPageFromSearchBox = new MainPage(getDriver())
@@ -90,26 +102,29 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textPageFromSearchBox, "Built-In Node");
     }
 
+    @Feature("UI")
     @Test
-    public void testSearchError(){
+    public void testSearchError() {
         String errorText = new MainPage(getDriver())
                 .getHeader()
-                .sendKeysSearchBox("p",new SearchPage(getDriver()))
+                .sendKeysSearchBox("p", new SearchPage(getDriver()))
                 .getErrorText();
 
-        Assert.assertEquals(errorText,"Nothing seems to match.");
+        Assert.assertEquals(errorText, "Nothing seems to match.");
     }
 
+    @Feature("UI")
     @Test
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
                 .getHeader()
-                .clickLogOUTButton()
+                .clickLogoutButton()
                 .isSignInButtonPresent();
 
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
     }
 
+    @Feature("UI")
     @Test
     public void testNotificationAndSecurityIcon() {
         String expectedManageJenkinsPageHeader = "Manage Jenkins";
@@ -121,7 +136,7 @@ public class HeaderTest extends BaseTest {
         String backgroundColorAfter = new MainPage(getDriver())
                 .getHeader()
                 .clickNotificationIcon()
-                .getNotificationIconBackgroundColor();
+                .getBackgroundColorNotificationIcon();
 
         String actualManageJenkinsPageHeader = new ManageJenkinsPage(getDriver())
                 .clickManageJenkinsLink()
@@ -131,6 +146,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(actualManageJenkinsPageHeader, expectedManageJenkinsPageHeader, " The page is not correct");
     }
 
+    @Feature("Function")
     @Test
     public void testReturnToDashboardFromProjectAndConfigPage() {
         final List<String> listItemName = new ArrayList<>(List.of("Test Item", "Second"));
@@ -156,6 +172,7 @@ public class HeaderTest extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Feature("UI")
     @Test
     public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
@@ -166,17 +183,48 @@ public class HeaderTest extends BaseTest {
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
     }
 
+    @DataProvider(name = "userDropDown")
+    public Object[][] userDropDown() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildPage(getDriver()), "Builds", "Builds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new UserConfigPage(new UserPage(getDriver())), "Configure", "Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MyViewsPage(getDriver()), "My Views", "All"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}};
+    }
+
+    @Feature("Function")
+    @Test(dataProvider = "userDropDown")
+    public void testSubMenuUserFromHeader(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String menu, String expectedPageName) {
+
+        String pageNameFromBreadcrumb = new MainPage(getDriver())
+                .getHeader()
+                .clickOnUserDropDownMenu()
+                .getPageFromUserDropdownMenu(menu, pageFromDataConstructor.apply(getDriver()))
+                .getBreadcrumb()
+                .getPageNameFromBreadcrumb();
+
+        Assert.assertEquals(pageNameFromBreadcrumb, expectedPageName);
+
+    }
+
+    @Feature("UI")
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
                 .getHeader()
                 .clickNotificationIcon()
-                .clickManageLinkFromPopUp()
+                .clickManageLinkFromNotificationPopUp()
                 .getActualHeader();
 
         Assert.assertEquals(screenManageFromPopUp, "Manage Jenkins");
     }
 
+    @Feature("UI")
     @Test
     public void testSearchHelpButton() {
         final String expectedResult = "Search Box";
@@ -189,20 +237,20 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Feature("UI")
     @Ignore
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
-        final String pageHeaderText = "Manage Jenkins";
-
         String actualHeaderPage = new MainPage(getDriver())
                 .getHeader()
                 .clickSecurityIcon()
-                .clickManageLinkFromPopUp()
+                .clickManageLinkFromSecurityPopUp()
                 .getActualHeader();
 
-        Assert.assertEquals(actualHeaderPage, pageHeaderText);
+        Assert.assertEquals(actualHeaderPage, "Manage Jenkins");
     }
 
+    @Feature("Function")
     @Test
     public void testSearchJobWithFullJobName() {
         final String projectName = "SearchProject";
@@ -211,10 +259,27 @@ public class HeaderTest extends BaseTest {
 
         String actualProjectName = new MainPage(getDriver())
                 .getHeader()
-                .sendSearchBoxProjectName(projectName)
+                .sendKeysSearchBox(projectName, new MultiConfigurationProjectPage(getDriver()))
                 .getJobName();
 
         assertEquals("Project " + projectName, actualProjectName);
+
+    }
+
+    @Feature("Function")
+    @Test
+    public void testSearchJobWithOneLetter() {
+        final String projectName = "Project";
+
+        TestUtils.createJob(this, projectName, TestUtils.JobType.FreestyleProject, false);
+
+        String actualResult = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox("p", new SearchPage(getDriver()))
+                .clickSearchResult(projectName)
+                .getJobName();
+
+        assertEquals("Project " + projectName, actualResult);
 
     }
 

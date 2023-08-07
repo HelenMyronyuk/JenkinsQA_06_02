@@ -8,6 +8,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
+import school.redrover.model.builds.*;
+import school.redrover.model.jobsSidemenu.ChangesPage;
+import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
@@ -196,9 +199,9 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     public BuildPage clickLastBuildLink() {
-        getWait10().until(ExpectedConditions.visibilityOf(lastBuildCompletedLink));
+        getWait15().until(ExpectedConditions.visibilityOf(lastBuildCompletedLink));
         getDriver().navigate().refresh();
-        getWait10().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
+        getWait15().until(ExpectedConditions.visibilityOf(lastBuildLink)).click();
 
         return new BuildPage(getDriver());
     }
