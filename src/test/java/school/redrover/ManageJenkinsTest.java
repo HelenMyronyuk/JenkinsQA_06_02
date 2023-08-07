@@ -1,6 +1,7 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -19,6 +20,7 @@ public class ManageJenkinsTest extends BaseTest {
         return RandomStringUtils.random(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
     }
 
+    @Feature("Navigation")
     @Description("Navigate to the configure system page by search menu using one letter")
     @Test
     public void testSearchWithLetterConfigureSystem() {
@@ -32,6 +34,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(configurePage, textConfigureSystem);
     }
 
+    @Feature("Navigation")
     @Description("Navigate to 'Manage Jenkins' menu from main page using dashboard")
     @Test
     public void testNavigateToManageJenkinsFromMainPageUsingDashboard() {
@@ -45,6 +48,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualResult, "Manage Jenkins");
     }
 
+    @Feature("Function")
     @Description("Verify the name of new node is displayed")
     @Test
     public void testNameNewNodeOnCreatePage() {
@@ -62,6 +66,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualNodeName, nodeName);
     }
 
+    @Feature("Function")
     @Description("Check error message creating new node with empty name")
     @Test
     public void testTextErrorWhenCreateNewNodeWithEmptyName() {
@@ -80,6 +85,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(textError, "Query parameter 'name' is required");
     }
 
+    @Feature("Function")
     @Description("Check search field using numeric symbol")
     @Test
     public void testSearchNumericSymbol() {
@@ -92,6 +98,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(searchText, "No results");
     }
 
+    @Feature("Navigation")
     @Description("Navigate to the configure system page by search field")
     @Test
     public void testNavigateToConfigureSystemPageBySearchField() {
@@ -111,6 +118,7 @@ public class ManageJenkinsTest extends BaseTest {
         return new Object[][]{{"manage"}, {"tool"}, {"sys"}, {"sec"}, {"cred"}, {"dow"}, {"script"}, {"jenkins"}, {"stat"}};
     }
 
+    @Feature("Function")
     @Description("Verify access search field using keywords")
     @Test(dataProvider = "keywords")
     public void testSearchSettingsItemsByKeyword(String keyword) {
@@ -129,6 +137,7 @@ public class ManageJenkinsTest extends BaseTest {
         return new Object[][]{{"Script Console"}, {"Jenkins CLI"}, {"Prepare for Shutdown"}};
     }
 
+    @Feature("Function")
     @Description("Verify access search field")
     @Test(dataProvider = "ToolsAndActions")
     public void testSearchToolsAndActions(String inputText) {
@@ -139,6 +148,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(searchResult, inputText);
     }
 
+    @Feature("Function")
     @Description("Verify access search field using short cut key")
     @Test
     public void testAccessSearchSettingsFieldUsingShortcutKey() {
@@ -153,6 +163,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldLinks());
     }
 
+    @Feature("Function")
     @Description("Create a new agent node")
     @Test
     public void testCreateNewAgentNode() {
@@ -171,6 +182,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(manageNodesPage, nodeName);
     }
 
+    @Feature("Function")
     @Description("Create a new agent node with description")
     @Test
     public void testCreateNewAgentNodeWithDescription() {
@@ -192,6 +204,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(nodeDescription, description);
     }
 
+    @Feature("Function")
     @Description("Create a new agent node by copying existing nod")
     @Test
     public void testCreateNewAgentNodeByCopyingExistingNode() {
@@ -220,6 +233,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(newNodeDescription, description);
     }
 
+    @Feature("Function")
     @Description("Create a new agent node by copying non existing nod")
     @Test
     public void testCreateNewAgentNodeByCopyingNonExistingNode() {
@@ -238,6 +252,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(errorMessage, "No such agent: " + nonExistingNodeName);
     }
 
+    @Feature("Function")
     @Description("Verify is displayed tasks on the side panel of the Manage plugins menu")
     @Test
     public void testFourTasksOnLeftSidePanel() {
@@ -250,6 +265,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualListOfTasks, expectedListOfTasks);
     }
 
+    @Feature("Function")
     @Description("Verify help info is displayed")
     @Test
     public void testServerHelpInfo() {
@@ -267,6 +283,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(ServerHelpInfo, expectedServerHelpInfo);
     }
 
+    @Feature("Function")
     @Description("Delete node by side menu on the nodes page")
     @Test
     public void testDeleteNodeBySideMenuOnNodePage() {
@@ -288,6 +305,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Feature("Function")
     @Description("Delete node by drop down menu on the nodes page")
     @Test
     public void testDeleteNodeByDropDownOnManageNodesPage() {
@@ -309,6 +327,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Feature("Function")
     @Ignore
     @Description("Set up email notification in the 'Manage Jenkins' menu")
     @Test
@@ -349,6 +368,7 @@ public class ManageJenkinsTest extends BaseTest {
         new ConfigureSystemPage(getDriver()).clickSaveButton();
     }
 
+    @Feature("Function")
     @Ignore
     @Description("Return to the 'Manage Jenkins' menu after setting up email notifications")
     @Test(dependsOnMethods = {"testManageJenkinsEmailNotificationSetUp"})
@@ -384,6 +404,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertTrue(configureSystemPage.isSmtpPortFieldEmailNotificationsBackToOriginal());
     }
 
+    @Feature("Function")
     @Description("Delete node from the Manage Jenkins page")
     @Test
     public void testDeleteNodeFromManageJenkinsPage() {
@@ -408,6 +429,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Feature("Function")
     @Description("Delete node from the main page")
     @Test
     public void testDeleteNodeFromMainPage() {
