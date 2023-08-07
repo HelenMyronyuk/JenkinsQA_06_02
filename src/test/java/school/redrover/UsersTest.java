@@ -492,4 +492,21 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(breadcrumbText, expectedBreadcrumbText);
 
     }
+
+    @Test
+    public void testCancelDeletingFromBin(){
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean userIsExist = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .clickDeleteUser()
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .isUserExist(USER_NAME);
+
+        Assert.assertTrue(userIsExist, "User is not exist");
+    }
 }
