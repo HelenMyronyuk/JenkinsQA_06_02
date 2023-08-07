@@ -30,7 +30,7 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
         super(driver);
     }
 
-    @Step("click 'kManage Jenkins' link from Main page")
+    @Step("click 'Manage Jenkins' link from Main page")
     public ManageJenkinsPage clickManageJenkinsPage() {
         manageJenkins.click();
 

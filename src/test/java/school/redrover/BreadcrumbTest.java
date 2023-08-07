@@ -787,4 +787,18 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
+
+    @Test(dataProvider = "subsections")
+    public void testNavigateToManageJenkinsSubsectionFromSideMenu(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+
+        String actualResult = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .getBreadcrumb()
+                .getManageJenkinsDropdownMenu()
+                .selectOptionFromManageJenkinsDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getHeading();
+
+        Assert.assertEquals(actualResult, expectedResult);
+    }
 }

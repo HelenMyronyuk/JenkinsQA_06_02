@@ -57,6 +57,12 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     @FindBy(xpath =  "//li/a/span[contains(text(), 'Build Now')]")
     private WebElement buildNowDropDownButton;
 
+    @FindBy(xpath = "//a[@href='/manage/']")
+    private WebElement manageJenkinsBreadcrumb;
+
+    @FindBy(xpath = "//a[@href='/manage/']/button")
+    private WebElement manageJenkinsDropDownButton;
+
     public MainBreadcrumbComponent(Page page) {
         super(page);
     }
@@ -191,5 +197,24 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         getWait2().until(ExpectedConditions.elementToBeClickable(buildNowDropDownButton)).click();
 
         return pageToReturn;
+    }
+
+    public MainBreadcrumbComponent<Page> getManageJenkinsDropdownMenu() {
+        new Actions(getDriver())
+                .moveToElement(manageJenkinsBreadcrumb)
+                .pause(Duration.ofMillis(300))
+                .perform();
+        getWait2().until(ExpectedConditions.visibilityOf(manageJenkinsDropDownButton)).sendKeys(Keys.RETURN);
+
+        return this;
+    }
+
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromManageJenkinsDropDownList(SubmenuPage submenuPage) {
+        new Actions(getDriver())
+                .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]")))
+                .click()
+                .perform();
+
+        return submenuPage;
     }
 }
