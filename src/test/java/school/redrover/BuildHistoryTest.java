@@ -19,7 +19,6 @@ public class BuildHistoryTest extends BaseTest {
     private final String FREESTYLE_PROJECT_NAME = "FreestyleName";
     private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001";
 
-    @Ignore
     @Test
     public void testBuildHistoryOfTwoDifferentTypesProjectsIsShown() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);

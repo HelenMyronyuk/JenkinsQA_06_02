@@ -32,6 +32,9 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//table[@id='projectStatus']/tbody/tr")
     private List<WebElement> buildHistoryTable;
 
+    @FindBy(xpath = "//table[@id='projectStatus']")
+    private WebElement projectStatusTable;
+
     @FindBy(css = ".task-link-wrapper>a[href$='newJob']")
     private WebElement newItem;
 
@@ -69,7 +72,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Get number of items on the Jenkins table")
     public int getNumberOfLinesInBuildHistoryTable() {
-        getWait5().until(ExpectedConditions.visibilityOf(pageHeader));
+        getWait5().until(ExpectedConditions.visibilityOf(projectStatusTable));
 
         return buildHistoryTable.size();
     }
