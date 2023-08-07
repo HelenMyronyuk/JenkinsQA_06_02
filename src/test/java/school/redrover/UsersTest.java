@@ -217,18 +217,6 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
-    public void testSearchPeople() {
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        String actualUserName = new MainPage(getDriver())
-                .getHeader()
-                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
-                .getActualNameUser();
-
-        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
-    }
-
-    @Test
     public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
 

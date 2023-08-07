@@ -226,7 +226,7 @@ public class HeaderTest extends BaseTest {
 
         String actualUserName = new MainPage(getDriver())
                 .getHeader()
-                .sendSearchBoxUser(USER_NAME)
+                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
                 .getActualNameUser();
 
         Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
