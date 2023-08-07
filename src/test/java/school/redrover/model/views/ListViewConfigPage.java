@@ -10,6 +10,7 @@ import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.runner.TestUtils;
 import school.redrover.model.interfaces.IDescription;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,6 +36,15 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
 
     @FindBy(xpath = "//div[contains(text(), 'Columns')]")
     private WebElement columnsText;
+
+    @FindBy(xpath = "//button[text()='Add column']")
+    private WebElement addColumnButton;
+
+    @FindBy(xpath = "//footer")
+    private WebElement footer;
+
+    @FindBy(xpath = "//div[@class='bd']//li")
+    private List<WebElement> addColumnOptions;
 
     public ListViewConfigPage(ViewPage viewPage) {
         super(viewPage);
@@ -84,5 +94,20 @@ public class ListViewConfigPage extends BaseConfigPage<ListViewConfigPage, ViewP
         getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
 
         return new DeletePage<>(redirectPage);
+    }
+
+    public ListViewConfigPage scrollAndClickAddColumnButton() {
+        TestUtils.scrollWithPauseByActions(this, footer, 300);
+
+        getWait5().until(ExpectedConditions.elementToBeClickable(addColumnButton)).click();
+        return this;
+    }
+
+    public List<String> getAddColumnOptionList() {
+        List<String> addColumnOptionList = new ArrayList<>();
+        for (WebElement element : addColumnOptions) {
+            addColumnOptionList.add(element.getText());
+        }
+        return addColumnOptionList;
     }
 }

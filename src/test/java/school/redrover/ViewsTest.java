@@ -220,6 +220,24 @@ public class ViewsTest extends BaseTest {
     }
 
     @Test
+    public void testAddColumnList() {
+        final List<String> expectedOptionsList = List.of(
+                "Status", "Weather", "Name", "Last Success", "Last Failure", "Last Stable",
+                "Last Duration", "Build Button", "Git Branches", "Name", "Project description");
+
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(false, VIEW_NAME, TestUtils.ViewType.ListView, true);
+
+        List<String> actualOptionList =  new MainPage(getDriver())
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
+                .clickEditView(TestUtils.ViewType.ListView, ListViewConfigPage.class)
+                .scrollAndClickAddColumnButton()
+                .getAddColumnOptionList();
+
+        Assert.assertEquals(actualOptionList, expectedOptionsList);
+    }
+
+    @Test
     public void testAddViewDescriptionPreview() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         createNewView(false, VIEW_NAME, TestUtils.ViewType.ListView, false);
