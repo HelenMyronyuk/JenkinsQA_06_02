@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,6 +20,7 @@ public class DashboardTest extends BaseTest {
     private static final String DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
     private static final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify of the dashboard table size")
     @Test
     public void testDashboardTableSize() {
@@ -40,6 +43,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(tableSizeActualList, sizeList);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of the presence of a description preview on the main page")
     @Test
     public void testPreviewDescriptionOnMainPage() {
@@ -52,6 +56,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(preview, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of adding of a description on the main page")
     @Test
     public void testAddDescriptionOnMainPage() {
@@ -64,6 +69,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(textDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of the presence of a description preview from My View page")
     @Test
     public void testPreviewDescriptionFromMyViewsPage() {
@@ -78,6 +84,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of adding of a description from My View page")
     @Test
     public void testAddDescriptionFromMyViewsPage() {
@@ -92,6 +99,7 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(description, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify of description field editing")
     @Test
     public void testEditDescription() {
