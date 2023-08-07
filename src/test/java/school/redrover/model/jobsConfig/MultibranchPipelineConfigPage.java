@@ -19,6 +19,12 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
     @FindBy(xpath = "//div[@class='jenkins-form-item has-help']/div/select")
     private WebElement defaultIcon;
 
+    @FindBy(xpath = "(//button [text()='Add metric'])[1]")
+    private WebElement addHealthMetric;
+
+    @FindBy(xpath = "//a[text()='Health of the primary branch of a repository']")
+    private WebElement healthPrimaryBranchRepositoryOption;
+
     public MultibranchPipelineConfigPage(MultibranchPipelinePage multibranchPipelinePage) {
         super(multibranchPipelinePage);
     }
@@ -41,6 +47,13 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
     public MultibranchPipelineConfigPage selectDefaultIcon() {
         new Select(getWait5().until(ExpectedConditions.elementToBeClickable(defaultIcon)))
                 .selectByVisibleText("Default Icon");
+
+        return this;
+    }
+
+    public MultibranchPipelineConfigPage addHealthMetricPrimaryBranchRepository() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(addHealthMetric)).click();
+        getWait5().until(ExpectedConditions.elementToBeClickable(healthPrimaryBranchRepositoryOption)).click();
 
         return this;
     }
