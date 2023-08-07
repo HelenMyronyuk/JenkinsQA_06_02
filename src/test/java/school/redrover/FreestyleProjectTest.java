@@ -1,6 +1,7 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -29,6 +30,7 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String DISPLAY_NAME = "FreestyleDisplayName";
     private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
 
+    @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -43,6 +45,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(FREESTYLE_NAME), FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromCreateAJobArrow() {
         boolean freestyleProjectNameIsAppeared = new MainPage(getDriver())
@@ -57,8 +60,9 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(freestyleProjectNameIsAppeared, "Error! Job Is Not Displayed");
     }
 
-    @Test(description = "creating a job by clicking on 'New Item' button")
+    @Feature("Function")
     @Description("Verify job creation when clicking on 'New Item' button")
+    @Test
     public void testCreateFromNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickNewItem()
@@ -72,6 +76,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -86,6 +91,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(FREESTYLE_NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -99,6 +105,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(FREESTYLE_NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
         boolean jobIsDisplayed = new MainPage(getDriver())
@@ -114,6 +121,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(jobIsDisplayed, "Error: the Freestyle Project's name is not displayed on Dashboard");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -130,6 +138,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -149,6 +158,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(nameJobFromMyViewsPage, "Created Freestyle project name is displayed on MyViews Page");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -166,6 +176,7 @@ public class FreestyleProjectTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -177,6 +188,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -189,6 +201,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("UI")
     @Test
     public void testOKButtonIsDisabledWhenEmptyName() {
         boolean okButton = new MainPage(getDriver())
@@ -199,6 +212,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertFalse(okButton);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -208,6 +222,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
         final String expectedError = "» “.” is not an allowed name";
@@ -221,6 +236,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -234,6 +250,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -247,6 +264,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualFreestyleProjectName, "Project " + NEW_FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -261,6 +279,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(projectName, "Project " + FREESTYLE_NAME + " New");
     }
 
+    @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -280,6 +299,7 @@ public class FreestyleProjectTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -294,6 +314,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testRenameWithDotInsteadName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -308,6 +329,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "“.” is not an allowed name");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -321,6 +343,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(createBuildNow, "Success");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -334,6 +357,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateBuildNowFromArrow() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -347,6 +371,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
     }
 
+    @Feature("Function")
     @Test
     public void testPresenceOfBuildLinksAfterBuild() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -366,6 +391,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(sizeOfPermalinksList, 4);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayNameForBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -382,6 +408,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "Error: The Display Name for the Build has not been changed.");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -397,6 +424,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -417,6 +445,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -432,6 +461,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromProjectPage() {
         final String heading = "Changes";
@@ -446,6 +476,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(changesTitle, heading);
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -458,6 +489,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(text.contains("No changes."));
     }
 
+    @Feature("Function")
     @Test
     public void testBuildChangesFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -472,6 +504,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(text, "Changes");
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -487,6 +520,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -501,6 +535,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -524,6 +559,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -538,6 +574,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -553,6 +590,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -566,6 +604,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -593,6 +632,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -618,6 +658,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -633,6 +674,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -649,6 +691,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -665,6 +708,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "Error");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -680,6 +724,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -694,6 +739,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(buildMessage, "error! No builds message is not display");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuildNowFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -709,6 +755,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Feature("UI")
     @Test
     public void testKeepThisBuildForever() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -728,6 +775,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(freestyleProjectPage.isIconLockIsDispalyed(), "The lock icon is not displayed");
     }
 
+    @Feature("UI")
     @Test
     public void testVisibleProjectNameOnProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -739,6 +787,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(projectNameOnProjectPage, "Project " + FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -765,6 +814,7 @@ public class FreestyleProjectTest extends BaseTest {
         soft.assertAll();
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -781,6 +831,7 @@ public class FreestyleProjectTest extends BaseTest {
         soft.assertAll();
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -795,6 +846,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewDescription, "DESCRIPTION_TEXT");
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -809,6 +861,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualDescription, "Freestyle project");
     }
 
+    @Feature("Function")
     @Test
     public void testEditDescription() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -824,6 +877,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(editDescription, NEW_DESCRIPTION_TEXT);
     }
 
+    @Feature("Navigation")
     @Test
     public void testNavigateToChangePage() {
         TestUtils.createJob(this, "Engineer", TestUtils.JobType.FreestyleProject, true);
@@ -837,6 +891,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "In the Freestyle project Changes chapter, not displayed status of the latest build.");
     }
 
+    @Feature("Navigation")
     @Test
     public void testNavigateToWorkspaceFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -850,6 +905,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(workspacePage, "Workspace of FREESTYLE_NAME on Built-In Node");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         final String descriptionText = "In publishing and graphic design, Lorem ipsum is a placeholder " +
@@ -870,6 +926,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualDescriptionText, descriptionText);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -883,6 +940,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, DESCRIPTION_TEXT);
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDashboard() {
         final String breadcrumb = "Dashboard > " + FREESTYLE_NAME + " > Configuration";
@@ -897,6 +955,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromProjectPage() {
         final String breadcrumbRoute = "Dashboard > " + FREESTYLE_NAME + " > Configuration";
@@ -910,6 +969,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -931,6 +991,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "Error: disabled project cannot be built");
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -948,6 +1009,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed());
     }
 
+    @Feature("Function")
     @Test
     public void testSetParametersToDiscardOldBuilds() {
         final int daysToKeepBuilds = 3;
@@ -969,6 +1031,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .parseInt(freestyleProjectConfigPage.getMaxNumOfBuildsToKeep()), maxOfBuildsToKeep);
     }
 
+    @Feature("Function")
     @Test
     public void testAddingAProjectOnGitHubToTheFreestyleProject() {
         final String expectedNameRepo = "Sign in";
@@ -987,6 +1050,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
+    @Feature("Function")
     @Test
     public void testAddBooleanParameterTheFreestyleProject() {
         final String booleanParameter = "Boolean Parameter";
@@ -1008,6 +1072,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(checkedSetByDefault);
     }
 
+    @Feature("Function")
     @Test
     public void testAddChoiceParameter() {
         final String parameterType = "Choice Parameter";
@@ -1036,6 +1101,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(buildPage.getChoiceParametersValuesList(), parameterChoicesList);
     }
 
+    @Feature("Function")
     @Test
     public void testSetRateLimitForBuilds() {
         final String timePeriod = "Week";
@@ -1052,7 +1118,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(actualTimePeriod, timePeriod);
     }
-
+    @Feature("UI")
     @Test
     public void testAllowParallelBuilds() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1068,6 +1134,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(statusExecuteConcurrentBuilds, "ExecuteConcurrentBuilds is not Selected");
     }
 
+    @Feature("Function")
     @Test
     public void testSetPeriodForJenkinsToWaitBeforeActuallyStartingTriggeredBuild() {
         final String expectedQuietPeriod = "10";
@@ -1087,6 +1154,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualQuietPeriod, expectedQuietPeriod);
     }
 
+    @Feature("Function")
     @Test
     public void testSetNumberOfCountForJenkinsToCheckOutFromTheSCMUntilItSucceeds() {
         final String retryCount = "5";
@@ -1106,6 +1174,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualRetryCount, retryCount);
     }
 
+    @Feature("UI")
     @Test
     public void testEnableJenkinsToBlockBuildsWhenUpstreamProjectIsBuilding() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1123,6 +1192,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(statusBlockBuildWhenUpstreamProjectIsBuilding, "error input is not selected");
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1138,6 +1208,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(displayName, "Project " + NEW_FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testAddRepositoryFromSourceCodeManagement() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1158,6 +1229,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(repositoryUrl, GITHUB_URL);
     }
 
+    @Feature("Function")
     @Test
     public void testAddBranchFromSourceCodeManagement() {
         final String branchName = "for_jenkins_build";
@@ -1180,6 +1252,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(gitBuildDataPage.getRepositoryName(), NEW_GITHUB_URL);
     }
 
+    @Feature("Function")
     @Test
     public void testConfigureBuildTriggersBuildAfterOtherProjectsAreBuilt() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1200,6 +1273,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + NEW_FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testBuildStepsOptions() {
         List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
@@ -1217,6 +1291,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
     }
 
+    @Feature("Function")
     @Test
     public void testBuildStepsExecuteWindowsBatchCommand() {
         final String commandFieldText = "echo Hello";
@@ -1238,6 +1313,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput.contains(cmdCommand), "Command wasn't run");
     }
 
+    @Feature("Function")
     @Test
     public void testBuildStepsExecuteShell() {
         final String commandFieldText = "echo Hello";
@@ -1257,6 +1333,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput.contains("Finished: SUCCESS"), "Build wasn't finished successfully");
     }
 
+    @Feature("Function")
     @Test
     public void testBuildStepsInvokeMavenGoalsTargets() {
         String goals = "clean";
@@ -1274,6 +1351,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(mavenGoals, goals);
     }
 
+    @Feature("Function")
     @Test
     public void testConfigurePostBuildActionsAggregateDownStreamTestResults() {
         BuildPage buildPage = new MainPage(getDriver())
@@ -1293,6 +1371,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/FREESTYLE_NAME/lastBuild/aggregatedTestReport"));
     }
 
+    @Feature("Function")
     @Test
     public void testConfigurePostBuildActionArchiveArtifacts() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1315,6 +1394,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "Advanced");
     }
 
+    @Feature("Function")
     @Test
     public void testConfigurePostBuildActionBuildOtherProjects() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1338,6 +1418,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testAddGitPublisherInPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1355,6 +1436,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(gitPublisherText, "Git Publisher\n?");
     }
 
+    @Feature("Function")
     @Test
     public void testAddEmailNotificationToPostBuildActions() {
         final String email = "email@email.com";
@@ -1375,6 +1457,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(currentEmail, email);
     }
 
+    @Feature("Function")
     @Test
     public void testConfigurePostBuildActionEditableEmailNotification() {
         String username = "jenkins05test@gmail.com";
@@ -1437,6 +1520,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton();
     }
 
+    @Feature("Function")
     @Test
     public void testSetGitHubCommitStatusToPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1456,6 +1540,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(commitContextName, FREESTYLE_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteWorkspaceWhenBuildDonePostBuildActions() {
         String expectedWorkspaceStatus = "Error: no workspace";
@@ -1475,6 +1560,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualWorkspaceStatus, expectedWorkspaceStatus);
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1489,6 +1575,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(projectIsPresent, "Error: the name of the Freestyle project is not shown");
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1503,6 +1590,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1514,6 +1602,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1526,6 +1615,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
     }
 
+    @Feature("Function")
     @Test
     public void testUseCustomWorkspaceFromConfigureGeneralAdvanced() {
         String directoryName = "My directory";
@@ -1547,5 +1637,4 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
     }
-
 }
