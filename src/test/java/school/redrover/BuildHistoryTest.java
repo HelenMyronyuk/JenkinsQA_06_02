@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -19,6 +20,8 @@ public class BuildHistoryTest extends BaseTest {
     private final String FREESTYLE_PROJECT_NAME = "FreestyleName";
     private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001";
 
+
+    @Feature("Function")
     @Test
     public void testBuildHistoryOfTwoDifferentTypesProjectsIsShown() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -35,6 +38,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(numberOfLinesInBuildHistoryTable >= 2);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionToBuild() {
         String buildDescription = new MainPage(getDriver())
@@ -54,6 +58,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
     }
 
+    @Feature("Function")
     @Ignore
     @Test
     public void testConsoleFreestyleBuildLocation() {
@@ -76,6 +81,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualLocation, "Building in workspace /var/jenkins_home/workspace/" + FREESTYLE_PROJECT_NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testConsoleOutputFreestyleBuildStartedByUser() {
         final String currentUser = new MainPage(getDriver()).getHeader().getCurrentUserName();
@@ -96,6 +102,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(currentUser, userConsoleOutput);
     }
 
+    @Feature("UI")
     @Test
     public void testConsoleOutputFreestyleBuildStatus() {
         final String consoleOutput = new MainPage(getDriver())
@@ -118,6 +125,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualStatus, "Finished: SUCCESS");
     }
 
+    @Feature("UI")
     @Ignore
     @Test
     public void verifyStatusBroken() {
@@ -147,6 +155,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualStatusMessageText, expectedStatusMessageText);
     }
 
+    @Feature("Function")
     @Ignore
     @Test
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
@@ -167,6 +176,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(projectNameOnBuildHistoryTimeline, itemName + " #1");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteBuild() {
         final int zeroBuild = 0;
