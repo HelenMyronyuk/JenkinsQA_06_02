@@ -283,6 +283,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Feature("UI")
     @Test
     public void testSearchPeople() {
         final String USER_NAME = "testuser";
