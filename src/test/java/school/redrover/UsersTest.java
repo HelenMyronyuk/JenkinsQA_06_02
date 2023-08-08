@@ -367,55 +367,30 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Test
-    public void testInputtingAnIncorrectUsername() {
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        String actualTextAlertIncorrectUsername = new MainPage(getDriver())
-                .getHeader()
-                .clickLogoutButton()
-                .enterUsername("incorrect user name")
-                .enterPassword(PASSWORD)
-                .enterSignIn(new LoginPage(getDriver()))
-                .getTextAlertIncorrectUsernameOrPassword();
-
-        Assert.assertEquals(actualTextAlertIncorrectUsername, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
+    @DataProvider(name = "invalid data for user login")
+    public Object[][] loginNameAndPassword() {
+        return new Object[][]{
+                {"incorrect user name", PASSWORD},
+                {USER_NAME, "12345hi"},
+                {"incorrect user name", "12345hi"}
+        };
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
-    @Test
-    public void testInputtingAnIncorrectPassword() {
+    @Test(dataProvider = "invalid data for user login")
+    public void testLogInWithInvalidData(String userName, String userPassword) {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        String actualTextAlertIncorrectPassword = new MainPage(getDriver())
+        String actualTextAlertLogInWithInvalidData = new MainPage(getDriver())
                 .getHeader()
                 .clickLogoutButton()
-                .enterUsername(USER_NAME)
-                .enterPassword("12345hi")
+                .enterUsername(userName)
+                .enterPassword(userPassword)
                 .enterSignIn(new LoginPage(getDriver()))
                 .getTextAlertIncorrectUsernameOrPassword();
 
-        Assert.assertEquals(actualTextAlertIncorrectPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Test
-    public void testInputtingAnIncorrectUsernameAndPassword() {
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        String actualTextAlertIncorrectUsernameAndPassword = new MainPage(getDriver())
-                .getHeader()
-                .clickLogoutButton()
-                .enterUsername("incorrect user name")
-                .enterPassword("12345hi")
-                .enterSignIn(new LoginPage(getDriver()))
-                .getTextAlertIncorrectUsernameOrPassword();
-
-        Assert.assertEquals(actualTextAlertIncorrectUsernameAndPassword, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
+        Assert.assertEquals(actualTextAlertLogInWithInvalidData, EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD);
     }
 
     @Severity(SeverityLevel.NORMAL)
