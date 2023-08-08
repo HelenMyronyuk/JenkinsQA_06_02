@@ -7,7 +7,6 @@ import jdk.jfr.Description;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -266,7 +265,6 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
-    @Ignore
     @Description("Verification of possibility to get ManageJenkinsPage by clicking Security icon on Header")
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
