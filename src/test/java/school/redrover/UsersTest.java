@@ -27,6 +27,7 @@ public class UsersTest extends BaseTest {
     protected static final String EMAIL = "test@test.com";
     protected static final String USER_FULL_NAME = "Test User";
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
+    protected static final String PROJECT_NAME = "PROJECT_NAME";
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
@@ -339,7 +340,6 @@ public class UsersTest extends BaseTest {
     @Feature("Function")
     @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
-        String nameProject = "Engineer";
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         MainPage actualResult = new MainPage(getDriver())
@@ -348,9 +348,9 @@ public class UsersTest extends BaseTest {
                 .enterUsername(USER_NAME)
                 .enterPassword(PASSWORD)
                 .enterSignIn(new MainPage(getDriver()));
-        TestUtils.createJob(this, nameProject, TestUtils.JobType.FreestyleProject, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        Assert.assertTrue(actualResult.jobIsDisplayed(nameProject), "true");
+        Assert.assertTrue(actualResult.jobIsDisplayed(PROJECT_NAME), "true");
     }
 
     @DataProvider(name = "invalid data for user login")
@@ -417,6 +417,20 @@ public class UsersTest extends BaseTest {
                 .getActualIconName();
 
         Assert.assertEquals(iconName, "Create User");
+    }
+
+    @Test
+    public void testCreateBuildForUser() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean isBuildPresent = new MainPage(getDriver())
+                .clickBuildByGreenArrow(PROJECT_NAME)
+                .getHeader()
+                .clickUserDropdownMenu()
+                .getPageFromUserDropdownMenu("Builds", new UserBuildsPage(getDriver()))
+                .isBuildFroUserPresent(PROJECT_NAME);
+
+        Assert.assertTrue(isBuildPresent, "Build for user is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
