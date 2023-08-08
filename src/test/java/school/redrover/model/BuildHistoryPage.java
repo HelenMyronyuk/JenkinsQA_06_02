@@ -4,11 +4,13 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.BuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -51,6 +53,11 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Get build status on the Jenkins table")
     public String getStatusMessageText() {
+        new Actions(getDriver())
+                .pause(3000)
+                .moveToElement(statusMessage)
+                .perform();
+
         getDriver().navigate().refresh();
 
         return statusMessage.getText();

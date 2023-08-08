@@ -126,9 +126,8 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Feature("UI")
-    @Ignore
     @Test
-    public void verifyStatusBroken() {
+    public void testVerifyStatusBroken() {
 
         final String namePipeline = "NewBuilds";
         final String textToDescriptionField = "What's up";
