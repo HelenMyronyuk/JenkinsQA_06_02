@@ -1,5 +1,6 @@
 package school.redrover.model.component;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -67,12 +68,14 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         super(page);
     }
 
+    @Step("Click the 'Dashboard' button")
     public MainPage clickDashboardButton() {
         getWait2().until(ExpectedConditions.elementToBeClickable(dashboard)).click();
 
         return new MainPage(getDriver());
     }
 
+    @Step("Get the 'Dashboard' drop-down menu")
     public MainBreadcrumbComponent<Page> getDashboardDropdownMenu() {
         new Actions(getDriver())
                 .moveToElement(dashboard)
@@ -83,6 +86,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return this;
     }
 
+    @Step("Get a page form the 'Dashboard' drop-down menu")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
             if (listItemName.contains("Delete Pipeline"))
@@ -91,6 +95,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
+    @Step("Select an option from 'Dashboard' -> 'Manage Jenkins' submenu list")
     public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(SubmenuPage submenuPage) {
         getDashboardDropdownMenu();
         new Actions(getDriver())
@@ -103,6 +108,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return submenuPage;
     }
 
+    @Step("Get the full breadcrumb text")
     public String getFullBreadcrumbText() {
         return getWait5()
                 .until(ExpectedConditions.visibilityOf(fullBreadcrumb))
@@ -111,6 +117,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .trim();
     }
 
+    @Step("Get a page name from the breadcrumb")
     public String getPageNameFromBreadcrumb(){
         String fullBreadcrumbText = getFullBreadcrumbText();
         int index = fullBreadcrumbText.lastIndexOf(">");
@@ -118,6 +125,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return fullBreadcrumbText.substring(index + 2);
     }
 
+    @Step("Get the drop-down menu list")
     public List<String> getMenuList() {
         List<String> menuList = new ArrayList<>();
         for (WebElement el : dropDownMenu) {
@@ -127,6 +135,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return menuList;
     }
 
+    @Step("Click the 'OK' button for the pop-up")
     public void clickOkOnPopUp() {
         getDriver()
                 .switchTo()
@@ -134,6 +143,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
                 .accept();
     }
 
+    @Step("Click on a job name from the breadcrumb")
     public <JobPage extends BasePage<?, ?>> JobPage clickJobNameFromBreadcrumb (String jobName, JobPage jobPage) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(String.format("//a[@href='/job/%s/']", jobName)))).click();
@@ -141,6 +151,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return jobPage;
     }
 
+    @Step("Get a job drop-down menu from the breadcrumb")
     public MainBreadcrumbComponent<Page> getJobBreadcrumbDropdownMenu() {
         new Actions(getDriver())
                 .moveToElement(jobNameBreadcrumb)
@@ -152,6 +163,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return this;
     }
 
+    @Step("Click on a job name from the 'All' drop-down menu")
     public <JobPage extends BasePage<?, ?>> JobPage clickProjectNameFromAllButtonDropDownMenu(JobPage jobPage, String jobName) {
         getWait2().until(ExpectedConditions.elementToBeClickable(allButtonDropDownMenu)).click();
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='" + jobName + "']"))).click();
@@ -159,12 +171,14 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return jobPage;
     }
 
+    @Step("Get the 'User' drop-down menu")
     public MainBreadcrumbComponent<Page> getUserBreadcrumbDropdownMenu() {
         getWait2().until(ExpectedConditions.visibilityOf(jobBreadcrumbChevron)).sendKeys(Keys.RETURN);
 
         return this;
     }
 
+    @Step("Click a page from 'User' drop-down")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickPageFromUserBreadcrumbDropdownMenu(
             String listItemName, ReturnedPage pageToReturn, String userName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
@@ -174,6 +188,8 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
+
+    @Step("Get 'Last Build' drop-down menu")
     public MainBreadcrumbComponent<Page> getLastBuildBreadcrumbDropdownMenu() {
         new Actions(getDriver())
                 .moveToElement(lastBuildBreadcrumbButton)
@@ -185,6 +201,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return this;
     }
 
+    @Step("Click 'Delete' from 'Last Build' drop-down menu")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickDeleteFromLastBuildDropDownMenu(
             ReturnedPage pageToReturn) {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteBuildLastBuildDropDownButton)).click();
@@ -192,6 +209,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
+    @Step("Click 'Build Now' from 'Dashboard' drop-down menu'")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildNowFromDashboardDropdownMenu(
             ReturnedPage pageToReturn) {
         getWait2().until(ExpectedConditions.elementToBeClickable(buildNowDropDownButton)).click();
@@ -199,6 +217,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
+    @Step("Get 'Manage Jenkins' drop-down menu")
     public MainBreadcrumbComponent<Page> getManageJenkinsDropdownMenu() {
         new Actions(getDriver())
                 .moveToElement(manageJenkinsBreadcrumb)
@@ -209,6 +228,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return this;
     }
 
+    @Step("Select an option from 'Manage Jenkins' drop-down menu")
     public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromManageJenkinsDropDownList(SubmenuPage submenuPage) {
         new Actions(getDriver())
                 .moveToElement(getDriver().findElement(By.xpath("//span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]")))
