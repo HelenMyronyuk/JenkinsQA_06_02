@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -75,6 +77,7 @@ public class ViewsTest extends BaseTest {
         }
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateAJobFromMyViewsPage() {
@@ -89,6 +92,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(project.getJobName(), "Project " + PROJECT_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateMyViewInFolder() {
@@ -104,6 +108,7 @@ public class ViewsTest extends BaseTest {
         assertEquals(newView, VIEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "mainView types")
     public void testCreateViewTypes(TestUtils.ViewType viewType) {
@@ -116,6 +121,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(isCreatedViewPresent, "The view is not created");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testCreateMyViewTypes(TestUtils.ViewType viewType) {
@@ -129,6 +135,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(isCreatedMyViewPresent, "The myView type is not created");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testRenameViewTypes(TestUtils.ViewType viewType) {
@@ -149,6 +156,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(actualViewName, "The new name is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testMoveFolderToNewViewList() {
@@ -168,6 +176,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(viewPage.getJobName(PROJECT_NAME), PROJECT_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateNewViewWithJobFilters() {
@@ -209,6 +218,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(actualViewJobsTexts, expectedViewJobs);
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testHelpForFeatureDescription() {
@@ -228,6 +238,7 @@ public class ViewsTest extends BaseTest {
         );
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddColumnList() {
@@ -247,6 +258,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(actualOptionList, expectedOptionsList);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteColumn() {
@@ -270,6 +282,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertFalse(isColumnDelete, "Column " + column + " is not delete!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testAddViewDescriptionPreview() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -290,6 +303,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(textDescription, VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionForGlobalViewTypeFromConfigure() {
@@ -304,6 +318,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionForListViewTypeFromConfigure() {
@@ -318,6 +333,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionForMyViewOnMyView() {
@@ -333,6 +349,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testAddDescription(TestUtils.ViewType viewType) {
@@ -349,6 +366,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionTest, VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testEditDescription(TestUtils.ViewType viewType) {
@@ -370,6 +388,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertEquals(descriptionText, NEW_VIEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testCancelDeletingFromViewPage(TestUtils.ViewType viewType) {
@@ -388,6 +407,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(viewIsPresent, "View is not present on My Views page");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromConfigurationPage() {
@@ -404,6 +424,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertTrue(isViewPresent, "View is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "myView types")
     public void testDeleteMyViewTypesFromViewPage(TestUtils.ViewType viewType) {
@@ -420,6 +441,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "mainView types")
     public void testDeleteViewTypesFromViewPage(TestUtils.ViewType viewType) {
@@ -435,6 +457,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteViewFromConfigureOfMyViewsPage() {
@@ -451,6 +474,7 @@ public class ViewsTest extends BaseTest {
         Assert.assertFalse(isViewPresent, "Error");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteViewFromConfigureOfNewViewPage() {

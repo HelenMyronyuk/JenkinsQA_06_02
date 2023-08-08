@@ -2,6 +2,8 @@ package school.redrover;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -20,6 +22,7 @@ public class ManageJenkinsTest extends BaseTest {
         return RandomStringUtils.random(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Navigation")
     @Description("Navigate to the configure system page by search menu using one letter")
     @Test
@@ -34,6 +37,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(configurePage, textConfigureSystem);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Navigation")
     @Description("Navigate to 'Manage Jenkins' menu from main page using dashboard")
     @Test
@@ -48,6 +52,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualResult, "Manage Jenkins");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verify the name of new node is displayed")
     @Test
@@ -66,6 +71,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualNodeName, nodeName);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Check error message creating new node with empty name")
     @Test
@@ -85,6 +91,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(textError, "Query parameter 'name' is required");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Check search field using numeric symbol")
     @Test
@@ -98,6 +105,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(searchText, "No results");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Navigation")
     @Description("Navigate to the configure system page by search field")
     @Test
@@ -118,6 +126,7 @@ public class ManageJenkinsTest extends BaseTest {
         return new Object[][]{{"manage"}, {"tool"}, {"sys"}, {"sec"}, {"cred"}, {"dow"}, {"script"}, {"jenkins"}, {"stat"}};
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verify access search field using keywords")
     @Test(dataProvider = "keywords")
@@ -137,6 +146,7 @@ public class ManageJenkinsTest extends BaseTest {
         return new Object[][]{{"Script Console"}, {"Jenkins CLI"}, {"Prepare for Shutdown"}};
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verify access search field")
     @Test(dataProvider = "ToolsAndActions")
@@ -148,6 +158,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(searchResult, inputText);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verify access search field using short cut key")
     @Test
@@ -163,6 +174,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldLinks());
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Create a new agent node")
     @Test
@@ -182,6 +194,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(manageNodesPage, nodeName);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Create a new agent node with description")
     @Test
@@ -204,6 +217,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(nodeDescription, description);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Create a new agent node by copying existing nod")
     @Test
@@ -233,6 +247,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(newNodeDescription, description);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Create a new agent node by copying non existing nod")
     @Test
@@ -252,6 +267,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(errorMessage, "No such agent: " + nonExistingNodeName);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify is displayed tasks on the side panel of the Manage plugins menu")
     @Test
@@ -265,7 +281,8 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(actualListOfTasks, expectedListOfTasks);
     }
 
-    @Feature("Function")
+    @Severity(SeverityLevel.MINOR)
+    @Feature("UI")
     @Description("Verify help info is displayed")
     @Test
     public void testServerHelpInfo() {
@@ -283,6 +300,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(ServerHelpInfo, expectedServerHelpInfo);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Delete node by side menu on the nodes page")
     @Test
@@ -305,6 +323,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Delete node by drop down menu on the nodes page")
     @Test
@@ -327,6 +346,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Ignore
     @Description("Set up email notification in the 'Manage Jenkins' menu")
@@ -368,6 +388,7 @@ public class ManageJenkinsTest extends BaseTest {
         new ConfigureSystemPage(getDriver()).clickSaveButton();
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Ignore
     @Description("Return to the 'Manage Jenkins' menu after setting up email notifications")
@@ -404,6 +425,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertTrue(configureSystemPage.isSmtpPortFieldEmailNotificationsBackToOriginal());
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Delete node from the Manage Jenkins page")
     @Test
@@ -429,6 +451,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Delete node from the main page")
     @Test

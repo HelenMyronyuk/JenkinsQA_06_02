@@ -1,5 +1,7 @@
 package school.redrover;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.MainPage;
@@ -9,6 +11,7 @@ import java.util.List;
 
 public class ConfigureGlobalSecurityTest extends BaseTest {
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Test
     public void testCheckTitleTexts() {
         final List<String> expectedTitleTexts = List.of(
@@ -31,6 +34,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
         Assert.assertEquals(actualTitleTexts, expectedTitleTexts);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Test
     public void testCheckNumberOfTitles() {
         final int expectedNumberOfTitles = 10;
@@ -43,6 +47,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
         Assert.assertEquals(actualNumberOfTitles, expectedNumberOfTitles);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Test
     public void testCheckNumberOfHelpButton() {
         final int expectedNumberOfHelpButton = 15;
@@ -55,6 +60,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
         Assert.assertEquals(actualNumberOfHelpButton, expectedNumberOfHelpButton);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Test
     public void testHostKeyVerificationStrategyDropdownMenuOptions() {
         final List<String> expectedMenuNames = List.of(
@@ -72,6 +78,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
         Assert.assertEquals(actualMenuNames, expectedMenuNames);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testAPICheckboxesAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -82,6 +89,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
         Assert.assertTrue(allChecksAreOk);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testRadioButtonsAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -93,6 +101,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testSavedNotificationAppearsWhenClickApply() {
 

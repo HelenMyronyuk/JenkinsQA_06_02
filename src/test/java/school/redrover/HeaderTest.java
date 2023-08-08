@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -29,6 +31,7 @@ import static org.testng.Assert.*;
 
 public class HeaderTest extends BaseTest {
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("UI")
     @Test
     public void testHeaderLogoIconPresent() {
@@ -44,6 +47,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(logoText);
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testSearchPresent() {
@@ -75,6 +79,7 @@ public class HeaderTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "sideMenuOptions")
     public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
@@ -91,6 +96,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textFromMainPage, "Welcome to Jenkins!");
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testPressEnterButtonSearchField() {
@@ -102,6 +108,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(textPageFromSearchBox, "Built-In Node");
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testSearchError() {
@@ -113,6 +120,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(errorText, "Nothing seems to match.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testLogOutButton() {
@@ -124,6 +132,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
     }
 
+    @Severity(SeverityLevel.MINOR)
     @Feature("UI")
     @Test
     public void testNotificationAndSecurityIcon() {
@@ -146,6 +155,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(actualManageJenkinsPageHeader, expectedManageJenkinsPageHeader, " The page is not correct");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testReturnToDashboardFromProjectAndConfigPage() {
@@ -172,6 +182,7 @@ public class HeaderTest extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testUserPageFromUserButton() {
@@ -196,6 +207,7 @@ public class HeaderTest extends BaseTest {
                         driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "userDropDown")
     public void testSubMenuUserFromHeader(
@@ -212,6 +224,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
@@ -224,6 +237,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(screenManageFromPopUp, "Manage Jenkins");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Test
     public void testSearchHelpButton() {
@@ -237,6 +251,7 @@ public class HeaderTest extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Ignore
     @Test
@@ -250,6 +265,7 @@ public class HeaderTest extends BaseTest {
         Assert.assertEquals(actualHeaderPage, "Manage Jenkins");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testSearchJobWithFullJobName() {
@@ -266,6 +282,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testSearchJobWithOneLetter() {
