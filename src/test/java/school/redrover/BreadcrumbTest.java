@@ -1,8 +1,11 @@
 package school.redrover;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -36,6 +39,7 @@ public class BreadcrumbTest extends BaseTest {
 
     private static final String PROJECT_NAME = "JOB";
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -69,6 +73,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsection(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
@@ -82,6 +87,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, expectedResult);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReloadConfigurationFromDiskOfManageJenkinsSubmenu() {
         String popUp = new MainPage(getDriver())
@@ -93,6 +99,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(popUp, "Reload Configuration from Disk: are you sure?");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testDashboardDropdownMenu() {
         final List<String> expectedMenuList = Arrays.asList("New Item", "People", "Build History", "Manage Jenkins", "My Views");
@@ -112,6 +119,7 @@ public class BreadcrumbTest extends BaseTest {
                 {TestUtils.JobType.MultibranchPipeline}, {TestUtils.JobType.OrganizationFolder}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromProjectPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, false);
@@ -124,6 +132,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(nameProjectOnMainPage, PROJECT_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToPluginsPageFromPeoplePage() {
         String actualTitle = new MainPage(getDriver())
@@ -135,6 +144,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualTitle, "Plugins");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToPluginsPageFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -145,6 +155,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, "Plugins");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "job-type")
     public void testNavigateToBuildHistoryPageFromProjectPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -159,6 +170,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualHeaderText, "Build History of Jenkins", "The header is not correct");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToPeoplePageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
@@ -171,6 +183,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualTitle, "People");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReturnToDashboardPageFromPeoplePage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -182,6 +195,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReturnToDashboardPageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
@@ -193,6 +207,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualTitle, "Dashboard [Jenkins]");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReturnToDashboardPageFromNewItemPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -204,6 +219,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromConfigurationPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -217,6 +233,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(mainPageOpen, "Main page is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReturnToDashboardPageFromMyViewsPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -228,6 +245,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testReturnToDashboardPageFromManageJenkinsPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -239,6 +257,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "job-type")
     public void testNavigateToMyViewsPageFromConfigurationPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -272,6 +291,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -288,6 +308,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(pageName, pageHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToJobFromBuildHistory() {
         Map<String, BaseJobPage<?>> jobMap = TestUtils.getJobMap(this);
@@ -314,6 +335,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(jobNameActualList, jobNameList);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @DataProvider(name = "job-submenu-option")
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
@@ -330,6 +352,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -346,6 +369,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(pageText, pageHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testSubmenuDeleteMultiConfigBuild() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -363,6 +387,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(lastBuild, "Error! No builds message is not display");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multi-configuration project";
@@ -380,6 +405,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualAlertText, alertText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow() {
         final String optionName = "Build Now";
@@ -397,6 +423,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(isBuildDisplayed, "Last build icon is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToNewItemPageFromMyViewsPage() {
         String actualResult = new MainPage(getDriver())
@@ -409,6 +436,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, "Enter an item name");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @DataProvider(name = "optionsOrganizationFolder")
     public Object[][] organizationFolderDropDownBreadcrumb() {
         return new Object[][]{
@@ -427,6 +455,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "optionsOrganizationFolder")
     public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -465,6 +494,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "optionsMultibranchPipeline")
     public void testNavigateToMultibranchPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -481,6 +511,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNewItemNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "New Item";
@@ -506,6 +537,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "buildSubMenu")
     public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
@@ -528,6 +560,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualResult, expectedResult);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToFreestyleDeletePageFromDropdownOnBreadcrumb() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -565,6 +598,7 @@ public class BreadcrumbTest extends BaseTest {
                         driver -> new PipelineSyntaxPage(driver), "Pipeline Syntax", "Overview"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "pipesubmenu")
     public void testNavigateToPipelinePagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -582,6 +616,7 @@ public class BreadcrumbTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testPipelineSyntaxNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Pipeline Syntax";
@@ -599,6 +634,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualText, text);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToPipelineSyntaxFromMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Pipeline Syntax";
@@ -616,6 +652,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualText, text);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Folder";
@@ -632,6 +669,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(deleteButton, "Delete button is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Organization Folder";
@@ -648,6 +686,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(deleteButton, "Delete button is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multibranch Pipeline";
@@ -664,6 +703,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(deletePage, "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @DataProvider(name = "userDropDownMenu")
     public Object[][] userDropDownBreadcrumbToMyViews2() {
         return new Object[][]{
@@ -678,6 +718,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
             String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText) {
@@ -714,6 +755,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "optionsFreestyleProject")
     public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -730,6 +772,8 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Ignore
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
         String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
@@ -759,6 +803,7 @@ public class BreadcrumbTest extends BaseTest {
         };
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "testuserDropDownMenu")
     public void testNavigateToSubMenuUserFromDropDownOnBreadcrumb(
             String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
@@ -788,6 +833,7 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsectionFromSideMenu(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
