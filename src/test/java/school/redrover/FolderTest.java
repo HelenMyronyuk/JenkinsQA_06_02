@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -36,6 +38,7 @@ public class FolderTest extends BaseTest {
                 .clickLogo();
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'Create a job' button")
     @Test
     public void testCreateFromCreateAJob() {
@@ -51,6 +54,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking on 'New Item' button")
     @Test
     public void testCreateFromNewItem() {
@@ -60,6 +64,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(new MainPage(getDriver()).isIconFolderDisplayed(), "Error: was not shown icon folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'New Item' button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
@@ -76,6 +81,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(projectName.isIconFolderDisplayed(), "Error: the folder icon is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'New Item' button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
@@ -93,6 +99,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'New Item' button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
@@ -110,6 +117,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'New Item' button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem(){
@@ -127,6 +135,7 @@ public class FolderTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating Folder project by clicking 'Create a Job' button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob(){
@@ -144,6 +153,7 @@ public class FolderTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with existing name")
     @Test
     public void testCreateWithExistingName() {
@@ -160,6 +170,7 @@ public class FolderTest extends BaseTest {
                 {";"}, {"<"}, {">"}, {"?"}, {"@"}, {"["}, {"]"}, {"|"}, {"\\"}, {"^"}};
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with name using unsafe characters")
     @Test(dataProvider = "invalid-data")
     public void testCreateUsingInvalidData(String invalidData) {
@@ -171,6 +182,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), expectedErrorMessage);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with empty name")
     @Test
     public void testCreateWithEmptyName() {
@@ -184,6 +196,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with space instead of name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
@@ -194,6 +207,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with dot instead of name")
     @Test
     public void testCreateWithDotInsteadOfName() {
@@ -206,6 +220,7 @@ public class FolderTest extends BaseTest {
         Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message after creating Folder project with long name")
     @Test
     public void testCreateWithLongName() {
@@ -220,6 +235,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that the Folder can be renamed from drop down menu on the Main page")
     @Test
     public void testRenameFromDropDownMenu() {
@@ -235,6 +251,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(newNameIsDisplayed, "Error: was not show new name folder");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that the Folder can be renamed from side menu on the Project page")
     @Test
     public void testRenameFromSideMenu() {
@@ -248,6 +265,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderPage.getTitle(), "All [" + RENAME + "] [Jenkins]");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to rename Folder project with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
@@ -261,6 +279,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(createItemErrorPage.getErrorMessage(), "The new name is the same as the current name.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to rename Folder project with invalid data")
     @Test(dataProvider = "invalid-data")
     public void testRenameWithInvalidData(String invalidData) {
@@ -283,6 +302,7 @@ public class FolderTest extends BaseTest {
         }
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to rename Folder project with '.' name'")
     @Test
     public void testRenameWithDotName() {
@@ -299,6 +319,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify navigation to Configuration Page from drop-down menu on Dashboard for Folder Project")
     @Test
     public void testAccessConfigurationPageFromDashboard() {
@@ -311,6 +332,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderConfigPage.getHeaderText(), "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify navigation to Configuration Page from side menu for Folder Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
@@ -323,6 +345,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderConfigPage.getHeaderText(), "Configuration");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder's 'Display name' can be added from Configuration page")
     @Test
     public void testAddDisplayName() {
@@ -336,6 +359,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(jobName, DISPLAY_NAME);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder's 'Display name' can be deleted from Configuration page")
     @Test
     public void testDeleteDisplayName() {
@@ -352,6 +376,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderName, NAME);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description is  added from the Configuration page")
     @Test
     public void testAddDescriptionFromConfigurationPage(){
@@ -365,6 +390,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(descriptionText,DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description is previewed on the Configuration page")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
@@ -379,6 +405,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder's Description can be deleted from the Configuration page")
     @Test
     public void testDeleteDescriptionFromConfigPage() {
@@ -393,6 +420,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(actualDescription.isEmpty());
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that the health metrics can be added to Folder from side menu")
     @Test
     public void testAddHealthMetricsFromSideMenu() {
@@ -409,6 +437,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify tool tip Description after adding the health metrics With Recursive to Folder")
     @Test
     public void testHealthMetricWithRecursive() {
@@ -436,7 +465,7 @@ public class FolderTest extends BaseTest {
                 "Worst health: " + NAME + " » " +  pipelineName + ": Build stability: All recent builds failed.");
     }
 
-
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that Folder's health metrics can be deleted through the Configuration page")
     @Test
     public void testDeleteHealthMetrics() {
@@ -457,6 +486,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(healthMetric, "The deleted health metric is visible!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that Pipeline Library can be added to Folder description through the Configuration page")
     @Test
     public void testAddedPipelineLibrary() {
@@ -479,6 +509,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isVersionValidated, "Cannot validate default version");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description is  added from the Project page")
     @Test
     public void testAddDescriptionFromProjectPage() {
@@ -493,6 +524,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(folderPage.getDescriptionButton(), "Edit description");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description is previewed on the Project page")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
@@ -509,6 +541,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description can be edit")
     @Test
     public void testEditDescription() {
@@ -527,6 +560,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(newDescription, DESCRIPTION_2);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that Jobs can be created in Folder")
     @Test
     public void testCreateJobsInFolder() {
@@ -560,6 +594,7 @@ public class FolderTest extends BaseTest {
                 {TestUtils.JobType.OrganizationFolder}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that created Projects can be moved to Folder from drop-down menu on the Main page")
     @Test(dataProvider = "jobType")
     public void testMoveJobToFolderFromDropDownMenu(TestUtils.JobType jobType) {
@@ -578,6 +613,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that created Projects can be moved to Folder from side menu on the Project page")
     @Test(dataProvider = "jobType")
     public void testMoveJobsToFolderFromSideMenu(TestUtils.JobType jobType) {
@@ -597,6 +633,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that deleting Folder can be canceled from drop-down menu on the Main page")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
@@ -610,6 +647,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that deleting Folder can be canceled from side menu on the Project page")
     @Test
     public void testCancelDeletingFromSideMenu() {
@@ -624,6 +662,7 @@ public class FolderTest extends BaseTest {
         Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that the Folder can be deleted with the 'Delete' option from drop-down menu on the Main page")
     @Test
     public void testDeleteItemFromDropDown() {
@@ -636,6 +675,7 @@ public class FolderTest extends BaseTest {
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that the Folder can be deleted with the 'Delete' button from side menu on the Project page")
     @Test
     public void testDeleteItemFromSideMenu() {
