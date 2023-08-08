@@ -138,7 +138,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
     }
 
     @Step("Click on the 'Configure' link from user drop down menu on the header page")
-    public UserConfigPage openConfigureTabFromUserDropdownMenu() {
+    public UserConfigPage openConfigureFromUserDropdownMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(configureTabFromUserDropdownMenu)).click();
 
         return new UserConfigPage(new UserPage(getDriver()));

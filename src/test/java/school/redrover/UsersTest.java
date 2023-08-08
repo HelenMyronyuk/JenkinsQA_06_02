@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -31,6 +32,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating New User")
     @Test
     public void testCreateNewUser() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -45,6 +47,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating New User with email using invalid characters")
     @Test
     public void testCreateUsingInvalidEmail() {
         String errorEmail = new MainPage(getDriver())
@@ -60,6 +63,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating New User with existing name")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -77,8 +81,9 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Description' can be added to the created User from User page")
     @Test
-    public void testAddDescriptionToUserOnUserStatusPage() {
+    public void testAddDescriptionToUserFromUserPage() {
         final String displayedDescriptionText = "Test User Description";
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -98,8 +103,9 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Description' can be edited to the created User from User page")
     @Test
-    public void testEditDescriptionToUserOnUserStatusPage() {
+    public void testEditDescriptionToUserFromUserPage() {
         final String displayedDescriptionText = "User Description Updated";
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -126,6 +132,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Description' can be added to the created User from Configure page")
     @Test
     public void testAddDescriptionFromConfigure() {
         String descriptionText = new MainPage(getDriver())
@@ -142,6 +149,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Description' can be present preview to the created User from Configure page")
     @Test
     public void testPreviewDescriptionFromConfigurePage() {
         String descriptionText = new MainPage(getDriver())
@@ -158,6 +166,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("The 'Email' can be edited to the created User from Profile page by drop-down menu")
     @Test
     public void testEditEmailOnTheUserProfilePageByDropDown() {
         final String displayedEmail = "testedited@test.com";
@@ -184,6 +193,8 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to pages " +
+            " by click options on the side menu from Users page")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToSideMenuUserFromUsersPage(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
@@ -203,6 +214,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verify of the View icons is exist on the People page")
     @Test
     public void testViewIconButtonsPeoplePage() {
         List<String> expectedIconButtonsNames = List.of("S" + "\n" + "mall", "M" + "\n" + "edium", "L" + "\n" + "arge");
@@ -216,6 +228,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verify that sort arrow mode changes after clicking sort Header button")
     @Test
     public void testSortArrowModeChangesAfterClickingSortHeaderButton() {
 
@@ -246,6 +259,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the created User can be deleted with the 'Delete' button from side menu")
     @Test
     public void testDeleteFromSideMenu() {
         String newUserName = "testuser";
@@ -265,6 +279,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the created User can be deleted with the 'Delete' button from 'bin' icon")
     @Test
     public void testDeleteFromBin() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -281,6 +296,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the created User can be deleted with the 'Delete' button from drop-down menu")
     @Test
     public void testDeleteFromDropDown() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -299,6 +315,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the created User can be deleted with the 'Delete' button from Configure page")
     @Test
     public void testDeleteFromConfigure() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -317,6 +334,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Checking the error message display when logging in with a remote user")
     @Test
     public void testLogInWithDeletedUserCredentials() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -338,6 +356,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Checking that the User can Log In with created account")
     @Test
     public void testUserCanLoginToJenkinsWithCreatedAccount() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -364,6 +383,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Checking the error message display when logging in with invalid data")
     @Test(dataProvider = "invalid data for user login")
     public void testLogInWithInvalidData(String userName, String userPassword) {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -381,6 +401,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking that the created User is exist on the People page")
     @Test
     public void testCreateUserCheckInPeople() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -394,6 +415,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking that the created User is exist on the ManageUsers page")
     @Test
     public void testCreateUserCheckInManageUsers() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -408,6 +430,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Checking that the 'Create User' button is clickable on the Users page")
     @Test
     public void testCreateUserButtonClickable() {
         String iconName = new MainPage(getDriver())
@@ -421,6 +444,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking that the created build for User is displayed on the Build User page")
     @Test
     public void testCreateBuildForUser() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -437,6 +461,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("The 'Description' can be present preview to the created User from User page")
     @Test
     public void testPreviewDescriptionFromUserPage() {
         final String expectedPreviewDescriptionText = "User Description";
@@ -455,11 +480,13 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Checking that the 'Search' field is insensitive " +
+            "after select option 'Insensitive search tool' from Configure page")
     @Test
     public void testSearchBoxInsensitive() {
         boolean isSearchResultContainsText = new MainPage(getDriver()).getHeader()
                 .clickUserDropdownMenu()
-                .openConfigureTabFromUserDropdownMenu()
+                .openConfigureFromUserDropdownMenu()
                 .selectInsensitiveSearch()
                 .clickSaveButton()
                 .getHeader()
@@ -483,6 +510,8 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to pages " +
+            " by click options on the side menu from Configure page")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
 
@@ -511,6 +540,8 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to pages " +
+            " by click options on the drop-down menu from Users page")
     @Test(dataProvider = "dropDownOnUsersPageMenu")
     public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedBreadcrumbText) throws InterruptedException {
 
@@ -530,6 +561,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that deleting created User can be canceled from side menu")
     @Test
     public void testCancelDeletingFromSideMenu(){
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -549,6 +581,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that deleting created User can be canceled from 'bin' icon")
     @Test
     public void testCancelDeletingFromBin(){
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
@@ -568,6 +601,7 @@ public class UsersTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that deleting created User can be canceled from Configure page")
     @Test
     public void testCancelDeletingFromConfigurePage(){
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
