@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -24,6 +26,7 @@ public class PipelineTest extends BaseTest {
     private static final String DESCRIPTION = "This is a test description";
     private static final String DISPLAYED_BUILD_NAME = "New Build Name";
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
@@ -39,6 +42,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromNewItem() {
@@ -55,6 +59,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectName, NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
@@ -70,6 +75,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
@@ -84,6 +90,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
@@ -101,6 +108,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(jobList.contains(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
@@ -118,6 +126,7 @@ public class PipelineTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the FPipeline Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
@@ -133,6 +142,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the pipeline name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
@@ -152,6 +162,7 @@ public class PipelineTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidDate(String invalidCharacters) {
@@ -162,6 +173,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
@@ -175,6 +187,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
@@ -185,6 +198,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(createItemErrorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
@@ -196,6 +210,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(getMessage, "» “.” is not an allowed name");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithLongName() {
@@ -210,6 +225,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithAllowedCharacters() {
@@ -228,6 +244,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectNameDashboard, allowedChar);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testSortingPipelineProjectAlphabetically() {
@@ -244,6 +261,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(listNamesOfJobs, namesOfJobs);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreatingBasicPipelineProjectThroughJenkinsUI() {
@@ -258,6 +276,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(resultOptionDefinitionFieldText, "Pipeline script");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameFromDropDown() {
@@ -274,6 +293,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(renamedPipeline, NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
@@ -291,6 +311,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(projectName, NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
@@ -311,6 +332,7 @@ public class PipelineTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
@@ -326,6 +348,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateBuildWithParameters() {
@@ -341,6 +364,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputPage.isDisplayedBuildTitle(), "Not found build");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateBuildNowFromDropDown() {
@@ -355,6 +379,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(createBuildNow, "Success");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateBuildNowFromSideMenu() {
@@ -369,6 +394,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateBuildNowFromArrow() {
@@ -383,6 +409,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDisplayNameForBuild() {
@@ -401,6 +428,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(newDisplayedBuildName, "Added Name for the Build is not displayed");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
@@ -418,6 +446,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromBuildPage() {
@@ -435,6 +464,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testEditDescriptionFromBuildPage() {
@@ -456,6 +486,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testBuildChangesFromDropDown() {
@@ -472,6 +503,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testBuildChangesFromLastBuild() {
@@ -486,6 +518,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(text, "Changes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testBuildChangesFromProjectPage() {
@@ -501,6 +534,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(changesTitle, title);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testConsoleOutputFromDropDown() {
@@ -516,6 +550,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testConsoleOutputFromProjectPage() {
@@ -531,6 +566,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testConsoleOutputFromLastBuild() {
@@ -555,6 +591,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testConsoleOutputFromBuildPage() {
@@ -570,6 +607,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditBuildInformationFromDropDown() {
@@ -586,6 +624,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditBuildInformationFromProjectPage() {
@@ -600,6 +639,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditBuildInformationFromLastBuild() {
@@ -614,6 +654,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textPageFromBreadcrumb, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditBuildInformationFromBuildPage() {
@@ -629,6 +670,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(testPageFromBreadcrumb, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
@@ -645,6 +687,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
@@ -662,6 +705,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteBuildNowFromDropDown() {
@@ -679,6 +723,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "Error");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteBuildNowFromSideMenu() {
@@ -695,6 +740,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
@@ -710,6 +756,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildMessage, "error! No builds message is not display");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteBuildNowFromBuildPage() {
@@ -726,6 +773,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testReplayBuildFromDropDown() {
@@ -743,6 +791,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testReplayBuildFromProjectPage() {
@@ -760,6 +809,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testReplayBuildFromLastBuild() {
@@ -779,6 +829,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#3");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testReplayBuildFromBuildPage() {
@@ -796,6 +847,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(lastBuildNumber, "#2");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromDropDown() {
@@ -812,6 +864,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromProjectPage() {
@@ -826,6 +879,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromLastBuild() {
@@ -843,6 +897,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineStepsBuildFromBuildPage() {
@@ -858,6 +913,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textFromStepsBuild, "Pipeline Steps");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testWorkspacesBuildFromDropDown() {
@@ -876,6 +932,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testWorkspacesBuildFromProjectPage() {
@@ -893,6 +950,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testWorkspacesBuildFromLastBuild() {
@@ -910,6 +968,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testMakeSeveralBuilds() {
@@ -929,6 +988,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(buildNumber, buildNumberExpected);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testSelectHelloAndConsoleOutputSuccess() {
@@ -946,6 +1006,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(textSuccessBuild.contains("Finished: SUCCESS"), "Job does not finished success");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
@@ -961,6 +1022,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineBuildNow() {
@@ -977,6 +1039,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(stageName, "Hello");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromProjectPage() {
@@ -991,6 +1054,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(resultDescriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
@@ -1006,6 +1070,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobStatus, "Disabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
@@ -1025,6 +1090,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobStatus, "Not built");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testProjectChangesFromSideMenu() {
@@ -1040,6 +1106,7 @@ public class PipelineTest extends BaseTest {
                 "In the Pipeline Changes chapter, not displayed status of the latest build.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineBuildingAfterChangesInCode() {
@@ -1058,6 +1125,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "Build #1 failed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
@@ -1070,6 +1138,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(configPageHeaderText, "Configure");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
@@ -1082,6 +1151,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineConfigPage.getHeaderText(), "Configure");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
@@ -1098,6 +1168,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertFalse(projectDisable, "Pipeline is enabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
@@ -1114,6 +1185,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(disableButtonText, "Disable Project");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEditDescriptionFromConfigurationPage() {
@@ -1134,6 +1206,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobDescription, newDescription);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
@@ -1148,6 +1221,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(textPreview, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
@@ -1163,6 +1237,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDiscardOldBuildsIsChecked() {
@@ -1179,6 +1254,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(discardOldBuildsCheckbox);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDiscardOldBuildsPipeline() {
@@ -1195,6 +1271,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobName, "Pipeline " + NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDiscardOldBuildsParams() {
@@ -1215,6 +1292,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(pipelineConfigPage.getMaxNumOfBuildsToKeep(), String.valueOf(builds));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDiscardOldBuilds0Days() {
@@ -1230,6 +1308,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "Not a positive integer");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddingAProjectOnGithubToThePipelineProject() {
@@ -1251,6 +1330,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddBooleanParameterWithDescription() {
@@ -1278,6 +1358,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(buildParametersPagePage.getParameterDescription(), description);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddBooleanParameter() {
@@ -1301,6 +1382,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertNull(buildParametersPage.getBooleanParameterCheckbox());
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testThisProjectIsParameterizedCheckAllParameters() {
@@ -1319,6 +1401,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(actualOptionsOfAddParameterDropdown, expectedOptionsOfAddParameterDropdown);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDisplayName() {
@@ -1344,6 +1427,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(jobName, NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateNewPipelineWithScript() {
@@ -1361,6 +1445,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectIsPresent);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
@@ -1374,6 +1459,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(projectIsPresent);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
@@ -1389,6 +1475,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
@@ -1402,6 +1489,7 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
