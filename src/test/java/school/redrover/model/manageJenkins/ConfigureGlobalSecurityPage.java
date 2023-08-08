@@ -1,5 +1,6 @@
 package school.redrover.model.manageJenkins;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -49,14 +50,17 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
         return "Configure Global Security";
     }
 
+    @Step("Get number of Form's Labels on the Configure Global Security page")
     public int getNumberOfTitles() {
         return listFormLabels.size();
     }
 
+    @Step("Get number of of Help Buttons on the Configure Global Security page")
     public int getNumberOfHelpButtons() {
         return listHelpButtons.size();
     }
 
+    @Step("Click on 'Host Key Verification Strategy' dropdown menu on the Configure Global Security page")
     public ConfigureGlobalSecurityPage navigateToHostKeyVerificationStrategyDropdownAndClick() {
         Actions action = new Actions(getDriver());
         action.moveToElement(hostKeyVerificationDropdown).click().perform();
@@ -64,18 +68,22 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
         return this;
     }
 
+    @Step("Get list of 'Host Key Verification Strategy' dropdown menu on the Configure Global Security page")
     public List<String> getDropDownMenuTexts() {
         return TestUtils.getTexts(menus);
     }
 
+    @Step("Get list of 'API Token' Checkboxes on the Configure Global Security page")
     private List<WebElement> getAPITokenCheckboxes() {
         return apiTokenCheckboxes;
     }
 
+    @Step("Get list of radio buttons on the Configure Global Security page")
     public List<WebElement> getRadioButtons() {
         return radioButtons;
     }
 
+    @Step("Check list of 'API Token' Checkboxes is clickable on the Configure Global Security page")
     public boolean checkAPITokenCheckboxes() {
         for (int i = 0; i <= 2; i++) {
             WebElement checkBox = getWait2().until(ExpectedConditions.elementToBeClickable(getAPITokenCheckboxes().get(i)));
@@ -91,6 +99,7 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
         return true;
     }
 
+    @Step("Check list of radio buttons is clickable on the Configure Global Security page")
     public boolean checkRadioButtons() {
         for (int i = 0; i <= 5; i++) {
             WebElement radioButton = getWait5().until(ExpectedConditions.elementToBeClickable(getRadioButtons().get(i)));
@@ -106,16 +115,19 @@ public class ConfigureGlobalSecurityPage extends BaseSubmenuPage<ConfigureGlobal
         return true;
     }
 
+    @Step("Click on the 'Apply' button on the Configure Global Security page")
     public ConfigureGlobalSecurityPage clickApplyButton() {
         applyButton.click();
 
         return new ConfigureGlobalSecurityPage(getDriver());
     }
 
+    @Step("Get notification text after click on 'Apply' button on the Configure Global Security page")
     public String getSavedNotificationText() {
         return getWait5().until(ExpectedConditions.visibilityOf(savedNotificationText)).getText();
     }
 
+    @Step("Get list of Section's Titles on the Configure Global Security page")
     public List<String> getSectionTitleList() {
         List<String> sectionTitleList = new ArrayList<>();
         for (WebElement element : listSectionTitles) {
