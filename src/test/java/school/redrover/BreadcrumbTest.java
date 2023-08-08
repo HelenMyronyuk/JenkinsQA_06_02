@@ -88,7 +88,7 @@ public class BreadcrumbTest extends BaseTest {
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
                 .selectAnOptionFromDashboardManageJenkinsSubmenuList(new MainPage(getDriver()))
-                .getPopUp();
+                .getAlertBoxText();
 
         Assert.assertEquals(popUp, "Reload Configuration from Disk: are you sure?");
     }

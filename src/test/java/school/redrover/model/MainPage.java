@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.*;
+import school.redrover.model.interfaces.IAlert;
 import school.redrover.model.interfaces.IDashboardTable;
 import school.redrover.model.interfaces.IDescription;
 import school.redrover.model.interfaces.IViewBar;
@@ -12,7 +13,7 @@ import school.redrover.model.manageJenkins.ManageJenkinsPage;
 import school.redrover.model.manageJenkins.ManageNodesPage;
 import school.redrover.model.views.MyViewsPage;
 
-public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage>, IViewBar {
+public class MainPage extends BaseDashboardPage<MainPage> implements IDescription<MainPage>, IDashboardTable<MainPage>, IViewBar, IAlert<MainPage> {
 
     @FindBy(css = "[href='/manage']")
     private WebElement manageJenkins;
