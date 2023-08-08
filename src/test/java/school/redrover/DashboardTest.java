@@ -1,6 +1,7 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -21,6 +22,7 @@ public class DashboardTest extends BaseTest {
     private static final String NEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
     @Description("Verify of the dashboard table size")
     @Test
     public void testDashboardTableSize() {
@@ -44,6 +46,7 @@ public class DashboardTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of the presence of a description preview on the main page")
     @Test
     public void testPreviewDescriptionOnMainPage() {
@@ -57,6 +60,7 @@ public class DashboardTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of adding of a description on the main page")
     @Test
     public void testAddDescriptionOnMainPage() {
@@ -70,6 +74,7 @@ public class DashboardTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of the presence of a description preview from My View page")
     @Test
     public void testPreviewDescriptionFromMyViewsPage() {
@@ -85,6 +90,7 @@ public class DashboardTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of adding of a description from My View page")
     @Test
     public void testAddDescriptionFromMyViewsPage() {
@@ -100,6 +106,7 @@ public class DashboardTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verify of description field editing")
     @Test
     public void testEditDescription() {
