@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
@@ -12,6 +13,7 @@ import java.util.List;
 public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
     @Test
     public void testCheckTitleTexts() {
         final List<String> expectedTitleTexts = List.of(
@@ -35,6 +37,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
     @Test
     public void testCheckNumberOfTitles() {
         final int expectedNumberOfTitles = 10;
@@ -48,6 +51,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
     @Test
     public void testCheckNumberOfHelpButton() {
         final int expectedNumberOfHelpButton = 15;
@@ -61,6 +65,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
     @Test
     public void testHostKeyVerificationStrategyDropdownMenuOptions() {
         final List<String> expectedMenuNames = List.of(
@@ -79,6 +84,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Test
     public void testAPICheckboxesAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -90,6 +96,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Test
     public void testRadioButtonsAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -102,6 +109,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Test
     public void testSavedNotificationAppearsWhenClickApply() {
 
