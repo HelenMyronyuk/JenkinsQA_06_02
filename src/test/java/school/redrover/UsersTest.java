@@ -326,7 +326,7 @@ public class UsersTest extends BaseTest {
                 .clickDeleteUser()
                 .clickYesButton()
                 .getHeader()
-                .clickLogoutButton()
+                .clickLogOutButton()
                 .enterUsername(USER_NAME)
                 .enterPassword(PASSWORD)
                 .enterSignIn(new LoginPage(getDriver()))
@@ -344,7 +344,7 @@ public class UsersTest extends BaseTest {
 
         MainPage actualResult = new MainPage(getDriver())
                 .getHeader()
-                .clickLogoutButton()
+                .clickLogOutButton()
                 .enterUsername(USER_NAME)
                 .enterPassword(PASSWORD)
                 .enterSignIn(new MainPage(getDriver()));
@@ -370,7 +370,7 @@ public class UsersTest extends BaseTest {
 
         String actualTextAlertLogInWithInvalidData = new MainPage(getDriver())
                 .getHeader()
-                .clickLogoutButton()
+                .clickLogOutButton()
                 .enterUsername(userName)
                 .enterPassword(userPassword)
                 .enterSignIn(new LoginPage(getDriver()))
@@ -427,7 +427,7 @@ public class UsersTest extends BaseTest {
 
         String previewDescriptionText = new MainPage(getDriver())
                 .getHeader()
-                .clickOnAdminButton()
+                .clickUserAdminButton()
                 .clickAddOrEditDescription()
                 .clearDescriptionField()
                 .enterDescription("User Description")

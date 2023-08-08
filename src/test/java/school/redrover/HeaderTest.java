@@ -126,7 +126,7 @@ public class HeaderTest extends BaseTest {
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
                 .getHeader()
-                .clickLogoutButton()
+                .clickLogOutButton()
                 .isSignInButtonPresent();
 
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
@@ -188,7 +188,7 @@ public class HeaderTest extends BaseTest {
     public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
                 .getHeader()
-                .clickOnAdminButton()
+                .clickUserAdminButton()
                 .isUserPageAvailable();
 
         assertTrue(adminOrUserPage, "'Jenkins User ID:' text is not displayed!");
