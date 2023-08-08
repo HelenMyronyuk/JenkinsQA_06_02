@@ -300,6 +300,7 @@ public class HeaderTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
     @Test
     public void testSearchPeople() {
