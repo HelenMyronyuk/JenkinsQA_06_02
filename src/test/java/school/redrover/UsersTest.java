@@ -29,7 +29,7 @@ public class UsersTest extends BaseTest {
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
     protected static final String PROJECT_NAME = "PROJECT_NAME";
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateNewUser() {
@@ -43,7 +43,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(newUser);
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateUsingInvalidEmail() {
@@ -58,7 +58,7 @@ public class UsersTest extends BaseTest {
                 "The error message is incorrect or missing");
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
@@ -140,7 +140,7 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals("Description text", descriptionText);
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurePage() {
@@ -244,7 +244,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIDButtonNotContainsArrow, "UserID button has sort arrow");
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteFromSideMenu() {
@@ -263,7 +263,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted);
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteFromBin() {
@@ -279,7 +279,7 @@ public class UsersTest extends BaseTest {
         Assert.assertFalse(userNotFound);
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteFromDropDown() {
@@ -297,7 +297,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteFromConfigure() {
@@ -392,7 +392,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(actualResultFindUserName, "The user not found");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testCreateUserCheckInManageUsers() {
@@ -419,6 +419,8 @@ public class UsersTest extends BaseTest {
         Assert.assertEquals(iconName, "Create User");
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Test
     public void testCreateBuildForUser() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -526,7 +528,26 @@ public class UsersTest extends BaseTest {
 
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
+    @Test
+    public void testCancelDeletingFromSideMenu(){
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
+
+        boolean userIsExist = new MainPage(getDriver())
+                .clickPeopleOnLeftSideMenu()
+                .clickUserName(USER_NAME)
+                .clickDeleteUserBtnFromUserPage(USER_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickManageJenkinsPage()
+                .clickManageUsers()
+                .isUserExist(USER_NAME);
+
+        Assert.assertTrue(userIsExist, "User is not exist");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromBin(){
@@ -545,7 +566,7 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIsExist, "User is not exist");
     }
 
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromConfigurePage(){
