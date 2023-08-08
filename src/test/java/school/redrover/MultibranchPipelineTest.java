@@ -46,7 +46,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Test
     public void testCreateFromNewItem() {
         boolean multibranchName = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
@@ -63,7 +63,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
@@ -134,7 +134,7 @@ public class MultibranchPipelineTest extends BaseTest {
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
@@ -170,7 +170,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(character)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline);
 
@@ -213,7 +213,7 @@ public class MultibranchPipelineTest extends BaseTest {
         final String expectedError = "» “.” is not an allowed name";
 
         String actualError = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .selectJobType(TestUtils.JobType.MultibranchPipeline)
                 .enterItemName(".")
                 .getItemInvalidMessage();
@@ -229,7 +229,7 @@ public class MultibranchPipelineTest extends BaseTest {
         String longName = RandomStringUtils.randomAlphanumeric(256);
 
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.MultibranchPipeline)
                 .getErrorMessage();

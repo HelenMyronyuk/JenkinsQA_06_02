@@ -12,10 +12,10 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     @FindBy(css = ".task-link-wrapper>a[href$='newJob']")
     private WebElement newItem;
 
-    @FindBy(xpath = "//span/a[@href='/asynchPeople/']")
+    @FindBy(xpath = "//a[@href='/asynchPeople/']")
     private WebElement people;
 
-    @FindBy(xpath = "//span/a[@href='/view/all/builds']")
+    @FindBy(xpath = "//a[@href='/view/all/builds']")
     private WebElement buildHistory;
 
     @FindBy(xpath = "//a[@href='/computer/']")
@@ -30,32 +30,26 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return "Reload Configuration from Disk";
     }
 
-    public NewJobPage selectNewItemInJobDropDownMenu(String folderName) {
-        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(String.format("//a[contains(@href,'/job/%s/newJob')]", folderName)))).click();
-
-        return new NewJobPage(getDriver());
-    }
-
     @Step("Click on 'New Item' in the side menu")
-    public NewJobPage clickNewItem() {
+    public NewJobPage clickNewItemFromSideMenu() {
         newItem.click();
 
         return new NewJobPage(getDriver());
     }
 
-    public PeoplePage clickPeopleOnLeftSideMenu() {
+    public PeoplePage clickPeopleFromSideMenu() {
         people.click();
 
         return new PeoplePage(getDriver());
     }
 
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionOnLeftSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span/a[@href='" + sideMenuLink + "']"))).click();
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionFromSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='" + sideMenuLink + "']"))).click();
 
         return pageToReturn;
     }
 
-    public BuildHistoryPage clickBuildsHistoryButton() {
+    public BuildHistoryPage clickBuildsHistoryFromSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistory)).click();
 
         return new BuildHistoryPage(getDriver());

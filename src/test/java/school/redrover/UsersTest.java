@@ -220,7 +220,7 @@ public class UsersTest extends BaseTest {
         List<String> expectedIconButtonsNames = List.of("S" + "\n" + "mall", "M" + "\n" + "edium", "L" + "\n" + "arge");
 
         List<String> actualIconButtonsNames = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .getIconButtonsList();
 
         Assert.assertEquals(actualIconButtonsNames, expectedIconButtonsNames);
@@ -233,7 +233,7 @@ public class UsersTest extends BaseTest {
     public void testSortArrowModeChangesAfterClickingSortHeaderButton() {
 
         boolean userIDButtonWithoutArrow = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .isUserIDButtonWithoutArrow();
 
         Assert.assertTrue(userIDButtonWithoutArrow, "UserID button has sort arrow");
@@ -267,11 +267,11 @@ public class UsersTest extends BaseTest {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean isUserDeleted = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickUserName(newUserName)
                 .clickDeleteUserBtnFromUserPage(newUserName)
                 .clickYesButton()
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .checkIfUserWasDeleted(newUserName);
 
         Assert.assertTrue(isUserDeleted);
@@ -307,7 +307,7 @@ public class UsersTest extends BaseTest {
                 .openUserIDDropDownMenu(USER_NAME)
                 .selectItemInUserIDDropDownMenu("Delete", new DeletePage<>(new MainPage(getDriver())))
                 .clickYesButton()
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .checkIfUserWasDeleted(USER_NAME);
 
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
@@ -326,7 +326,7 @@ public class UsersTest extends BaseTest {
                 .clickConfigureButton(USER_NAME)
                 .clickDeleteUser()
                 .clickYesButton()
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .checkIfUserWasDeleted(USER_NAME);
 
         Assert.assertTrue(isUserDeleted, "The user was not deleted");
@@ -407,7 +407,7 @@ public class UsersTest extends BaseTest {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean actualResultFindUserName = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .checkIfUserWasAdded(USER_NAME, USER_FULL_NAME);
 
         Assert.assertTrue(actualResultFindUserName, "The user not found");
@@ -567,7 +567,7 @@ public class UsersTest extends BaseTest {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userIsExist = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickUserName(USER_NAME)
                 .clickDeleteUserBtnFromUserPage(USER_NAME)
                 .getHeader()

@@ -65,7 +65,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testCreateFromNewItem() {
         MainPage projectName = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -80,7 +80,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
@@ -143,7 +143,7 @@ public class FreestyleProjectTest extends BaseTest {
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -180,7 +180,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(character)
                 .selectJobType(TestUtils.JobType.FreestyleProject);
 
@@ -228,7 +228,7 @@ public class FreestyleProjectTest extends BaseTest {
         final String expectedError = "» “.” is not an allowed name";
 
         String actualError = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .enterItemName(".")
                 .getItemInvalidMessage();
@@ -242,7 +242,7 @@ public class FreestyleProjectTest extends BaseTest {
         String longName = RandomStringUtils.randomAlphanumeric(256);
 
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.FreestyleProject)
                 .getErrorMessage();
@@ -1281,7 +1281,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "Set build status to \"pending\" on GitHub commit");
 
         List<String> actualOptionsInBuildStepsSection = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -1319,7 +1319,7 @@ public class FreestyleProjectTest extends BaseTest {
         final String commandFieldText = "echo Hello";
 
         String consoleOutput = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -1355,7 +1355,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Test
     public void testConfigurePostBuildActionsAggregateDownStreamTestResults() {
         BuildPage buildPage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))

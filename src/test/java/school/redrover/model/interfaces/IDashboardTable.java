@@ -197,6 +197,12 @@ public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IB
         return new RenamePage<>(jobTypePage);
     }
 
+    default NewJobPage selectNewItemInJobDropDownMenu(String folderName) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(String.format("//a[contains(@href,'/job/%s/newJob')]", folderName)))).click();
+
+        return new NewJobPage(getDriver());
+    }
+
     default String selectFromJobDropdownMenuTheGitHub(String jobName) {
         openJobDropDownMenu(jobName);
         getDriver().findElement(By.xpath("//a[contains(@href, 'github.com')]")).click();

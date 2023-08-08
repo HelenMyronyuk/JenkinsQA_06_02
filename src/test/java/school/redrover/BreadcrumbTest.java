@@ -136,7 +136,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test
     public void testNavigateToPluginsPageFromPeoplePage() {
         String actualTitle = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .getBreadcrumb()
                 .selectAnOptionFromDashboardManageJenkinsSubmenuList(new PluginsPage(getDriver()))
                 .getPageTitle();
@@ -174,7 +174,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test
     public void testNavigateToPeoplePageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
                 .getPageFromDashboardDropdownMenu("People", new PeoplePage(getDriver()))
@@ -187,7 +187,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test
     public void testReturnToDashboardPageFromPeoplePage() {
         boolean welcomeJenkins = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
@@ -199,7 +199,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test
     public void testReturnToDashboardPageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .getTitle();
@@ -211,7 +211,7 @@ public class BreadcrumbTest extends BaseTest {
     @Test
     public void testReturnToDashboardPageFromNewItemPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
@@ -322,7 +322,7 @@ public class BreadcrumbTest extends BaseTest {
 
         for (Map.Entry<String, BaseJobPage<?>> jobNameAndJobTypeMap : jobMap.entrySet()) {
             jobNameActualList.add(new MainPage(getDriver())
-                    .clickBuildsHistoryButton()
+                    .clickBuildsHistoryFromSideMenu()
                     .getBreadcrumb()
                     .clickProjectNameFromAllButtonDropDownMenu(jobNameAndJobTypeMap.getValue(), jobNameAndJobTypeMap.getKey())
                     .getProjectName());

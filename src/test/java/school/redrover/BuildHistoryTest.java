@@ -32,7 +32,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickLogo()
                 .clickJobDropdownMenuBuildNow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickJobDropdownMenuBuildNow(FREESTYLE_PROJECT_NAME)
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .getNumberOfLinesInBuildHistoryTable();
 
         Assert.assertTrue(numberOfLinesInBuildHistoryTable >= 2);
@@ -42,7 +42,7 @@ public class BuildHistoryTest extends BaseTest {
     @Test
     public void testAddDescriptionToBuild() {
         String buildDescription = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME_PIPELINE)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
@@ -62,7 +62,7 @@ public class BuildHistoryTest extends BaseTest {
     @Test
     public void testConsoleFreestyleBuildLocation() {
         String consoleOutputText = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -70,7 +70,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .getHeader()
                 .clickLogo()
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
                 .getConsoleOutputText();
 
@@ -86,7 +86,7 @@ public class BuildHistoryTest extends BaseTest {
         final String currentUser = new MainPage(getDriver()).getHeader().getCurrentUserName();
 
         final String userConsoleOutput = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -94,7 +94,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .getHeader()
                 .clickLogo()
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
                 .getStartedByUser();
 
@@ -105,7 +105,7 @@ public class BuildHistoryTest extends BaseTest {
     @Test
     public void testConsoleOutputFreestyleBuildStatus() {
         final String consoleOutput = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(FREESTYLE_PROJECT_NAME)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -114,7 +114,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuild()
                 .getHeader()
                 .clickLogo()
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
                 .getConsoleOutputText();
 
@@ -134,7 +134,7 @@ public class BuildHistoryTest extends BaseTest {
         final String expectedStatusMessageText = "broken since this build";
 
         String actualStatusMessageText = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(namePipeline)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
@@ -147,7 +147,7 @@ public class BuildHistoryTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickBuildByGreenArrow("NewBuilds")
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .getStatusMessageText();
 
         Assert.assertEquals(actualStatusMessageText, expectedStatusMessageText);
@@ -159,7 +159,7 @@ public class BuildHistoryTest extends BaseTest {
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
         final String itemName = "TestProject";
         String projectNameOnBuildHistoryTimeline = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(itemName)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
@@ -167,7 +167,7 @@ public class BuildHistoryTest extends BaseTest {
                 .getHeader()
                 .clickLogo()
                 .clickBuildByGreenArrow(itemName)
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickBuildNameOnTimeline(itemName + " #1")
                 .getBubbleTitleOnTimeline();
 
@@ -185,13 +185,13 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .getHeader()
                 .clickLogo()
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickNameOfBuildLink()
                 .clickDeleteBuild(new FreestyleProjectPage(getDriver()))
                 .clickYesButton()
                 .getHeader()
                 .clickLogo()
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .getNumberOfLinesInBuildHistoryTable();
 
         Assert.assertEquals(countOfBuildsAfterDeleting, zeroBuild);

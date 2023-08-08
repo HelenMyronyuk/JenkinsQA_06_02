@@ -69,7 +69,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectName = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Folder)
@@ -86,7 +86,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage mainPage = new MainPage(getDriver())
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Folder)
@@ -123,7 +123,7 @@ public class FolderTest extends BaseTest {
     public void testCreateFromMyViewsNewItem(){
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Folder)
                 .clickOkButton(new FolderConfigPage(new FolderPage(getDriver())))
@@ -227,7 +227,7 @@ public class FolderTest extends BaseTest {
         String longName = RandomStringUtils.randomAlphanumeric(256);
 
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.Folder)
                 .getErrorMessage();

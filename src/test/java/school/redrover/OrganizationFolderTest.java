@@ -61,7 +61,7 @@ public class OrganizationFolderTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(ORGANIZATION_FOLDER_NAME)
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
@@ -78,7 +78,7 @@ public class OrganizationFolderTest extends BaseTest {
     @Test
     public void testCreateFromBuildHistoryPage() {
         boolean newProjectFromBuildHistoryPage = new MainPage(getDriver())
-                .clickBuildsHistoryButton()
+                .clickBuildsHistoryFromSideMenu()
                 .clickNewItem()
                 .enterItemName(ORGANIZATION_FOLDER_NAME)
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
@@ -116,7 +116,7 @@ public class OrganizationFolderTest extends BaseTest {
     public void testCreateFromMyViewsNewItem() {
         String newOrganizationFolderName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(ORGANIZATION_FOLDER_NAME)
                 .selectJobType(TestUtils.JobType.OrganizationFolder)
                 .clickOkButton(new OrganizationFolderConfigPage(new OrganizationFolderPage(getDriver())))
@@ -176,7 +176,7 @@ public class OrganizationFolderTest extends BaseTest {
     @Test(dataProvider = "wrong-character")
     public void testCreateUsingInvalidData(String invalidData) {
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(invalidData)
                 .selectJobType(TestUtils.JobType.OrganizationFolder);
 
@@ -217,7 +217,7 @@ public class OrganizationFolderTest extends BaseTest {
     @Test
     public void testCreateWithDotInsteadOfName() {
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(".")
                 .getItemInvalidMessage();
 
@@ -231,7 +231,7 @@ public class OrganizationFolderTest extends BaseTest {
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.OrganizationFolder)
                 .getErrorMessage();

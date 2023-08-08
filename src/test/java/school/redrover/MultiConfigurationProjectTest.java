@@ -60,7 +60,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
@@ -127,7 +127,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
@@ -217,7 +217,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         String longName = RandomStringUtils.randomAlphanumeric(256);
 
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.MultiConfigurationProject)
                 .getErrorMessage();
@@ -232,7 +232,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String exceptionMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .getItemNameRequiredErrorText();
 

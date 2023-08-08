@@ -87,7 +87,7 @@ public class HeaderTest extends BaseTest {
     @Test(dataProvider = "sideMenuOptions")
     public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
         String textTitle = new MainPage(getDriver())
-                .clickOptionOnLeftSideMenu(pageFromSideMenu.apply(getDriver()), sideMenuLink)
+                .clickOptionFromSideMenu(pageFromSideMenu.apply(getDriver()), sideMenuLink)
                 .getHeader()
                 .clickLogo()
                 .getTitle();

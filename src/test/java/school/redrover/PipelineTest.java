@@ -47,7 +47,7 @@ public class PipelineTest extends BaseTest {
     @Test
     public void testCreateFromNewItem() {
         String projectName = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
@@ -64,7 +64,7 @@ public class PipelineTest extends BaseTest {
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleOnLeftSideMenu()
+                .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Pipeline)
@@ -132,7 +132,7 @@ public class PipelineTest extends BaseTest {
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
@@ -149,7 +149,7 @@ public class PipelineTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Pipeline);
 
@@ -203,7 +203,7 @@ public class PipelineTest extends BaseTest {
     @Test
     public void testCreateWithDotInsteadOfName() {
         String getMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(".")
                 .getItemInvalidMessage();
 
@@ -217,7 +217,7 @@ public class PipelineTest extends BaseTest {
         String longName = RandomStringUtils.randomAlphanumeric(256);
 
         String errorMessage = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(longName)
                 .selectJobAndOkAndGoToBugPage(TestUtils.JobType.Pipeline)
                 .getErrorMessage();
@@ -232,7 +232,7 @@ public class PipelineTest extends BaseTest {
         final String allowedChar = "_-+=”{},";
 
         String projectNameDashboard = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(allowedChar)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
@@ -266,7 +266,7 @@ public class PipelineTest extends BaseTest {
     @Test
     public void testCreatingBasicPipelineProjectThroughJenkinsUI() {
         String resultOptionDefinitionFieldText = new MainPage(getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))

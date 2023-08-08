@@ -148,7 +148,7 @@ public class TestUtils {
         BaseConfigPage<?, ?> configPage = jobType.createConfigPage(baseTest.getDriver());
 
         new MainPage(driver)
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(name)
                 .selectJobType(jobType)
                 .clickOkButton(configPage)
@@ -222,7 +222,7 @@ public class TestUtils {
 
     public static CreateItemErrorPage createJobWithExistingName(BaseTest baseTest, String jobName, JobType jobType) {
         return new MainPage(baseTest.getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(jobName)
                 .selectJobAndOkAndGoError(jobType);
     }
@@ -236,7 +236,7 @@ public class TestUtils {
 
     public static CreateItemErrorPage createJobWithSpaceInsteadName(BaseTest baseTest, JobType jobType) {
         return new MainPage(baseTest.getDriver())
-                .clickNewItem()
+                .clickNewItemFromSideMenu()
                 .enterItemName(" ")
                 .selectJobAndOkAndGoError(jobType);
     }
