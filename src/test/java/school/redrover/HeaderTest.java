@@ -3,6 +3,7 @@ package school.redrover;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import jdk.jfr.Description;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -33,6 +34,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("UI")
+    @Description("Verification of logo presence on Header")
     @Test
     public void testHeaderLogoIconPresent() {
         boolean logoIcon = new MainPage(getDriver())
@@ -49,6 +51,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verification of search icon and help icon presence on Header")
     @Test
     public void testSearchPresent() {
         String placeholder = new MainPage(getDriver())
@@ -81,6 +84,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of opportunity to return to dashboard from NewJobPage, PeoplePage, BuildHistoryPage, ManageJenkinsPage, MyViewsPage")
     @Test(dataProvider = "sideMenuOptions")
     public void testReturnToDashboardFromSideMenuPages(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink) {
         String textTitle = new MainPage(getDriver())
@@ -98,6 +102,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verification of possibility to get BuiltInNodePage by pressing Enter in search field")
     @Test
     public void testPressEnterButtonSearchField() {
         String textPageFromSearchBox = new MainPage(getDriver())
@@ -110,6 +115,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verification of error message presence in case empty search result")
     @Test
     public void testSearchError() {
         String errorText = new MainPage(getDriver())
@@ -122,6 +128,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of log out by clicking LogOut button")
     @Test
     public void testLogOutButton() {
         boolean signInButtonPresence = new MainPage(getDriver())
@@ -134,6 +141,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verification of presence Notification and Security icons on Header")
     @Test
     public void testNotificationAndSecurityIcon() {
         String expectedManageJenkinsPageHeader = "Manage Jenkins";
@@ -157,6 +165,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to return to DashboardPage from ProjectPage and ConfigurationPage")
     @Test
     public void testReturnToDashboardFromProjectAndConfigPage() {
         final List<String> listItemName = new ArrayList<>(List.of("Test Item", "Second"));
@@ -184,6 +193,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to get UserPage by clicking User button on Header")
     @Test
     public void testUserPageFromUserButton() {
         boolean adminOrUserPage = new MainPage(getDriver())
@@ -209,6 +219,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to get BuildsPage, ConfigurePage, MyViewsPage, CredentialsPage from drop-down User menu on Header")
     @Test(dataProvider = "userDropDown")
     public void testSubMenuUserFromHeader(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String menu, String expectedPageName) {
@@ -226,6 +237,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to get ManageJenkinsPage by clicking Notification Icon on Header")
     @Test
     public void testNotificationPopUpClickManageJenkinsLink() {
         String screenManageFromPopUp = new MainPage(getDriver())
@@ -239,6 +251,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verification of possibility to get SearcBoxPage by clicking Help icon on Header")
     @Test
     public void testSearchHelpButton() {
         final String expectedResult = "Search Box";
@@ -254,6 +267,7 @@ public class HeaderTest extends BaseTest {
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Ignore
+    @Description("Verification of possibility to get ManageJenkinsPage by clicking Security icon on Header")
     @Test
     public void testSecurityPopUpClickManageJenkinsLink() {
         String actualHeaderPage = new MainPage(getDriver())
@@ -267,6 +281,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to search Job with its full name using search field on Header")
     @Test
     public void testSearchJobWithFullJobName() {
         final String projectName = "SearchProject";
@@ -284,6 +299,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to search Job with one letter using search field on Header")
     @Test
     public void testSearchJobWithOneLetter() {
         final String projectName = "Project";
@@ -302,6 +318,7 @@ public class HeaderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to search user with its full name using search field on Header")
     @Test
     public void testSearchPeople() {
         final String USER_NAME = "testuser";
