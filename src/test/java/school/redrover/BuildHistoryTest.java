@@ -59,7 +59,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Feature("Function")
-    @Ignore
     @Test
     public void testConsoleFreestyleBuildLocation() {
         String consoleOutputText = new MainPage(getDriver())
