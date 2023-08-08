@@ -2,6 +2,8 @@ package school.redrover;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -23,6 +25,7 @@ public class OrganizationFolderTest extends BaseTest {
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
     private static final String DISPLAY_NAME = "This is Display Name of Folder";
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'Create a job' button")
     @Test
@@ -39,6 +42,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(ORGANIZATION_FOLDER_NAME), ORGANIZATION_FOLDER_NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify job creation when clicking on 'New Item' button")
     @Test
@@ -51,6 +55,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(actualNewFolderName, "error was not show name folder");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'New Item' button from People Page")
     @Test
@@ -67,6 +72,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'New Item' button from Build History Page")
     @Test
@@ -84,6 +90,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage, "Error: the Organization Folder name is not displayed on Dashboard");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'New Item' button from Manage Jenkins Page")
     @Test
@@ -102,6 +109,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(organizationFolderName.contains(ORGANIZATION_FOLDER_NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'New Item' button from My Views Page")
     @Test
@@ -125,6 +133,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(newOrganizationFolderNameIsDisplayed);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Organization Folder project by clicking 'Create a Job' button from My Views Page")
     @Test
@@ -143,6 +152,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Organization Folder project with existing name")
     @Test
@@ -160,6 +170,7 @@ public class OrganizationFolderTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Organization Folder project with name using unsafe characters")
     @Test(dataProvider = "wrong-character")
@@ -173,6 +184,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidData + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Organization Folder project with empty name")
     @Test
@@ -187,6 +199,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message on Error Page while creating Organization Folder project with space instead name")
     @Test
@@ -198,6 +211,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Organization Folder project with dot instead name")
     @Test
@@ -210,6 +224,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "» “.” is not an allowed name");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Organization Folder project with long name")
     @Test
@@ -224,6 +239,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be renamed from drop down menu on the Main page")
     @Test
@@ -239,6 +255,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedName, ORGANIZATION_FOLDER_RENAMED);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be renamed from side menu on the Project page")
     @Test
@@ -255,6 +272,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(actualRenamedFolderName, ORGANIZATION_FOLDER_RENAMED);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Organization Folder project from drop-down menu with existing name")
     @Test
@@ -270,6 +288,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "The new name is the same as the current name.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Organization Folder project with invalid data")
     @Test(dataProvider = "wrong-character")
@@ -291,6 +310,7 @@ public class OrganizationFolderTest extends BaseTest {
         }
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Organization Folder project with '.' name'")
     @Test
@@ -306,6 +326,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "“.” is not an allowed name");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Configuration Page from side menu for Organization Folder Project")
     @Test
@@ -319,6 +340,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Scan Organization Folder Page" +
             " by click 'Re-run the Folder Computation'")
@@ -334,6 +356,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(headerScanOrganizationFolder, "Scan Organization Folder");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Pipeline Page" +
             " by click 'Creating a Jenkins Pipeline'")
@@ -351,6 +374,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineOneTutorial, "Pipeline");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Branches and Pull Requests Page" +
             " by click 'Creating Multibranch Projects'")
@@ -365,6 +389,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(createMultibranchProject, "Branches and Pull Requests");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Scan Organization Folder Log Page " +
             "from side menu for Organization Folder Project")
@@ -380,6 +405,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleScanOrgFolderLogPage, "Scan Organization Folder Log");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Organization Folder Events Page" +
             " from side menu for Organization Folder Project")
@@ -395,6 +421,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(eventTitle, "Organization Folder Events");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to navigate to Pipeline Syntax Page" +
             " from side menu for Organization Folder Project and added option 'echo: Print Message'")
@@ -414,6 +441,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Credentials Page " +
             "from side menu for Organization Folder Project")
@@ -429,6 +457,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleCredentials, "Credentials");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verification of presence Preview of description for Organization Folder Project from the Project page")
     @Test
@@ -445,6 +474,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be disable by click on the 'Disable Organization Folder' button on the Project page")
     @Test
@@ -459,6 +489,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(disabledText.substring(0, 46), "This Organization Folder is currently disabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to enable disabled Organization Folder Project from Project Page")
     @Test
@@ -478,6 +509,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(iconOrgFolder, "the dispayеd icon OrganizationFolder exists");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for Organization Folder Project")
     @Test
@@ -492,6 +524,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to navigate to Configuration Page from side menu menu for Organization Folder Project")
     @Test
@@ -506,6 +539,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be disable from Configuration page")
     @Test
@@ -522,6 +556,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(disabledText.contains("This Organization Folder is currently disabled"));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be enable from Configuration page")
     @Test
@@ -541,6 +576,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(enableOrgFolder.trim(), "Disable Organization Folder");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("Verification of presence Preview of description for Organization Folder Project from the Configuration page")
     @Test
@@ -557,6 +593,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("The 'Description' can be added to the Organization Folder from Configuration page")
     @Test
@@ -572,6 +609,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(textFromDescription, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("The 'Display name' can be added to the Organization Folder from Configuration page")
     @Test
@@ -588,6 +626,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(orgFolderPage.getHeader().clickLogo().getJobName(ORGANIZATION_FOLDER_NAME), DISPLAY_NAME);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("The 'Display name' can be deleted to the Organization Folder from Configuration page")
     @Test
@@ -607,6 +646,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(orgFolderName, ORGANIZATION_FOLDER_NAME);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Description("The 'Appearance' icon can be added to the Organization Folder from Configuration page")
     @Test
@@ -624,6 +664,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "The appearance icon was not changed to the default icon");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Description("The child health metrics can be added to Organization folder")
     @Test
@@ -642,6 +683,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("The 'Script Path' can be edited to the Organization Folder from Configuration page")
     @Test
@@ -661,6 +703,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(organizationFolderProjectIsPresent, scriptPath);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that deleting 'Organization Folder' can be canceled from drop-down menu on the Main page")
     @Test
@@ -676,6 +719,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that deleting 'Organization Folder' can be canceled from side menu on the Project page")
     @Test
@@ -692,6 +736,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be deleted with the 'Delete' option from drop-down menu on the Main page")
     @Test
@@ -707,6 +752,7 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertTrue(welcomeToJenkinsIsDisplayed, "error, Welcome to Jenkins! is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that the 'Organization Folder' can be deleted with the 'Delete' button from side menu on the Project page")
     @Test
