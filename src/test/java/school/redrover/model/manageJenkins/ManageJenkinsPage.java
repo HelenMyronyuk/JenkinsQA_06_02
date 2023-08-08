@@ -10,7 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.jobsSidemenu.CredentialsPage;
 import school.redrover.model.users.ManageUsersPage;
+import school.redrover.runner.TestUtils;
 
 import java.time.Duration;
 import java.util.List;
@@ -67,6 +69,9 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
 
     @FindBy(linkText = "Delete Agent")
     private WebElement deleteAgent;
+
+    @FindBy(xpath = "//dl/dt[text()='Manage Credentials']")
+    private WebElement credentialsLink;
 
     public ManageJenkinsPage(WebDriver driver) {
         super(driver);
@@ -227,5 +232,12 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
 
         return new DeletePage<>(new ManageNodesPage(getDriver()));
+    }
+
+    @Step("Click 'Credentials' link on 'ManageJenkins' Page")
+    public CredentialsPage clickCredentialsLink() {
+        TestUtils.scrollWithPauseByActions(this, manageUsersLink, 300);
+        TestUtils.clickByJavaScript(this, credentialsLink);
+        return new CredentialsPage(getDriver());
     }
 }

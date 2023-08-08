@@ -10,6 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.ConfigureSystemPage;
+import school.redrover.model.GlobalCredentialsPage;
 import school.redrover.model.MainPage;
 import school.redrover.model.manageJenkins.ManageJenkinsPage;
 import school.redrover.runner.BaseTest;
@@ -474,5 +475,28 @@ public class ManageJenkinsTest extends BaseTest {
                 .getNodesList();
 
         Assert.assertFalse(nodeNameList.contains(nodeName));
+    }
+
+    @Description("Create new credentials from Manage Jenkins page")
+    @Test
+    public void testCreateNewCredentials() {
+        final String credentialUsername = getRandomStr(5);
+        final String credentialPassword = getRandomStr(5);
+
+        int amountOfGlobalCredentialsBefore = new MainPage(getDriver())
+                .clickManageJenkinsPage()
+                .clickCredentialsLink()
+                .clickGlobalStoresScopedToJenkinsLink()
+                .getSizeOfGlobalCredentialsNamesList();
+
+        int amountOfGlobalCredentialsAfter = new GlobalCredentialsPage(getDriver())
+                .clickAddCredentialsButton()
+                .inputUsernameIntoUsernameInputField(credentialUsername)
+                .inputPasswordIntoPasswordInputField(credentialPassword)
+                .clickCreateButton()
+                .getSizeOfGlobalCredentialsNamesList();
+
+        Assert.assertNotEquals(amountOfGlobalCredentialsBefore, amountOfGlobalCredentialsAfter);
+        Assert.assertTrue(new GlobalCredentialsPage(getDriver()).isCredentialWithSpecificNameDisplayed(credentialUsername), "Credentials with specific name weren't created");
     }
 }
