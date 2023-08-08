@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -23,6 +25,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     private static final String DESCRIPTION = "Description";
     private static final String NEW_DESCRIPTION = "New Description";
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking Create a job button")
     @Test
     public void testCreateFromCreateAJob() {
@@ -37,6 +40,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "error was not show name project");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button")
     @Test
     public void testCreateFromNewItem() {
@@ -51,6 +55,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(new MainPage(getDriver()).getJobName(NAME), NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
@@ -66,6 +71,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
@@ -80,6 +86,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
@@ -96,6 +103,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(jobIsDisplayed, "Error: the MultiConfiguration Project's name is not displayed on Dashboard");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking Create a job button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
@@ -113,6 +121,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
@@ -128,6 +137,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the project name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with existing name")
     @Test
     public void testCreateWithExistingName() {
@@ -149,6 +159,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 {'<'}, {'>'}, {'/'}, {'?'}};
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with name using unsafe characters")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(char invalidCharacters) {
@@ -159,6 +170,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’" + " is an unsafe character");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCreateWithEmptyName() {
@@ -172,6 +184,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message on Error Page while creating MultiConfiguration project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
@@ -184,6 +197,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
@@ -196,6 +210,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with long name")
     @Test
     public void testCreateWithLongName() {
@@ -210,6 +225,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCheckExceptionOfNameToMultiConfiguration() {
@@ -223,6 +239,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(exceptionMessage, "» This field cannot be empty, please enter a valid name");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to rename MultiConfiguration project from drop-down menu")
     @Test
     public void testRenameFromDropDownMenu() {
@@ -239,6 +256,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newNameProject, NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to rename MultiConfiguration project from side menu")
     @Test
     public void testRenameFromSideMenu() {
@@ -254,6 +272,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newName, "Project " + NEW_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to rename MultiConfiguration project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
@@ -274,6 +293,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to rename MultiConfiguration project with unsafe data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
@@ -289,6 +309,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to build  MultiConfiguration project from drop-down menu")
     @Test
     public void testCreateBuildNowFromDropDown() {
@@ -304,6 +325,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(jobBuildStatus, "Success");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to build  MultiConfiguration project from side menu")
     @Test
     public void testCreateBuildNowFromSideMenu() {
@@ -318,6 +340,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to build  MultiConfiguration project by clicking green arrow")
     @Test
     public void testCreateBuildNowFromArrow() {
@@ -332,6 +355,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of presence display name for build of MultiConfiguration project")
     @Test
     public void testAddDisplayNameForBuild() {
@@ -349,6 +373,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 "Error: The Display Name for the Build has not been changed.");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of presence of preview description for build of MultiConfiguration project")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
@@ -365,6 +390,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of possibility to rename description for build of MultiConfiguration project")
     @Test
     public void testEditDescriptionFromBuildPage() {
@@ -386,6 +412,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to build changes of MultiConfiguration project")
     @Test
     public void testBuildChangesFromDropDown() {
@@ -402,6 +429,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to build changes from last build of MultiConfiguration project")
     @Test
     public void testBuildChangesFromLastBuild() {
@@ -415,6 +443,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(text.contains("No changes."));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to make console output from MultiConfiguration Project Page")
     @Test
     public void testConsoleOutputFromProjectPage() {
@@ -430,6 +459,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to make console output from last build of MultiConfiguration project")
     @Test
     public void testConsoleOutputFromLastBuild() {
@@ -454,6 +484,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to make console output for MultiConfiguration from Build Page")
     @Test
     public void testConsoleOutputFromBuildPage() {
@@ -469,6 +500,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to edit build information from drop-down menu for MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromDropDown() {
@@ -485,6 +517,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to edit build information from MultiConfiguration Project Page")
     @Test
     public void testEditBuildInformationFromProjectPage() {
@@ -499,6 +532,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to edit build information from last build of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromLastBuild() {
@@ -513,6 +547,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to edit build information from Build Page of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromBuildPage() {
@@ -528,6 +563,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of presence preview description of build from Edit Information Page for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
@@ -544,6 +580,8 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
+    @Description("Verification of description of build can be added from Edit Information Page for MultiConfiguration Project")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -560,6 +598,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to delete build from drop-down menu for MultiConfiguration Project")
     @Test
     public void testDeleteBuildNowFromDropDown() {
@@ -577,6 +616,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(noBuildsMessage, "Error");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of presence description for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
@@ -593,6 +633,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(previewDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Verification of presence description added from MultiConfiguration Project Page")
     @Test
     public void testAddDescriptionFromProjectPage() {
@@ -608,6 +649,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getDescription, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to disable MultiConfiguration Project from Project Page")
     @Test
     public void testDisableFromProjectPage() {
@@ -621,6 +663,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(disabled.getEnableButtonText(), "Enable");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of disabled icon of MultiConfiguration Project on Dashboard")
     @Test
     public void testCheckDisableIconOnDashboard() {
@@ -636,6 +679,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(statusIcon, "Disabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of impossibility to build for disabled MultiConfiguration Project")
     @Test
     public void testBuildNowOptionNotPresentInDisabledProject() {
@@ -651,6 +695,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(dropDownMenuItems.contains("Build Now"), "'Build Now' option is present in drop-down menu");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification for general parameters are visible and clickable for MultiConfiguration Project drop-down menu")
     @Test
     public void testCheckGeneralParametersDisplayedAndClickable() {
@@ -670,6 +715,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(checkboxesVisibleClickable);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to enable disabled MultiConfiguration Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
@@ -689,6 +735,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(projectPage, "Not built");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to navigate to Changes Page from side menu for MultiConfiguration Project")
     @Test
     public void testNavigateToChangesPageFromSideMenu() {
@@ -704,6 +751,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to navigate to Workspaces from Project Page for MultiConfiguration Project")
     @Test
     public void testNavigateToWorkspaceFromProjectPage(){
@@ -718,6 +766,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(workspacePage, "Workspace of MULTI_CONFIGURATION_NAME on Built-In Node");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
@@ -731,6 +780,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configure");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to navigate to Configuration Page from side menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
@@ -743,6 +793,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(multiConfigurationProjectConfigPage.getHeaderText(), "Configure");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testDisableFromConfigurationPage() {
@@ -765,6 +816,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(NAME), "Error: disabled project cannot be built");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to enable disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testEnableFromConfigurationPage() {
@@ -778,6 +830,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(enabledButtonText, "'Enabled' is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to configure old build for MultiConfiguration Project")
     @Test
     public void testConfigureOldBuildForProject() {
@@ -801,6 +854,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 multiConfigurationProjectConfigPage.getMaxNumOfBuildsToKeep()), displayedMaxNumOfBuildsToKeep);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to add MultiConfiguration Project on GitHub")
     @Test
     public void testAddingAProjectOnGithubToTheMultiConfigurationProject() {
@@ -822,7 +876,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
-
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of presence parameters for MultiConfiguration Project on GitHub")
     @Test
     public void testThisProjectIsParameterizedOptionsCollectToList() {
@@ -842,6 +896,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsProjectIsParameterizedList, expectedOptionsProjectIsParameterizedList);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verification of possibility to add build steps options for MultiConfiguration Project")
     @Test
     public void testAddBuildStepsOptionsCollectToList() {
@@ -860,6 +915,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of possibility to cancel deleting from drop-down menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
@@ -875,6 +931,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(projectIsPresent, "Error: the name of the MultiConfiguration project is not shown");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of possibility to cancel deleting from side menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromSideMenu() {
@@ -890,6 +947,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of possibility to delete MultiConfiguration Project from drop-down menu")
     @Test
     public void testDeleteItemFromDropDown() {
@@ -903,6 +961,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(deleteProject.size(), 0);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verification of possibility to delete MultiConfiguration Project from side menu")
     @Test
     public void testDeleteItemFromSideMenu() {
