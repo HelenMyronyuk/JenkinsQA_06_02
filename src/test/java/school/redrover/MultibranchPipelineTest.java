@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -20,6 +22,7 @@ public class MultibranchPipelineTest extends BaseTest {
     private static final String RENAMED = "MultibranchPipelineRenamed";
     private static final String DESCRIPTION = "Description";
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
@@ -35,6 +38,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromNewItem() {
@@ -50,6 +54,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(multibranchName, "Error! Job Is Not Displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
@@ -65,6 +70,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
@@ -79,6 +85,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
@@ -95,6 +102,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(jobIsDisplayed, "Error: the Multibranch Project's name is not displayed on Dashboard");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
@@ -112,6 +120,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
@@ -127,6 +136,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the folder name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
@@ -145,6 +155,7 @@ public class MultibranchPipelineTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
@@ -157,6 +168,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
@@ -170,6 +182,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
@@ -180,6 +193,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
@@ -194,6 +208,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCreateWithLongName() {
@@ -208,6 +223,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testFindCreatedMultibranchPipelineOnMainPage(){
@@ -219,6 +235,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(jobIsPresent);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameFromDropDownMenu() {
@@ -233,6 +250,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualProjectName, RENAMED);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
@@ -248,6 +266,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualDisplayedName, RENAMED);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
@@ -268,6 +287,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
@@ -283,6 +303,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
@@ -298,6 +319,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testConfigureProject() {
@@ -311,6 +333,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testReindexBranches() {
@@ -324,6 +347,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(headerScanMultibranchPipeline, "Scan Multibranch Pipeline");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testScanMultibranchPipelineLog() {
@@ -337,6 +361,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pageHeaderText, "Scan Multibranch Pipeline Log");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testMultibranchPipelineEvents() {
@@ -350,6 +375,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pageHeaderText, "Multibranch Pipeline Events");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testNavigateToPeoplePageFromProjectPage(){
@@ -363,6 +389,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(peoplePageText, "People - Welcome");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testNavigateToBuildHistoryPageFromProjectPage(){
@@ -376,6 +403,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(buildHistoryWelcomeText, "Build History of Welcome");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPipelineSyntax() {
@@ -397,6 +425,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedScript);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Test
     public void testCredentials(){
@@ -410,6 +439,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(credentialsText, "Credentials");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
@@ -423,6 +453,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(disabledText.substring(0, 47), "This Multibranch Pipeline is currently disabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
@@ -441,6 +472,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(iconMultibranch, "the displayеd icon Multibranch pipeline exists");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
@@ -454,6 +486,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
@@ -467,6 +500,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
@@ -481,6 +515,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(actualDisableMessage.contains("This Multibranch Pipeline is currently disabled"));
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
@@ -499,6 +534,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(enableMultibranch.trim(), "Disable Multibranch Pipeline");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
@@ -514,6 +550,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
@@ -532,6 +569,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(MultibranchPipeline, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
     @Test
     public void testAddDisplayName() {
@@ -549,6 +587,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(multibranchPipelinePage.isMetadataFolderIconDisplayed(), "error was not shown Metadata Folder icon");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Test
     public void testChooseDefaultIcon() {
@@ -565,6 +604,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "error was not shown default icon");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddHealthMetrics() {
@@ -582,6 +622,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(healthMetricIsVisible, "error was not shown Health Metrics");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteHealthMetrics() {
@@ -603,6 +644,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(healthMetric, "the deleted metric is no longer visible");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddHealthOfThePrimaryBranchOfARepository() {
@@ -621,6 +663,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(IsHealthMetricVisible, "Health metric is not displayed!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
@@ -635,6 +678,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
@@ -650,6 +694,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
@@ -663,6 +708,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(WelcomeJenkinsPage, "Welcome to Jenkins!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
@@ -677,6 +723,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Navigation")
     @Test
     public void testCreatingMultibranchProjectsLink() {
