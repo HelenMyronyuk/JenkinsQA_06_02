@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
@@ -23,6 +24,7 @@ public class OrganizationFolderTest extends BaseTest {
     private static final String DISPLAY_NAME = "This is Display Name of Folder";
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'Create a job' button")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -38,6 +40,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify job creation when clicking on 'New Item' button")
     @Test
     public void testCreateFromNewItem() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -49,6 +52,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'New Item' button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -64,6 +68,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'New Item' button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
         boolean newProjectFromBuildHistoryPage = new MainPage(getDriver())
@@ -80,6 +85,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'New Item' button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
         List<String> organizationFolderName = new MainPage(getDriver())
@@ -97,6 +103,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'New Item' button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
         String newOrganizationFolderName = new MainPage(getDriver())
@@ -119,6 +126,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Organization Folder project by clicking 'Create a Job' button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -136,6 +144,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Organization Folder project with existing name")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -152,6 +161,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Organization Folder project with name using unsafe characters")
     @Test(dataProvider = "wrong-character")
     public void testCreateUsingInvalidData(String invalidData) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -164,6 +174,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Organization Folder project with empty name")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -177,6 +188,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify job creation when clicking on 'New Item' button")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -187,6 +199,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Organization Folder project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
         String errorMessage = new MainPage(getDriver())
@@ -198,6 +211,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Organization Folder project with long name")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -211,6 +225,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be renamed from drop down menu on the Main page")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -225,6 +240,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be renamed from side menu on the Project page")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -240,6 +256,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Organization Folder project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -254,6 +271,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Organization Folder project with invalid data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData) {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -274,6 +292,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Organization Folder project with '.' name'")
     @Test
     public void testRenameWithDotName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -287,7 +306,8 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(errorMessage, "“.” is not an allowed name");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Configuration Page from side menu for Organization Folder Project")
     @Test
     public void testConfigureProject() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -299,7 +319,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Scan Organization Folder Page" +
+            " by click 'Re-run the Folder Computation'")
     @Test
     public void testRerunFolderComputation() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -312,7 +334,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(headerScanOrganizationFolder, "Scan Organization Folder");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Pipeline Page" +
+            " by click 'Creating a Jenkins Pipeline'")
     @Test
     public void testCreatingJenkinsPipeline() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -327,7 +351,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineOneTutorial, "Pipeline");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Branches and Pull Requests Page" +
+            " by click 'Creating Multibranch Projects'")
     @Test
     public void testCreateMultibranchProject() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, false);
@@ -339,7 +365,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(createMultibranchProject, "Branches and Pull Requests");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Scan Organization Folder Log Page " +
+            "from side menu for Organization Folder Project")
     @Test
     public void testScanOrgFolderLog() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -352,7 +380,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(titleScanOrgFolderLogPage, "Scan Organization Folder Log");
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Organization Folder Events Page" +
+            " from side menu for Organization Folder Project")
     @Test
     public void testOrganizationFolderEvents() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -366,6 +396,8 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Pipeline Syntax Page" +
+            " from side menu for Organization Folder Project and added option 'echo: Print Message'")
     @Test
     public void testOrganizationFolderConfigPipelineSyntax() {
         final String expectedText = "echo '" + PRINT_MESSAGE_PIPELINE_SYNTAX + "'";
@@ -382,7 +414,9 @@ public class OrganizationFolderTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedText);
     }
 
-    @Feature("Function")
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Credentials Page " +
+            "from side menu for Organization Folder Project")
     @Test
     public void testCredentials() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -396,6 +430,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence Preview of description for Organization Folder Project from the Project page")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -411,6 +446,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be disable by click on the 'Disable Organization Folder' button on the Project page")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -424,6 +460,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to enable disabled Organization Folder Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -442,6 +479,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for Organization Folder Project")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -455,6 +493,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Configuration Page from side menu menu for Organization Folder Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -468,6 +507,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be disable from Configuration page")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -483,6 +523,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be enable from Configuration page")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -501,6 +542,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence Preview of description for Organization Folder Project from the Configuration page")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -516,6 +558,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("The 'Description' can be added to the Organization Folder from Configuration page")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -530,6 +573,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("The 'Display name' can be added to the Organization Folder from Configuration page")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -545,6 +589,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("The 'Display name' can be deleted to the Organization Folder from Configuration page")
     @Test
     public void testDeleteDisplayName() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -563,6 +608,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("UI")
+    @Description("The 'Appearance' icon can be added to the Organization Folder from Configuration page")
     @Test
     public void testAppearanceIconHasChanged() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -579,6 +625,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("The child health metrics can be added to Organization folder")
     @Test
     public void testAddHealthMetricsFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -596,6 +643,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("The 'Script Path' can be edited to the Organization Folder from Configuration page")
     @Test
     public void testConfigureProjectsEditScriptPath() {
         final String scriptPath = "Test Script Path";
@@ -614,6 +662,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that deleting 'Organization Folder' can be canceled from drop-down menu on the Main page")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -628,6 +677,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that deleting 'Organization Folder' can be canceled from side menu on the Project page")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
@@ -643,6 +693,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be deleted with the 'Delete' option from drop-down menu on the Main page")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, "OrgFolder", TestUtils.JobType.OrganizationFolder, true);
@@ -657,6 +708,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be deleted with the 'Delete' button from side menu on the Project page")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, "OrgFolder", TestUtils.JobType.OrganizationFolder, true);
