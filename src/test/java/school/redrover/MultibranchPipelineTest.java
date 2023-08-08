@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -19,6 +20,7 @@ public class MultibranchPipelineTest extends BaseTest {
     private static final String RENAMED = "MultibranchPipelineRenamed";
     private static final String DESCRIPTION = "Description";
 
+    @Feature("Function")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -33,6 +35,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromNewItem() {
         boolean multibranchName = new MainPage(getDriver())
@@ -47,6 +50,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(multibranchName, "Error! Job Is Not Displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -61,6 +65,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -74,6 +79,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromManageJenkinsPage() {
         boolean jobIsDisplayed = new MainPage(getDriver())
@@ -89,6 +95,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(jobIsDisplayed, "Error: the Multibranch Project's name is not displayed on Dashboard");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -105,6 +112,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -119,6 +127,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the folder name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -136,6 +145,7 @@ public class MultibranchPipelineTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -147,6 +157,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -159,6 +170,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -168,6 +180,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithDotInsteadOfName() {
         final String expectedError = "» “.” is not an allowed name";
@@ -181,6 +194,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Feature("Function")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -194,6 +208,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Feature("Function")
     @Test
     public void testFindCreatedMultibranchPipelineOnMainPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -204,6 +219,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(jobIsPresent);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -217,6 +233,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualProjectName, RENAMED);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -231,6 +248,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualDisplayedName, RENAMED);
     }
 
+    @Feature("Function")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -250,6 +268,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Feature("Function")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -264,6 +283,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -278,6 +298,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Feature("Navigation")
     @Test
     public void testConfigureProject() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -290,6 +311,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(configurationHeaderText, "Configuration");
     }
 
+    @Feature("Navigation")
     @Test
     public void testReindexBranches() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -302,6 +324,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(headerScanMultibranchPipeline, "Scan Multibranch Pipeline");
     }
 
+    @Feature("Navigation")
     @Test
     public void testScanMultibranchPipelineLog() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -314,6 +337,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pageHeaderText, "Scan Multibranch Pipeline Log");
     }
 
+    @Feature("Navigation")
     @Test
     public void testMultibranchPipelineEvents() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -326,6 +350,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pageHeaderText, "Multibranch Pipeline Events");
     }
 
+    @Feature("Navigation")
     @Test
     public void testNavigateToPeoplePageFromProjectPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -338,6 +363,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(peoplePageText, "People - Welcome");
     }
 
+    @Feature("Navigation")
     @Test
     public void testNavigateToBuildHistoryPageFromProjectPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -350,6 +376,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(buildHistoryWelcomeText, "Build History of Welcome");
     }
 
+    @Feature("Function")
     @Test
     public void testPipelineSyntax() {
         final String sampleStep = "sleep: Sleep";
@@ -370,6 +397,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(pipelineSyntax, expectedScript);
     }
 
+    @Feature("Navigation")
     @Test
     public void testCredentials(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -382,6 +410,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(credentialsText, "Credentials");
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -394,6 +423,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(disabledText.substring(0, 47), "This Multibranch Pipeline is currently disabled");
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -411,6 +441,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(iconMultibranch, "the displayеd icon Multibranch pipeline exists");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -423,6 +454,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Feature("Function")
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -435,6 +467,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(getHeaderText, "Configuration");
     }
 
+    @Feature("Function")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -448,6 +481,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(actualDisableMessage.contains("This Multibranch Pipeline is currently disabled"));
     }
 
+    @Feature("Function")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -465,6 +499,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(enableMultibranch.trim(), "Disable Multibranch Pipeline");
     }
 
+    @Feature("Function")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -479,6 +514,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -496,6 +532,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(MultibranchPipeline, DESCRIPTION);
     }
 
+    @Feature("Function")
     @Test
     public void testAddDisplayName() {
         final String multibranchPipelineDisplayName = "MultibranchDisplayName";
@@ -512,6 +549,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(multibranchPipelinePage.isMetadataFolderIconDisplayed(), "error was not shown Metadata Folder icon");
     }
 
+    @Feature("UI")
     @Test
     public void testChooseDefaultIcon() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -527,6 +565,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(defaultIconDisplayed, "error was not shown default icon");
     }
 
+    @Feature("Function")
     @Test
     public void testAddHealthMetrics() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -543,6 +582,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(healthMetricIsVisible, "error was not shown Health Metrics");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteHealthMetrics() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -563,6 +603,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(healthMetric, "the deleted metric is no longer visible");
     }
 
+    @Feature("Function")
     @Test
     public void testAddHealthOfThePrimaryBranchOfARepository() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -580,6 +621,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(IsHealthMetricVisible, "Health metric is not displayed!");
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -593,6 +635,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -607,6 +650,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -619,6 +663,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(WelcomeJenkinsPage, "Welcome to Jenkins!");
     }
 
+    @Feature("Function")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -632,6 +677,7 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
+    @Feature("Navigation")
     @Test
     public void testCreatingMultibranchProjectsLink() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
