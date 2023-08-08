@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -24,6 +25,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'Create a job' button")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -40,6 +42,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify job creation when clicking on 'New Item' button")
     @Test
     public void testCreateFromNewItem() {
         boolean multibranchName = new MainPage(getDriver())
@@ -56,6 +59,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -72,6 +76,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -87,6 +92,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
         boolean jobIsDisplayed = new MainPage(getDriver())
@@ -104,6 +110,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'Create a Job' button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -122,6 +129,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -138,6 +146,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating Multibranch Pipeline project with existing name")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -157,6 +166,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating Multibranch Pipeline project with name using invalid data")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -170,6 +180,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating Multibranch Pipeline project with empty name")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -184,6 +195,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message on Error Page while creating Multibranch Pipeline project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -195,6 +207,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating Multibranch Pipeline project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
         final String expectedError = "» “.” is not an allowed name";
@@ -210,6 +223,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of showing error message while creating Multibranch Pipeline project with long name")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -225,6 +239,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Find created Multibranch Pipeline project on Main page")
     @Test
     public void testFindCreatedMultibranchPipelineOnMainPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -237,6 +252,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be renamed from drop down menu on the Main page")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -252,6 +268,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be renamed from side menu on the Project page")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -268,6 +285,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to rename Multibranch Pipeline project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -289,6 +307,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to rename Multibranch Pipeline project with invalid data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -305,6 +324,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of presence Preview of description for Multibranch Pipeline Project from the Project page")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -321,6 +341,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Configuration Page" +
+            " by click 'Configure the project'")
     @Test
     public void testConfigureProject() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -335,6 +357,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Scan Multibranch Pipeline Page" +
+            " by click 'Re-index branches'")
     @Test
     public void testReindexBranches() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -349,6 +373,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Scan Multibranch Pipeline Log Page" +
+            " from side menu for Multibranch Pipeline Project")
     @Test
     public void testScanMultibranchPipelineLog() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -363,6 +389,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Multibranch Pipeline Events Page" +
+            " from side menu for Multibranch Pipeline Project")
     @Test
     public void testMultibranchPipelineEvents() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -377,6 +405,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to People Page" +
+            " from side menu for Multibranch Pipeline Project")
     @Test
     public void testNavigateToPeoplePageFromProjectPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -391,6 +421,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Build History of Welcome Page" +
+            " from side menu for Multibranch Pipeline Project")
     @Test
     public void testNavigateToBuildHistoryPageFromProjectPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -405,6 +437,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Pipeline Syntax Page" +
+            " from side menu for Multibranch Pipeline Project and added option 'sleep: Sleep'")
     @Test
     public void testPipelineSyntax() {
         final String sampleStep = "sleep: Sleep";
@@ -427,6 +461,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Credentials Page " +
+            "from side menu for Multibranch Pipeline Project")
     @Test
     public void testCredentials(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -441,6 +477,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that the 'Organization Folder' can be disable by click on the 'Disable Multibranch Pipeline' button on the Project page")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -455,6 +492,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to enable disabled Multibranch Pipeline Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -474,6 +512,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for Multibranch Pipeline Project")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -488,6 +527,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to navigate to Configuration Page from side menu menu for Multibranch Pipeline Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -502,6 +542,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be disable from Configuration page")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -517,6 +558,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be enable from Configuration page")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -536,6 +578,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of presence Preview of description for Multibranch Pipeline Project from the Configuration page")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -552,6 +595,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Description' can be added to the Multibranch Pipeline from Configuration page")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -571,6 +615,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Display name' can be added to the Multibranch Pipeline from Configuration page")
     @Test
     public void testAddDisplayName() {
         final String multibranchPipelineDisplayName = "MultibranchDisplayName";
@@ -589,6 +634,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("The 'Appearance' icon can be added to the Multibranch Pipeline from Configuration page " +
+            "and can be choose Default icon")
     @Test
     public void testChooseDefaultIcon() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -606,6 +653,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("The 'child health metrics' can be added to Multibranch Pipeline")
     @Test
     public void testAddHealthMetrics() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -624,6 +672,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("The 'child health metrics' can be deleted to Multibranch Pipeline")
     @Test
     public void testDeleteHealthMetrics() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -646,6 +695,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("The 'Health of the primary branch of a repository' can be added to Multibranch Pipeline")
     @Test
     public void testAddHealthOfThePrimaryBranchOfARepository() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -665,6 +715,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that deleting 'Multibranch Pipeline' can be canceled from drop-down menu on the Main page")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -680,6 +731,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that deleting 'Multibranch Pipeline' can be canceled from side menu on the Project page")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -696,6 +748,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be deleted with the 'Delete' option from drop-down menu on the Main page")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -710,6 +763,7 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verify that the 'Multibranch Pipeline' can be deleted with the 'Delete' button from side menu on the Project page")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
@@ -725,6 +779,8 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Branches and Pull Requests Page" +
+            " by click 'Creating Multibranch Projects'")
     @Test
     public void testCreatingMultibranchProjectsLink() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);

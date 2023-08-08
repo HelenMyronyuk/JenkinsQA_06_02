@@ -188,7 +188,7 @@ public class OrganizationFolderTest extends BaseTest {
     }
 
     @Feature("Function")
-    @Description("Verify job creation when clicking on 'New Item' button")
+    @Description("Verification of showing error message on Error Page while creating Organization Folder project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
