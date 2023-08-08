@@ -299,4 +299,20 @@ public class HeaderTest extends BaseTest {
         assertEquals("Project " + projectName, actualResult);
 
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("UI")
+    @Test
+    public void testSearchPeople() {
+        final String USER_NAME = "testuser";
+
+        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, "p@ssword123", "Test User", "test@test.com");
+
+        String actualUserName = new MainPage(getDriver())
+                .getHeader()
+                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
+                .getActualNameUser();
+
+        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
+    }
 }

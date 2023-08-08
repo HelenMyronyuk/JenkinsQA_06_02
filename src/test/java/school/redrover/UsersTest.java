@@ -243,20 +243,6 @@ public class UsersTest extends BaseTest {
         Assert.assertTrue(userIDButtonNotContainsArrow, "UserID button has sort arrow");
     }
 
-    @Severity(SeverityLevel.MINOR)
-    @Feature("UI")
-    @Test
-    public void testSearchPeople() {
-        TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
-
-        String actualUserName = new MainPage(getDriver())
-                .getHeader()
-                .sendKeysSearchBox(USER_NAME, new UserPage(getDriver()))
-                .getActualNameUser();
-
-        Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
-    }
-
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
