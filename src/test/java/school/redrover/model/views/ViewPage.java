@@ -1,5 +1,6 @@
 package school.redrover.model.views;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,18 +27,21 @@ public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescriptio
         super(driver);
     }
 
+    @Step("Click the 'Edit View' button on the Side menu")
     public <ViewConfigPage extends BaseMainHeaderPage<?>> ViewConfigPage clickEditView(TestUtils.ViewType viewType, Class<ViewConfigPage> clazz) {
         getWait2().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Edit View']/.."))).click();
 
         return (ViewConfigPage) viewType.createNextPage(getDriver());
     }
 
+    @Step("Click the ‘Delete View’ button on the Side menu")
     public <RedirectPage extends BasePage<?,?>> DeletePage<RedirectPage> clickDeleteView(RedirectPage redirectPage) {
         getWait10().until(ExpectedConditions.elementToBeClickable(deleteViewLink)).click();
 
         return new DeletePage<>(redirectPage);
     }
 
+    @Step("Click the 'Edit View' button on the Side menu")
     public ViewPage clickEditView() {
         editViewSideMenu.click();
 
