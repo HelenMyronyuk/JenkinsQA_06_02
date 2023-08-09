@@ -3,6 +3,7 @@ package school.redrover;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import jdk.jfr.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -28,6 +29,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking Create a Job button")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -44,6 +46,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking +NewItem button")
     @Test
     public void testCreateFromNewItem() {
         String projectName = new MainPage(getDriver())
@@ -61,6 +64,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking +NewItem button from PeoplePage")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -77,6 +81,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking +NewItem button from BuildHistoryPage")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -92,6 +97,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking +NewItem button from ManageJenkinsPage")
     @Test
     public void testCreateFromManageJenkinsPage() {
         List<String> jobList = new MainPage(getDriver())
@@ -110,6 +116,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking CreateAJob button from MyViewsPage")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -128,6 +135,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project by clicking +NewItem button from MyViewsPage")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -144,6 +152,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with existing name")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -164,6 +173,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with unsafe characters")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidDate(String invalidCharacters) {
         NewJobPage newJobPage =
@@ -175,6 +185,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with empty name")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -189,6 +200,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with space instead of name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage createItemErrorPage =
@@ -200,6 +212,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with dot instead of name")
     @Test
     public void testCreateWithDotInsteadOfName() {
         String getMessage = new MainPage(getDriver())
@@ -212,6 +225,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of impossibility to create Pipeline project with too long name")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -227,6 +241,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project with allowed characters")
     @Test
     public void testCreateWithAllowedCharacters() {
         final String allowedChar = "_-+=”{},";
@@ -246,6 +261,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to sort Pipeline projects alphabetically")
     @Test
     public void testSortingPipelineProjectAlphabetically() {
         List<String> namesOfJobs = Arrays.asList("UProject", "SProject", "AProject");
@@ -263,6 +279,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project through Jenkins UI")
     @Test
     public void testCreatingBasicPipelineProjectThroughJenkinsUI() {
         String resultOptionDefinitionFieldText = new MainPage(getDriver())
@@ -278,6 +295,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to rename Pipeline project from drop-down menu")
     @Test
     public void testRenameFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -295,6 +313,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to rename Pipeline project from side menu")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -313,6 +332,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to rename Pipeline project with current name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -334,6 +354,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to rename Pipeline project with unsafe character")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -350,6 +371,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create build with parameters for Pipeline project")
     @Test
     public void testCreateBuildWithParameters() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -366,6 +388,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create build for Pipeline project from drop-down menu")
     @Test
     public void testCreateBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -381,6 +404,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create build for Pipeline project from side menu")
     @Test
     public void testCreateBuildNowFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -396,6 +420,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create build for Pipeline project by clicking green arrow")
     @Test
     public void testCreateBuildNowFromArrow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -411,6 +436,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to add display name for build of Pipeline project")
     @Test
     public void testAddDisplayNameForBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -430,6 +456,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to preview description from BuildPage for Pipeline project")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -448,6 +475,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to add description for Pipeline project from BuildPage")
     @Test
     public void testAddDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -466,6 +494,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit description for Pipeline project from BuildPage")
     @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -488,6 +517,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Pipeline project from drop-down menu")
     @Test
     public void testBuildChangesFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -505,6 +535,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Pipeline project from last build")
     @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -520,6 +551,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Pipeline project from ProjectPage")
     @Test
     public void testBuildChangesFromProjectPage() {
         final String title = "Changes";
@@ -536,6 +568,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to console output for Pipeline project from drop-down menu")
     @Test
     public void testConsoleOutputFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -552,6 +585,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to console output for Pipeline project from ProjectPage")
     @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -568,6 +602,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to console output for Pipeline project from LastBuild")
     @Test
     public void testConsoleOutputFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -593,6 +628,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("UI")
+    @Description("Verification of possibility to console output for Pipeline project from BuildPage")
     @Test
     public void testConsoleOutputFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -609,6 +645,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit build information for Pipeline project from drop-down menu")
     @Test
     public void testEditBuildInformationFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -626,6 +663,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit build information for Pipeline project from ProjectPage")
     @Test
     public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -641,6 +679,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit build information for Pipeline project from LastBuild")
     @Test
     public void testEditBuildInformationFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -656,6 +695,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit build information for Pipeline project from BuildPage")
     @Test
     public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -672,6 +712,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence preview description of build information for Pipeline project")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -689,6 +730,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of presence description of build information for Pipeline project")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -707,6 +749,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete build  for Pipeline project from drop-down menu")
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -725,6 +768,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete build  for Pipeline project from side menu")
     @Test
     public void testDeleteBuildNowFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -742,6 +786,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete build  for Pipeline project from LastBuild")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -758,6 +803,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete build  for Pipeline project from BuildPage")
     @Test
     public void testDeleteBuildNowFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -775,6 +821,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to replay build  for Pipeline project from drop-down menu")
     @Test
     public void testReplayBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -793,6 +840,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to replay build  for Pipeline project from ProjectPage")
     @Test
     public void testReplayBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -811,6 +859,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to replay build  for Pipeline project from LastBuild")
     @Test
     public void testReplayBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -831,6 +880,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to replay build  for Pipeline project from BuildPage")
     @Test
     public void testReplayBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -849,6 +899,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to step build for Pipeline project from drop-down menu")
     @Test
     public void testPipelineStepsBuildFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -866,6 +917,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to step build for Pipeline project from ProjectPage")
     @Test
     public void testPipelineStepsBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -881,6 +933,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to step build for Pipeline project from LastBuild")
     @Test
     public void testPipelineStepsBuildFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -899,6 +952,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to step build for Pipeline project from BuildPage")
     @Test
     public void testPipelineStepsBuildFromBuildPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -915,6 +969,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence workspaces for Pipeline project from drop-down menu")
     @Test
     public void testWorkspacesBuildFromDropDown() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -934,6 +989,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence workspaces for Pipeline project from ProjectPage")
     @Test
     public void testWorkspacesBuildFromProjectPage() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -952,6 +1008,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence workspaces for Pipeline project from LastBuild")
     @Test
     public void testWorkspacesBuildFromLastBuild() {
         final String pageHeaderText = "Workspaces for " + NAME + " #1";
@@ -970,6 +1027,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to make several builds of Pipeline project")
     @Test
     public void testMakeSeveralBuilds() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -990,6 +1048,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to make script sample 'Hello' for Pipeline project")
     @Test
     public void testSelectHelloAndConsoleOutputSuccess() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1008,6 +1067,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence description of Pipeline project from ProjectPage")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1024,6 +1084,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to make script sample 'Hello' for Pipeline project")
     @Test
     public void testPipelineBuildNow() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1041,6 +1102,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to add description for Pipeline project from ProjectPage")
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1056,6 +1118,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to disable Pipeline project from ProjectPage")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1072,6 +1135,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to add enable Pipeline project from ProjectPage")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1092,6 +1156,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to get changes information for builds of Pipeline project")
     @Test
     public void testProjectChangesFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1108,6 +1173,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to build Pipeline project after making changes in code")
     @Test
     public void testPipelineBuildingAfterChangesInCode() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1127,6 +1193,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to get ConfigurationPage for  Pipeline project from drop-down menu")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1140,6 +1207,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to get ConfigurationPage for  Pipeline project from side menu")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
@@ -1153,6 +1221,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to disable Pipeline project from ConfigurationPage")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1170,6 +1239,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to enable Pipeline project from ConfigurationPage")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1187,6 +1257,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to edit description for Pipeline project from ConfigurationPage")
     @Test
     public void testEditDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1208,6 +1279,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of presence preview description for Pipeline project from ConfigurationPage")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1223,6 +1295,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to add description for Pipeline project from ConfigurationPage")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1239,6 +1312,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of presence checkbox for discard old builds for Pipeline project")
     @Test
     public void testDiscardOldBuildsIsChecked() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1256,6 +1330,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to discard old builds Pipeline project")
     @Test
     public void testDiscardOldBuildsPipeline() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1273,6 +1348,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to discard old builds parameters for Pipeline project")
     @Test
     public void testDiscardOldBuildsParams() {
         final int days = 7;
@@ -1294,6 +1370,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of impossibility to discard old builds days =0 for Pipeline project")
     @Test
     public void testDiscardOldBuilds0Days() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1310,6 +1387,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to add project on GitHub to Pipeline project")
     @Test
     public void testAddingAProjectOnGithubToThePipelineProject() {
         final String gitHubUrl = "https://github.com/ArtyomDulya/TestRepo";
@@ -1332,6 +1410,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to add boolean parameter with description for Pipeline project")
     @Test
     public void testAddBooleanParameterWithDescription() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1360,6 +1439,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to add boolean parameter for Pipeline project")
     @Test
     public void testAddBooleanParameter() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1384,6 +1464,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to add all parameters for Pipeline project")
     @Test
     public void testThisProjectIsParameterizedCheckAllParameters() {
         List<String> expectedOptionsOfAddParameterDropdown = List.of(
@@ -1403,6 +1484,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of possibility to display name for Pipeline project")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, false);
@@ -1429,6 +1511,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of possibility to create Pipeline project with script")
     @Test
     public void testCreateNewPipelineWithScript() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1447,6 +1530,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to cancel deleting Pipeline project from drop-down menu")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1461,6 +1545,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to cancel deleting Pipeline project from side menu")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1477,6 +1562,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete Pipeline project from drop-down menu")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
@@ -1491,6 +1577,7 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
+    @Description("Verification of possibility to delete Pipeline project from side menu")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
