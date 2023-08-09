@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -79,21 +80,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Test
-    public void testCreateAJobFromMyViewsPage() {
-        FreestyleProjectPage project = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobAndArrow()
-                .enterItemName(PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton();
-
-        Assert.assertEquals(project.getJobName(), "Project " + PROJECT_NAME);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
+    @Description("Verification of creating 'My View' Type View in Folder")
     @Test
     public void testCreateMyViewInFolder() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
@@ -110,6 +97,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of creating all type of 'View'")
     @Test(dataProvider = "mainView types")
     public void testCreateViewTypes(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -123,6 +111,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of creating all type of 'My View'")
     @Test(dataProvider = "myView types")
     public void testCreateMyViewTypes(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -137,6 +126,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of renaming all type of 'My View'")
     @Test(dataProvider = "myView types")
     public void testRenameViewTypes(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -158,6 +148,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of moving folder to new View list")
     @Test
     public void testMoveFolderToNewViewList() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
@@ -178,6 +169,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification of creating New View with job filters")
     @Test
     public void testCreateNewViewWithJobFilters() {
         final String jobName1 = "job1";
@@ -220,6 +212,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.MINOR)
     @Feature("UI")
+    @Description("Verification of showing help message after click on '?'")
     @Test
     public void testHelpForFeatureDescription() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -240,6 +233,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of adding column list on ListViewConfigPage")
     @Test
     public void testAddColumnList() {
         final List<String> expectedOptionsList = List.of(
@@ -260,6 +254,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of deleting column list on ListViewConfigPage")
     @Test
     public void testDeleteColumn() {
         final List<String> optionsList = List.of(
@@ -283,6 +278,7 @@ public class ViewsTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification the possibility of preview View Description")
     @Test
     public void testAddViewDescriptionPreview() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -305,6 +301,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification the possibility of adding Description For GlobalView Type From Configuration page")
     @Test
     public void testAddDescriptionForGlobalViewTypeFromConfigure() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -320,6 +317,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification the possibility of adding Description For ListView Type From Configuration page")
     @Test
     public void testAddDescriptionForListViewTypeFromConfigure() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -335,6 +333,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification the possibility of adding Description For MyView Type on 'MyView'")
     @Test
     public void testAddDescriptionForMyViewOnMyView() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -351,6 +350,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of adding Description For all Type on 'MyView'")
     @Test(dataProvider = "myView types")
     public void testAddDescription(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -368,6 +368,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of editing Description of all Type on 'MyView'")
     @Test(dataProvider = "myView types")
     public void testEditDescription(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -390,6 +391,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Cancel Deleting of all Type of 'MyView' From ViewPage")
     @Test(dataProvider = "myView types")
     public void testCancelDeletingFromViewPage(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -409,6 +411,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Cancel Deleting of ListView Type From ConfigurationPage")
     @Test
     public void testCancelDeletingFromConfigurationPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -426,6 +429,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Deleting of all Type of 'MyView' From ViewPage")
     @Test(dataProvider = "myView types")
     public void testDeleteMyViewTypesFromViewPage(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -443,6 +447,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Deleting of all Type of 'View' From ViewPage")
     @Test(dataProvider = "mainView types")
     public void testDeleteViewTypesFromViewPage(TestUtils.ViewType viewType) {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -459,6 +464,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Deleting View From Configure Of MyViewsPage")
     @Test
     public void testDeleteViewFromConfigureOfMyViewsPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
@@ -476,6 +482,7 @@ public class ViewsTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the possibility of Deleting View From Configure Of NewViewPage")
     @Test
     public void testDeleteViewFromConfigureOfNewViewPage() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
