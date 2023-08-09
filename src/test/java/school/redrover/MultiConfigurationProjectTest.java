@@ -1,6 +1,7 @@
 package school.redrover;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,6 +27,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     private static final String NEW_DESCRIPTION = "New Description";
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking Create a job button")
     @Test
     public void testCreateFromCreateAJob() {
@@ -41,6 +43,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button")
     @Test
     public void testCreateFromNewItem() {
@@ -56,6 +59,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
@@ -72,6 +76,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
@@ -87,6 +92,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Manage Jenkins Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
@@ -104,6 +110,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking Create a job button from My Views Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
@@ -122,6 +129,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
@@ -138,6 +146,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with existing name")
     @Test
     public void testCreateWithExistingName() {
@@ -160,6 +169,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with name using unsafe characters")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(char invalidCharacters) {
@@ -171,6 +181,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCreateWithEmptyName() {
@@ -185,6 +196,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message on Error Page while creating MultiConfiguration project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
@@ -198,6 +210,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
@@ -211,6 +224,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with long name")
     @Test
     public void testCreateWithLongName() {
@@ -226,6 +240,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
     @Test
     public void testCheckExceptionOfNameToMultiConfiguration() {
@@ -240,6 +255,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to rename MultiConfiguration project from drop-down menu")
     @Test
     public void testRenameFromDropDownMenu() {
@@ -257,6 +273,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to rename MultiConfiguration project from side menu")
     @Test
     public void testRenameFromSideMenu() {
@@ -273,6 +290,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of impossibility to rename MultiConfiguration project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
@@ -294,6 +312,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of impossibility to rename MultiConfiguration project with unsafe data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
@@ -310,6 +329,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to build  MultiConfiguration project from drop-down menu")
     @Test
     public void testCreateBuildNowFromDropDown() {
@@ -326,6 +346,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to build  MultiConfiguration project from side menu")
     @Test
     public void testCreateBuildNowFromSideMenu() {
@@ -341,6 +362,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to build  MultiConfiguration project by clicking green arrow")
     @Test
     public void testCreateBuildNowFromArrow() {
@@ -356,6 +378,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of presence display name for build of MultiConfiguration project")
     @Test
     public void testAddDisplayNameForBuild() {
@@ -374,6 +397,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of presence of preview description for build of MultiConfiguration project")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
@@ -391,6 +415,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of possibility to rename description for build of MultiConfiguration project")
     @Test
     public void testEditDescriptionFromBuildPage() {
@@ -413,6 +438,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to build changes of MultiConfiguration project")
     @Test
     public void testBuildChangesFromDropDown() {
@@ -430,6 +456,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to build changes from last build of MultiConfiguration project")
     @Test
     public void testBuildChangesFromLastBuild() {
@@ -444,6 +471,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to make console output from MultiConfiguration Project Page")
     @Test
     public void testConsoleOutputFromProjectPage() {
@@ -460,6 +488,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to make console output from last build of MultiConfiguration project")
     @Test
     public void testConsoleOutputFromLastBuild() {
@@ -485,6 +514,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to make console output for MultiConfiguration from Build Page")
     @Test
     public void testConsoleOutputFromBuildPage() {
@@ -501,6 +531,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to edit build information from drop-down menu for MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromDropDown() {
@@ -518,6 +549,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to edit build information from MultiConfiguration Project Page")
     @Test
     public void testEditBuildInformationFromProjectPage() {
@@ -533,6 +565,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to edit build information from last build of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromLastBuild() {
@@ -548,6 +581,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to edit build information from Build Page of MultiConfiguration Project")
     @Test
     public void testEditBuildInformationFromBuildPage() {
@@ -564,6 +598,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of presence preview description of build from Edit Information Page for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
@@ -581,6 +616,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of description of build can be added from Edit Information Page for MultiConfiguration Project")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
@@ -599,6 +635,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to delete build from drop-down menu for MultiConfiguration Project")
     @Test
     public void testDeleteBuildNowFromDropDown() {
@@ -617,6 +654,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of presence description for MultiConfiguration Project")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
@@ -634,6 +672,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of presence description added from MultiConfiguration Project Page")
     @Test
     public void testAddDescriptionFromProjectPage() {
@@ -650,6 +689,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to disable MultiConfiguration Project from Project Page")
     @Test
     public void testDisableFromProjectPage() {
@@ -664,6 +704,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of disabled icon of MultiConfiguration Project on Dashboard")
     @Test
     public void testCheckDisableIconOnDashboard() {
@@ -680,6 +721,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of impossibility to build for disabled MultiConfiguration Project")
     @Test
     public void testBuildNowOptionNotPresentInDisabledProject() {
@@ -696,6 +738,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification for general parameters are visible and clickable for MultiConfiguration Project drop-down menu")
     @Test
     public void testCheckGeneralParametersDisplayedAndClickable() {
@@ -716,6 +759,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to enable disabled MultiConfiguration Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
@@ -736,6 +780,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to navigate to Changes Page from side menu for MultiConfiguration Project")
     @Test
     public void testNavigateToChangesPageFromSideMenu() {
@@ -743,18 +788,19 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         String text =
                 new MainPage(getDriver())
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickChangeOnLeftSideMenu()
-                .getTextOfPage();
+                        .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                        .clickChangeOnLeftSideMenu()
+                        .getTextOfPage();
 
         Assert.assertTrue(text.contains("No builds."),
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to navigate to Workspaces from Project Page for MultiConfiguration Project")
     @Test
-    public void testNavigateToWorkspaceFromProjectPage(){
+    public void testNavigateToWorkspaceFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String workspacePage = new MainPage(getDriver())
@@ -767,6 +813,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to navigate to Configuration Page from drop-down menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromDropDown() {
@@ -781,6 +828,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to navigate to Configuration Page from side menu for MultiConfiguration Project")
     @Test
     public void testAccessConfigurationPageFromSideMenu() {
@@ -794,6 +842,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testDisableFromConfigurationPage() {
@@ -817,6 +866,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to enable disable MultiConfiguration Project from Configuration Page")
     @Test
     public void testEnableFromConfigurationPage() {
@@ -831,6 +881,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to configure old build for MultiConfiguration Project")
     @Test
     public void testConfigureOldBuildForProject() {
@@ -855,6 +906,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to add MultiConfiguration Project on GitHub")
     @Test
     public void testAddingAProjectOnGithubToTheMultiConfigurationProject() {
@@ -877,6 +929,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("UI")
     @Description("Verification of presence parameters for MultiConfiguration Project on GitHub")
     @Test
     public void testThisProjectIsParameterizedOptionsCollectToList() {
@@ -897,6 +950,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification of possibility to add build steps options for MultiConfiguration Project")
     @Test
     public void testAddBuildStepsOptionsCollectToList() {
@@ -916,6 +970,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of possibility to cancel deleting from drop-down menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
@@ -932,6 +987,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of possibility to cancel deleting from side menu for MultiConfiguration Project")
     @Test
     public void testCancelDeletingFromSideMenu() {
@@ -948,6 +1004,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of possibility to delete MultiConfiguration Project from drop-down menu")
     @Test
     public void testDeleteItemFromDropDown() {
@@ -962,6 +1019,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Feature("Function")
     @Description("Verification of possibility to delete MultiConfiguration Project from side menu")
     @Test
     public void testDeleteItemFromSideMenu() {
