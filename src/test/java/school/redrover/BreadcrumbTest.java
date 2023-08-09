@@ -2,6 +2,7 @@ package school.redrover;
 
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import jdk.jfr.Description;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -39,6 +40,7 @@ public class BreadcrumbTest extends BaseTest {
     private static final String PROJECT_NAME = "JOB";
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user can navigate to 'Manage Jenkins' page from the 'Dashboard' drop-down menu")
     @Test
     public void testNavigateToManageJenkinsFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -73,6 +75,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate from 'Dashboard' -> 'Manage Jenkins' to the pages listed in the drop-down")
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsection(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
@@ -87,6 +90,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate from 'Dashboard' -> 'Manage Jenkins' to the 'Reload " +
+            "Configuration from Disk' page")
     @Test
     public void testReloadConfigurationFromDiskOfManageJenkinsSubmenu() {
         String popUp = new MainPage(getDriver())
@@ -99,6 +104,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that all the 'Dashboard' drop-down menu items are present")
     @Test
     public void testDashboardDropdownMenu() {
         final List<String> expectedMenuList = Arrays.asList("New Item", "People", "Build History", "Manage Jenkins", "My Views");
@@ -119,6 +125,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that clicking on 'Dashboard' button returns a user to the 'Dashboard' page")
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromProjectPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, false);
@@ -132,6 +139,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'Manage Plugins' page from 'People' page " +
+            "by clicking 'Dashboard'->'Manage Jenkins'")
     @Test
     public void testNavigateToPluginsPageFromPeoplePage() {
         String actualTitle = new MainPage(getDriver())
@@ -144,6 +153,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'Manage Plugins' page from the main page " +
+            "by clicking 'Dashboard'->'Manage Jenkins'")
     @Test
     public void testNavigateToPluginsPageFromDropDown() {
         String actualResult = new MainPage(getDriver())
@@ -155,6 +166,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'Build History' page from project page " +
+            "by clicking 'Dashboard'->'Build History'")
     @Test(dataProvider = "job-type")
     public void testNavigateToBuildHistoryPageFromProjectPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -170,6 +183,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'Build History' page from project page " +
+            "by clicking 'Dashboard'->'Build History'")
     @Test
     public void testNavigateToPeoplePageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
@@ -183,6 +198,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'People' page " +
+            "by clicking 'Dashboard'")
     @Test
     public void testReturnToDashboardPageFromPeoplePage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -195,6 +212,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'Build History' page " +
+            "by clicking 'Dashboard'")
     @Test
     public void testReturnToDashboardPageFromBuildHistoryPage() {
         String actualTitle = new MainPage(getDriver())
@@ -207,6 +226,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'New Item' page " +
+            "by clicking 'Dashboard'")
     @Test
     public void testReturnToDashboardPageFromNewItemPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -219,6 +240,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'Configure' page " +
+            "by clicking 'Dashboard'")
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromConfigurationPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -233,6 +256,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'My Views' page " +
+            "by clicking 'Dashboard'")
     @Test
     public void testReturnToDashboardPageFromMyViewsPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -245,6 +270,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to return to 'Dashboard' page from 'Manage Jenkins' page " +
+            "by clicking 'Dashboard'")
     @Test
     public void testReturnToDashboardPageFromManageJenkinsPage() {
         boolean welcomeJenkins = new MainPage(getDriver())
@@ -257,6 +284,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'My Views' page from 'Configure' page " +
+            "by selecting 'Dashboard' drop-down menu")
     @Test(dataProvider = "job-type")
     public void testNavigateToMyViewsPageFromConfigurationPage(TestUtils.JobType jobType) {
         TestUtils.createJob(this, PROJECT_NAME, jobType, true);
@@ -291,6 +320,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to folder pages from the drop-down")
     @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -308,6 +338,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to a job page from 'Build History' page " +
+            "by clicking 'All' drop-down menu")
     @Test
     public void testNavigateToJobFromBuildHistory() {
         Map<String, BaseJobPage<?>> jobMap = TestUtils.getJobMap(this);
@@ -352,6 +384,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to Multiconfiguration Project pages from the project drop-down")
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -387,6 +420,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that Multiconfiguration Project can be deleted from the project drop-down menu")
     @Test
     public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multi-configuration project";
@@ -405,6 +439,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'Build' page from the project drop-down")
     @Test
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow() {
         final String optionName = "Build Now";
@@ -423,6 +458,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'New Item' page from 'My Views' page by clicking " +
+            "on the 'Dashboard' drop-down")
     @Test
     public void testNavigateToNewItemPageFromMyViewsPage() {
         String actualResult = new MainPage(getDriver())
@@ -455,6 +492,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to Organization Folder pages from the project drop-down")
     @Test(dataProvider = "optionsOrganizationFolder")
     public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
@@ -494,6 +532,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to Multibrunch Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsMultibranchPipeline")
     public void testNavigateToMultibranchPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -511,6 +550,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'New Item' page from the Folder project drop-down")
     @Test
     public void testNewItemNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "New Item";
@@ -537,6 +577,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the Freestyle Project Build pages from the build drop-down")
     @Test(dataProvider = "buildSubMenu")
     public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
@@ -560,6 +601,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the 'Delete' Build page from the build drop-down")
     @Test
     public void testNavigateToFreestyleDeletePageFromDropdownOnBreadcrumb() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -598,6 +640,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "pipesubmenu")
     public void testNavigateToPipelinePagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -616,6 +659,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
+            "the Organization Folder project drop-down")
     @Test
     public void testPipelineSyntaxNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Pipeline Syntax";
@@ -634,6 +679,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
+            "the Multibranch Pipeline project drop-down")
     @Test
     public void testNavigateToPipelineSyntaxFromMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Pipeline Syntax";
@@ -652,6 +699,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a Folder project can be deleted from the project drop-down")
     @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Folder";
@@ -669,6 +717,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that an Organization Folder project can be deleted from the project drop-down")
     @Test
     public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Organization Folder";
@@ -686,6 +735,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a Multibranch Pipeline project can be deleted from the project drop-down")
     @Test
     public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
         final String optionName = "Delete Multibranch Pipeline";
@@ -718,6 +768,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to 'My Views' page from the 'Admin' drop-down menu items")
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
             String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText) {
@@ -755,6 +806,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsFreestyleProject")
     public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
@@ -772,6 +824,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to compile a build from PipeLine project drop-down menu")
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
         String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
@@ -801,6 +854,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the user pages from the 'User' drop-down")
     @Test(dataProvider = "testuserDropDownMenu")
     public void testNavigateToSubMenuUserFromDropDownOnBreadcrumb(
             String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
@@ -831,6 +885,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verification that a user is able to navigate to the 'Manaje Jenkins' subsections from the 'Manage Jenkins' drop-down")
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsectionFromSideMenu(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
