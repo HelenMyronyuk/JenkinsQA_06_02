@@ -38,11 +38,6 @@ public class MultiConfigurationProjectPage extends BaseProjectPage<MultiConfigur
         return buildStatus.getAttribute("tooltip");
     }
 
-    @Step("Get a text alert about confirmation of deletion")
-    public String getDeleteAlertText() {
-        return getDriver().switchTo().alert().getText();
-    }
-
     @Step("Get 'true' if Build Icon is displayed on the present")
     public boolean isLastBuildIconDisplayed() {
         return getWait2().until(ExpectedConditions.visibilityOf(lastBuildIcon)).isDisplayed();

@@ -1027,7 +1027,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         MainPage deletedProjPage = new MainPage(getDriver())
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickDeleteAndAlert();
+                .clickDeleteAndAccept();
 
         Assert.assertEquals(deletedProjPage.getTitle(), "Dashboard [Jenkins]");
         Assert.assertEquals(deletedProjPage.getWelcomeText(), "Welcome to Jenkins!");

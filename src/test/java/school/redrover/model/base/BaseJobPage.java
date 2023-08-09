@@ -6,12 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.interfaces.IDescription;
-import school.redrover.model.MainPage;
 import school.redrover.model.MovePage;
 import school.redrover.model.RenamePage;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
-
-import java.time.Duration;
 
 public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainHeaderPage<Self> implements IDescription<Self> {
 
@@ -54,15 +51,6 @@ public abstract class BaseJobPage<Self extends BaseJobPage<?>> extends BaseMainH
         renameButton.click();
 
         return new RenamePage<>((Self) this);
-    }
-
-    @Step("Click on the 'Delete' Button on the Base Job Page and alert")
-    public MainPage clickDeleteAndAlert() {
-        deleteButton.click();
-        getDriver().switchTo().alert().accept();
-        getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(2));
-
-        return new MainPage(getDriver());
     }
 
     @Step("Click on the 'Move' Button on side menu")

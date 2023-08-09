@@ -9,13 +9,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.builds.*;
+import school.redrover.model.interfaces.IAlert;
 import school.redrover.model.jobsSidemenu.ChangesPage;
 import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
-public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends BaseJobPage<Self> {
+public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends BaseJobPage<Self> implements IAlert<Self> {
 
     @FindBy(xpath = "//a[contains(@href, 'changes')]")
     private WebElement changesButton;
@@ -132,14 +133,14 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     public MainPage clickDeleteAndAccept() {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
-        getDriver().switchTo().alert().accept();
+        acceptAlert();
 
         return new MainPage(getDriver());
     }
 
     public Self clickDeleteAndCancel() {
         getWait2().until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
-        getDriver().switchTo().alert().dismiss();
+        dismissAlert();
 
         return (Self) this;
     }

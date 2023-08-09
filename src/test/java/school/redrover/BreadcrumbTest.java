@@ -433,7 +433,7 @@ public class BreadcrumbTest extends BaseTest {
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
                 .getPageFromDashboardDropdownMenu(optionName, new MultiConfigurationProjectPage(getDriver()))
-                .getDeleteAlertText();
+                .getAlertBoxText();
 
         Assert.assertEquals(actualAlertText, alertText);
     }
