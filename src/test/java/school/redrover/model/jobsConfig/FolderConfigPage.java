@@ -1,5 +1,6 @@
 package school.redrover.model.jobsConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -47,6 +48,7 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
         super(folderPage);
     }
 
+    @Step("Enter a library name in 'Name' input field under 'Library'")
     public FolderConfigPage inputNameLibrary() {
         TestUtils.scrollWithPauseByActions(this, footer, 500);
         getWait2().until(ExpectedConditions.elementToBeClickable(addButton)).click();
@@ -55,6 +57,7 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
         return this;
     }
 
+    @Step("Enter a '{defaultVersion}' value in the 'Default version' input field")
     public FolderConfigPage inputDefaultVersion(String defaultVersion) {
        TestUtils.scrollWithPauseByActions(this, cacheFetchedLabel, 300);
        getWait2().until(ExpectedConditions.elementToBeClickable(defaultVersionField)).sendKeys(defaultVersion);
@@ -62,19 +65,22 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
         return this;
     }
 
-    public FolderConfigPage pushSourceCodeManagementButton() {
+    @Step("Open a 'Source Code Management' dropdown menu")
+    public FolderConfigPage openSourceCodeManagementDropdown() {
         TestUtils.scrollWithPauseByActions(this, freshClonePerBuildLabel, 500);
         getWait2().until(ExpectedConditions.elementToBeClickable(sourceCodeManagementOptions)).click();
 
         return this;
     }
 
-    public FolderConfigPage chooseOptionGitHub() {
+    @Step("Select 'GitHub' option")
+    public FolderConfigPage selectOptionGitHub() {
         new Select(sourceCodeManagementOptions).selectByVisibleText("GitHub");
 
         return this;
     }
 
+    @Step("Enter '{repoUrl}' value in 'Library Path' input field")
     public FolderConfigPage inputLibraryRepoUrl(String repoUrl) {
         TestUtils.scrollWithPauseByActions(this, repositoryScanRadio, 300);
         getWait2().until(ExpectedConditions.elementToBeClickable(repositoryField)).sendKeys(repoUrl);
@@ -82,12 +88,14 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
         return this;
     }
 
+    @Step("Refresh the page")
     public FolderConfigPage refreshPage() {
         getDriver().navigate().refresh();
 
         return this;
     }
 
+    @Step("Validate 'currentDefaultVersion' label")
     public Boolean libraryDefaultVersionValidated() {
         TestUtils.scrollWithPauseByActions(this, cacheFetchedLabel, 300);
 
