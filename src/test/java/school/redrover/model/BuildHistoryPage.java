@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.BuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
-import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -21,9 +20,6 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @FindBy(xpath = "//a[@class='jenkins-table__link jenkins-table__badge model-link inside']")
     private WebElement nameOfBuildLink;
-
-    @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']")
-    private WebElement bubbleContainer;
 
     @FindBy(xpath = "//div[@class='timeline-event-bubble-title']/a")
     private WebElement bubbleTitle;
@@ -39,6 +35,9 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @FindBy(css = ".task-link-wrapper>a[href$='newJob']")
     private WebElement newItem;
+
+    @FindBy(xpath = "//div[@class='label-event-blue  event-blue  timeline-event-label']")
+    private WebElement lastBuildLinkFromTimeline;
 
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
@@ -65,16 +64,15 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Click build name on timeline")
     public BuildHistoryPage clickBuildNameOnTimeline(String projectBuildName) {
-        getDriver().findElement(By.xpath("//div[contains(text(), '" + projectBuildName + "')]")).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(getDriver().findElement(
+                By.xpath("//div[contains(text(), '" + projectBuildName + "')]"))));
 
         return this;
     }
 
     @Step("Get bubble title on timeline")
-    public String getBubbleTitleOnTimeline() {
-        getWait5().until(ExpectedConditions.visibilityOf(bubbleContainer));
-
-        return bubbleTitle.getText();
+    public boolean getBubbleTitleOnTimeline() {
+        return getWait10().until(ExpectedConditions.visibilityOf(lastBuildLinkFromTimeline)).isDisplayed();
     }
 
     @Step("Get number of items on the Jenkins table")

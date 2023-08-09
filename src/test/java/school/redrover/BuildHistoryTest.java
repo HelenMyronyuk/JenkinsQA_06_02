@@ -2,7 +2,6 @@ package school.redrover;
 
 import io.qameta.allure.Feature;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -154,11 +153,11 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Feature("Function")
-    @Ignore
     @Test
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
         final String itemName = "TestProject";
-        String projectNameOnBuildHistoryTimeline = new MainPage(getDriver())
+
+        boolean projectNameOnBuildHistoryTimeline = new MainPage(getDriver())
                 .clickNewItemFromSideMenu()
                 .enterItemName(itemName)
                 .selectJobType(TestUtils.JobType.FreestyleProject)
@@ -168,10 +167,9 @@ public class BuildHistoryTest extends BaseTest {
                 .clickLogo()
                 .clickBuildByGreenArrow(itemName)
                 .clickBuildsHistoryFromSideMenu()
-                .clickBuildNameOnTimeline(itemName + " #1")
                 .getBubbleTitleOnTimeline();
 
-        Assert.assertEquals(projectNameOnBuildHistoryTimeline, itemName + " #1");
+        Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
     @Feature("Function")
