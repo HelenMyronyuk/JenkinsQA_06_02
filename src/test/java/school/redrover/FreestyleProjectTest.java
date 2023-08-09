@@ -1034,7 +1034,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Feature("Function")
     @Test
     public void testAddingAProjectOnGitHubToTheFreestyleProject() {
-        final String expectedNameRepo = "Sign in";
+        final String expectedNameRepo = "TestRepo";
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         final String actualNameRepo = new MainPage(getDriver())
@@ -1045,7 +1045,8 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
-                .selectFromJobDropdownMenuTheGitHub(NEW_FREESTYLE_NAME);
+                .selectGitHubFromJobDropdownMenu(NEW_FREESTYLE_NAME)
+                .getNameRepo();
 
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }

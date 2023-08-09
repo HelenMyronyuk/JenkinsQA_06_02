@@ -911,7 +911,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Test
     public void testAddingAProjectOnGithubToTheMultiConfigurationProject() {
         final String gitHubUrl = "https://github.com/ArtyomDulya/TestRepo";
-        final String expectedNameRepo = "Sign in";
+        final String expectedNameRepo = "TestRepo";
 
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
@@ -923,7 +923,8 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
-                .selectFromJobDropdownMenuTheGitHub(NAME);
+                .selectGitHubFromJobDropdownMenu(NAME)
+                .getNameRepo();
 
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }

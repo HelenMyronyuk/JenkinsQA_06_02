@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testcontainers.shaded.org.bouncycastle.crypto.modes.gcm.GCMExponentiator;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
@@ -203,11 +204,11 @@ public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IB
         return new NewJobPage(getDriver());
     }
 
-    default String selectFromJobDropdownMenuTheGitHub(String jobName) {
+    default GitHubTestRepo selectGitHubFromJobDropdownMenu(String jobName) {
         openJobDropDownMenu(jobName);
         getDriver().findElement(By.xpath("//a[contains(@href, 'github.com')]")).click();
 
-        return getDriver().findElement(By.xpath("//a[normalize-space(text())= 'Sign in']")).getText();
+        return new GitHubTestRepo(getDriver());
     }
 
     default Self clickBuildByGreenArrow(String projectName) {

@@ -1391,7 +1391,7 @@ public class PipelineTest extends BaseTest {
     @Test
     public void testAddingAProjectOnGithubToThePipelineProject() {
         final String gitHubUrl = "https://github.com/ArtyomDulya/TestRepo";
-        final String expectedNameRepo = "Sign in";
+        final String expectedNameRepo = "TestRepo";
 
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
@@ -1403,7 +1403,8 @@ public class PipelineTest extends BaseTest {
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
-                .selectFromJobDropdownMenuTheGitHub(NAME);
+                .selectGitHubFromJobDropdownMenu(NAME)
+                .getNameRepo();
 
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
