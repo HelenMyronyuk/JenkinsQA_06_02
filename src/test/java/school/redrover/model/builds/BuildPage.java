@@ -69,7 +69,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
 
     @Step("Green check mark symbol is present")
     public boolean isDisplayedGreenIconV() {
-        return getWait5().until(ExpectedConditions.visibilityOf(greenIconV)).isDisplayed();
+        return getWait10().until(ExpectedConditions.visibilityOf(greenIconV)).isDisplayed();
     }
 
     @Step("Build title is displayed")

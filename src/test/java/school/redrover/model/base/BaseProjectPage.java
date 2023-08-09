@@ -26,7 +26,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//form[@id='disable-project']/button")
     private WebElement disableButton;
 
-    @FindBy(css = "form#enable-project")
+    @FindBy(xpath = "//form[@id='enable-project']/*")
     private List<WebElement> disabledMessageList;
 
     @FindBy(xpath = "//form[@id='enable-project']/button")
@@ -41,7 +41,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//td[@class='build-row-cell']")
     private WebElement buildRowCell;
 
-    @FindBy(xpath = "//h2[text()='Permalinks']")
+    @FindBy(xpath = "//div[@id='main-panel']/h2")
     private WebElement permalinks;
 
     @FindBy(xpath = "//ul[@class='permalinks-list']//li")
@@ -59,7 +59,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//a[text()='trend']")
     private WebElement trend;
 
-    @FindBy(xpath = "//a[@class='model-link inside build-link display-name']//button[@class='jenkins-menu-dropdown-chevron']")
+    @FindBy(xpath = "//a[@class='model-link inside build-link display-name']//button")
     private WebElement buildsDropDownMenu;
 
     @FindBy(xpath = "//span[text() = 'Workspaces']")
@@ -68,37 +68,37 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//span[contains(text(),'Delete build ‘#1’')]")
     private WebElement deleteBuildButtonDropDownMenu;
 
-    @FindBy(xpath = "(//a[contains(@href, 'changes')])[1]")
+    @FindBy(xpath = "//div[@id='breadcrumb-menu']//span[text()='Changes']/..")
     private WebElement changesButtonDropDownMenu;
 
     @FindBy(xpath = "//div[@id='no-builds']")
     private WebElement noBuildsMessage;
 
-    @FindBy(xpath = "//*[@id='tasks']/div[3]/span/a")
+    @FindBy(xpath = "//span[text()='Workspace']/..")
     private WebElement workspaceButton;
 
-    @FindBy(xpath = "//ul[@class='first-of-type']/li[@index='0']")
+    @FindBy(xpath = "//span[text()='Changes']/..")
     private WebElement changesFromLastBuild;
 
-    @FindBy(xpath = "//a[contains(@class, 'task-link task-link')]")
+    @FindBy(xpath = "//span[text()='Status']/..")
     private WebElement statusButton;
 
-    @FindBy(xpath = "//span[contains(text(),'Edit Build Information')]")
+    @FindBy(xpath = "//span[text()='Edit Build Information']/..")
     private WebElement editBuildInformFromDropDownOfBuild;
 
-    @FindBy(xpath = "//span[contains(text(),'Console Output')]")
+    @FindBy(xpath = "//span[text()='Console Output']/..")
     private WebElement consoleOutputType;
 
-    @FindBy(xpath = "(//li[@class='permalink-item'])[1]//button")
+    @FindBy(xpath = "//a[@href='lastBuild/']/button")
     private WebElement permalinksLastBuildDropDown;
 
-    @FindBy(xpath = "//a[@update-parent-class='.build-row'][@tooltip]")
+    @FindBy(css = ".pane.build-details a")
     private WebElement buildDate;
 
     @FindBy(xpath = "//div[@class='bd']/ul/li")
     private List<WebElement> buildDropdownMenuOptions;
 
-    @FindBy(xpath = "//div[@class='middle-align build-badge']/img")
+    @FindBy(css = ".middle-align.build-badge img")
     private WebElement iconLock;
 
     @FindBy(xpath = "//a[not(contains(tooltip, 'In progress > Console Output'))]/ancestor::div/a[contains(@href,'/2/')]")
@@ -113,7 +113,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     @FindBy(xpath = "//span[contains(text(), 'Replay')]")
     private WebElement replayButton;
 
-    @FindBy(xpath = "//a[contains(@href, 'lastBuild')]/span[text()='Pipeline Steps']")
+    @FindBy(xpath = "//span[text()='Pipeline Steps']/..")
     private WebElement pipelineStepsDropDown;
 
     @FindBy(xpath = "//div[@id='breadcrumb-menu-target']//span[text()='Pipeline Steps']")
