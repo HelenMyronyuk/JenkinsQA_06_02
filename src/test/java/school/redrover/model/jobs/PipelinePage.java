@@ -7,6 +7,7 @@ import school.redrover.model.jobsConfig.PipelineConfigPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseProjectPage;
+import school.redrover.runner.TestUtils;
 
 public class PipelinePage extends BaseProjectPage<PipelinePage> {
 
@@ -36,8 +37,11 @@ public class PipelinePage extends BaseProjectPage<PipelinePage> {
         return stage.getText();
     }
 
-    @Step("Get a text alert")
-    public String getAlert() {
+    @Step("Get a warning text")
+    public String getWarningText() {
+        TestUtils.scrollWithPauseByActions(this, alertWarning, 800);
+
+        getDriver().navigate().refresh();
         getWait10().until(ExpectedConditions.visibilityOf(lastCompletedBuildLinkFromPermalinks));
 
         return getWait10().until(ExpectedConditions.visibilityOf(alertWarning)).getText().trim();

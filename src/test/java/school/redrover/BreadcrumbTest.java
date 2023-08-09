@@ -5,7 +5,6 @@ import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
@@ -773,7 +772,6 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Ignore
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
         String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
@@ -786,8 +784,7 @@ public class BreadcrumbTest extends BaseTest {
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
                 .clickBuildNowFromDashboardDropdownMenu(new PipelinePage(getDriver()))
-                .refreshPage()
-                .getAlert();
+                .getWarningText();
 
         Assert.assertNotEquals(DisplayedAlertText, expectedWarningText);
         Assert.assertEquals(actualWarningText, expectedWarningText);
