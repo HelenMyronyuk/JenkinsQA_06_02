@@ -13,7 +13,9 @@ import school.redrover.model.ConfigureSystemPage;
 import school.redrover.model.GlobalCredentialsPage;
 import school.redrover.model.MainPage;
 import school.redrover.model.manageJenkins.ManageJenkinsPage;
+import school.redrover.model.manageJenkins.ManageNodesPage;
 import school.redrover.runner.BaseTest;
+import school.redrover.runner.TestUtils;
 
 import java.util.List;
 
@@ -307,15 +309,9 @@ public class ManageJenkinsTest extends BaseTest {
     @Test
     public void testDeleteNodeBySideMenuOnNodePage() {
         final String nodeName = "NameDeleteSideMenu";
+        TestUtils.createNode(getDriver(), nodeName, false);
 
-        List<String> nodeNameList = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageNodes()
-                .clickNewNodeButton()
-                .inputNodeNameField(nodeName)
-                .clickPermanentAgentRadioButton()
-                .clickCreateButton()
-                .clickSaveButton()
+        List<String> nodeNameList = new ManageNodesPage(getDriver())
                 .clickOnNode(nodeName)
                 .clickOnDeleteAgent()
                 .clickYesButton()
@@ -330,15 +326,9 @@ public class ManageJenkinsTest extends BaseTest {
     @Test
     public void testDeleteNodeByDropDownOnManageNodesPage() {
         final String nodeName = "NameFor Delete";
+        TestUtils.createNode(getDriver(), nodeName, false);
 
-        List<String> nodeNameList = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageNodes()
-                .clickNewNodeButton()
-                .inputNodeNameField(nodeName)
-                .clickPermanentAgentRadioButton()
-                .clickCreateButton()
-                .clickSaveButton()
+        List<String> nodeNameList = new ManageNodesPage(getDriver())
                 .openNodeDropDownMenu(nodeName)
                 .dropDownMenuClickDeleteAgent()
                 .clickYesButton()
@@ -432,17 +422,9 @@ public class ManageJenkinsTest extends BaseTest {
     @Test
     public void testDeleteNodeFromManageJenkinsPage() {
         final String nodeName = "NodeName";
+        TestUtils.createNode(getDriver(), nodeName, true);
 
         List<String> nodeNameList = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageNodes()
-                .clickNewNodeButton()
-                .inputNodeNameField(nodeName)
-                .clickPermanentAgentRadioButton()
-                .clickCreateButton()
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
                 .clickManageJenkinsPage()
                 .clickNodeDropdownMenu(nodeName)
                 .selectDeleteAgentInDropdown()
@@ -458,17 +440,9 @@ public class ManageJenkinsTest extends BaseTest {
     @Test
     public void testDeleteNodeFromMainPage() {
         final String nodeName = "NameDeleteSideMenu";
+        TestUtils.createNode(getDriver(), nodeName, true);
 
         List<String> nodeNameList = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickManageNodes()
-                .clickNewNodeButton()
-                .inputNodeNameField(nodeName)
-                .clickPermanentAgentRadioButton()
-                .clickCreateButton()
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
                 .clickNodeDropdownMenu(nodeName)
                 .selectDeleteAgentInDropdown()
                 .clickYesButton()

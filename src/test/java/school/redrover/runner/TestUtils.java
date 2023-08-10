@@ -265,4 +265,21 @@ public class TestUtils {
                 .pause(mls)
                 .perform();
     }
+
+    public static void createNode(WebDriver driver, String nodeName, Boolean goToMainPage) {
+        new MainPage(driver)
+                .clickManageJenkinsPage()
+                .clickManageNodes()
+                .clickNewNodeButton()
+                .inputNodeNameField(nodeName)
+                .clickPermanentAgentRadioButton()
+                .clickCreateButton()
+                .clickSaveButton();
+
+        if (goToMainPage) {
+            new MainPage(driver)
+                    .getHeader()
+                    .clickLogo();
+        }
+    }
 }
