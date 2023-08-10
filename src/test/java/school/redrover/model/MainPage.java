@@ -27,6 +27,9 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
     @FindBy(linkText = "Delete Agent")
     private WebElement deleteAgent;
 
+    @FindBy(xpath = "//a[text()='Icon legend']")
+    private WebElement iconLegendButton;
+
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -79,5 +82,11 @@ public class MainPage extends BaseDashboardPage<MainPage> implements IDescriptio
         getWait5().until(ExpectedConditions.elementToBeClickable(deleteAgent)).click();
 
         return new DeletePage<>(new ManageNodesPage(getDriver()));
+    }
+
+    public IconLegendPage clickIconLegend() {
+        iconLegendButton.click();
+
+        return new IconLegendPage(getDriver());
     }
 }

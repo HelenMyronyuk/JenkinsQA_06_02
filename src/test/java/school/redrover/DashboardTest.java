@@ -123,4 +123,36 @@ public class DashboardTest extends BaseTest {
 
         Assert.assertEquals(description, NEW_DESCRIPTION);
     }
+
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
+    @Description("Verify of icon and text displaying on Legend Icon page")
+    @Test
+    public void testIconLegend() {
+        final List<String> iconDescriptionTextList = List.of("The last build was successful.",
+                "The last build was successful. A new build is in progress.",
+                "The last build was successful but unstable. This is primarily used to represent test failures.",
+                "The last build was successful but unstable. A new build is in progress.",
+                "The last build failed.",
+                "The last build failed. A new build is in progress.",
+                "The project has never been built.",
+                "The first build is in progress.",
+                "The project is disabled.",
+                "The project is disabled, but a build is in progress.",
+                "The last build was aborted.",
+                "The last build was aborted. A new build is in progress.",
+                "Project health is over 80%",
+                "Project health is over 60% and up to 80%",
+                "Project health is over 40% and up to 60%",
+                "Project health is over 20% and up to 40%",
+                "Project health is 20% or less");
+
+        TestUtils.createJob(this, "NEW_JOB", TestUtils.JobType.FreestyleProject, true);
+
+        List<String> actualIconDescriptionTextList = new MainPage(getDriver())
+                .clickIconLegend()
+                .getIconDescriptionTextList();
+
+        Assert.assertEquals(actualIconDescriptionTextList, iconDescriptionTextList);
+    }
 }
