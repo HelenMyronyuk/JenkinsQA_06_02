@@ -161,7 +161,7 @@ public abstract class BaseOtherFoldersPage<Self extends BaseJobPage<?>> extends 
     public abstract BaseConfigPage<?, ?> clickConfigureProject();
 
     @Step("Click on the 'Creating a Jenkins Pipeline' link on the Project page")
-    public DocBookPipelinePage clickPipelineOneTutorial() {
+    public DocBookPipelinePage clickCreatingAJenkinsPipelineLinkOnProjectPage() {
         getWait5().until(ExpectedConditions.elementToBeClickable(linkBookCreatingJenkinsPipeline)).click();
 
         return new DocBookPipelinePage(getDriver());

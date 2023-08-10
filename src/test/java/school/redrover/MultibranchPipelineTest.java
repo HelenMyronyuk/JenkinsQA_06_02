@@ -373,6 +373,22 @@ public class MultibranchPipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Pipeline Page" +
+            " by click 'Creating a Jenkins Pipeline'")
+    @Test
+    public void testCreatingJenkinsPipeline(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String textFromJenkinsPipelinePage = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickCreatingAJenkinsPipelineLinkOnProjectPage()
+                .getTextPipelineTitle();
+
+        Assert.assertEquals(textFromJenkinsPipelinePage,"Pipeline");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification of possibility to navigate to Scan Multibranch Pipeline Log Page" +
             " from side menu for Multibranch Pipeline Project")
     @Test

@@ -367,7 +367,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .getTextCreatingJenkinsPipeline();
 
         String pipelineOneTutorial = new OrganizationFolderPage(getDriver())
-                .clickPipelineOneTutorial()
+                .clickCreatingAJenkinsPipelineLinkOnProjectPage()
                 .getTextPipelineTitle();
 
         Assert.assertEquals(linkBookCreatingPipeline, "Creating a Jenkins Pipeline");
