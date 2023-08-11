@@ -16,6 +16,18 @@ public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage>
     @FindBy(xpath = "//button[@name = 'Submit']")
     private WebElement submitView;
 
+    @FindBy(xpath = "//label[text()='Filter build queue']")
+    private WebElement filterQueueLabel;
+
+    @FindBy(xpath = "//label[text()='Filter build executors']")
+    private WebElement filterExecutorsLabel;
+
+    @FindBy(xpath = "//input[@name='filterQueue']")
+    private WebElement filterQueueCheckBox;
+
+    @FindBy(xpath = "//input[@name='filterExecutors']")
+    private WebElement filterExecutorsCheckBox;
+
     public MyViewConfigPage(ViewPage viewPage) {
         super(viewPage);
     }
@@ -26,5 +38,27 @@ public class MyViewConfigPage extends BaseConfigPage<MyViewConfigPage, ViewPage>
         getWait5().until(ExpectedConditions.elementToBeClickable(submitView)).click();
 
         return new MyViewsPage(getDriver());
+    }
+
+    @Step("Click to Filter Queue check box")
+    public MyViewConfigPage clickFilterQueueCheckBox() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(filterQueueLabel)).click();
+
+        return this;
+    }
+
+    @Step("Click to Filter Executors check box")
+    public MyViewConfigPage clickFilterExecutorsCheckBox() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(filterExecutorsLabel)).click();
+
+        return this;
+    }
+
+    @Step("Verification the filters check boxes are checked")
+    public boolean getFiltersCheckBoxAttribute() {
+        String filterQueueCheckBoxAttribute = getWait5().until(ExpectedConditions.visibilityOf(filterQueueCheckBox)).getAttribute("checked");
+        String filterExecutorsCheckBoxAttribute = getWait5().until(ExpectedConditions.visibilityOf(filterExecutorsCheckBox)).getAttribute("checked");
+
+        return filterQueueCheckBoxAttribute.equals("true") && filterExecutorsCheckBoxAttribute.equals("true");
     }
 }

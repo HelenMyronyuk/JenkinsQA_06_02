@@ -10,8 +10,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.FolderPage;
-import school.redrover.model.jobs.FreestyleProjectPage;
-import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.views.*;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
@@ -494,5 +492,23 @@ public class ViewsTest extends BaseTest {
                 .verifyViewIsPresent(VIEW_NAME);
 
         Assert.assertFalse(viewIsPresent, "View is present on Main page");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verification the possibility of adding filters to MyView")
+    @Test
+    public void testMyViewAddFilters() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, TestUtils.ViewType.MyView, false);
+
+        boolean isFiltersChecked = new MyViewsPage(getDriver())
+                .clickEditView()
+                .clickFilterQueueCheckBox()
+                .clickFilterExecutorsCheckBox()
+                .pushApply()
+                .getFiltersCheckBoxAttribute();
+
+        Assert.assertTrue(isFiltersChecked, "Check box is not checked!");
     }
 }
