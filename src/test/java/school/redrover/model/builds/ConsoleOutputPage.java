@@ -1,5 +1,6 @@
 package school.redrover.model.builds;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,12 +35,14 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
         return "console";
     }
 
+    @Step("get text from console output")
     public String getConsoleOutputText() {
         getWait5().until(ExpectedConditions.textToBePresentInElement(consoleOutput, "Finished"));
 
         return consoleOutput.getText();
     }
 
+    @Step("get parameter from console output")
     public String getParameterFromConsoleOutput(String consoleText, String containParameterText) {
         String[] split = consoleText.split("\n");
         for (String str : split) {
@@ -56,10 +59,12 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
         return getWait2().until(ExpectedConditions.visibilityOf(startedByUser)).getText();
     }
 
+    @Step("Check if Green icon is displayed")
     public boolean isDisplayedGreenIconV() {
         return getWait2().until(ExpectedConditions.visibilityOf(greenIconV)).isDisplayed();
     }
 
+    @Step("Check if Build title  is displayed")
     public boolean isDisplayedBuildTitle() {
         return getWait2().until(ExpectedConditions.visibilityOf(buildTitle)).isDisplayed();
     }
@@ -71,6 +76,7 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
         return new BuildPage(getDriver());
     }
 
+    @Step("click git Build Link ConsoleOutput Page")
     public GitBuildDataPage clickGitBuildDataLink() {
         getWait15().until(ExpectedConditions.elementToBeClickable(gitBuildDataLink)).click();
 
