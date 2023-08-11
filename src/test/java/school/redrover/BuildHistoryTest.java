@@ -1,6 +1,8 @@
 package school.redrover;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
@@ -20,6 +22,7 @@ public class BuildHistoryTest extends BaseTest {
     private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001";
 
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testBuildHistoryOfTwoDifferentTypesProjectsIsShown() {
@@ -37,6 +40,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(numberOfLinesInBuildHistoryTable >= 2);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testAddDescriptionToBuild() {
@@ -57,6 +61,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testConsoleFreestyleBuildLocation() {
@@ -79,6 +84,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualLocation, "Building in workspace /var/jenkins_home/workspace/" + FREESTYLE_PROJECT_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testConsoleOutputFreestyleBuildStartedByUser() {
@@ -100,6 +106,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(currentUser, userConsoleOutput);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Test
     public void testConsoleOutputFreestyleBuildStatus() {
@@ -123,6 +130,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualStatus, "Finished: SUCCESS");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Test
     public void testVerifyStatusBroken() {
@@ -152,6 +160,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualStatusMessageText, expectedStatusMessageText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
@@ -172,6 +181,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Test
     public void testDeleteBuild() {
