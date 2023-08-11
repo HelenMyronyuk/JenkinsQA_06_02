@@ -387,6 +387,22 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(textFromJenkinsPipelinePage,"Pipeline");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Branches and Pull Requests Page" +
+            " by click 'Creating Multibranch Projects'")
+    @Test
+    public void testCreatingMultibranchProjectsLink() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String pageHeaderText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickMultibranchProject()
+                .getPageHeaderText();
+
+        Assert.assertEquals(pageHeaderText, "Branches and Pull Requests");
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Scan Multibranch Pipeline Log Page" +
@@ -791,21 +807,5 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getWelcomeText();
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Navigation")
-    @Description("Verification of possibility to navigate to Branches and Pull Requests Page" +
-            " by click 'Creating Multibranch Projects'")
-    @Test
-    public void testCreatingMultibranchProjectsLink() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
-
-        String pageHeaderText = new MainPage(getDriver())
-                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
-                .clickMultibranchProject()
-                .getPageHeaderText();
-
-        Assert.assertEquals(pageHeaderText, "Branches and Pull Requests");
     }
 }
