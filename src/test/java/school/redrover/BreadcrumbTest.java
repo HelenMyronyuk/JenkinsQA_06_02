@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import jdk.jfr.Description;
@@ -40,6 +41,7 @@ public class BreadcrumbTest extends BaseTest {
     private static final String PROJECT_NAME = "JOB";
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user can navigate to 'Manage Jenkins' page from the 'Dashboard' drop-down menu")
     @Test
     public void testNavigateToManageJenkinsFromDropDown() {
@@ -75,6 +77,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate from 'Dashboard' -> 'Manage Jenkins' to the pages listed in the drop-down")
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsection(
@@ -90,6 +93,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to navigate from 'Dashboard' -> 'Manage Jenkins' to the 'Reload " +
             "Configuration from Disk' page")
     @Test
@@ -104,6 +108,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that all the 'Dashboard' drop-down menu items are present")
     @Test
     public void testDashboardDropdownMenu() {
@@ -125,6 +130,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that clicking on 'Dashboard' button returns a user to the 'Dashboard' page")
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromProjectPage(TestUtils.JobType jobType) {
@@ -139,6 +145,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'Manage Plugins' page from 'People' page " +
             "by clicking 'Dashboard'->'Manage Jenkins'")
     @Test
@@ -153,6 +160,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'Manage Plugins' page from the main page " +
             "by clicking 'Dashboard'->'Manage Jenkins'")
     @Test
@@ -166,6 +174,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'Build History' page from project page " +
             "by clicking 'Dashboard'->'Build History'")
     @Test(dataProvider = "job-type")
@@ -183,6 +192,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'Build History' page from project page " +
             "by clicking 'Dashboard'->'Build History'")
     @Test
@@ -198,6 +208,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'People' page " +
             "by clicking 'Dashboard'")
     @Test
@@ -212,6 +223,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'Build History' page " +
             "by clicking 'Dashboard'")
     @Test
@@ -226,6 +238,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'New Item' page " +
             "by clicking 'Dashboard'")
     @Test
@@ -240,6 +253,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'Configure' page " +
             "by clicking 'Dashboard'")
     @Test(dataProvider = "job-type")
@@ -256,6 +270,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'My Views' page " +
             "by clicking 'Dashboard'")
     @Test
@@ -270,6 +285,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to return to 'Dashboard' page from 'Manage Jenkins' page " +
             "by clicking 'Dashboard'")
     @Test
@@ -284,6 +300,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'My Views' page from 'Configure' page " +
             "by selecting 'Dashboard' drop-down menu")
     @Test(dataProvider = "job-type")
@@ -320,6 +337,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to folder pages from the drop-down")
     @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
@@ -338,6 +356,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to a job page from 'Build History' page " +
             "by clicking 'All' drop-down menu")
     @Test
@@ -384,6 +403,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to Multiconfiguration Project pages from the project drop-down")
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
@@ -402,6 +422,8 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verification that Build from Multiconfiguration Project can be deleted")
     @Test
     public void testSubmenuDeleteMultiConfigBuild() {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -420,6 +442,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that Multiconfiguration Project can be deleted from the project drop-down menu")
     @Test
     public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
@@ -458,6 +481,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'New Item' page from 'My Views' page by clicking " +
             "on the 'Dashboard' drop-down")
     @Test
@@ -492,6 +516,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to Organization Folder pages from the project drop-down")
     @Test(dataProvider = "optionsOrganizationFolder")
     public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(
@@ -532,6 +557,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to Multibrunch Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsMultibranchPipeline")
     public void testNavigateToMultibranchPagesFromDropdownOnBreadcrumb(
@@ -550,6 +576,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'New Item' page from the Folder project drop-down")
     @Test
     public void testNewItemNavigateToFolderPagesFromDropdownOnBreadcrumb() {
@@ -577,6 +604,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the Freestyle Project Build pages from the build drop-down")
     @Test(dataProvider = "buildSubMenu")
     public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
@@ -601,6 +629,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the 'Delete' Build page from the build drop-down")
     @Test
     public void testNavigateToFreestyleDeletePageFromDropdownOnBreadcrumb() {
@@ -640,6 +669,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "pipesubmenu")
     public void testNavigateToPipelinePagesFromDropdownOnBreadcrumb(
@@ -659,6 +689,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
             "the Organization Folder project drop-down")
     @Test
@@ -679,6 +710,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
             "the Multibranch Pipeline project drop-down")
     @Test
@@ -699,6 +731,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a Folder project can be deleted from the project drop-down")
     @Test
     public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
@@ -717,6 +750,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that an Organization Folder project can be deleted from the project drop-down")
     @Test
     public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
@@ -735,6 +769,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a Multibranch Pipeline project can be deleted from the project drop-down")
     @Test
     public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
@@ -752,7 +787,6 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(deletePage, "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
     }
 
-    @Severity(SeverityLevel.NORMAL)
     @DataProvider(name = "userDropDownMenu")
     public Object[][] userDropDownBreadcrumbToMyViews2() {
         return new Object[][]{
@@ -768,6 +802,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to 'My Views' page from the 'Admin' drop-down menu items")
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
@@ -806,6 +841,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsFreestyleProject")
     public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
@@ -824,6 +860,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Verification that a user is able to compile a build from PipeLine project drop-down menu")
     @Test
     public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
@@ -854,6 +891,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the user pages from the 'User' drop-down")
     @Test(dataProvider = "testuserDropDownMenu")
     public void testNavigateToSubMenuUserFromDropDownOnBreadcrumb(
@@ -885,6 +923,7 @@ public class BreadcrumbTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the 'Manaje Jenkins' subsections from the 'Manage Jenkins' drop-down")
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsectionFromSideMenu(
