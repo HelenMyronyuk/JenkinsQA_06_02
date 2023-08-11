@@ -451,6 +451,8 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertFalse(nodeNameList.contains(nodeName));
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("Create new credentials from Manage Jenkins page")
     @Test
     public void testCreateNewCredentials() {
