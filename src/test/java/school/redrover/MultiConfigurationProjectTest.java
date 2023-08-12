@@ -880,6 +880,23 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(enabledButtonText, "'Enabled' is not displayed");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
+    @Description("Verification of possibility 'Description' for MultiConfiguration Project can be added from Configuration Page")
+    @Test
+    public void testAddDescriptionFromConfigurationPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String descriptionText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .addDescription(DESCRIPTION)
+                .clickSaveButton()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, DESCRIPTION);
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to configure old build for MultiConfiguration Project")
