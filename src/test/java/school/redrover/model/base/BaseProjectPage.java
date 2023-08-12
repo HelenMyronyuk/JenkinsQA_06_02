@@ -185,7 +185,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
     @Step("Click 'Build Now' from side menu")
     public Self clickBuildNowFromSideMenu() {
-        getWait5().until(ExpectedConditions.elementToBeClickable(buildNowButton)).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(buildNowButton)).click();
         getWait10().until(ExpectedConditions.visibilityOf(buildRowCell));
 
         return (Self) this;
