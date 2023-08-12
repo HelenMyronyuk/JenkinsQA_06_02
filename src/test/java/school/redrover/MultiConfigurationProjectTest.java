@@ -882,6 +882,23 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification of of presence Preview of description for MultiConfiguration Project can be added from Configuration Page")
+    @Test
+    public void testPreviewDescriptionFromConfigurationPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        String previewDescriptionText = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .addDescription(DESCRIPTION)
+                .clickPreview()
+                .getPreviewText();
+
+        Assert.assertEquals(previewDescriptionText, DESCRIPTION);
+    }
+
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of possibility 'Description' for MultiConfiguration Project can be added from Configuration Page")
     @Test
     public void testAddDescriptionFromConfigurationPage(){
