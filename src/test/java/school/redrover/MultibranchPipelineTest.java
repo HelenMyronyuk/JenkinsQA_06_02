@@ -17,6 +17,8 @@ import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
+import java.util.List;
+
 public class MultibranchPipelineTest extends BaseTest {
 
     private static final String NAME = "MultibranchPipeline";
@@ -662,6 +664,23 @@ public class MultibranchPipelineTest extends BaseTest {
 
         Assert.assertEquals(multibranchPipelinePage.getJobName(), multibranchPipelineDisplayName);
         Assert.assertTrue(multibranchPipelinePage.isMetadataFolderIconDisplayed(), "error was not shown Metadata Folder icon");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("UI")
+    @Description("All options are displayed from 'Add source'")
+    @Test
+    public void testBranchSourcesOptionsList() {
+        final List<String> optionsList = List.of("Git", "GitHub", "Single repository & branch");
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        List<String> actualOptionsList = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigure()
+                .clickAddSourceButton()
+                .getAddSourceOptionsList();
+
+        Assert.assertEquals(actualOptionsList, optionsList);
     }
 
     @Severity(SeverityLevel.TRIVIAL)

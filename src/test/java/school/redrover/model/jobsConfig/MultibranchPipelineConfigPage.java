@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.model.base.baseConfig.BaseConfigFoldersPage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<MultibranchPipelineConfigPage, MultibranchPipelinePage> {
 
     @FindBy(xpath = "//label[@data-title='Disabled']")
@@ -24,6 +27,12 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
 
     @FindBy(xpath = "//a[text()='Health of the primary branch of a repository']")
     private WebElement healthPrimaryBranchRepositoryOption;
+
+    @FindBy(xpath = "//button[text()='Add source']")
+    private WebElement addSourceButton;
+
+    @FindBy(xpath = "//ul[@class='first-of-type']/li")
+    private List<WebElement> addSourceOptionsList;
 
     public MultibranchPipelineConfigPage(MultibranchPipelinePage multibranchPipelinePage) {
         super(multibranchPipelinePage);
@@ -51,11 +60,30 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
         return this;
     }
 
+    @Step("Select an option the 'Health of the primary branch of a repository' from the Health metrics section")
     public MultibranchPipelineConfigPage addHealthMetricPrimaryBranchRepository() {
         getWait5().until(ExpectedConditions.elementToBeClickable(addHealthMetric)).click();
         getWait5().until(ExpectedConditions.elementToBeClickable(healthPrimaryBranchRepositoryOption)).click();
 
         return this;
+    }
+
+    @Step("Click on the 'Add Source' button from the Configuration page")
+    public MultibranchPipelineConfigPage clickAddSourceButton() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(addSourceButton)).click();
+
+        return this;
+    }
+
+    @Step("Get an options list from the 'Add Source' drop down menu")
+    public List<String> getAddSourceOptionsList() {
+        List<String> optionsList = new ArrayList<>();
+
+        for(WebElement option: addSourceOptionsList) {
+            optionsList.add(option.getText());
+        }
+
+        return optionsList;
     }
 }
 
