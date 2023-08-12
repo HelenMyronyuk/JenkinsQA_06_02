@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.DeletePage;
@@ -46,5 +47,10 @@ public class ViewPage extends BaseDashboardPage<ViewPage> implements IDescriptio
         editViewSideMenu.click();
 
         return this;
+    }
+
+    @Step("Verification the 'Delete View' button invisibility on the Side menu")
+    public boolean isDeleteViewButtonDisplayed() {
+        return getWait5().until(ExpectedConditions.invisibilityOf(deleteViewLink));
     }
 }

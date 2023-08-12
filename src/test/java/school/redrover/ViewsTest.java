@@ -511,4 +511,34 @@ public class ViewsTest extends BaseTest {
 
         Assert.assertTrue(isFiltersChecked, "Check box is not checked!");
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verification the possibility of Deleting View From Default View To User")
+    @Test
+    public void testNotAvailableDeleteForDefaultViewForUser() {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        createNewView(true, VIEW_NAME, TestUtils.ViewType.ListView, false);
+
+        boolean deleteButtonInvisibility = new ViewPage(getDriver())
+                .getHeader()
+                .clickUserDropdownMenu()
+                .openConfigureFromUserDropdownMenu()
+                .enterDefaultView(VIEW_NAME)
+                .clickSaveButton()
+                .getBreadcrumb()
+                .getDashboardDropdownMenu()
+                .getPageFromDashboardDropdownMenu("My Views", new MyViewsPage(getDriver()))
+                .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
+                .isDeleteViewButtonDisplayed();
+
+        new ViewPage(getDriver())
+                .getHeader()
+                .clickUserDropdownMenu()
+                .openConfigureFromUserDropdownMenu()
+                .enterDefaultView("")
+                .clickSaveButton();
+
+        Assert.assertTrue(deleteButtonInvisibility, "Delete View button is displayed!");
+    }
 }

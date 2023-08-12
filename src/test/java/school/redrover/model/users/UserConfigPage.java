@@ -2,6 +2,7 @@ package school.redrover.model.users;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.DeletePage;
@@ -20,6 +21,11 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
     @FindBy(xpath = "//a[contains(@href, 'delete')]")
     private WebElement deleteButton;
 
+    @FindBy(xpath = "//div[contains(text(), 'Session Termination')]")
+    private WebElement sessionTerminationLabel;
+
+    @FindBy(xpath = "//input[@class='jenkins-input validated  ']")
+    private WebElement defaultViewField;
     public UserConfigPage(UserPage statusUserPage) {
         super(statusUserPage);
     }
@@ -54,9 +60,20 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
         return this;
     }
 
+    @Step("Click the ‘Delete’ button on the Side menu")
     public DeletePage<MainPage> clickDeleteUser() {
         deleteButton.click();
 
         return new DeletePage<>(new MainPage(getDriver()));
+    }
+
+    @Step("Enter view name to Default View field")
+    public UserConfigPage enterDefaultView(String viewName) {
+        TestUtils.scrollWithPauseByActions(this, sessionTerminationLabel, 100);
+
+        getWait5().until(ExpectedConditions.visibilityOf(defaultViewField)).clear();
+        defaultViewField.sendKeys(viewName);
+
+        return this;
     }
 }
