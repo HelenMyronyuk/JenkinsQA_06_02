@@ -10,7 +10,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.OrganizationFolderPage;
+import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.OrganizationFolderConfigPage;
+import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
@@ -681,6 +683,35 @@ public class OrganizationFolderTest extends BaseTest {
                 .healthMetricIsVisible();
 
         Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Health metrics recursive can be added")
+    @Test
+    public void testHealthMetricsRecursive() {
+        String pipelineName = "pipeline Test";
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME,TestUtils.JobType.OrganizationFolder, true);
+
+        String weatherReport = new MainPage(getDriver())
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .clickHealthMetrics()
+                .clickSaveButton()
+                .getHeader()
+                .clickLogo()
+                .clickNewItemFromSideMenu()
+                .enterItemName(pipelineName)
+                .selectJobType(TestUtils.JobType.Pipeline)
+                .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .hoverOverWeather(pipelineName)
+                .getTooltipDescription();
+
+        Assert.assertEquals(weatherReport, "Build stability: No recent builds failed.");
     }
 
     @Severity(SeverityLevel.NORMAL)
