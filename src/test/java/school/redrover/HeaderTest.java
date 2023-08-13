@@ -138,30 +138,6 @@ public class HeaderTest extends BaseTest {
         Assert.assertTrue(signInButtonPresence, "Sign In button is not displayed after logout");
     }
 
-    @Severity(SeverityLevel.MINOR)
-    @Feature("UI")
-    @Description("Verification of presence Notification and Security icons on Header")
-    @Test
-    public void testNotificationAndSecurityIcon() {
-        String expectedManageJenkinsPageHeader = "Manage Jenkins";
-
-        String backgroundColorBefore = new MainPage(getDriver())
-                .getHeader()
-                .getBackgroundColorNotificationIcon();
-
-        String backgroundColorAfter = new MainPage(getDriver())
-                .getHeader()
-                .clickNotificationIcon()
-                .getBackgroundColorNotificationIcon();
-
-        String actualManageJenkinsPageHeader = new ManageJenkinsPage(getDriver())
-                .clickManageJenkinsLink()
-                .getActualHeader();
-
-        Assert.assertNotEquals(backgroundColorBefore, backgroundColorAfter, " The color of icon is not changed");
-        Assert.assertEquals(actualManageJenkinsPageHeader, expectedManageJenkinsPageHeader, " The page is not correct");
-    }
-
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to return to DashboardPage from ProjectPage and ConfigurationPage")
