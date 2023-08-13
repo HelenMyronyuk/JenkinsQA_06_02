@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -24,6 +25,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that build history table contains information about all types of built projects")
     @Test
     public void testBuildHistoryOfTwoDifferentTypesProjectsIsShown() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -42,6 +44,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify the ability to add a description to the project build")
     @Test
     public void testAddDescriptionToBuild() {
         String buildDescription = new MainPage(getDriver())
@@ -50,12 +53,10 @@ public class BuildHistoryTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.Pipeline)
                 .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
                 .clickSaveButton()
-                .getHeader()
-                .clickLogo()
-                .clickJobName(NAME_PIPELINE, new PipelinePage(getDriver()))
-                .clickAddOrEditDescription()
+                .clickBuildNowFromSideMenu()
+                .clickEditBuildInformFromProjectPage()
                 .enterDescription(BUILD_DESCRIPTION)
-                .clickSaveButtonDescription()
+                .clickSaveButton()
                 .getDescriptionText();
 
         Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
@@ -63,6 +64,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the name of workspace building on the built-in node on Console Output Page")
     @Test
     public void testConsoleFreestyleBuildLocation() {
         String consoleOutputText = new MainPage(getDriver())
@@ -86,6 +88,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verification the user of build on Console Output Page")
     @Test
     public void testConsoleOutputFreestyleBuildStartedByUser() {
         final String currentUser = new MainPage(getDriver()).getHeader().getCurrentUserName();
@@ -108,6 +111,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verification the build status on Console Output Page")
     @Test
     public void testConsoleOutputFreestyleBuildStatus() {
         final String consoleOutput = new MainPage(getDriver())
@@ -132,6 +136,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verification of Status Message Text of broken build")
     @Test
     public void testVerifyStatusBroken() {
 
@@ -162,6 +167,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify that name of project is present on Time line on Build History page")
     @Test
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
         final String itemName = "TestProject";
@@ -183,6 +189,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Verify the ability to delete a project build from Build page")
     @Test
     public void testDeleteBuild() {
         final int zeroBuild = 0;
