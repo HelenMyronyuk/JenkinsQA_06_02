@@ -31,15 +31,16 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of creating MultiConfiguration project by clicking Create a job button")
     @Test
     public void testCreateFromCreateAJob() {
-        MainPage mainPage = new MainPage(getDriver())
+        boolean jobIsDisplayed = new MainPage(getDriver())
                 .clickCreateAJobAndArrow()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
                 .getHeader()
-                .clickLogo();
+                .clickLogo()
+                .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "error was not show name project");
+        Assert.assertTrue(jobIsDisplayed, "error was not show name project");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -63,16 +64,17 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from People Page")
     @Test
     public void testCreateFromPeoplePage() {
-        MainPage projectPeoplePage = new MainPage(getDriver())
+        boolean jobIsDisplayed = new MainPage(getDriver())
                 .clickPeopleFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
                 .getHeader()
-                .clickLogo();
+                .clickLogo()
+                .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
+        Assert.assertTrue(jobIsDisplayed, "Job name is not displayed!");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -80,15 +82,17 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from Build History Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
-        MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
+        boolean jobIsDisplayed = new MainPage(getDriver())
+                .clickBuildsHistoryFromSideMenu()
                 .clickNewItem()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
                 .getHeader()
-                .clickLogo();
+                .clickLogo()
+                .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
+        Assert.assertTrue(jobIsDisplayed, "Job name is not displayed!");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -133,16 +137,17 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button from My Views Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
-        MainPage projectName = new MainPage(getDriver())
+        boolean jobIsDisplayed = new MainPage(getDriver())
                 .clickMyViewsSideMenuLink()
                 .clickNewItemFromSideMenu()
                 .enterItemName(NAME)
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject)
                 .clickOkButton(new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(getDriver())))
                 .getHeader()
-                .clickLogo();
+                .clickLogo()
+                .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the project name is not displayed");
+        Assert.assertTrue(jobIsDisplayed, "Error: the project name is not displayed");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -382,18 +387,19 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of presence display name for build of MultiConfiguration project")
     @Test
     public void testAddDisplayNameForBuild() {
+        final String displayName = "DisplayName";
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
-        String buildHeaderText = new MultiConfigurationProjectPage(getDriver())
+        boolean buildHeaderText = new MultiConfigurationProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
                 .clickEditBuildInformation()
-                .enterDisplayName("DisplayName")
+                .enterDisplayName(displayName)
                 .clickSaveButton()
-                .getBuildHeaderText();
+                .getBuildHeaderText()
+                .contains(displayName);
 
-        Assert.assertTrue(buildHeaderText.contains("DisplayName"),
-                "Error: The Display Name for the Build has not been changed.");
+        Assert.assertTrue(buildHeaderText, "Error: The Display Name for the Build has not been changed.");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -462,12 +468,13 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
-        String text = new MultiConfigurationProjectPage(getDriver())
+        boolean isTextContains = new MultiConfigurationProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .clickChangesViaLastBuildDropDownMenu()
-                .getTextOfPage();
+                .getTextOfPage()
+                .contains("No changes.");
 
-        Assert.assertTrue(text.contains("No changes."));
+        Assert.assertTrue(isTextContains, "The text is not contains No changes.");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -727,14 +734,15 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testBuildNowOptionNotPresentInDisabledProject() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        List<String> dropDownMenuItems = new MainPage(getDriver())
+        boolean dropDownMenuItemsContains = new MainPage(getDriver())
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .clickDisable()
                 .getHeader()
                 .clickLogo()
-                .getListOfProjectMenuItems(NAME);
+                .getListOfProjectMenuItems(NAME)
+                .contains("Build Now");
 
-        Assert.assertFalse(dropDownMenuItems.contains("Build Now"), "'Build Now' option is present in drop-down menu");
+        Assert.assertFalse(dropDownMenuItemsContains, "'Build Now' option is present in drop-down menu");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -786,13 +794,13 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testNavigateToChangesPageFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        String text =
-                new MainPage(getDriver())
-                        .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                        .clickChangeOnLeftSideMenu()
-                        .getTextOfPage();
+        boolean textContains = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickChangeOnLeftSideMenu()
+                .getTextOfPage()
+                .contains("No builds.");
 
-        Assert.assertTrue(text.contains("No builds."),
+        Assert.assertTrue(textContains,
                 "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
     }
 
@@ -1067,12 +1075,12 @@ public class MultiConfigurationProjectTest extends BaseTest {
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        List<String> deleteProject = new MainPage(getDriver())
+        boolean welcomeDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDelete(NAME)
                 .acceptAlert()
-                .getJobList();
+                .isWelcomeDisplayed();
 
-        Assert.assertEquals(deleteProject.size(), 0);
+        Assert.assertTrue(welcomeDisplayed, "Welcome Jenkins is not displayed!");
     }
 
     @Severity(SeverityLevel.CRITICAL)
