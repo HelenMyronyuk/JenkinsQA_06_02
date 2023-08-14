@@ -716,6 +716,29 @@ public class OrganizationFolderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Check Health Metric can be deleted")
+    @Test
+    public void testDeleteHealthMetricsSideMenu() {
+        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
+
+        boolean healthMetricIsNotVisible = new MainPage(getDriver())
+                .clickJobName(ORGANIZATION_FOLDER_NAME, new OrganizationFolderPage(getDriver()))
+                .clickConfigure()
+                .addHealthMetrics()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickHealthMetrics()
+                .removeHealthMetrics()
+                .clickSaveButton()
+                .clickConfigure()
+                .clickHealthMetrics()
+                .isHealthMetricInvisible();
+
+        Assert.assertTrue(healthMetricIsNotVisible, "Health metrics is disabled");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
     @Description("The 'Script Path' can be edited to the Organization Folder from Configuration page")
     @Test
     public void testConfigureProjectsEditScriptPath() {
