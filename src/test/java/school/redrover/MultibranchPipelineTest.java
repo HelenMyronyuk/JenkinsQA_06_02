@@ -683,6 +683,26 @@ public class MultibranchPipelineTest extends BaseTest {
         Assert.assertEquals(actualOptionsList, optionsList);
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("UI")
+    @Description("All options are displayed from Scan Multibranch Pipeline Triggers Interval select")
+    @Test
+    public void testScanMultibranchPipelineTriggersIntervalsList() {
+        final List<String> intervalsList = List.of("1 minute", "2 minutes", "3 minutes", "5 minutes",
+                "10 minutes", "15 minutes", "20 minutes", "25 minutes", "30 minutes", "1 hour", "2 hours", "4 hours",
+                "8 hours", "12 hours", "1 day", "2 days", "1 week", "2 weeks", "4 weeks");
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        List<String> actualIntervalsList = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigure()
+                .clickPeriodicallyOtherwiseCheckBox()
+                .openIntervalDropDownSelect()
+                .getIntervalsList();
+
+        Assert.assertEquals(actualIntervalsList, intervalsList);
+    }
+
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
     @Description("The 'Appearance' icon can be added to the Multibranch Pipeline from Configuration page " +

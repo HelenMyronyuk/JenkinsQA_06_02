@@ -2,11 +2,13 @@ package school.redrover.model.jobsConfig;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.model.base.baseConfig.BaseConfigFoldersPage;
+import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,18 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
 
     @FindBy(xpath = "//ul[@class='first-of-type']/li")
     private List<WebElement> addSourceOptionsList;
+
+    @FindBy(xpath = "//label[text()='Discard old items']")
+    private WebElement discardOldItemsLabel;
+
+    @FindBy(xpath = "//label[text()='Periodically if not otherwise run']")
+    private WebElement periodicallyOtherwiseCheckBox;
+
+    @FindBy(xpath = "//select[@name='_.interval']")
+    private WebElement intervalSelect;
+
+    @FindBy(xpath = "//select[@name='_.interval']/option")
+    private List<WebElement> intervalsList;
 
     public MultibranchPipelineConfigPage(MultibranchPipelinePage multibranchPipelinePage) {
         super(multibranchPipelinePage);
@@ -84,6 +98,32 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
         }
 
         return optionsList;
+    }
+
+    @Step("Click on the 'Periodically if not otherwise run' button from the Configuration page")
+    public MultibranchPipelineConfigPage clickPeriodicallyOtherwiseCheckBox() {
+        TestUtils.scrollWithPauseByActions(this, discardOldItemsLabel, 600);
+        getWait5().until(ExpectedConditions.elementToBeClickable(periodicallyOtherwiseCheckBox)).click();
+
+        return this;
+    }
+
+    @Step("Open 'Interval' drop down select from the Configuration page")
+    public MultibranchPipelineConfigPage openIntervalDropDownSelect() {
+        intervalSelect.click();
+
+        return this;
+    }
+
+    @Step("Get an options list from the 'Scan Multibranch Pipeline Triggers. Interval' drop down select")
+    public List<String> getIntervalsList() {
+        List<String> intervalOptionList = new ArrayList<>();
+
+        for (WebElement interval: intervalsList) {
+            intervalOptionList.add(interval.getText());
+        }
+
+        return intervalOptionList;
     }
 }
 
