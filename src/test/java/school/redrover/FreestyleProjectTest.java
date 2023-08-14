@@ -1180,6 +1180,29 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Feature("Function")
     @Test
+    public void testUseCustomWorkspaceFromConfigureGeneralAdvanced() {
+        String directoryName = "My directory";
+
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        String actualConsoleOutputText = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
+                .clickConfigure()
+                .clickAdvancedGeneral()
+                .clickUseCustomWorkspace(directoryName)
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .openLastBuildDropDownMenu()
+                .clickConsoleOutputLastBuildDropDown()
+                .getConsoleOutputText();
+
+        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
+    }
+
+    @Feature("Function")
+    @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
@@ -1599,28 +1622,5 @@ public class FreestyleProjectTest extends BaseTest {
                 .isWelcomeDisplayed();
 
         Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
-    }
-
-    @Feature("Function")
-    @Test
-    public void testUseCustomWorkspaceFromConfigureGeneralAdvanced() {
-        String directoryName = "My directory";
-
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        String actualConsoleOutputText = new MainPage(getDriver())
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickConfigure()
-                .clickAdvancedGeneral()
-                .clickUseCustomWorkspace(directoryName)
-                .clickSaveButton()
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
-                .openLastBuildDropDownMenu()
-                .clickConsoleOutputLastBuildDropDown()
-                .getConsoleOutputText();
-
-        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
     }
 }
