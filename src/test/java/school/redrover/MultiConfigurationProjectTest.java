@@ -48,15 +48,12 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of creating MultiConfiguration project by clicking +New Item button")
     @Test
     public void testCreateFromNewItem() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        Assert.assertEquals(new MultiConfigurationProjectPage(getDriver()).getJobName().substring(8, 32), NAME);
+        boolean jobNameDisplayed = new MainPage(getDriver())
+                .jobIsDisplayed(NAME);
 
-        new MainPage(getDriver())
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertEquals(new MainPage(getDriver()).getJobName(NAME), NAME);
+        Assert.assertTrue(jobNameDisplayed, "Error: was not show name MultiConfiguration Project");
     }
 
     @Severity(SeverityLevel.CRITICAL)
