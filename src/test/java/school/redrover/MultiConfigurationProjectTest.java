@@ -968,7 +968,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of presence parameters for MultiConfiguration Project on GitHub")
     @Test
     public void testThisProjectIsParameterizedOptionsCollectToList() {
-        List<String> expectedOptionsProjectIsParameterizedList = List.of("Boolean Parameter", "Choice Parameter",
+        final List<String> expectedOptionsProjectIsParameterizedList = List.of("Boolean Parameter", "Choice Parameter",
                 "Credentials Parameter", "File Parameter", "Multi-line String Parameter", "Password Parameter",
                 "Run Parameter", "String Parameter");
 
@@ -989,7 +989,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of possibility to add build steps options for MultiConfiguration Project")
     @Test
     public void testAddBuildStepsOptionsCollectToList() {
-        List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
+        final List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
                 "Invoke Ant", "Invoke Gradle script", "Invoke top-level Maven targets", "Run with timeout",
                 "Set build status to \"pending\" on GitHub commit");
 
@@ -1002,6 +1002,28 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getOptionsInBuildStepDropdown();
 
         Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verification of possibility to post build actions options for MultiConfiguration Project")
+    @Test
+    public void testPostBuildActionsOptionsCollectToList() {
+        final List<String> expectedOptionsList = List.of("Aggregate downstream test results",
+                "Archive the artifacts", "Build other projects", "Publish JUnit test result report",
+                "Record fingerprints of files to track usage", "Git Publisher", "E-mail Notification",
+                "Editable Email Notification", "Set GitHub commit status (universal)",
+                "Set build status on GitHub commit [deprecated]", "Delete workspace when build is done");
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        List<String> actualOptionsList = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .clickAddPostBuildActionDropDown()
+                .getPostBuildActionsOptionsList();
+
+        Assert.assertEquals(actualOptionsList, expectedOptionsList);
     }
 
     @Severity(SeverityLevel.CRITICAL)

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.base.BaseProjectPage;
 import school.redrover.runner.TestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends BaseConfigProjectsPage<?, ?>, ProjectPage extends BaseProjectPage<?>> extends BaseConfigProjectsPage<Self, ProjectPage> {
@@ -141,6 +142,9 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
 
     @FindBy(xpath = "//div[text()='Additional Behaviours']")
     private WebElement additionalBehavioursText;
+
+    @FindBy(xpath = "//div[@class='jenkins-form-item hetero-list-container with-drag-drop one-each honor-order']//li")
+    private List<WebElement> postBuildActionsOptionsList;
 
     public BaseConfigFreestyleAndMulticonfigProjectsPage(ProjectPage projectPage) {
         super(projectPage);
@@ -431,5 +435,15 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
         useDirectoryName.sendKeys(directoryName);
 
         return (Self) this;
+    }
+
+    public List<String> getPostBuildActionsOptionsList() {
+        List<String> optionsList = new ArrayList<>();
+
+        for (WebElement option: postBuildActionsOptionsList) {
+            optionsList.add(option.getText());
+        }
+
+        return optionsList;
     }
 }
