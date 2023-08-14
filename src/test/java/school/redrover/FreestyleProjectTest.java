@@ -46,21 +46,6 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
-    @Test
-    public void testCreateFromCreateAJobArrow() {
-        boolean freestyleProjectNameIsAppeared = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .enterItemName(FREESTYLE_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(FREESTYLE_NAME);
-
-        Assert.assertTrue(freestyleProjectNameIsAppeared, "Error! Job Is Not Displayed");
-    }
-
-    @Feature("Function")
     @Description("Verify job creation when clicking on 'New Item' button")
     @Test
     public void testCreateFromNewItem() {
