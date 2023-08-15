@@ -11,6 +11,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseComponent;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.externalPages.SearchBoxPage;
 import school.redrover.model.manageJenkins.ManageJenkinsPage;
 import school.redrover.model.users.UserConfigPage;
 import school.redrover.model.users.UserPage;

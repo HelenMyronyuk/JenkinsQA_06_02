@@ -1,4 +1,4 @@
-package school.redrover.model;
+package school.redrover.model.externalPages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;

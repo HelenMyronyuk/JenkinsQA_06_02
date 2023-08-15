@@ -1,4 +1,4 @@
-package school.redrover.model;
+package school.redrover.model.externalPages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

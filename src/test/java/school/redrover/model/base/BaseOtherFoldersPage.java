@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.base.baseConfig.BaseConfigPage;
 import school.redrover.model.builds.WelcomeBuildHistoryPage;
+import school.redrover.model.externalPages.DocBookPipelineMultibranchPage;
+import school.redrover.model.externalPages.DocBookPipelinePage;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobsSidemenu.CredentialsPage;
 import school.redrover.model.jobsSidemenu.OtherFoldersEventsPage;
