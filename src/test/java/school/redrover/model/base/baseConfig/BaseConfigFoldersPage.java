@@ -1,5 +1,6 @@
 package school.redrover.model.base.baseConfig;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -44,6 +45,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         super(foldersPage);
     }
 
+    @Step("Enter {displayName} as display name")
     public Self enterDisplayName(String displayName) {
         inputDisplayName.click();
         inputDisplayName.sendKeys(displayName);
@@ -51,12 +53,14 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
+   @Step("Clear display name")
     public Self clearDisplayName() {
         inputDisplayName.clear();
 
         return (Self)this;
     }
 
+    @Step("Clear health metrics")
     public Self clickHealthMetrics() {
         new Actions(getDriver())
                 .click(healthMetricsSideMenu)
@@ -67,6 +71,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
+    @Step("Add health metrics")
     public Self addHealthMetrics() {
         clickHealthMetrics();
 
@@ -76,11 +81,13 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
+    @Step("Check if health metric is visible")
     public Boolean healthMetricIsVisible() {
 
         return getWait10().until(ExpectedConditions.visibilityOf(addedHealthMetric)).isDisplayed();
     }
 
+    @Step("Delete health metrics")
     public Self removeHealthMetrics() {
         new Actions(getDriver())
                 .click(removeHealthMetric)
@@ -90,16 +97,19 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self) this;
     }
 
+    @Step("Check if health metric is invisible")
     public boolean isHealthMetricInvisible() {
         return getWait2().until(ExpectedConditions.invisibilityOf(addedHealthMetric));
     }
 
+    @Step("Click project's side menu")
     public Self clickProjectsSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(projectsSideMenu)).click();
 
         return (Self) this;
     }
 
+    @Step("Enter script path {scriptPath}")
     public Self enterScriptPath(String scriptPath) {
         inputScriptPath.clear();
         inputScriptPath.click();
@@ -108,6 +118,7 @@ public abstract class BaseConfigFoldersPage<Self extends BaseConfigPage<?, ?>, F
         return (Self)this;
     }
 
+    @Step("Get script path")
     public String getScriptPath() {
         return inputScriptPath.getAttribute("value");
     }
