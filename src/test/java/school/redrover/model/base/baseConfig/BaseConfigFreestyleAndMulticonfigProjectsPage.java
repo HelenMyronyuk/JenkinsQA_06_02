@@ -139,13 +139,16 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
     private WebElement useDirectoryName;
 
     @FindBy(xpath = "//*[@id='source-code-management']")
-    private WebElement soursCodeManagement;
+    private WebElement sourceCodeManagementLabel;
 
     @FindBy(xpath = "//div[text()='Additional Behaviours']")
     private WebElement additionalBehavioursText;
 
     @FindBy(xpath = "//div[@class='jenkins-form-item hetero-list-container with-drag-drop one-each honor-order']//li")
     private List<WebElement> postBuildActionsOptionsList;
+
+    @FindBy(xpath = "//input[@name='_.displayNameOrNull']")
+    private WebElement displayNameInput;
 
     public BaseConfigFreestyleAndMulticonfigProjectsPage(ProjectPage projectPage) {
         super(projectPage);
@@ -465,7 +468,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
 
     @Step("click 'Advanced General' from dropdown menu")
     public Self clickAdvancedGeneral() {
-        TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
+        TestUtils.scrollWithPauseByActions(this, sourceCodeManagementLabel, 100);
         advancedDropdownMenu.click();
 
         return (Self) this;
@@ -473,7 +476,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
 
     @Step("click 'Use Custom Workspace' and input '{directoryName}' ")
     public Self clickUseCustomWorkspace(String directoryName) {
-        TestUtils.scrollWithPauseByActions(this, soursCodeManagement, 100);
+        TestUtils.scrollWithPauseByActions(this, sourceCodeManagementLabel, 100);
         useCustomWorkspace.click();
         useDirectoryName.sendKeys(directoryName);
 
@@ -489,5 +492,13 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
         }
 
         return optionsList;
+    }
+
+    @Step("Clear displayName field and input '{displayName}' ")
+    public Self enterDisplayName(String displayName) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(displayNameInput)).clear();
+        displayNameInput.sendKeys(displayName);
+
+        return (Self) this;
     }
 }

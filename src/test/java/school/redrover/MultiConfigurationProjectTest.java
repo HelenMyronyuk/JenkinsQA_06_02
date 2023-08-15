@@ -937,6 +937,27 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
+    @Description("The 'Display name' can be deleted to the MultiConfiguration from Configuration page")
+    @Test
+    public void testDeleteDisplayName() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String actualProjectName = new MultiConfigurationProjectPage(getDriver())
+                .clickConfigure()
+                .clickAdvancedDropdownMenu()
+                .enterDisplayName(NEW_NAME)
+                .clickSaveButton()
+                .clickConfigure()
+                .clickAdvancedDropdownMenu()
+                .enterDisplayName("")
+                .clickSaveButton()
+                .getProjectName();
+
+        Assert.assertEquals(actualProjectName, NAME);
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to configure old build for MultiConfiguration Project")
