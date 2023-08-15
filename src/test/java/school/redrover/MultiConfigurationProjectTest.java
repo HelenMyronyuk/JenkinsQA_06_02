@@ -419,6 +419,24 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("Verification that description for build of MultiConfiguration project can be added")
+    @Test
+    public void testAddDescriptionFromBuildPage(){
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String descriptionText = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .clickAddOrEditDescription()
+                .enterDescription(DESCRIPTION)
+                .clickSaveButtonDescription()
+                .getDescriptionText();
+
+        Assert.assertEquals(descriptionText, DESCRIPTION);
+    }
+
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("Verification of possibility to rename description for build of MultiConfiguration project")
     @Test
     public void testEditDescriptionFromBuildPage() {
