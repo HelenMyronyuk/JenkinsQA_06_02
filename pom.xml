@@ -97,7 +97,8 @@
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <parallel>classes</parallel>
-                    <threadCount>10</threadCount>
+                    <threadCount>4</threadCount>
+                    <forkCount>2</forkCount>
                 </configuration>
                 <dependencies>
                     <dependency>
