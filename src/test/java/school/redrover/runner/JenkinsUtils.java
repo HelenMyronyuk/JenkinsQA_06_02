@@ -74,7 +74,7 @@ public class JenkinsUtils {
         }
     }
 
-    private static HttpResponse<String> postHttp(String url, String body) {
+    private static synchronized HttpResponse<String> postHttp(String url, String body) {
         try {
             return client.send(
                     HttpRequest.newBuilder()
