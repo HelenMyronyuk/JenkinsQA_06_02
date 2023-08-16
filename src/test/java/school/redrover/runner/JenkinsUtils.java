@@ -1,5 +1,6 @@
 package school.redrover.runner;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -120,6 +121,7 @@ public class JenkinsUtils {
         }
     }
 
+    @Step("Delete Jobs")
     private static void deleteJobs(String baseUrl) {
         String mainPage = getPage(baseUrl, "");
         deleteByLink(baseUrl + "job/%s/doDelete",
@@ -127,6 +129,7 @@ public class JenkinsUtils {
                 getCrumbFromPage(mainPage));
     }
 
+    @Step("Delete Views")
     private static void deleteViews(String baseUrl) {
         String mainPage = getPage(baseUrl, "");
         deleteByLink(baseUrl +"view/%s/doDelete",
@@ -139,6 +142,7 @@ public class JenkinsUtils {
                 getCrumbFromPage(viewPage));
     }
 
+    @Step("Delete Users")
     private static void deleteUsers(String baseUrl) {
         String userPage = getPage(baseUrl, "manage/securityRealm/");
         deleteByLink(baseUrl + "manage/securityRealm/user/%s/doDelete",
@@ -147,6 +151,7 @@ public class JenkinsUtils {
                 getCrumbFromPage(userPage));
     }
 
+    @Step("Delete Nodes")
     private static void deleteNodes(String baseUrl) {
         String mainPage = getPage(baseUrl, "");
         deleteByLink(baseUrl + "computer/%s/doDelete",
@@ -155,6 +160,7 @@ public class JenkinsUtils {
     }
 
 
+    @Step("Delete description")
     private static void deleteDescription(String baseUrl) {
         String mainPage = getPage(baseUrl, "");
         postHttp(baseUrl + "submitDescription",
@@ -163,6 +169,7 @@ public class JenkinsUtils {
                         getCrumbFromPage(mainPage)));
     }
 
+    @Step("Clear Data for Jenkins instance {0}")
     static void clearData(String baseUrl) {
         JenkinsUtils.deleteViews(baseUrl);
         JenkinsUtils.deleteJobs(baseUrl);
@@ -177,6 +184,7 @@ public class JenkinsUtils {
         driver.findElement(By.name("Submit")).click();
     }
 
+    @Step("Logout from instance {1}")
     static void logout(WebDriver driver, String url) {
         ProjectUtils.get1(driver, url);
 

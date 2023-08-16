@@ -2,8 +2,10 @@ package school.redrover.runner;
 
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import school.redrover.JenkinsInstance;
@@ -37,6 +39,9 @@ public abstract class BaseTest {
                         .collect(Collectors.toList()),
                 m -> m.getName(),
                 m -> m.getAnnotation(Test.class).dependsOnMethods());
+        instance = ProjectUtils.getJenkinsUrl();
+        instance.setBusy(true);
+        ProjectUtils.logf("Locked Jenkins %s for class %s".formatted(instance.toString(), this.getClass().getName()));
     }
 
     @BeforeMethod
@@ -70,8 +75,6 @@ public abstract class BaseTest {
 
     protected void getWeb() {
         ProjectUtils.log("Get web page");
-        instance = ProjectUtils.getJenkinsUrl();
-        instance.setBusy(true);
         ProjectUtils.get1(driver, instance.toString());
     }
 
@@ -130,8 +133,13 @@ public abstract class BaseTest {
         }
 
         clearData();
-        instance.setBusy(false);
         ProjectUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
+    }
+
+    @AfterClass
+    protected void unlockInstance(){
+        instance.setBusy(false);
+        ProjectUtils.logf("Unlocked Jenkins %s after class %s".formatted(instance.toString(), this.getClass().getName()));
     }
 
     protected WebDriver getDriver() {

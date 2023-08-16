@@ -86,7 +86,7 @@ public final class ProjectUtils {
                 properties.getProperty(PROP_PORT));
     }
 
-    static JenkinsInstance getJenkinsUrl() {
+    static synchronized JenkinsInstance getJenkinsUrl() {
         return JenkinsConstants.instances
                 .stream()
                 .filter(i -> !i.isBusy())

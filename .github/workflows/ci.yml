@@ -41,14 +41,14 @@ jobs:
 
       - name: Extract Jenkins data and set permission for instance 1
         run: |
-          tar -xvf ./jenkins_backup.tar && mv jenkins_backup_1
+          tar -xvf ./jenkins_backup.tar && mv jenkins_backup jenkins_backup_1
           chmod -R 777 ./jenkins_backup_1/var/jenkins_home
           echo "List of files: "
           ls
 
       - name: Extract Jenkins data and set permission for instance 2
         run: |
-          tar -xvf ./jenkins_backup.tar && mv jenkins_backup_2
+          tar -xvf ./jenkins_backup.tar && mv jenkins_backup jenkins_backup_2
           chmod -R 777 ./jenkins_backup_2/var/jenkins_home
           echo "List of files: "
           ls
@@ -57,10 +57,10 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Docker start 1
-        run: docker run --rm --detach -p 8080:8080 -p 50000:50000 -v ${{ github.workspace }}/jenkins_backup_1/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
+        run: docker run --rm --detach -p 8080:8080 -v ${{ github.workspace }}/jenkins_backup_1/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
 
       - name: Docker start 2
-        run: docker run --rm --detach -p 8081:8080 -p 50000:50000 -v ${{ github.workspace }}/jenkins_backup_2/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
+        run: docker run --rm --detach -p 8081:8080 -v ${{ github.workspace }}/jenkins_backup_2/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
 
       - name: Wait for the Jenkins
         run: ./.github/wait-for-jenkins.sh
