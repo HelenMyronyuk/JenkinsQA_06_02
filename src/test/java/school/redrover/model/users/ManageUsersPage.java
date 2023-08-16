@@ -99,17 +99,6 @@ public class ManageUsersPage extends BaseSubmenuPage<ManageUsersPage> {
         return new DeletePage<>(this);
     }
 
-    @Step("Verify if '{username}' User is deleted")
-    public boolean getUserDeleted(String username) {
-        for (WebElement user : people) {
-            if (user.getText().equals(username)) {
-                break;
-            }
-        }
-
-        return false;
-    }
-
     @Step("Click Gear 'Configure' button for Admin user")
     public UserConfigPage clickFirstUserEditButton() {
         configureAdminButton.click();

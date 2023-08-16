@@ -289,7 +289,7 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .clickDeleteUser()
                 .clickYesButton()
-                .getUserDeleted(USER_NAME);
+                .isUserExist(USER_NAME);
 
         Assert.assertFalse(userNotFound);
     }
