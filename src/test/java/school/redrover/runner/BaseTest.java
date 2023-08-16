@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import school.redrover.JenkinsInstance;
 import school.redrover.runner.order.OrderForTests;
 import school.redrover.runner.order.OrderUtils;
 
@@ -26,6 +27,7 @@ public abstract class BaseTest {
     private WebDriver driver;
 
     private OrderUtils.MethodsOrder<Method> methodsOrder;
+    private JenkinsInstance instance;
 
     @BeforeClass
     protected void beforeClass() {
@@ -42,7 +44,6 @@ public abstract class BaseTest {
         ProjectUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             if (!methodsOrder.isGroupStarted(method) || methodsOrder.isGroupFinished(method)) {
-                clearData();
                 startDriver();
                 getWeb();
                 loginWeb();
@@ -59,7 +60,7 @@ public abstract class BaseTest {
 
     protected void clearData() {
         ProjectUtils.log("Clear data");
-        JenkinsUtils.clearData();
+        JenkinsUtils.clearData(instance.toString());
     }
 
     protected void loginWeb() {
@@ -69,7 +70,9 @@ public abstract class BaseTest {
 
     protected void getWeb() {
         ProjectUtils.log("Get web page");
-        ProjectUtils.get(driver);
+        instance = ProjectUtils.getJenkinsUrl();
+        instance.setBusy(true);
+        ProjectUtils.get1(driver, instance.toString());
     }
 
     protected void startDriver() {
@@ -92,7 +95,7 @@ public abstract class BaseTest {
 
     protected void stopDriver() {
         try {
-            JenkinsUtils.logout(driver);
+            JenkinsUtils.logout(driver, instance.toString());
         } catch (Exception ignore) {
         }
 
@@ -126,6 +129,8 @@ public abstract class BaseTest {
             stopDriver();
         }
 
+        clearData();
+        instance.setBusy(false);
         ProjectUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
     }
 

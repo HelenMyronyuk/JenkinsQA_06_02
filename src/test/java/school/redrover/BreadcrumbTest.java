@@ -4,6 +4,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import jdk.jfr.Description;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -38,7 +39,7 @@ import java.util.function.Function;
 
 public class BreadcrumbTest extends BaseTest {
 
-    private static final String PROJECT_NAME = "JOB";
+    private static final String PROJECT_NAME = "JOB"+ RandomStringUtils.randomAlphanumeric(7);
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")

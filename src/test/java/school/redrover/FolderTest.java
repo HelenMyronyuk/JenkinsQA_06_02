@@ -21,11 +21,11 @@ import java.util.*;
 
 public class FolderTest extends BaseTest {
 
-    private static final String NAME = "FolderName";
-    private static final String RENAME = "Folder";
-    private static final String DESCRIPTION = "Created new folder";
-    private static final String DESCRIPTION_2 = "Created new Description";
-    private static final String DISPLAY_NAME = "NewFolder";
+    private static final String NAME = "FolderName"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String RENAME = "Folder"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DESCRIPTION = "Created new folder"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DESCRIPTION_2 = "Created new Description"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DISPLAY_NAME = "NewFolder"+RandomStringUtils.randomAlphanumeric(7);
 
     private void createdJobInFolder(String jobName, String folderName, TestUtils.JobType jobType, BaseConfigPage<?, ?> jobConfigPage) {
         new MainPage(getDriver())

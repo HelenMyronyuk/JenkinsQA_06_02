@@ -21,11 +21,11 @@ import java.util.List;
 
 public class OrganizationFolderTest extends BaseTest {
 
-    private static final String ORGANIZATION_FOLDER_NAME = "OrgFolder";
-    private static final String ORGANIZATION_FOLDER_RENAMED = "OrgFolderNew";
+    private static final String ORGANIZATION_FOLDER_NAME = "OrgFolder"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String ORGANIZATION_FOLDER_RENAMED = "OrgFolderNew"+RandomStringUtils.randomAlphanumeric(7);
     private static final String PRINT_MESSAGE_PIPELINE_SYNTAX = "TEXT";
-    private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
-    private static final String DISPLAY_NAME = "This is Display Name of Folder";
+    private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DISPLAY_NAME = "This is Display Name of Folder"+RandomStringUtils.randomAlphanumeric(7);
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")

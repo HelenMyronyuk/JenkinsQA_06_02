@@ -25,10 +25,10 @@ import java.util.function.Function;
 
 public class PipelineTest extends BaseTest {
 
-    private static final String NAME = "PIPELINE_NAME";
-    private static final String NEW_NAME = "Pipeline Project";
-    private static final String DESCRIPTION = "This is a test description";
-    private static final String DISPLAYED_BUILD_NAME = "New Build Name";
+    private static final String NAME = "PIPELINE_NAME"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String NEW_NAME = "Pipeline Project"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DESCRIPTION = "This is a test description"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String DISPLAYED_BUILD_NAME = "New Build Name"+RandomStringUtils.randomAlphanumeric(7);
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")

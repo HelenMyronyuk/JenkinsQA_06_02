@@ -21,19 +21,19 @@ import java.util.List;
 
 public class FreestyleProjectTest extends BaseTest {
 
-    private static final String FREESTYLE_NAME = "FREESTYLE_NAME";
-    private static final String NEW_FREESTYLE_NAME = "NEW_FREESTYLE_NAME";
-    private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
-    private static final String NEW_DESCRIPTION_TEXT = "NEW_DESCRIPTION_TEXT";
+    private static final String FREESTYLE_NAME = "FREESTYLE_NAME" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String NEW_FREESTYLE_NAME = "NEW_FREESTYLE_NAME" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String NEW_DESCRIPTION_TEXT = "NEW_DESCRIPTION_TEXT" + RandomStringUtils.randomAlphanumeric(7);
     private static final String GITHUB_URL = "https://github.com/ArtyomDulya/TestRepo";
     private static final String NEW_GITHUB_URL = "https://github.com/nikabenz/repoForJenkinsBuild";
-    private static final String DISPLAY_NAME = "FreestyleDisplayName";
-    private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
+    private static final String DISPLAY_NAME = "FreestyleDisplayName" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName" + RandomStringUtils.randomAlphanumeric(7);
 
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'Create a job' button")
     @Test
-    public void testCreateFromCreateAJob() {
+    public void testCreateFromCreateAJob(){
         MainPage mainPage = new MainPage(getDriver())
                 .clickCreateAJobAndArrow()
                 .enterItemName(FREESTYLE_NAME)
@@ -1165,6 +1165,8 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(actualTimePeriod, timePeriod);
     }
+
+    @Feature("UI")
     @Feature("Function")
     @Description("Checking the possibility click 'ExecuteConcurrentBuilds' checkBox from Configuration page")
     @Test

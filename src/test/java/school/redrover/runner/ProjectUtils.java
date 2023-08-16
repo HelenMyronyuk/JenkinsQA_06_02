@@ -8,6 +8,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import school.redrover.JenkinsConstants;
+import school.redrover.JenkinsInstance;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -84,12 +86,24 @@ public final class ProjectUtils {
                 properties.getProperty(PROP_PORT));
     }
 
+    static JenkinsInstance getJenkinsUrl() {
+        return JenkinsConstants.instances
+                .stream()
+                .filter(i -> !i.isBusy())
+                .findFirst()
+                .orElse(null);
+    }
+
     static WebDriver createDriver() {
         return new ChromeDriver(chromeOptions);
     }
 
     public static void get(WebDriver driver) {
         driver.get(getUrl());
+    }
+
+    public static void get1(WebDriver driver, String url) {
+       driver.get(url);
     }
 
     static String getUserName() {
