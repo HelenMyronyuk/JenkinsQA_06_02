@@ -14,32 +14,36 @@ import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class BuildHistoryTest extends BaseTest {
 
     private static final String NAME_PIPELINE = "Pipeline2023";
     private static final String BUILD_DESCRIPTION = "For QA";
-    private final String FREESTYLE_PROJECT_NAME = "FreestyleName";
-    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001";
+    private final String FREESTYLE_PROJECT_NAME = "FreestyleName"+ RandomStringUtils.randomAlphanumeric(7);;
+    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001"+ RandomStringUtils.randomAlphanumeric(7);;
+    private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
 
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that build history table contains information about all types of built projects")
     @Test
-    public void testBuildHistoryOfTwoDifferentTypesProjectsIsShown() {
+    public void testAllTypesOfProjectsIsDisplayedInTable() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
         TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+        TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, true);
 
         int numberOfLinesInBuildHistoryTable = new MainPage(getDriver())
                 .getHeader()
                 .clickLogo()
                 .clickJobDropdownMenuBuildNow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickJobDropdownMenuBuildNow(FREESTYLE_PROJECT_NAME)
+                .clickJobDropdownMenuBuildNow(PIPELINE_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .getNumberOfLinesInBuildHistoryTable();
 
-        Assert.assertTrue(numberOfLinesInBuildHistoryTable >= 2);
+        Assert.assertEquals(numberOfLinesInBuildHistoryTable, 4);
     }
 
     @Severity(SeverityLevel.NORMAL)
