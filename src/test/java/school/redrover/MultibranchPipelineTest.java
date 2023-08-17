@@ -243,7 +243,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Feature("Function")
     @Description("Find created Multibranch Pipeline project on Main page")
     @Test
-    public void testFindCreatedMultibranchPipelineOnMainPage(){
+    public void testFindCreatedMultibranchPipelineOnMainPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         boolean jobIsPresent = new MainPage(getDriver())
@@ -378,7 +378,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Description("Verification of possibility to navigate to Pipeline Page" +
             " by click 'Creating a Jenkins Pipeline'")
     @Test
-    public void testCreatingJenkinsPipeline(){
+    public void testCreatingJenkinsPipeline() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         String textFromJenkinsPipelinePage = new MainPage(getDriver())
@@ -386,7 +386,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickCreatingAJenkinsPipelineLinkOnProjectPage()
                 .getTextPipelineTitle();
 
-        Assert.assertEquals(textFromJenkinsPipelinePage,"Pipeline");
+        Assert.assertEquals(textFromJenkinsPipelinePage, "Pipeline");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -442,7 +442,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Description("Verification of possibility to navigate to People Page" +
             " from side menu for Multibranch Pipeline Project")
     @Test
-    public void testNavigateToPeoplePageFromProjectPage(){
+    public void testNavigateToPeoplePageFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         String peoplePageText = new MainPage(getDriver())
@@ -458,7 +458,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Description("Verification of possibility to navigate to Build History of Welcome Page" +
             " from side menu for Multibranch Pipeline Project")
     @Test
-    public void testNavigateToBuildHistoryPageFromProjectPage(){
+    public void testNavigateToBuildHistoryPageFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         String buildHistoryWelcomeText = new MainPage(getDriver())
@@ -498,7 +498,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Description("Verification of possibility to navigate to Credentials Page " +
             "from side menu for Multibranch Pipeline Project")
     @Test
-    public void testCredentials(){
+    public void testCredentials() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         String credentialsText = new MainPage(getDriver())
@@ -563,7 +563,7 @@ public class MultibranchPipelineTest extends BaseTest {
     @Feature("Function")
     @Description("Verification of possibility to navigate to Configuration Page from side menu menu for Multibranch Pipeline Project")
     @Test
-    public void testAccessConfigurationPageFromSideMenu(){
+    public void testAccessConfigurationPageFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
         String getHeaderText = new MainPage(getDriver())
@@ -771,7 +771,7 @@ public class MultibranchPipelineTest extends BaseTest {
     public void testAddHealthOfThePrimaryBranchOfARepository() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
 
-        boolean IsHealthMetricVisible =  new MainPage(getDriver())
+        boolean IsHealthMetricVisible = new MainPage(getDriver())
                 .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
                 .clickConfigure()
                 .clickHealthMetrics()
@@ -846,5 +846,26 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getWelcomeText();
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify that when you click the 'Pipeline: Multibranch' link after clicking the 'Help for Feature: Script Path', you are taken to the 'Pipeline: Multibranch' page")
+    @Test
+    public void testHelpForFeatureButton() {
+        final String expectedTitle = "Pipeline: Multibranch";
+
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
+
+        String actualTitle = new MainPage(getDriver())
+                .clickJobName(NAME, new MultibranchPipelinePage(getDriver()))
+                .clickConfigure()
+                .clickBuildConfiguration()
+                .clickScriptPathButton()
+                .clickPipelineMultibranchPageLink()
+                .switchToWorkflowMultibranchPage()
+                .getWorkflowMultibranchPageTitle();
+
+        Assert.assertEquals(actualTitle, expectedTitle);
     }
 }

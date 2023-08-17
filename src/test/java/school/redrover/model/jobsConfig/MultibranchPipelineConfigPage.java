@@ -1,17 +1,22 @@
 package school.redrover.model.jobsConfig;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import school.redrover.model.WorkflowMultibranchPage;
 import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.model.base.baseConfig.BaseConfigFoldersPage;
 import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
 
 public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<MultibranchPipelineConfigPage, MultibranchPipelinePage> {
 
@@ -47,6 +52,15 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
 
     @FindBy(xpath = "//select[@name='_.interval']/option")
     private List<WebElement> intervalsList;
+
+    @FindBy(xpath = "//button[@data-section-id ='build-configuration']")
+    private WebElement buildConfigurationButton;
+
+    @FindBy(xpath = "//a[@tooltip='Help for feature: Script Path']")
+    private WebElement scriptPathButton;
+
+    @FindBy(xpath = "//a[normalize-space()='Pipeline: Multibranch']")
+    private WebElement pipelineMultibranchPageLink;
 
     public MultibranchPipelineConfigPage(MultibranchPipelinePage multibranchPipelinePage) {
         super(multibranchPipelinePage);
@@ -93,7 +107,7 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
     public List<String> getAddSourceOptionsList() {
         List<String> optionsList = new ArrayList<>();
 
-        for(WebElement option: addSourceOptionsList) {
+        for (WebElement option : addSourceOptionsList) {
             optionsList.add(option.getText());
         }
 
@@ -119,11 +133,43 @@ public class MultibranchPipelineConfigPage extends BaseConfigFoldersPage<Multibr
     public List<String> getIntervalsList() {
         List<String> intervalOptionList = new ArrayList<>();
 
-        for (WebElement interval: intervalsList) {
+        for (WebElement interval : intervalsList) {
             intervalOptionList.add(interval.getText());
         }
 
         return intervalOptionList;
     }
+
+    @Step("Click on the 'Build Configuration' button on the Configuration page to select the option")
+    public MultibranchPipelineConfigPage clickBuildConfiguration() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(buildConfigurationButton)).click();
+
+        return this;
+    }
+
+    @Step("Click on the 'ScriptPath' button on the Build Configuration menu")
+    public MultibranchPipelineConfigPage clickScriptPathButton() {
+
+        getWait10().until(ExpectedConditions.elementToBeClickable(scriptPathButton)).click();
+
+        return this;
+    }
+
+    @Step("Click on the 'Pipeline: Multibranch' link in the Script Path field to navigate to the 'Pipeline: Multibranch' page")
+    public WorkflowMultibranchPage clickPipelineMultibranchPageLink() {
+
+        WebElement element = getWait10().until(ExpectedConditions.elementToBeClickable(pipelineMultibranchPageLink));
+
+        int xCoordinate = element.getLocation().getX();
+        int yCoordinate = element.getLocation().getY();
+
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
+        String jsClick = "window.scrollTo(" + xCoordinate + ", " + yCoordinate + ");"
+                + "arguments[0].click();";
+        jsExecutor.executeScript(jsClick, element);
+
+        return new WorkflowMultibranchPage(getDriver());
+    }
+
 }
 
