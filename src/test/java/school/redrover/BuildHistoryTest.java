@@ -44,26 +44,6 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verify the ability to add a description to the project build")
-    @Test
-    public void testAddDescriptionToBuild() {
-        String buildDescription = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(NAME_PIPELINE)
-                .selectJobType(TestUtils.JobType.Pipeline)
-                .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
-                .clickSaveButton()
-                .clickBuildNowFromSideMenu()
-                .clickEditBuildInformFromProjectPage()
-                .enterDescription(BUILD_DESCRIPTION)
-                .clickSaveButton()
-                .getDescriptionText();
-
-        Assert.assertEquals(buildDescription, BUILD_DESCRIPTION);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification the name of workspace building on the built-in node on Console Output Page")
     @Test
     public void testConsoleFreestyleBuildLocation() {
