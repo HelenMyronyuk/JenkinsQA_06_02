@@ -5,12 +5,16 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.builds.EditBuildInformationPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.MultiConfigurationProjectConfigPage;
@@ -18,6 +22,7 @@ import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class MultiConfigurationProjectTest extends BaseTest {
 
@@ -535,21 +540,55 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
+    @DataProvider(name = "buildSubMenu")
+    public Object[][] getBuildSubmenu() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"}
+        };
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to make console output for MultiConfiguration from Build Page")
-    @Test
-    public void testConsoleOutputFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+    @Description("Verification that a user is able to navigate to the MultiConfiguration Project Build pages from the build drop-down")
+    @Test(dataProvider = "buildSubMenu")
+    public void testNavigateToOptionsFromBuildPage(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
 
-        boolean consoleOutputTitleDisplayed = new MainPage(getDriver())
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+        String actualResult = "";
+
+        BaseSubmenuPage submenuPage  = new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .clickLastBuildLink()
-                .clickConsoleOutput()
-                .isDisplayedBuildTitle();
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
 
-        Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
+        if ("configure".equals(pageFromSubMenuConstructor.apply(getDriver()).callByMenuItemName())) {
+            actualResult = submenuPage.getTextEditBuildInformFromBreadCrumb();
+        } else {
+            actualResult = submenuPage.getHeading();
+        }
+        Assert.assertTrue(actualResult.contains(expectedResult));
+    }
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verification that a user is able to navigate to 'Delete' Build page from the build drop-down")
+    @Test
+    public void testNavigateToDeleteBuildFromBuildPage() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        boolean deleteBuildPage = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .selectDeleteOptionFromBuildDropDownList(new MultiConfigurationProjectPage(getDriver()))
+                .isDeleteButtonDisplayed();
+
+        Assert.assertTrue(deleteBuildPage, "Test is not navigate to delete build from MultiConfigurationProject build page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -597,23 +636,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
                 .editBuildInfoPermalinksLastBuildDropDown()
-                .getTextEditBuildInformFromBreadCrumb();
-
-        Assert.assertEquals(editBuildInformPage, "Edit Build Information");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information from Build Page of MultiConfiguration Project")
-    @Test
-    public void testEditBuildInformationFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String editBuildInformPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickLastBuildLink()
-                .clickEditBuildInformation()
                 .getTextEditBuildInformFromBreadCrumb();
 
         Assert.assertEquals(editBuildInformPage, "Edit Build Information");
