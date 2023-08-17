@@ -39,6 +39,13 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//div[@class='label-event-blue  event-blue  timeline-event-label']")
     private WebElement lastBuildLinkFromTimeline;
 
+    @FindBy(xpath = "(//div[contains(text(), 'default')])[1]")
+    private WebElement lastDefaultBuildBubbleLinkFromTimeline;
+
+    @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']")
+    private WebElement buildBubblePopUp;
+
+
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
     }
@@ -99,5 +106,17 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Get Page header")
     public String getHeaderText(){
         return pageHeader.getText();
+    }
+
+    @Step("Click last default build bubble on the Timeline")
+    public BuildHistoryPage clickDefaultBuildBubbleFromTimeline() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(lastDefaultBuildBubbleLinkFromTimeline)).click();
+
+        return new BuildHistoryPage(getDriver());
+    }
+
+    @Step("Verify that default build bubble pop up has default from header text")
+    public boolean isDefaultBuildPopUpHeaderTextDisplayed() {
+        return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).getText().contains("default");
     }
 }

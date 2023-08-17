@@ -172,6 +172,22 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
+    @Test
+    public void testOpenDefaultBuildPopUpOfMultiConfiguration() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        boolean isDefaultBuildPopUpDisplayed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickDefaultBuildBubbleFromTimeline()
+                .isDefaultBuildPopUpHeaderTextDisplayed();
+
+        Assert.assertTrue(isDefaultBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to delete a project build from Build page")
     @Test
