@@ -2,6 +2,7 @@ package school.redrover.model;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -45,6 +46,9 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']")
     private WebElement buildBubblePopUp;
 
+
+    @FindBy(xpath = "(//a[@class='jenkins-table__link jenkins-table__badge model-link inside' and not (contains(@href, 'default'))])[1]")
+    private WebElement lastNotDefaultBuild;
 
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
@@ -118,5 +122,13 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Verify that default build bubble pop up has default from header text")
     public boolean isDefaultBuildPopUpHeaderTextDisplayed() {
         return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).getText().contains("default");
+    }
+
+    @Step("Click last not default build link badge on the Jenkins table")
+    public BuildPage clickLastNotDefaultBuild() {
+        getDriver().navigate().refresh();
+        getWait5().until(ExpectedConditions.elementToBeClickable(lastNotDefaultBuild)).sendKeys(Keys.RETURN);
+
+        return new BuildPage(getDriver());
     }
 }

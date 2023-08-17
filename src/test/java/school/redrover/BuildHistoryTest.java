@@ -5,6 +5,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -171,6 +172,15 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
+    @DataProvider(name = "project-type")
+    public Object[][] projectType() {
+        return new Object[][]{
+                {TestUtils.JobType.FreestyleProject},
+                {TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject},
+        };
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
@@ -189,26 +199,24 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verify the ability to delete a project build from Build page")
-    @Test
-    public void testDeleteBuild() {
-        final int zeroBuild = 0;
-        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+    @Description("Verify the ability to delete the all types of project build from Build page")
+    @Test(dataProvider = "project-type")
+    public void testDeleteBuild(TestUtils.JobType jobType) {
+        final int size = 0;
+        final String jobName = "BUILD_PROJECT";
+        TestUtils.createJob(this, jobName, jobType, true);
 
-        int countOfBuildsAfterDeleting = new MainPage(getDriver())
-                .clickJobName(FREESTYLE_PROJECT_NAME, new FreestyleProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
+        int numberOfLinesInBuildHistoryTable = new MainPage(getDriver())
+                .clickBuildByGreenArrow(jobName)
                 .clickBuildsHistoryFromSideMenu()
-                .clickNameOfBuildLink()
-                .clickDeleteBuild(new FreestyleProjectPage(getDriver()))
+                .clickLastNotDefaultBuild()
+                .clickDeleteBuild(jobType.createJobPage(getDriver()))
                 .clickYesButton()
                 .getHeader()
                 .clickLogo()
                 .clickBuildsHistoryFromSideMenu()
                 .getNumberOfLinesInBuildHistoryTable();
 
-        Assert.assertEquals(countOfBuildsAfterDeleting, zeroBuild);
+        Assert.assertEquals(numberOfLinesInBuildHistoryTable, size);
     }
 }

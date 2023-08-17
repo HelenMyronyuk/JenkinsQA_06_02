@@ -84,7 +84,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
 
     @Step("Click Delete the build on the side bar menu")
     public <JobTypePage extends BasePage<?, ?>> DeletePage<JobTypePage> clickDeleteBuild(JobTypePage jobTypePage) {
-        getWait5().until(ExpectedConditions.elementToBeClickable(deleteBuildButton)).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(deleteBuildButton)).click();
 
         return new DeletePage<>(jobTypePage);
     }
