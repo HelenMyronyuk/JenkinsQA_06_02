@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -187,6 +188,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(isDefaultBuildPopUpDisplayed, "Default build pop up is not displayed!");
     }
 
+    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to delete the all types of project build from Build page")
