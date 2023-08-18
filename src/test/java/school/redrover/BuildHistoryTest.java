@@ -6,7 +6,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -173,7 +172,6 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
-    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
