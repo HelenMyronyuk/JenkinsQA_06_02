@@ -1,5 +1,7 @@
 package school.redrover.runner;
 
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -7,6 +9,8 @@ import org.testng.annotations.*;
 import school.redrover.runner.order.OrderForTests;
 import school.redrover.runner.order.OrderUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Arrays;
@@ -109,7 +113,12 @@ public abstract class BaseTest {
     @AfterMethod
     protected void afterMethod(Method method, ITestResult testResult) {
         if (!testResult.isSuccess() && ProjectUtils.isServerRun()) {
-            ProjectUtils.takeScreenshot(driver, method.getName(), this.getClass().getName());
+           File file = ProjectUtils.takeScreenshot(driver, method.getName(), this.getClass().getName());
+            try {
+                Allure.addAttachment("Page state: ", FileUtils.openInputStream(file));
+            } catch (IOException e) {
+                ProjectUtils.log("Couldn't make a screenshot because of exception: " + e.getMessage());
+            }
             ProjectUtils.captureDOM(driver, method.getName(), this.getClass().getName());
         }
 

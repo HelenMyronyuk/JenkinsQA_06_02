@@ -100,13 +100,14 @@ public final class ProjectUtils {
         return properties.getProperty(PROP_ADMIN_PAS);
     }
 
-    static void takeScreenshot(WebDriver driver, String methodName, String className) {
+    static File takeScreenshot(WebDriver driver, String methodName, String className) {
         File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(file, new File(String.format("screenshots/%s.%s.png", className, methodName)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return file;
     }
 
     static void captureDOM(WebDriver driver, String methodName, String className) {
