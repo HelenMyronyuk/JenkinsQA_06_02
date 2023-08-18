@@ -5,6 +5,7 @@ import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -31,6 +32,7 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'Create a job' button")
     @Test
     public void testCreateFromCreateAJob() {
         MainPage mainPage = new MainPage(getDriver())
@@ -62,6 +64,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'People' Page")
     @Test
     public void testCreateFromPeoplePage() {
         MainPage projectPeoplePage = new MainPage(getDriver())
@@ -77,6 +80,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'Build History' Page")
     @Test
     public void testCreateFromBuildHistoryPage() {
         MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
@@ -91,6 +95,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'Manage Jenkins' Page")
     @Test
     public void testCreateFromManageJenkinsPage() {
         boolean jobIsDisplayed = new MainPage(getDriver())
@@ -107,6 +112,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'Create a Job' button from 'My Views' Page")
     @Test
     public void testCreateFromMyViewsCreateAJob() {
         MainPage projectName = new MainPage(getDriver())
@@ -124,6 +130,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'My Views' Page")
     @Test
     public void testCreateFromMyViewsNewItem() {
         MainPage projectName = new MainPage(getDriver())
@@ -144,6 +151,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Freestyle project with existing name")
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -162,6 +170,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Freestyle project with name using unsafe characters")
     @Test(dataProvider = "invalid-characters")
     public void testCreateUsingInvalidData(String character) {
         NewJobPage newJobPage = new MainPage(getDriver())
@@ -174,6 +183,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Freestyle project with empty name")
     @Test
     public void testCreateWithEmptyName() {
         final String expectedError = "» This field cannot be empty, please enter a valid name";
@@ -186,7 +196,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Checking that the OK button is disabled if the project name has not been entered")
     @Test
     public void testOKButtonIsDisabledWhenEmptyName() {
         boolean okButton = new MainPage(getDriver())
@@ -198,6 +209,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message on Error Page while creating Freestyle project with space instead name")
     @Test
     public void testCreateWithSpaceInsteadOfName() {
         CreateItemErrorPage errorPage =
@@ -208,6 +220,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Freestyle project with dot instead name")
     @Test
     public void testCreateWithDotInsteadOfName() {
         final String expectedError = "» “.” is not an allowed name";
@@ -222,6 +235,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of showing error message while creating Freestyle project with long name")
     @Test
     public void testCreateWithLongName() {
         String longName = RandomStringUtils.randomAlphanumeric(256);
@@ -236,6 +250,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Freestyle' can be renamed from drop down menu on the Main page")
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -250,6 +265,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that the 'Freestyle' can be renamed from side menu on the Project page")
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -265,6 +281,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Freestyle project from drop-down menu with existing name")
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -285,6 +302,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Freestyle project with invalid data")
     @Test(dataProvider = "wrong-character")
     public void testRenameWithInvalidData(String invalidData, String expectedResult) {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -300,6 +318,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of impossibility to rename Freestyle project with '.' name'")
     @Test
     public void testRenameWithDotInsteadName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -315,6 +334,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build Freestyle project from drop-down menu")
     @Test
     public void testCreateBuildNowFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -329,6 +349,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build Freestyle project from side menu")
     @Test
     public void testCreateBuildNowFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -343,6 +364,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build Freestyle project by clicking green arrow")
     @Test
     public void testCreateBuildNowFromArrow() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -357,6 +379,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking presence links to the build after the build is created")
     @Test
     public void testPresenceOfBuildLinksAfterBuild() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -377,6 +400,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence display name for build of Freestyle project")
     @Test
     public void testAddDisplayNameForBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -394,6 +418,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence of preview description for build of Freestyle project")
     @Test
     public void testPreviewDescriptionFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -410,6 +435,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to rename description for build of Freestyle project")
     @Test
     public void testEditDescriptionFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -431,6 +457,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build changes of Freestyle project")
     @Test
     public void testBuildChangesFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -447,6 +474,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Freestyle project from ProjectPage")
     @Test
     public void testBuildChangesFromProjectPage() {
         final String heading = "Changes";
@@ -462,6 +490,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Freestyle project from last build")
     @Test
     public void testBuildChangesFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -475,6 +504,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to build changes for Freestyle project from Build Page")
     @Test
     public void testBuildChangesFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -489,7 +519,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(text, "Changes");
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Verification of possibility to console output for Freestyle project from drop-down menu")
     @Test
     public void testConsoleOutputFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -505,7 +536,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Verification of possibility to make console output from Freestyle Project Page")
     @Test
     public void testConsoleOutputFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -520,7 +552,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Verification of possibility to make console output from last build of Freestyle project")
     @Test
     public void testConsoleOutputFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -544,7 +577,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Verification of possibility to console output for Freestyle project from BuildPage")
     @Test
     public void testConsoleOutputFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -560,6 +594,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to edit build information from drop-down menu for Freestyle Project")
     @Test
     public void testEditBuildInformationFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -576,6 +611,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to edit build information from Freestyle Project Page")
     @Test
     public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -590,6 +626,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to edit build information from last build of Freestyle Project")
     @Test
     public void testEditBuildInformationFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -618,6 +655,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to edit build information for Freestyle project from BuildPage")
     @Test
     public void testEditBuildInformationFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -644,6 +682,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence preview description of build from Edit Information Page for Freestyle Project")
     @Test
     public void testPreviewDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -660,6 +699,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of description of build can be added from Edit Information Page for Freestyle Project")
     @Test
     public void testAddDescriptionFromEditInformationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -677,6 +717,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to delete build from drop-down menu for Freestyle Project")
     @Test
     public void testDeleteBuildNowFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -694,6 +735,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to delete build for Freestyle project from side menu")
     @Test
     public void testDeleteBuildNowFromSideMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -710,6 +752,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @jdk.jfr.Description("Verification of possibility to delete build  for Freestyle project from LastBuild")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -725,6 +768,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to delete build  for Freestyle project from BuildPage")
     @Test
     public void testDeleteBuildNowFromBuildPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -773,6 +817,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to disable Freestyle Project from Project Page")
     @Test
     public void testDisableFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -800,6 +845,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to enable disabled Freestyle Project from Project Page")
     @Test
     public void testEnableFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -817,6 +863,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence description for Freestyle Project")
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -832,6 +879,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of presence description added from Freestyle Project Page")
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -847,6 +895,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to rename description for build of Freestyle project")
     @Test
     public void testEditDescription() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -863,6 +912,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Changes Page from side menu for Freestyle Project")
     @Test
     public void testNavigateToChangePage() {
         TestUtils.createJob(this, "Engineer", TestUtils.JobType.FreestyleProject, true);
@@ -877,6 +927,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Navigation")
+    @Description("Verification of possibility to navigate to Workspaces from Project Page for Freestyle Project")
     @Test
     public void testNavigateToWorkspaceFromProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -891,6 +942,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of of presence Preview of description for Freestyle Project can be added from Configuration Page")
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         final String descriptionText = "In publishing and graphic design, Lorem ipsum is a placeholder " +
@@ -912,6 +964,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility 'Description' for Freestyle Project can be added from Configuration Page")
     @Test
     public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, false);
@@ -926,6 +979,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify navigation to Configuration Page from drop-down menu on Dashboard for Freestyle Project")
     @Test
     public void testAccessConfigurationPageFromDashboard() {
         final String breadcrumb = "Dashboard > " + FREESTYLE_NAME + " > Configuration";
@@ -941,6 +995,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify navigation to Configuration Page from drop-down menu on Project Page for Freestyle Project")
     @Test
     public void testAccessConfigurationPageFromProjectPage() {
         final String breadcrumbRoute = "Dashboard > " + FREESTYLE_NAME + " > Configuration";
@@ -955,6 +1010,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to disable Freestyle Project from Configuration Page")
     @Test
     public void testDisableFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -977,6 +1033,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to enable disable Freestyle Project from Configuration Page")
     @Test
     public void testEnableFromConfigurationPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -995,6 +1052,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility of Setting Parameters to delete Builds ")
     @Test
     public void testSetParametersToDiscardOldBuilds() {
         final int daysToKeepBuilds = 3;
@@ -1017,6 +1075,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility of adding a Project on GitHub to a Freestyle Project")
     @Test
     public void testAddingAProjectOnGitHubToTheFreestyleProject() {
         final String expectedNameRepo = "TestRepo";
@@ -1037,6 +1096,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to add boolean parameter for Freestyle project")
     @Test
     public void testAddBooleanParameterTheFreestyleProject() {
         final String booleanParameter = "Boolean Parameter";
@@ -1059,6 +1119,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the ability to Add a choice parameter")
     @Test
     public void testAddChoiceParameter() {
         final String parameterType = "Choice Parameter";
@@ -1088,6 +1149,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the ability to limit the speed for Builds")
     @Test
     public void testSetRateLimitForBuilds() {
         final String timePeriod = "Week";
@@ -1104,7 +1166,8 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(actualTimePeriod, timePeriod);
     }
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Checking the possibility click 'ExecuteConcurrentBuilds' checkBox from Configuration page")
     @Test
     public void testAllowParallelBuilds() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1121,6 +1184,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Check period for Jenkins to wait before Actually Starting Triggered Build")
     @Test
     public void testSetPeriodForJenkinsToWaitBeforeActuallyStartingTriggeredBuild() {
         final String expectedQuietPeriod = "10";
@@ -1141,6 +1205,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Check number of count for Jenkins if input SCM Checkout Retry Count from Configuration page")
     @Test
     public void testSetNumberOfCountForJenkinsToCheckOutFromTheSCMUntilItSucceeds() {
         final String retryCount = "5";
@@ -1160,7 +1225,8 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualRetryCount, retryCount);
     }
 
-    @Feature("UI")
+    @Feature("Function")
+    @Description("Checking the possibility enable 'Block Build' from ‘Advanced’in the Configuration page")
     @Test
     public void testEnableJenkinsToBlockBuildsWhenUpstreamProjectIsBuilding() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1179,6 +1245,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  'Use Custom Workspace' from ‘General Advanced’in the Configuration page ")
     @Test
     public void testUseCustomWorkspaceFromConfigureGeneralAdvanced() {
         String directoryName = "My directory";
@@ -1202,6 +1269,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that 'Display name' can be added from Configuration page")
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1218,6 +1286,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  'add Repository' from ‘Source Code Management’ ")
     @Test
     public void testAddRepositoryFromSourceCodeManagement() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1239,6 +1308,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  'add branch' from ‘Source Code Management’ ")
     @Test
     public void testAddBranchFromSourceCodeManagement() {
         final String branchName = "for_jenkins_build";
@@ -1262,6 +1332,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  in the Configure click checkBox ‘Build After OtherProjects Are Built’ ")
     @Test
     public void testConfigureBuildTriggersBuildAfterOtherProjectsAreBuilt() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1283,6 +1354,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to add build steps options for Freestyle Project")
     @Test
     public void testBuildStepsOptions() {
         List<String> expectedOptionsInBuildStepsSection = List.of("Execute Windows batch command", "Execute shell",
@@ -1301,6 +1373,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  in the steps of Build add ‘Execute Windows Batch Command’ ")
     @Test
     public void testBuildStepsExecuteWindowsBatchCommand() {
         final String commandFieldText = "echo Hello";
@@ -1323,6 +1396,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  in the steps of Build add ‘Execute Shell’ ")
     @Test
     public void testBuildStepsExecuteShell() {
         final String commandFieldText = "echo Hello";
@@ -1343,6 +1417,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility  in the steps of Build add ‘Invoke Maven Targets’")
     @Test
     public void testBuildStepsInvokeMavenGoalsTargets() {
         String goals = "clean";
@@ -1361,6 +1436,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility of configuring actions after the build, aggregating test results in a downstream flow")
     @Test
     public void testConfigurePostBuildActionsAggregateDownStreamTestResults() {
         BuildPage buildPage = new MainPage(getDriver())
@@ -1381,6 +1457,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the possibility of configuring the artifacts of the archive of actions after the build")
     @Test
     public void testConfigurePostBuildActionArchiveArtifacts() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1404,6 +1481,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking whether the post-build action can be configured to create other projects")
     @Test
     public void testConfigurePostBuildActionBuildOtherProjects() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1428,6 +1506,8 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the ability to add Git Publisher after the build in the configuration")
+    @Ignore
     @Test
     public void testAddGitPublisherInPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1446,6 +1526,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the ability to add email notifications after the build in the configuration")
     @Test
     public void testAddEmailNotificationToPostBuildActions() {
         final String email = "email@email.com";
@@ -1467,6 +1548,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the ability to edit email notifications after the build in the configuration")
     @Test
     public void testConfigurePostBuildActionEditableEmailNotification() {
         String username = "jenkins05test@gmail.com";
@@ -1530,6 +1612,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking the commit status on GitHub for post-build actions")
     @Test
     public void testSetGitHubCommitStatusToPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1550,6 +1633,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Checking that the workspace is deleted when the build is completed After performing the build actions")
     @Test
     public void testDeleteWorkspaceWhenBuildDonePostBuildActions() {
         String expectedWorkspaceStatus = "Error: no workspace";
@@ -1570,6 +1654,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that deleting Folder can be canceled from drop-down menu on the Main page")
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1585,6 +1670,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verify that deleting Folder can be canceled from side menu on the Main page")
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1600,6 +1686,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to delete Freestyle Project from drop-down menu")
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1612,6 +1699,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
+    @Description("Verification of possibility to delete Freestyle Project from side menu")
     @Test
     public void testDeleteItemFromSideMenu() {
         TestUtils.createJob(this, NEW_FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
