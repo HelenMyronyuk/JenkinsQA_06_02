@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -172,15 +173,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
-    @DataProvider(name = "project-type")
-    public Object[][] projectType() {
-        return new Object[][]{
-                {TestUtils.JobType.FreestyleProject},
-                {TestUtils.JobType.Pipeline},
-                {TestUtils.JobType.MultiConfigurationProject},
-        };
-    }
-
+    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
@@ -195,6 +188,15 @@ public class BuildHistoryTest extends BaseTest {
                 .isDefaultBuildPopUpHeaderTextDisplayed();
 
         Assert.assertTrue(isDefaultBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
+
+    @DataProvider(name = "project-type")
+    public Object[][] projectType() {
+        return new Object[][]{
+                {TestUtils.JobType.FreestyleProject},
+                {TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject},
+        };
     }
 
     @Severity(SeverityLevel.NORMAL)

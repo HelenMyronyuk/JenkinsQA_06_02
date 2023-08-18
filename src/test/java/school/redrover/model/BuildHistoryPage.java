@@ -126,6 +126,9 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Click last not default build link badge on the Jenkins table")
     public BuildPage clickLastNotDefaultBuild() {
+        new Actions(getDriver())
+                .pause(2500)
+                .perform();
         getDriver().navigate().refresh();
         getWait5().until(ExpectedConditions.elementToBeClickable(lastNotDefaultBuild)).sendKeys(Keys.RETURN);
 
