@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -14,6 +15,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verification 'Configure Global Security' link from  the 'Manage Jenkins' page")
     @Test
     public void testCheckTitleTexts() {
         final List<String> expectedTitleTexts = List.of(
@@ -38,6 +40,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Checking the number of titles on the 'Configure Global Security' page")
     @Test
     public void testCheckNumberOfTitles() {
         final int expectedNumberOfTitles = 10;
@@ -52,6 +55,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Checking the number of Help buttons on the 'Configure Global Security' page")
     @Test
     public void testCheckNumberOfHelpButton() {
         final int expectedNumberOfHelpButton = 15;
@@ -66,6 +70,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Checking Host Key Verification Strategy from dropdown menu")
     @Test
     public void testHostKeyVerificationStrategyDropdownMenuOptions() {
         final List<String> expectedMenuNames = List.of(
@@ -85,6 +90,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking if 'API' checkboxes are clickable")
     @Test
     public void testAPICheckboxesAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -97,6 +103,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking if radio buttons are clickable")
     @Test
     public void testRadioButtonsAreClickable() {
         boolean allChecksAreOk = new MainPage(getDriver())
@@ -110,6 +117,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
+    @Description("Checking that the notification is saved and visible if you click 'Apply' ")
     @Test
     public void testSavedNotificationAppearsWhenClickApply() {
 
