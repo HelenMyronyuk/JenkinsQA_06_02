@@ -46,9 +46,11 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']")
     private WebElement buildBubblePopUp;
 
-
     @FindBy(xpath = "(//a[@class='jenkins-table__link jenkins-table__badge model-link inside' and not (contains(@href, 'default'))])[1]")
     private WebElement lastNotDefaultBuild;
+
+    @FindBy(xpath = "//div[@class='simileAjax-bubble-close simileAjax-bubble-close-pngTranslucent']")
+    private WebElement closePopUpButtonInTimeline;
 
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
@@ -76,7 +78,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Click build name on timeline")
     public BuildHistoryPage clickBuildNameOnTimeline(String projectBuildName) {
         getWait10().until(ExpectedConditions.elementToBeClickable(getDriver().findElement(
-                By.xpath("//div[contains(text(), '" + projectBuildName + "')]"))));
+                By.xpath("//div[contains(text(), '" + projectBuildName + "')]")))).click();
 
         return this;
     }
@@ -123,9 +125,24 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
         return new BuildHistoryPage(getDriver());
     }
 
+    @Step("Close Pop Up in Timeline")
+    public BuildHistoryPage closeProjectWindowButtonInTimeline() {
+        getWait10().until(ExpectedConditions.visibilityOf(closePopUpButtonInTimeline)).click();
+        return new BuildHistoryPage(getDriver());
+    }
+
     @Step("Verify that default build bubble pop up has default from header text")
     public boolean isDefaultBuildPopUpHeaderTextDisplayed() {
         return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).getText().contains("default");
+    }
+
+    @Step("Verify that build bubble pop up is displayed from timeline")
+    public boolean isBuildPopUpDisplayed() {
+        try {
+            return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).isDisplayed();
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Step("Click last not default build link badge on the Jenkins table")

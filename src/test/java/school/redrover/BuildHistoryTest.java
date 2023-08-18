@@ -188,6 +188,23 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(isDefaultBuildPopUpDisplayed, "Default build pop up is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
+    @Test
+    public void testCloseBuildPopUpOfFreestyle() {
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean isBubblePopUpDisplayed =  new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(FREESTYLE_PROJECT_NAME)
+                .closeProjectWindowButtonInTimeline()
+                .isBuildPopUpDisplayed();
+
+        Assert.assertFalse(isBubblePopUpDisplayed, "Bubble pop up window not closed!");
+    }
+
     @DataProvider(name = "project-type")
     public Object[][] projectType() {
         return new Object[][]{
