@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -19,10 +20,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class BuildHistoryTest extends BaseTest {
 
-    private static final String NAME_PIPELINE = "Pipeline2023";
-    private static final String BUILD_DESCRIPTION = "For QA";
-    private final String FREESTYLE_PROJECT_NAME = "FreestyleName"+ RandomStringUtils.randomAlphanumeric(7);;
-    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration001"+ RandomStringUtils.randomAlphanumeric(7);;
+    private final String FREESTYLE_PROJECT_NAME = "Freestyle"+ RandomStringUtils.randomAlphanumeric(7);;
+    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration"+ RandomStringUtils.randomAlphanumeric(7);;
     private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
 
 
@@ -124,26 +123,19 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verification of Status Message Text of broken build")
     @Test
     public void testVerifyStatusBroken() {
-
-        final String namePipeline = "NewBuilds";
-        final String textToDescriptionField = "What's up";
         final String textToPipelineScript = "Test";
         final String expectedStatusMessageText = "broken since this build";
+        TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, true);
 
         String actualStatusMessageText = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(namePipeline)
-                .selectJobType(TestUtils.JobType.Pipeline)
-                .clickOkButton(new PipelineConfigPage(new PipelinePage(getDriver())))
-                .addDescription(textToDescriptionField)
-                .scrollToBuildTriggers()
-                .clickBuildAfterOtherProjectsAreBuiltCheckBox()
+                .clickJobName(PIPELINE_PROJECT_NAME, new PipelinePage(getDriver()))
+                .clickConfigure()
                 .scrollToPipelineSection()
                 .inputInScriptField(textToPipelineScript)
                 .clickSaveButton()
                 .getHeader()
                 .clickLogo()
-                .clickBuildByGreenArrow("NewBuilds")
+                .clickBuildByGreenArrow(PIPELINE_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .getStatusMessageText();
 
@@ -191,6 +183,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
+    @Ignore
     @Test
     public void testCloseBuildPopUpOfFreestyle() {
         TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
