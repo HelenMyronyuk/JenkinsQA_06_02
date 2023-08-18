@@ -149,8 +149,8 @@ public class JenkinsUtils {
 
     private static void deleteNodes() {
         String mainPage = getPage("");
-        deleteByLink("computer/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"/computer/", "/\""),
+        deleteByLink("manage/computer/%s/doDelete",
+                getSubstringsFromPage(mainPage, "href=\"/manage/computer/", "/\""),
                 getCrumbFromPage(mainPage));
     }
 

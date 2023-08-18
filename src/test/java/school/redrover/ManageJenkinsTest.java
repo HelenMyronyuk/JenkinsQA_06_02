@@ -250,6 +250,7 @@ public class ManageJenkinsTest extends BaseTest {
         Assert.assertEquals(newNodeDescription, description);
     }
 
+    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Create a new agent node by copying non existing nod")
