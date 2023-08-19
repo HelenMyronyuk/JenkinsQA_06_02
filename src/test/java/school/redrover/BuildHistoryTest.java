@@ -6,14 +6,12 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
-import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -183,19 +181,18 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
-    @Ignore
     @Test
     public void testCloseBuildPopUpOfFreestyle() {
         TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        boolean isBubblePopUpDisplayed =  new MainPage(getDriver())
+        boolean isBubblePopUpClosed =  new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .clickBuildNameOnTimeline(FREESTYLE_PROJECT_NAME)
                 .closeProjectWindowButtonInTimeline()
-                .isBuildPopUpDisplayed();
+                .isBuildPopUpInvisible();
 
-        Assert.assertFalse(isBubblePopUpDisplayed, "Bubble pop up window not closed!");
+        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
     }
 
     @DataProvider(name = "project-type")

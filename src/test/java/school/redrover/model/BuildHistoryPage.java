@@ -77,8 +77,8 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Click build name on timeline")
     public BuildHistoryPage clickBuildNameOnTimeline(String projectBuildName) {
-        getWait10().until(ExpectedConditions.elementToBeClickable(getDriver().findElement(
-                By.xpath("//div[contains(text(), '" + projectBuildName + "')]")))).click();
+        getWait10().until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[contains(text(), '" + projectBuildName + "')]"))).click();
 
         return this;
     }
@@ -127,7 +127,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Close Pop Up in Timeline")
     public BuildHistoryPage closeProjectWindowButtonInTimeline() {
-        getWait10().until(ExpectedConditions.visibilityOf(closePopUpButtonInTimeline)).click();
+        getWait15().until(ExpectedConditions.visibilityOf(closePopUpButtonInTimeline)).click();
         return new BuildHistoryPage(getDriver());
     }
 
@@ -137,12 +137,8 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     }
 
     @Step("Verify that build bubble pop up is displayed from timeline")
-    public boolean isBuildPopUpDisplayed() {
-        try {
-            return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).isDisplayed();
-        } catch (Exception ex) {
-            return false;
-        }
+    public boolean isBuildPopUpInvisible() {
+        return getWait5().until(ExpectedConditions.invisibilityOf(buildBubblePopUp));
     }
 
     @Step("Click last not default build link badge on the Jenkins table")
