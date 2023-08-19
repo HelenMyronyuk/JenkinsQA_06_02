@@ -1,6 +1,7 @@
 package school.redrover.model;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,11 +17,15 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
     @FindBy(name = "Submit")
     private WebElement deleteYesButton;
 
-    private final ParentPage parentPage;
+    private ParentPage parentPage;
 
     public DeletePage(ParentPage parentPage) {
         super(parentPage.getDriver());
         this.parentPage = parentPage;
+    }
+
+    public DeletePage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     @Step("Click on the 'Yes' button on the DeletePage")

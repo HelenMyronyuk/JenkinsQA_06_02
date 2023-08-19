@@ -49,6 +49,12 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return pageToReturn;
     }
 
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
+
+        return pageToReturn;
+    }
+
     public BuildHistoryPage clickBuildsHistoryFromSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistory)).click();
 
