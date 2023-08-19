@@ -108,9 +108,6 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
     @FindBy(xpath = "//a[contains(text(),'Git Publisher')]")
     private WebElement gitPublisher;
 
-    @FindBy(xpath = "//div[text()='Tags']")
-    private WebElement textTagsFromPostBuildActions;
-
     @FindBy(xpath = "//div[contains(text(), 'Git Publisher')]")
     private WebElement gitPublisherHandle;
 
@@ -410,7 +407,7 @@ public abstract class BaseConfigFreestyleAndMulticonfigProjectsPage<Self extends
 
     @Step("get text Git Publisher")
     public String getGitPublisherText() {
-        TestUtils.scrollWithPauseByActions(this, textTagsFromPostBuildActions, 3000);
+        TestUtils.scrollWithPauseByActions(this, addPostBuildActionButton, 3000);
 
         return gitPublisherHandle.getText();
     }

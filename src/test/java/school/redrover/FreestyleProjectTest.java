@@ -5,7 +5,6 @@ import io.qameta.allure.Feature;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
@@ -752,7 +751,7 @@ public class FreestyleProjectTest extends BaseTest {
     }
 
     @Feature("Function")
-    @jdk.jfr.Description("Verification of possibility to delete build  for Freestyle project from LastBuild")
+    @Description("Verification of possibility to delete build  for Freestyle project from LastBuild")
     @Test
     public void testDeleteBuildNowFromLastBuild() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -1507,7 +1506,6 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Feature("Function")
     @Description("Checking the ability to add Git Publisher after the build in the configuration")
-    @Ignore
     @Test
     public void testAddGitPublisherInPostBuildActions() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
