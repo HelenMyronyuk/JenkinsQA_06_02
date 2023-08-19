@@ -6,10 +6,10 @@ import org.apache.commons.io.FileUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import school.redrover.JenkinsInstance;
+import school.redrover.api.JenkinsSpecBuilder;
 import school.redrover.runner.order.OrderForTests;
 import school.redrover.runner.order.OrderUtils;
 
@@ -31,6 +31,7 @@ public abstract class BaseTest {
 
     private OrderUtils.MethodsOrder<Method> methodsOrder;
     private JenkinsInstance instance;
+    private JenkinsSpecBuilder specBuilder;
 
     @BeforeClass
     protected void beforeClass() {
@@ -41,8 +42,11 @@ public abstract class BaseTest {
                 m -> m.getName(),
                 m -> m.getAnnotation(Test.class).dependsOnMethods());
         instance = ProjectUtils.getJenkinsUrl();
+        instance.setUser(ProjectUtils.getUserName());
+        instance.setPassword(ProjectUtils.getPassword());
         instance.setBusy(true);
-        ProjectUtils.logf("Locked Jenkins %s for class %s".formatted(instance.toString(), this.getClass().getName()));
+        specBuilder = new JenkinsSpecBuilder(instance);
+        ProjectUtils.logf("Locked Jenkins %s for class %s".formatted(instance.getUrl(), this.getClass().getName()));
     }
 
     @BeforeMethod
@@ -66,7 +70,7 @@ public abstract class BaseTest {
 
     protected void clearData() {
         ProjectUtils.log("Clear data");
-        JenkinsUtils.clearData(instance.toString());
+        JenkinsUtils.clearData(specBuilder);
     }
 
     protected void loginWeb() {
@@ -76,7 +80,7 @@ public abstract class BaseTest {
 
     protected void getWeb() {
         ProjectUtils.log("Get web page");
-        ProjectUtils.get1(driver, instance.toString());
+        ProjectUtils.get1(driver, instance.getUrl());
     }
 
     protected void startDriver() {
@@ -99,7 +103,7 @@ public abstract class BaseTest {
 
     protected void stopDriver() {
         try {
-            JenkinsUtils.logout(driver, instance.toString());
+            JenkinsUtils.logout(driver, instance.getUrl());
         } catch (Exception ignore) {
         }
 
@@ -137,10 +141,10 @@ public abstract class BaseTest {
         ProjectUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
     }
 
-    @AfterClass
-    protected void unlockInstance(){
+    @AfterClass(alwaysRun = true)
+    protected void unlockInstance() {
         instance.setBusy(false);
-        ProjectUtils.logf("Unlocked Jenkins %s after class %s".formatted(instance.toString(), this.getClass().getName()));
+        ProjectUtils.logf("Unlocked Jenkins %s after class %s".formatted(instance.getUrl(), this.getClass().getName()));
     }
 
     protected WebDriver getDriver() {

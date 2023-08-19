@@ -3,179 +3,63 @@ package school.redrover.runner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import school.redrover.api.*;
 
 public class JenkinsUtils {
 
-    private static final HttpClient client = HttpClient.newBuilder().build();
-
-    private static String sessionId;
-
-    private static String getCrumbFromPage(String page) {
-        final String CRUMB_TAG = "data-crumb-value=\"";
-
-        int crumbTagBeginIndex = page.indexOf(CRUMB_TAG) + CRUMB_TAG.length();
-        int crumbTagEndIndex = page.indexOf('"', crumbTagBeginIndex);
-
-        return page.substring(crumbTagBeginIndex, crumbTagEndIndex);
-    }
-
-    private static Set<String> getSubstringsFromPage(String page, String from, String to) {
-        return getSubstringsFromPage(page, from, to, 100);
-    }
-
-    private static Set<String> getSubstringsFromPage(String page, String from, String to, int maxSubstringLength) {
-        Set<String> result = new HashSet<>();
-
-        int index = page.indexOf(from);
-        while (index != -1) {
-            int endIndex = page.indexOf(to, index + from.length());
-
-            if (endIndex != -1 && endIndex - index < maxSubstringLength) {
-                result.add(page.substring(index + from.length(), endIndex));
-            } else {
-                endIndex = index + from.length();
-            }
-
-            index = page.indexOf(from, endIndex);
-        }
-
-        return result;
-    }
-
-    private static String[] getHeader() {
-        List<String> result = new ArrayList<>(List.of("Content-Type", "application/x-www-form-urlencoded"));
-        if (sessionId != null) {
-            result.add("Cookie");
-            result.add(sessionId);
-        }
-        return result.toArray(String[]::new);
-    }
-
-    private static HttpResponse<String> getHttp(String url) {
-        try {
-            return client.send(
-                    HttpRequest.newBuilder()
-                            .uri(URI.create(url))
-                            .headers(getHeader())
-                            .GET()
-                            .build(),
-                    HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static synchronized HttpResponse<String> postHttp(String url, String body) {
-        try {
-            return client.send(
-                    HttpRequest.newBuilder()
-                            .uri(URI.create(url))
-                            .headers(getHeader())
-                            .POST(HttpRequest.BodyPublishers.ofString(body))
-                            .build(),
-                    HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static String getPage(String baseUrl, String uri) {
-        HttpResponse<String> page = getHttp(baseUrl + uri);
-        if (page.statusCode() != 200) {
-            final String HEAD_COOKIE = "set-cookie";
-
-            HttpResponse<String> loginPage = getHttp(baseUrl + "login?from=%2F");
-            sessionId = loginPage.headers().firstValue(HEAD_COOKIE).orElse(null);
-
-            // Поле sessionId используется внутри postHttp
-            HttpResponse<String> indexPage = postHttp(baseUrl + "j_spring_security_check",
-                    String.format("j_username=%s&j_password=%s&from=%%2F&Submit=", ProjectUtils.getUserName(), ProjectUtils.getPassword()));
-            sessionId = indexPage.headers().firstValue(HEAD_COOKIE).orElse("");
-
-            page = getHttp(baseUrl + uri);
-        }
-
-        if (page.statusCode() == 403) {
-            throw new RuntimeException(String.format("Authorization does not work with user: \"%s\" and password: \"%s\"", ProjectUtils.getUserName(), ProjectUtils.getPassword()));
-        } else if (page.statusCode() != 200) {
-            throw new RuntimeException("Something went wrong while clearing data");
-        }
-
-        return page.body();
-    }
-
-    private static void deleteByLink(String link, Set<String> names, String crumb) {
-        String fullCrumb = String.format("Jenkins-Crumb=%s", crumb);
-        for (String name : names) {
-            postHttp(String.format(link, name), fullCrumb);
-        }
-    }
-
     @Step("Delete Jobs")
-    private static void deleteJobs(String baseUrl) {
-        String mainPage = getPage(baseUrl, "");
-        deleteByLink(baseUrl + "job/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"job/", "/\""),
-                getCrumbFromPage(mainPage));
+    private static void deleteJobs(JenkinsSpecBuilder specBuilder) {
+        var jobsService = new JobService(specBuilder);
+        jobsService.getJobs().forEach(j -> jobsService.deleteJob(j).then().statusCode(302));
     }
 
     @Step("Delete Views")
-    private static void deleteViews(String baseUrl) {
-        String mainPage = getPage(baseUrl, "");
-        deleteByLink(baseUrl +"view/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"/view/", "/\""),
-                getCrumbFromPage(mainPage));
+    private static void deleteViews(JenkinsSpecBuilder specBuilder) {
+        var viewService = new ViewService(specBuilder);
+        viewService.getViews()
+                .stream()
+                .filter(v -> !v.equalsIgnoreCase("all"))
+                .forEach(v -> viewService.deleteView(v).then().statusCode(302));
 
-        String viewPage = getPage(baseUrl, "me/my-views/view/all/");
-        deleteByLink(baseUrl + "user/admin/my-views/view/%s/doDelete",
-                getSubstringsFromPage(viewPage, "href=\"/user/admin/my-views/view/", "/\""),
-                getCrumbFromPage(viewPage));
+        var myViewService = new MyViewService(specBuilder);
+        myViewService.getMyViews()
+                .stream()
+                .filter(v -> !v.equalsIgnoreCase("all"))
+                .forEach(v -> myViewService.deleteMyView(v).then().statusCode(302));
     }
 
     @Step("Delete Users")
-    private static void deleteUsers(String baseUrl) {
-        String userPage = getPage(baseUrl, "manage/securityRealm/");
-        deleteByLink(baseUrl + "manage/securityRealm/user/%s/doDelete",
-                getSubstringsFromPage(userPage, "href=\"user/", "/delete\"").stream()
-                        .filter(user -> !user.equals(ProjectUtils.getUserName())).collect(Collectors.toSet()),
-                getCrumbFromPage(userPage));
+    private static void deleteUsers(JenkinsSpecBuilder specBuilder) {
+        var userService = new UserService(specBuilder);
+        userService.getUsers()
+                .stream()
+                .filter(u -> !UserService.DEFAULT_USERS.contains(u))
+                .forEach(u -> userService.deleteUser(u).then().statusCode(302));
     }
 
     @Step("Delete Nodes")
-    private static void deleteNodes(String baseUrl) {
-        String mainPage = getPage(baseUrl, "");
-        deleteByLink(baseUrl + "computer/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"/computer/", "/\""),
-                getCrumbFromPage(mainPage));
+    private static void deleteNodes(JenkinsSpecBuilder specBuilder) {
+        var nodeService = new NodeService(specBuilder);
+        nodeService.getNodes()
+                .stream()
+                .filter(u -> !NodeService.DEFAULT_NODES.contains(u))
+                .forEach(u -> nodeService.deleteNode(u).then().statusCode(302));
     }
 
 
     @Step("Delete description")
-    private static void deleteDescription(String baseUrl) {
-        String mainPage = getPage(baseUrl, "");
-        postHttp(baseUrl + "submitDescription",
-                String.format(
-                        "description=&Submit=&Jenkins-Crumb=%1$s&json=%%7B%%22description%%22%%3A+%%22%%22%%2C+%%22Submit%%22%%3A+%%22%%22%%2C+%%22Jenkins-Crumb%%22%%3A+%%22%1$s%%22%%7D",
-                        getCrumbFromPage(mainPage)));
+    private static void deleteDescription(JenkinsSpecBuilder specBuilder) {
+        var baseService = new BaseService(specBuilder);
+        baseService.submitDescription("").then().statusCode(302);
     }
 
     @Step("Clear Data for Jenkins instance {0}")
-    static void clearData(String baseUrl) {
-        JenkinsUtils.deleteViews(baseUrl);
-        JenkinsUtils.deleteJobs(baseUrl);
-        JenkinsUtils.deleteUsers(baseUrl);
-        JenkinsUtils.deleteNodes(baseUrl);
-        JenkinsUtils.deleteDescription(baseUrl);
+    static void clearData(JenkinsSpecBuilder specBuilder) {
+        JenkinsUtils.deleteViews(specBuilder);
+        JenkinsUtils.deleteJobs(specBuilder);
+        JenkinsUtils.deleteUsers(specBuilder);
+        JenkinsUtils.deleteNodes(specBuilder);
+        JenkinsUtils.deleteDescription(specBuilder);
     }
 
     static void login(WebDriver driver) {
