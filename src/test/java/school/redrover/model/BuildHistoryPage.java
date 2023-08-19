@@ -52,6 +52,9 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//div[@class='simileAjax-bubble-close simileAjax-bubble-close-pngTranslucent']")
     private WebElement closePopUpButtonInTimeline;
 
+    @FindBy(xpath = "//div[@class = 'timeline-event-bubble-title']/a[contains(@href, '/default/1')]")
+    private WebElement defaultBuildBubbleLink;
+
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
     }
@@ -148,6 +151,13 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
                 .perform();
         getDriver().navigate().refresh();
         getWait5().until(ExpectedConditions.elementToBeClickable(lastNotDefaultBuild)).sendKeys(Keys.RETURN);
+
+        return new BuildPage(getDriver());
+    }
+
+    @Step("Click default build link from timeline")
+    public BuildPage clickDefaultBuildLinkFromTimeline() {
+        defaultBuildBubbleLink.click();
 
         return new BuildPage(getDriver());
     }

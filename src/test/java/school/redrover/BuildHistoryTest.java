@@ -226,4 +226,21 @@ public class BuildHistoryTest extends BaseTest {
 
         Assert.assertEquals(numberOfLinesInBuildHistoryTable, size);
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to build page of Multiconfiguration default from timeline")
+    @Test
+    public void testNavigateToMultiConfigurationDefaultBuildPageFromTimeline() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        boolean buildPageHeader = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickDefaultBuildBubbleFromTimeline()
+                .clickDefaultBuildLinkFromTimeline()
+                .isDisplayedBuildTitle();
+
+        Assert.assertTrue(buildPageHeader, "Wrong page");
+    }
 }
