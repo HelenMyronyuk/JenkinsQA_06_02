@@ -18,9 +18,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class BuildHistoryTest extends BaseTest {
 
-    private final String FREESTYLE_PROJECT_NAME = "Freestyle";;
-    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration";;
-    private final String PIPELINE_PROJECT_NAME = "Pipeline";
+    private final String FREESTYLE_PROJECT_NAME = "Freestyle"+ RandomStringUtils.randomAlphanumeric(7);
+    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration"+ RandomStringUtils.randomAlphanumeric(7);
+    private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
 
 
     @Severity(SeverityLevel.NORMAL)
@@ -46,74 +46,25 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification the name of workspace building on the built-in node on Console Output Page")
+    @Description("Verification of navigation to Console Output Page")
     @Test
-    public void testConsoleFreestyleBuildLocation() {
-        String consoleOutputText = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(FREESTYLE_PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
+    public void testConsoleOutputFreestyleBuild() {
+        final String expectedConsoleOutputText = "Started by user \nadmin\nRunning as SYSTEM\n"
+                + "Building in workspace /var/jenkins_home/workspace/"
+                + FREESTYLE_PROJECT_NAME
+                + "\nFinished: SUCCESS";
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        ConsoleOutputPage consoleOutputPage = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
-                .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
-                .getConsoleOutputText();
+                .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME);
 
-        String actualLocation = new ConsoleOutputPage(getDriver())
-                .getParameterFromConsoleOutput(consoleOutputText, "workspace");
+        String actualConsoleOutputText = consoleOutputPage.getConsoleOutputText();
+        String pageHeader = consoleOutputPage.getPageHeaderText();
 
-        Assert.assertEquals(actualLocation, "Building in workspace /var/jenkins_home/workspace/" + FREESTYLE_PROJECT_NAME);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification the user of build on Console Output Page")
-    @Test
-    public void testConsoleOutputFreestyleBuildStartedByUser() {
-        final String currentUser = new MainPage(getDriver()).getHeader().getCurrentUserName();
-
-        final String userConsoleOutput = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(FREESTYLE_PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
-                .clickBuildsHistoryFromSideMenu()
-                .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
-                .getStartedByUser();
-
-        Assert.assertEquals(currentUser, userConsoleOutput);
-    }
-
-    @Severity(SeverityLevel.TRIVIAL)
-    @Feature("UI")
-    @Description("Verification the build status on Console Output Page")
-    @Test
-    public void testConsoleOutputFreestyleBuildStatus() {
-        final String consoleOutput = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(FREESTYLE_PROJECT_NAME)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .clickBuildWithParameters()
-                .clickBuild()
-                .getHeader()
-                .clickLogo()
-                .clickBuildsHistoryFromSideMenu()
-                .clickProjectBuildConsole(FREESTYLE_PROJECT_NAME)
-                .getConsoleOutputText();
-
-        String actualStatus = new ConsoleOutputPage(getDriver())
-                .getParameterFromConsoleOutput(consoleOutput, "Finished");
-
-        Assert.assertEquals(actualStatus, "Finished: SUCCESS");
+        Assert.assertEquals(pageHeader, "Console Output");
+        Assert.assertEquals(actualConsoleOutputText, expectedConsoleOutputText);
     }
 
     @Severity(SeverityLevel.TRIVIAL)
