@@ -37,7 +37,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(css = ".task-link-wrapper>a[href$='newJob']")
     private WebElement newItem;
 
-    @FindBy(xpath = "//div[@class='label-event-blue  event-blue  timeline-event-label']")
+    @FindBy(xpath = "//div[@id='label-tl-0-1-e1']")
     private WebElement lastBuildLinkFromTimeline;
 
     @FindBy(xpath = "(//div[contains(text(), 'default')])[1]")

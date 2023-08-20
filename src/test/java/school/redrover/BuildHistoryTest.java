@@ -97,17 +97,10 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify that name of project is present on Time line on Build History page")
     @Test
     public void testPresenceProjectNameOnBuildHistoryTimeline() {
-        final String itemName = "TestProject";
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
         boolean projectNameOnBuildHistoryTimeline = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(itemName)
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .clickOkButton(new FreestyleProjectConfigPage(new FreestyleProjectPage(getDriver())))
-                .clickSaveButton()
-                .getHeader()
-                .clickLogo()
-                .clickBuildByGreenArrow(itemName)
+                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .getBubbleTitleOnTimeline();
 
