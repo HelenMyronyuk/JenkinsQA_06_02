@@ -1,0 +1,1 @@
+http://localhost:8080/job/FolderName/,http://localhost:8080/job/FREESTYLE_NAME/,http://localhost:8080/job/MultibranchPipeline/,http://localhost:8080/job/OrgFolder/,http://localhost:8080/job/PIPELINE_NAME/
