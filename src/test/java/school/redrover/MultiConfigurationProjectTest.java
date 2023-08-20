@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -465,24 +466,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to build changes of MultiConfiguration project")
-    @Test
-    public void testBuildChangesFromDropDown() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String titleChange = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .getHeader()
-                .clickLogo()
-                .openBuildDropDownMenu("#1")
-                .clickChangesBuildFromDropDown()
-                .getTextChanges();
-
-        Assert.assertEquals(titleChange, "Changes");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification of possibility to build changes from last build of MultiConfiguration project")
     @Test
     public void testBuildChangesFromLastBuild() {
@@ -593,24 +576,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to edit build information from drop-down menu for MultiConfiguration Project")
-    @Test
-    public void testEditBuildInformationFromDropDown() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String getTitle = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .getHeader()
-                .clickLogo()
-                .openBuildDropDownMenu("#1")
-                .clickEditBuildInformFromDropDown()
-                .getHeaderText();
-
-        Assert.assertEquals(getTitle, "Edit Build Information");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification of possibility to edit build information from MultiConfiguration Project Page")
     @Test
     public void testEditBuildInformationFromProjectPage() {
@@ -676,25 +641,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, DESCRIPTION);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to delete build from drop-down menu for MultiConfiguration Project")
-    @Test
-    public void testDeleteBuildNowFromDropDown() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        boolean noBuildsMessage = new MainPage(getDriver())
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
-                .clickBuildDropdownMenuDeleteBuild("#1")
-                .clickDelete(new MultiConfigurationProjectPage(getDriver()))
-                .isNoBuildsDisplayed();
-
-        Assert.assertTrue(noBuildsMessage, "Error");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -1154,5 +1100,38 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         Assert.assertEquals(deletedProjPage.getTitle(), "Dashboard [Jenkins]");
         Assert.assertEquals(deletedProjPage.getWelcomeText(), "Welcome to Jenkins!");
+    }
+
+    @DataProvider(name = "buildDropDownMenuOptions")
+    public Object[][] optionsFromDropDown() {
+        return new Object[][] {
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification of navigation to options page for MultiConfiguration Project from build drop-down menu")
+    @Test(dataProvider = "buildDropDownMenuOptions")
+    public void testNavigateToOptionsFromDropDown(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .getHeader()
+                .clickLogo()
+                .openBuildDropDownMenu("#1")
+                .clickBuildOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+
+        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
+            String pageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(pageHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
+        } else {
+            String breadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertTrue(breadcrumbHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
+        }
     }
 }
