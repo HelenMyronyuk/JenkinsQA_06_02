@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
@@ -118,10 +119,12 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
     @Test
     public void testOpenDefaultBuildPopUpOfMultiConfiguration() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
-        boolean isDefaultBuildPopUpDisplayed = new MainPage(getDriver())
-                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+        boolean isDefaultBuildPopUpDisplayed = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
                 .clickBuildsHistoryFromSideMenu()
                 .clickDefaultBuildBubbleFromTimeline()
                 .isDefaultBuildPopUpHeaderTextDisplayed();
@@ -183,10 +186,12 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify the ability to navigate to build page of Multiconfiguration default from timeline")
     @Test
     public void testNavigateToMultiConfigurationDefaultBuildPageFromTimeline() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
-        boolean buildPageHeader = new MainPage(getDriver())
-                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+        boolean buildPageHeader = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
                 .clickBuildsHistoryFromSideMenu()
                 .clickDefaultBuildBubbleFromTimeline()
                 .clickDefaultBuildLinkFromTimeline()
