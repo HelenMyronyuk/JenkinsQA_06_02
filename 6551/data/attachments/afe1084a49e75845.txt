@@ -1,0 +1,1 @@
+http://local8081/job/FolderName/,http://local8081/job/FREESTYLE_NAME/,http://local8081/job/MultibranchPipeline/,http://local8081/job/OrgFolder/
