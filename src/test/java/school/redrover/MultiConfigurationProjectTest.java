@@ -26,10 +26,10 @@ import java.util.function.Function;
 
 public class MultiConfigurationProjectTest extends BaseTest {
 
-    private static final String NAME = "MULTI_CONFIGURATION_NAME"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String NEW_NAME = "MULTI_CONFIGURATION_NEW_NAME"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String DESCRIPTION = "Description"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String NEW_DESCRIPTION = "New Description"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String NAME = "MULTI_CONFIGURATION_NAME";
+    private static final String NEW_NAME = "MULTI_CONFIGURATION_NEW_NAME";
+    private static final String DESCRIPTION = "Description";
+    private static final String NEW_DESCRIPTION = "New Description";
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")

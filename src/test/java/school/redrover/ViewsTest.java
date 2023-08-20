@@ -21,10 +21,10 @@ import static org.testng.Assert.assertEquals;
 
 public class ViewsTest extends BaseTest {
 
-    private static final String PROJECT_NAME = "Project1"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String NEW_PROJECT_NAME = "Project2"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String VIEW_NAME = "View1"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String NEW_VIEW_NAME = "View2"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String PROJECT_NAME = "Project1";
+    private static final String NEW_PROJECT_NAME = "Project2";
+    private static final String VIEW_NAME = "View1";
+    private static final String NEW_VIEW_NAME = "View2";
     private static final String VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
     private static final String NEW_VIEW_DESCRIPTION = RandomStringUtils.randomAlphanumeric(7);
 

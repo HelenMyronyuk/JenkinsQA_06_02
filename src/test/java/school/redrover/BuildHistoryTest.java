@@ -18,9 +18,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class BuildHistoryTest extends BaseTest {
 
-    private final String FREESTYLE_PROJECT_NAME = "Freestyle"+ RandomStringUtils.randomAlphanumeric(7);;
-    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration"+ RandomStringUtils.randomAlphanumeric(7);;
-    private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
+    private final String FREESTYLE_PROJECT_NAME = "Freestyle";;
+    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration";;
+    private final String PIPELINE_PROJECT_NAME = "Pipeline";
 
 
     @Severity(SeverityLevel.NORMAL)

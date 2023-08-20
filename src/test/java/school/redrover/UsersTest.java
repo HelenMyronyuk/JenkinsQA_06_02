@@ -24,12 +24,12 @@ import java.util.function.Function;
 
 public class UsersTest extends BaseTest {
 
-    protected static final String USER_NAME = "testuser"+ RandomStringUtils.randomAlphanumeric(7);
+    protected static final String USER_NAME = "testuser";
     protected static final String PASSWORD = "p@ssword123";
     protected static final String EMAIL = "test@test.com";
-    protected static final String USER_FULL_NAME = "Test User"+RandomStringUtils.randomAlphanumeric(7);
+    protected static final String USER_FULL_NAME = "Test User";
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
-    protected static final String PROJECT_NAME = "PROJECT_NAME"+RandomStringUtils.randomAlphanumeric(7);
+    protected static final String PROJECT_NAME = "PROJECT_NAME";
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")

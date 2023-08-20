@@ -21,9 +21,9 @@ import java.util.List;
 
 public class MultibranchPipelineTest extends BaseTest {
 
-    private static final String NAME = "MultibranchPipeline" + RandomStringUtils.randomAlphanumeric(7);
-    private static final String RENAMED = "MultibranchPipelineRenamed"+RandomStringUtils.randomAlphanumeric(7);
-    private static final String DESCRIPTION = "Description"+RandomStringUtils.randomAlphanumeric(7);
+    private static final String NAME = "MultibranchPipeline";
+    private static final String RENAMED = "MultibranchPipelineRenamed";
+    private static final String DESCRIPTION = "Description";
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
