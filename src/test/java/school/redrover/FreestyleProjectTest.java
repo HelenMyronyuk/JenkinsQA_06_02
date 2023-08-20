@@ -1549,64 +1549,47 @@ public class FreestyleProjectTest extends BaseTest {
     @Description("Checking the ability to edit email notifications after the build in the configuration")
     @Test
     public void testConfigurePostBuildActionEditableEmailNotification() {
-        String username = "jenkins05test@gmail.com";
-        String expectedConsoleOutputText = "Sending email to: jenkins05test@gmail.com";
+        final String userEmail = "jenkins06test@gmail.com";
+        final String userPass = "bfdzlscazepasstj";
+        final String userPort = "465";
+        final String userStmp = "smtp.gmail.com";
 
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         String emailSentLog = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickConfigureSystemLink()
-                .inputSmtpServerFieldExtendedEmailNotifications("smtp.gmail.com")
-                .inputSmtpPortFieldExtendedEmailNotifications("465")
+                .inputSmtpServerFieldExtendedEmailNotifications(userStmp)
+                .inputSmtpPortFieldExtendedEmailNotifications(userPort)
                 .clickAdvancedButtonExtendedEmailNotification()
                 .clickAddCredentialButton()
-                .inputUsernameIntoAddCredentialPopUpWindow("jenkins05test@gmail.com")
-                .inputPasswordIntoAddCredentialPopUpWindow("bfdzlscazepasstj")
+                .inputUsernameIntoAddCredentialPopUpWindow(userEmail)
+                .inputPasswordIntoAddCredentialPopUpWindow(userPass)
                 .clickAddButtonAddCredentialPopUp()
-                .selectCreatedCredentials("jenkins05test@gmail.com")
+                .selectCreatedCredentials(userEmail)
                 .checkUseSSLCheckbox()
                 .clickDefaultTriggersButton()
                 .checkAlwaysDefaultTriggers()
                 .checkSuccessDefaultTriggers()
-                .inputSmtpServerFieldEmailNotifications("smtp.gmail.com")
+                .inputSmtpServerFieldEmailNotifications(userStmp)
                 .clickAdvancedButtonEmailNotification()
                 .clickUseSMTPAuthenticationCheckbox()
-                .inputUserNameAndPasswordSMTPAuthentication("jenkins05test@gmail.com", "bfdzlscazepasstj")
+                .inputUserNameAndPasswordSMTPAuthentication(userEmail, userPass)
                 .checkUseSSLCheckboxEmailNotifications()
-                .inputSmtpPortEmailNotificationsField("465")
+                .inputSmtpPortEmailNotificationsField(userPort)
                 .clickSaveButton()
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .clickConfigure()
                 .clickPostBuildActionsButton()
                 .clickAddPostBuildActionDropDown()
                 .selectEditableEmailNotification()
-                .inputEmailIntoProjectRecipientListInputField(username)
+                .inputEmailIntoProjectRecipientListInputField(userEmail)
                 .clickSaveButton()
                 .clickBuildNowFromSideMenu()
                 .clickBuildIconStatus()
                 .getConsoleOutputText();
 
-        Assert.assertTrue(emailSentLog.contains(expectedConsoleOutputText), "Error: Email report wasn't sent");
-
-        new MainPage(getDriver())
-                .getBreadcrumb()
-                .clickDashboardButton()
-                .clickManageJenkinsPage()
-                .clickConfigureSystemLink()
-                .inputSmtpServerFieldExtendedEmailNotifications("")
-                .inputSmtpPortFieldExtendedEmailNotifications("25")
-                .clickAdvancedButtonExtendedEmailNotification()
-                .unCheckUseSSLCheckboxExtendedEmailNotifications()
-                .clickDefaultTriggersButton()
-                .unCheckDefaultTriggerAlwaysCheckbox()
-                .unCheckDefaultTriggerSuccessCheckbox()
-                .inputSmtpServerFieldEmailNotifications("")
-                .clickAdvancedButtonEmailNotification()
-                .unCheckSMTPAuthenticationCheckbox()
-                .unCheckUseSSLCheckboxEmailNotifications()
-                .inputSmtpPortEmailNotificationsField("25")
-                .clickSaveButton();
+        Assert.assertTrue(emailSentLog.contains("Sending email to: " + userEmail), "Error: Email report wasn't sent");
     }
 
     @Feature("Function")
