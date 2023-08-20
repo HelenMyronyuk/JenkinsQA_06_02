@@ -47,6 +47,16 @@ jobs:
           tar -xvf ./jenkins_backup.tar && mv jenkins_backup jenkins_backup_2
           chmod -R 777 ./jenkins_backup_2/var/jenkins_home
 
+      - name: Extract Jenkins data and set permission for instance 3
+        run: |
+          tar -xvf ./jenkins_backup.tar && mv jenkins_backup jenkins_backup_3
+          chmod -R 777 ./jenkins_backup_3/var/jenkins_home
+
+      - name: Extract Jenkins data and set permission for instance 4
+        run: |
+          tar -xvf ./jenkins_backup.tar && mv jenkins_backup jenkins_backup_4
+          chmod -R 777 ./jenkins_backup_4/var/jenkins_home
+
       - name: Docker login
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
@@ -55,6 +65,12 @@ jobs:
 
       - name: Docker start 2
         run: docker run --rm --detach -p 8081:8080 -v ${{ github.workspace }}/jenkins_backup_2/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
+
+      - name: Docker start 3
+        run: docker run --rm --detach -p 8082:8080 -v ${{ github.workspace }}/jenkins_backup_3/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
+
+      - name: Docker start 4
+        run: docker run --rm --detach -p 8083:8080 -v ${{ github.workspace }}/jenkins_backup_4/var/jenkins_home:/var/jenkins_home jenkins/jenkins:2.387.2-lts-jdk17
 
       - name: Wait for the Jenkins
         run: ./.github/wait-for-jenkins.sh

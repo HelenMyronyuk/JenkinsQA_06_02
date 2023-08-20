@@ -38,7 +38,16 @@ public class JenkinsInstance {
         return password;
     }
 
+    public int getPort() {
+        return port;
+    }
+
     public String getUrl(){
         return "http://%s:%s/".formatted(host, port);
+    }
+
+    @Override
+    public String toString() {
+        return getUrl();
     }
 }

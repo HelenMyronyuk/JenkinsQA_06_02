@@ -2,6 +2,7 @@ package school.redrover.api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import school.redrover.JenkinsInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +11,13 @@ import java.util.regex.Pattern;
 
 public class MyViewService extends BaseService {
 
-    public MyViewService(JenkinsSpecBuilder baseService) {
-        super(baseService);
+    public MyViewService(JenkinsInstance instance) {
+        super(instance);
     }
 
     @Step("Get My Views")
     public List<String> getMyViews() {
-        var html = specBuilder.buildBasicSpec()
+        var html = buildBasicSpec()
                 .basePath("me/my-views")
                 .get()
                 .body()
@@ -37,7 +38,7 @@ public class MyViewService extends BaseService {
     @Step("Delete My View {0}")
     public Response deleteMyView(String viewName) {
         var crumb = getCrumbRequest();
-        return specBuilder.buildBasicSpec()
+        return buildBasicSpec()
                 .basePath("me/my-views/view/%s/doDelete".formatted(viewName))
                 .header("Jenkins-Crumb", crumb.jsonPath().getString("crumb"))
                 .cookies(crumb.getCookies())

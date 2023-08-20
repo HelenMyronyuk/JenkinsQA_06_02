@@ -1,6 +1,8 @@
 package school.redrover.runner;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -86,12 +88,23 @@ public final class ProjectUtils {
                 properties.getProperty(PROP_PORT));
     }
 
-    static synchronized JenkinsInstance getJenkinsUrl() {
-        return JenkinsConstants.instances
+    @Step("Lock Instance")
+    static synchronized JenkinsInstance lockJenkinsInstance() {
+        var instance = JenkinsConstants.instances
                 .stream()
                 .filter(i -> !i.isBusy())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("Couldn't find any available Jenkins instance"));
+        instance.setBusy(true);
+        instance.setUser(getUserName());
+        instance.setPassword(getPassword());
+        Allure.addAttachment("Locked instance: ", instance.toString());
+        return instance;
+    }
+
+    @Step("Unlock instance {0}")
+    static synchronized void unlockJenkinsInstance(JenkinsInstance instance) {
+        instance.setBusy(false);
     }
 
     static WebDriver createDriver() {
@@ -102,6 +115,7 @@ public final class ProjectUtils {
         driver.get(getUrl());
     }
 
+    @Step("Open instance {0}")
     public static void get1(WebDriver driver, String url) {
        driver.get(url);
     }

@@ -2,19 +2,20 @@ package school.redrover.api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import school.redrover.JenkinsInstance;
 
 import java.util.List;
 
 public class ViewService extends BaseService {
 
-    public ViewService(JenkinsSpecBuilder baseService) {
-        super(baseService);
+    public ViewService(JenkinsInstance instance) {
+        super(instance);
     }
 
     @Step("Get Views")
     public List<String> getViews() {
-        return specBuilder.buildBasicSpec()
-                .basePath(specBuilder.suffix)
+        return buildBasicSpec()
+                .basePath(suffix)
                 .get()
                 .jsonPath()
                 .getList("views.name");
@@ -23,7 +24,7 @@ public class ViewService extends BaseService {
     @Step("Delete View {0}")
     public Response deleteView(String viewName) {
         var crumb = getCrumbRequest();
-        return specBuilder.buildBasicSpec()
+        return buildBasicSpec()
                 .basePath("view/%s/doDelete".formatted(viewName))
                 .header("Jenkins-Crumb", crumb.jsonPath().getString("crumb"))
                 .cookies(crumb.getCookies())

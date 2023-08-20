@@ -242,7 +242,7 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
-@Ignore
+
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to create Pipeline project with allowed characters")

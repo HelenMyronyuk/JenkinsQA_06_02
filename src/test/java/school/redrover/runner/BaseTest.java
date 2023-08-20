@@ -1,15 +1,12 @@
 package school.redrover.runner;
 
-import io.qameta.allure.Step;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import school.redrover.JenkinsInstance;
-import school.redrover.api.JenkinsSpecBuilder;
 import school.redrover.runner.order.OrderForTests;
 import school.redrover.runner.order.OrderUtils;
 
@@ -31,7 +28,6 @@ public abstract class BaseTest {
 
     private OrderUtils.MethodsOrder<Method> methodsOrder;
     private JenkinsInstance instance;
-    private JenkinsSpecBuilder specBuilder;
 
     @BeforeClass
     protected void beforeClass() {
@@ -41,11 +37,7 @@ public abstract class BaseTest {
                         .collect(Collectors.toList()),
                 m -> m.getName(),
                 m -> m.getAnnotation(Test.class).dependsOnMethods());
-        instance = ProjectUtils.getJenkinsUrl();
-        instance.setUser(ProjectUtils.getUserName());
-        instance.setPassword(ProjectUtils.getPassword());
-        instance.setBusy(true);
-        specBuilder = new JenkinsSpecBuilder(instance);
+        instance = ProjectUtils.lockJenkinsInstance();
         ProjectUtils.logf("Locked Jenkins %s for class %s".formatted(instance.getUrl(), this.getClass().getName()));
     }
 
@@ -70,7 +62,7 @@ public abstract class BaseTest {
 
     protected void clearData() {
         ProjectUtils.log("Clear data");
-        JenkinsUtils.clearData(specBuilder);
+        JenkinsUtils.clearData(instance);
     }
 
     protected void loginWeb() {
@@ -121,7 +113,7 @@ public abstract class BaseTest {
         }
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     protected void afterMethod(Method method, ITestResult testResult) {
         if (!testResult.isSuccess() && ProjectUtils.isServerRun()) {
            File file = ProjectUtils.takeScreenshot(driver, method.getName(), this.getClass().getName());
@@ -143,7 +135,7 @@ public abstract class BaseTest {
 
     @AfterClass(alwaysRun = true)
     protected void unlockInstance() {
-        instance.setBusy(false);
+        ProjectUtils.unlockJenkinsInstance(instance);
         ProjectUtils.logf("Unlocked Jenkins %s after class %s".formatted(instance.getUrl(), this.getClass().getName()));
     }
 
