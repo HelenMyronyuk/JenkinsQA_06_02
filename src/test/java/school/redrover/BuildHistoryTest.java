@@ -192,4 +192,21 @@ public class BuildHistoryTest extends BaseTest {
 
         Assert.assertTrue(buildPageHeader, "Wrong page");
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to close the bubble pop up of MultiConfiguration project build from timeline")
+    @Test
+    public void testCloseBuildPopUpOfMultiConfiguration() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        boolean isBubblePopUpClosed =  new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .closeProjectWindowButtonInTimeline()
+                .isBuildPopUpInvisible();
+
+        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
+    }
 }

@@ -43,13 +43,13 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "(//div[contains(text(), 'default')])[1]")
     private WebElement lastDefaultBuildBubbleLinkFromTimeline;
 
-    @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']")
+    @FindBy(xpath = "//div[contains(@class, 'simileAjax-bubble-contentContainer-pngTranslucent')]")
     private WebElement buildBubblePopUp;
 
     @FindBy(xpath = "(//a[@class='jenkins-table__link jenkins-table__badge model-link inside' and not (contains(@href, 'default'))])[1]")
     private WebElement lastNotDefaultBuild;
 
-    @FindBy(xpath = "//div[@class='simileAjax-bubble-close simileAjax-bubble-close-pngTranslucent']")
+    @FindBy(xpath = "//div[contains(@class, 'simileAjax-bubble-close-pngTranslucent')]")
     private WebElement closePopUpButtonInTimeline;
 
     @FindBy(xpath = "//div[@class = 'timeline-event-bubble-title']/a[contains(@href, '/default/1')]")
