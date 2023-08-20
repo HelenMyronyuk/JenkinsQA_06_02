@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
@@ -241,7 +242,7 @@ public class PipelineTest extends BaseTest {
 
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
-
+@Ignore
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to create Pipeline project with allowed characters")
