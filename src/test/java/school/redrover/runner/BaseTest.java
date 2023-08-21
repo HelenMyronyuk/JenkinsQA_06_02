@@ -2,6 +2,7 @@ package school.redrover.runner;
 
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -13,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Listeners({FilterForTests.class, OrderForTests.class})
@@ -26,6 +29,12 @@ public abstract class BaseTest {
     private WebDriver driver;
 
     private OrderUtils.MethodsOrder<Method> methodsOrder;
+
+    List<String> jobNames = new ArrayList<>();
+    List<String> viewNames = new ArrayList<>();
+    List<String> myViewNames = new ArrayList<>();
+    List<String> userNames = new ArrayList<>();
+    List<String> nodeNames = new ArrayList<>();
 
     @BeforeClass
     protected void beforeClass() {
@@ -57,10 +66,10 @@ public abstract class BaseTest {
         }
     }
 
-    protected void clearData() {
-        ProjectUtils.log("Clear data");
-        JenkinsUtils.clearData();
-    }
+//    protected void clearData() {
+//        ProjectUtils.log("Clear data");
+//        JenkinsUtils.clearData();
+//    }
 
     protected void loginWeb() {
         ProjectUtils.log("Login");
@@ -153,4 +162,25 @@ public abstract class BaseTest {
         }
         return wait10;
     }
+
+    public String initName(){
+        String jobName = RandomStringUtils.randomAlphanumeric(7);
+        jobNames.add(jobName);
+        return jobName;
+    }
+
+    public  void clearData(){
+        JenkinsUtils.deleteViews(viewNames);
+        deleteJobs(jobNames);
+        JenkinsUtils.deleteUsers(userNames);
+        JenkinsUtils.deleteNodes(nodeNames);
+        JenkinsUtils.deleteDescription();
+    };
+
+    private void deleteJobs(List<String> jobNames) {
+        for (String job: jobNames) {
+            jobNames.remove(job);
+        }
+    }
+
 }
