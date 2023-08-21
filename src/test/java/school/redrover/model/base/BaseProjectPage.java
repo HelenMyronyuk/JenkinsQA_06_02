@@ -408,4 +408,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
 
         return new PipelineStepsPage(getDriver());
     }
+
+    @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildsOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
+
+        return pageToReturn;
+    }
 }

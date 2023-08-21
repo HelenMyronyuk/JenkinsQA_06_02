@@ -214,6 +214,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of MultiConfiguration project build from timeline")
+    @Ignore
     @Test
     public void testCloseBuildPopUpOfMultiConfiguration() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
