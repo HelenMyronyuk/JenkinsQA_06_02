@@ -1,1 +1,0 @@
-http://localhost:8080/job/Second/,http://localhost:8080/job/Test%20Item/
