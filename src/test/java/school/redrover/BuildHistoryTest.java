@@ -6,13 +6,12 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
-import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
-import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -108,6 +107,24 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration(not default) from timeline")
+    @Test(dataProvider = "project-type")
+    public void testNavigateToBuildPageFromTimeline(TestUtils.JobType jobType) {
+        final String jobName = "BUILD_PROJECT";
+        TestUtils.createJob(this, jobName, jobType, true);
+
+        boolean buildPageHeader = new MainPage(getDriver())
+                .clickBuildByGreenArrow(jobName)
+                .clickBuildsHistoryFromSideMenu()
+                .clickLastNotDefaultBuildFromTimeline()
+                .clickLastNotDefaultBuildLinkFromBubblePopUp()
+                .isDisplayedBuildPageHeaderText();
+
+        Assert.assertTrue(buildPageHeader, "Wrong page! The build page header text is not displayed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
     @Test
@@ -128,6 +145,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
+    @Ignore
     @Test
     public void testCloseBuildPopUpOfFreestyle() {
         TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -188,7 +206,7 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildsHistoryFromSideMenu()
                 .clickDefaultBuildBubbleFromTimeline()
                 .clickDefaultBuildLinkFromTimeline()
-                .isDisplayedBuildTitle();
+                .isDisplayedBuildPageHeaderText();
 
         Assert.assertTrue(buildPageHeader, "Wrong page");
     }

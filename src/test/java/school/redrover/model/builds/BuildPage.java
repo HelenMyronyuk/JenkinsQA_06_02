@@ -73,7 +73,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Build title is displayed")
-    public boolean isDisplayedBuildTitle() {
+    public boolean isDisplayedBuildPageHeaderText() {
         return buildHeader.getText().contains("Build #1");
     }
 

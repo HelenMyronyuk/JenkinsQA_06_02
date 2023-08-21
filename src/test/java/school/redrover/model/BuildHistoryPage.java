@@ -55,6 +55,12 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @FindBy(xpath = "//div[@class = 'timeline-event-bubble-title']/a[contains(@href, '/default/1')]")
     private WebElement defaultBuildBubbleLink;
 
+    @FindBy(xpath = "//div[@class='label-event-blue  event-blue  timeline-event-label' and not (contains(text(), 'default'))]")
+    private WebElement lastNotDefaultBuildFromTimeline;
+
+    @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']//a")
+    private WebElement notDefaultBuildLinkFromBubblePopUp;
+
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
     }
@@ -154,6 +160,25 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Click default build link from timeline")
     public BuildPage clickDefaultBuildLinkFromTimeline() {
         defaultBuildBubbleLink.click();
+
+        return new BuildPage(getDriver());
+    }
+
+    @Step("Click last not default build link badge on the Jenkins table")
+    public BuildHistoryPage clickLastNotDefaultBuildFromTimeline() {
+        new Actions(getDriver())
+                .pause(2500)
+                .perform();
+
+        getDriver().navigate().refresh();
+        getWait10().until(ExpectedConditions.elementToBeClickable(lastNotDefaultBuildFromTimeline)).click();
+
+        return new BuildHistoryPage(getDriver());
+    }
+
+    @Step("Click last not default build link badge on bubble pop up from timeline")
+    public BuildPage clickLastNotDefaultBuildLinkFromBubblePopUp() {
+        getWait10().until(ExpectedConditions.elementToBeClickable(notDefaultBuildLinkFromBubblePopUp)).click();
 
         return new BuildPage(getDriver());
     }
