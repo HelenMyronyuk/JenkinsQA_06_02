@@ -1,1 +1,0 @@
-http://local8082/job/FreestyleX5V8Dq1/,http://local8082/job/MULTI_CONFIGURATION_NAME/,http://local8082/job/MultiConfiguration9SS8yex/,http://local8082/job/PipelinewIQjhn6/
