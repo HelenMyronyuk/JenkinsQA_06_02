@@ -1,6 +1,7 @@
 package school.redrover.runner;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
@@ -14,9 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Listeners({FilterForTests.class, OrderForTests.class})
@@ -30,11 +29,11 @@ public abstract class BaseTest {
 
     private OrderUtils.MethodsOrder<Method> methodsOrder;
 
-    List<String> jobNames = new ArrayList<>();
-    List<String> viewNames = new ArrayList<>();
-    List<String> myViewNames = new ArrayList<>();
-    List<String> userNames = new ArrayList<>();
-    List<String> nodeNames = new ArrayList<>();
+    Set<String> jobNames = new HashSet<>();
+    Set<String> viewNames = new HashSet<>();
+    Set<String> myViewNames = new HashSet<>();
+    Set<String> userNames = new HashSet<>();
+    Set<String> nodeNames = new HashSet<>();
 
     @BeforeClass
     protected void beforeClass() {
@@ -51,7 +50,7 @@ public abstract class BaseTest {
         ProjectUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             if (!methodsOrder.isGroupStarted(method) || methodsOrder.isGroupFinished(method)) {
-                clearData();
+
                 startDriver();
                 getWeb();
                 loginWeb();
@@ -119,7 +118,7 @@ public abstract class BaseTest {
         }
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     protected void afterMethod(Method method, ITestResult testResult) {
         if (!testResult.isSuccess() && ProjectUtils.isServerRun()) {
            File file = ProjectUtils.takeScreenshot(driver, method.getName(), this.getClass().getName());
@@ -134,7 +133,7 @@ public abstract class BaseTest {
         if (!testResult.isSuccess() || methodsOrder.isGroupFinished(method)) {
             stopDriver();
         }
-
+        clearData();
         ProjectUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
     }
 
@@ -163,24 +162,38 @@ public abstract class BaseTest {
         return wait10;
     }
 
+    @Step("Init Job Name")
     public String initName(){
         String jobName = RandomStringUtils.randomAlphanumeric(7);
         jobNames.add(jobName);
+        Allure.addAttachment("Job name for class %s".formatted(this.getClass().getName()), jobName);
         return jobName;
     }
 
-    public  void clearData(){
+    @Step("Init View Name")
+    public String initViewName(){
+        String viewName = RandomStringUtils.randomAlphanumeric(7);
+        viewNames.add(viewName);
+        Allure.addAttachment("View name for class %s".formatted(this.getClass().getName()), viewName);
+        return viewName;
+    }
+
+    @Step("Init User Name")
+    public String initUserName(){
+        String userName = RandomStringUtils.randomAlphanumeric(7);
+        userNames.add(userName);
+        Allure.addAttachment("View name for class %s".formatted(this.getClass().getName()), userName);
+        return userName;
+    }
+
+    @Step("Clear Data")
+    public void clearData(){
         JenkinsUtils.deleteViews(viewNames);
-        deleteJobs(jobNames);
+        JenkinsUtils.deleteMyViews(myViewNames);
+        JenkinsUtils.deleteJobs(jobNames);
         JenkinsUtils.deleteUsers(userNames);
         JenkinsUtils.deleteNodes(nodeNames);
         JenkinsUtils.deleteDescription();
-    };
-
-    private void deleteJobs(List<String> jobNames) {
-        for (String job: jobNames) {
-            jobNames.remove(job);
-        }
     }
 
 }

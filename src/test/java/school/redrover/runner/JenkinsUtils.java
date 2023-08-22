@@ -1,7 +1,10 @@
 package school.redrover.runner;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -74,18 +77,24 @@ public class JenkinsUtils {
         }
     }
 
+    @Step("Send post request to {0}")
     private static HttpResponse<String> postHttp(String url, String body) {
+        HttpResponse<String> response = null;
         try {
-            return client.send(
+            response = client.send(
                     HttpRequest.newBuilder()
                             .uri(URI.create(url))
                             .headers(getHeader())
                             .POST(HttpRequest.BodyPublishers.ofString(body))
                             .build(),
                     HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            Assert.assertEquals(response.statusCode(), 302);
+        } catch (Exception | AssertionError e) {
+            if (response != null) {
+                Allure.addAttachment("Couldn't delete entity by url because of", response.body());
+            }
         }
+        return response;
     }
 
     private static String getPage(String uri) {
@@ -120,42 +129,54 @@ public class JenkinsUtils {
         }
     }
 
-    private static void deleteJobs() {
+    @Step("Clear jobs {0}")
+    public static synchronized void deleteJobs(Set<String> jobNames) {
         String mainPage = getPage("");
         deleteByLink("job/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"job/", "/\""),
+                // getSubstringsFromPage(mainPage, "href=\"job/", "/\""),
+                jobNames,
                 getCrumbFromPage(mainPage));
     }
 
-    private static void deleteViews() {
+    @Step("Clear views {0}")
+    public static synchronized void deleteViews(Set<String> views) {
         String mainPage = getPage("");
         deleteByLink("view/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"/view/", "/\""),
+                views,
                 getCrumbFromPage(mainPage));
 
         String viewPage = getPage("me/my-views/view/all/");
         deleteByLink("user/admin/my-views/view/%s/doDelete",
-                getSubstringsFromPage(viewPage, "href=\"/user/admin/my-views/view/", "/\""),
+                views,
                 getCrumbFromPage(viewPage));
     }
 
-    private static void deleteUsers() {
+    @Step("Clear my views {0}")
+    public static synchronized void deleteMyViews(Set<String> myViews) {
+        String viewPage = getPage("me/my-views/view/all/");
+        deleteByLink("user/admin/my-views/view/%s/doDelete",
+                myViews,
+                getCrumbFromPage(viewPage));
+    }
+
+    @Step("Clear users {0}")
+    public static synchronized void deleteUsers(Set<String> userName) {
         String userPage = getPage("manage/securityRealm/");
         deleteByLink("manage/securityRealm/user/%s/doDelete",
-                getSubstringsFromPage(userPage, "href=\"user/", "/delete\"").stream()
-                        .filter(user -> !user.equals(ProjectUtils.getUserName())).collect(Collectors.toSet()),
+                userName,
                 getCrumbFromPage(userPage));
     }
 
-    private static void deleteNodes() {
+    @Step("Clear nodes {0}")
+    public static synchronized void deleteNodes(Set<String> nodeName) {
         String mainPage = getPage("");
         deleteByLink("manage/computer/%s/doDelete",
-                getSubstringsFromPage(mainPage, "href=\"/manage/computer/", "/\""),
+                nodeName,
                 getCrumbFromPage(mainPage));
     }
 
 
-    private static void deleteDescription() {
+    public static synchronized void deleteDescription() {
         String mainPage = getPage("");
         postHttp(ProjectUtils.getUrl() + "submitDescription",
                 String.format(
@@ -163,13 +184,13 @@ public class JenkinsUtils {
                         getCrumbFromPage(mainPage)));
     }
 
-    static void clearData() {
-        JenkinsUtils.deleteViews();
-        JenkinsUtils.deleteJobs();
-        JenkinsUtils.deleteUsers();
-        JenkinsUtils.deleteNodes();
-        JenkinsUtils.deleteDescription();
-    }
+//    static void clearData() {
+//        JenkinsUtils.deleteViews();
+//        JenkinsUtils.deleteJobs();
+//        JenkinsUtils.deleteUsers();
+//        JenkinsUtils.deleteNodes();
+//        JenkinsUtils.deleteDescription();
+//    }
 
     static void login(WebDriver driver) {
         driver.findElement(By.name("j_username")).sendKeys(ProjectUtils.getUserName());

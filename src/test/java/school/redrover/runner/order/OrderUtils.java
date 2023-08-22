@@ -1,6 +1,7 @@
 package school.redrover.runner.order;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -70,8 +71,8 @@ public final class OrderUtils {
 
         public MethodsOrder(List<List<T>> methodList) {
             this.methodList = methodList;
-            this.methodInvokedMap = new HashMap<>();
-            this.methodListMap = new HashMap<>();
+            this.methodInvokedMap = new ConcurrentHashMap<>();
+            this.methodListMap = new ConcurrentHashMap<>();
 
             for (List<T> list : methodList) {
                 for (T method : list) {

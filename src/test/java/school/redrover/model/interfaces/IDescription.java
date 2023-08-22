@@ -18,6 +18,7 @@ public interface IDescription <Self extends BaseMainHeaderPage<?>> extends IBase
     }
 
     default Self enterDescription(String name) {
+        clearDescriptionField();
         getWait5().until(ExpectedConditions.visibilityOf(
                 getDriver().findElement(By.xpath("//textarea[@name='description']")))).sendKeys(name);
 

@@ -499,7 +499,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickChangesViaLastBuildDropDownMenu()
                 .getTextOfPage();
 
-        Assert.assertTrue(text.contains("No changes."));
+        Assert.assertTrue(text.contains("No changes."), "Expected %s to contain 'No changes'".formatted(text));
     }
 
     @Feature("Function")

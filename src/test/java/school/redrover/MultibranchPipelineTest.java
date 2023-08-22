@@ -21,8 +21,8 @@ import java.util.List;
 
 public class MultibranchPipelineTest extends BaseTest {
 
-    private static final String NAME = "MultibranchPipeline";
-    private static final String RENAMED = "MultibranchPipelineRenamed";
+    private  final String NAME = initName();
+    private  final String RENAMED = initName();
     private static final String DESCRIPTION = "Description";
 
     @Severity(SeverityLevel.CRITICAL)

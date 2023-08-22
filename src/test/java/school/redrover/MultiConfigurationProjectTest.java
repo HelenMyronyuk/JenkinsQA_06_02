@@ -27,8 +27,8 @@ import java.util.function.Function;
 
 public class MultiConfigurationProjectTest extends BaseTest {
 
-    private static final String NAME = "MULTI_CONFIGURATION_NAME";
-    private static final String NEW_NAME = "MULTI_CONFIGURATION_NEW_NAME";
+    private final String NAME = initName();
+    private  final String NEW_NAME = initName();
     private static final String DESCRIPTION = "Description";
     private static final String NEW_DESCRIPTION = "New Description";
 

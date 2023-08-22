@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.8.3</version>
+            <version>4.11.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -51,16 +51,16 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.RedRoverCommunity.MercuryIT</groupId>
-            <artifactId>mercuryit-core</artifactId>
-            <version>${mercury.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.RedRoverCommunity.MercuryIT</groupId>
-            <artifactId>mercuryit-http</artifactId>
-            <version>${mercury.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.RedRoverCommunity.MercuryIT</groupId>-->
+<!--            <artifactId>mercuryit-core</artifactId>-->
+<!--            <version>${mercury.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.RedRoverCommunity.MercuryIT</groupId>-->
+<!--            <artifactId>mercuryit-http</artifactId>-->
+<!--            <version>${mercury.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>io.cucumber</groupId>

@@ -71,7 +71,7 @@ public final class ProjectUtils {
             }
         }
 
-        WebDriverManager.chromedriver().setup();
+       // WebDriverManager.chromedriver().setup();
     }
 
     static boolean isServerRun() {

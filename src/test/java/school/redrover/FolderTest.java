@@ -21,8 +21,8 @@ import java.util.*;
 
 public class FolderTest extends BaseTest {
 
-    private static final String NAME = "FolderName";
-    private static final String RENAME = "Folder";
+    private  final String NAME = initName();
+    private  final String RENAME = initName();
     private static final String DESCRIPTION = "Created new folder";
     private static final String DESCRIPTION_2 = "Created new Description";
     private static final String DISPLAY_NAME = "NewFolder";

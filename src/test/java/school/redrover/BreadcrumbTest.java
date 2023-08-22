@@ -38,7 +38,7 @@ import java.util.function.Function;
 
 public class BreadcrumbTest extends BaseTest {
 
-    private static final String PROJECT_NAME = "JOB";
+    private final String PROJECT_NAME = initName();
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
