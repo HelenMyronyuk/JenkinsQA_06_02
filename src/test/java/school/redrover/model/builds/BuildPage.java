@@ -39,7 +39,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     @FindBy(xpath = "//button[@formnovalidate]")
     private WebElement keepBuildForeverButton;
 
-    @FindBy (css = "a[href = 'aggregatedTestReport/']")
+    @FindBy(css = "a[href = 'aggregatedTestReport/']")
     private WebElement aggregatedTestResultLink;
 
     @FindBy(css = "#main-panel table tr:last-child td:last-child")
@@ -90,7 +90,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Click Changes on the side bar menu")
-    public ChangesBuildPage clickChangesBuildFromSideMenu(){
+    public ChangesBuildPage clickChangesBuildFromSideMenu() {
         changesPageButton.click();
 
         return new ChangesBuildPage(getDriver());
@@ -104,7 +104,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Click Pipeline Steps on the side bar menu")
-    public PipelineStepsPage clickPipelineStepsFromSideMenu(){
+    public PipelineStepsPage clickPipelineStepsFromSideMenu() {
         pipelineSteps.click();
 
         return new PipelineStepsPage(getDriver());
@@ -183,7 +183,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Click Replay option from the build drop-down menu")
-    public <JobTypePage extends BasePage<?, ?>> ReplayPage<JobTypePage> clickReplay(JobTypePage jobTypePage){
+    public <JobTypePage extends BasePage<?, ?>> ReplayPage<JobTypePage> clickReplay(JobTypePage jobTypePage) {
         replayButton.click();
 
         return new ReplayPage<>(jobTypePage);
@@ -196,4 +196,11 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
 
         return pageToReturn;
     }
+
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionsFromSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href, '" + sideMenuLink + "')]"))).click();
+
+        return pageToReturn;
+    }
+
 }

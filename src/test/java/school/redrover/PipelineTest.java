@@ -635,20 +635,19 @@ public class PipelineTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Feature("UI")
-    @Description("Verification of possibility to console output for Pipeline project from BuildPage")
+    @Feature("Function")
+    @Description("Verification of possibility to edit build information for Pipeline project from ProjectPage")
     @Test
-    public void testConsoleOutputFromBuildPage() {
+    public void testEditBuildInformationFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        boolean consoleOutputTitleDisplayed = new MainPage(getDriver())
+        String titleEditBuildPage = new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickLastBuildLink()
-                .clickConsoleOutput()
-                .isDisplayedBuildTitle();
+                .clickEditBuildInformFromProjectPage()
+                .getHeaderText();
 
-        Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
+        Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -665,23 +664,6 @@ public class PipelineTest extends BaseTest {
                 .getHeaderText();
 
         Assert.assertEquals(textPageFromBreadcrumb, "Edit Build Information");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information for Pipeline project from BuildPage")
-    @Test
-    public void testEditBuildInformationFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String testPageFromBreadcrumb = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickLastBuildLink()
-                .clickEditBuildInformation()
-                .getHeaderText();
-
-        Assert.assertEquals(testPageFromBreadcrumb, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -817,21 +799,18 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to replay build  for Pipeline project from BuildPage")
+    @Description("Verification of possibility to step build for Pipeline project from ProjectPage")
     @Test
-    public void testReplayBuildFromBuildPage() {
+    public void testPipelineStepsBuildFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        String lastBuildNumber = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
+        String pipelineSteps = new MainPage(getDriver())
                 .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickLastBuildLink()
-                .clickReplay(new PipelinePage(getDriver()))
-                .clickRunButton()
-                .refreshPage()
-                .getLastBuildNumber();
+                .clickBuildNowFromSideMenu()
+                .clickPipelineStepsFromBuildDropDownFromSideMenu()
+                .getTitlePipelineFromBreadcrumb();
 
-        Assert.assertEquals(lastBuildNumber, "#2");
+        Assert.assertEquals(pipelineSteps, "Pipeline Steps");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -855,19 +834,21 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to step build for Pipeline project from BuildPage")
+    @Description("Verification of presence workspaces for Pipeline project from ProjectPage")
     @Test
-    public void testPipelineStepsBuildFromBuildPage() {
+    public void testWorkspacesBuildFromProjectPage() {
+        final String pageHeaderText = "Workspaces for " + NAME + " #1";
+
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        String textFromStepsBuild = new MainPage(getDriver())
+        String actualPageHeaderText = new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickLastBuildLink()
-                .clickPipelineStepsFromSideMenu()
-                .getTitlePipelineFromBreadcrumb();
+                .openBuildsDropDownMenu()
+                .clickWorkspaceButtonFromBuildDropDown()
+                .getHeaderTextFromWorkspacesBuildPage();
 
-        Assert.assertEquals(textFromStepsBuild, "Pipeline Steps");
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1453,5 +1434,40 @@ public class PipelineTest extends BaseTest {
                 .getWelcomeText();
 
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
+    }
+
+    @DataProvider(name = "buildSideMenuOptions")
+    public Object[][] buildSideMenuOptions() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "console", "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "configure", "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "confirmDelete", "Confirm deletion"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ReplayPage::new, "replay", "Replay"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PipelineStepsPage::new, "flowGraphTable", "Pipeline Steps"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacesBuildPage::new, "ws", "Workspaces"},
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification of navigation to options page for Pipeline project from build side menu")
+    @Test(dataProvider = "buildSideMenuOptions")
+    public void testNavigateToOptionsFromBuildSide(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink, String expectedPageHeader) {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new PipelinePage(getDriver()))
+                .clickLastBuildLink()
+                .clickOptionsFromSideMenu(pageFromSideMenu.apply(getDriver()), sideMenuLink);
+
+        if (sideMenuLink.equals("changes") || sideMenuLink.equals("console")) {
+            String pageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
+            Assert.assertEquals(pageHeader, expectedPageHeader);
+        } else {
+            String breadcrumbHeader = pageFromSideMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertEquals(breadcrumbHeader, expectedPageHeader);
+        }
     }
 }
