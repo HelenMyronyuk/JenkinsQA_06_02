@@ -98,7 +98,7 @@
                     </suiteXmlFiles>
 
                     <parallel>classes</parallel>
-                    <threadCount>2</threadCount>
+                    <threadCount>4</threadCount>
 
                 </configuration>
                 <dependencies>
