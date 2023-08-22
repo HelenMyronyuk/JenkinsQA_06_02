@@ -1,1 +1,0 @@
-http://localhost:8083/job/Pipeline%20Project/

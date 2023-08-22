@@ -1,1 +1,0 @@
-http://localhost:8080/job/Freestyle7rDQCwf/,http://localhost:8080/job/MultiConfigurationx4Q0Df8/,http://localhost:8080/job/PipelineHfsaeJS/

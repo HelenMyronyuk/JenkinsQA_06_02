@@ -1,1 +1,0 @@
-http://localhost:8081/job/FREESTYLE_NAME/,http://localhost:8081/job/NEW_FREESTYLE_NAME/
