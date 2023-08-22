@@ -127,10 +127,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click on 'Changes' from left side menu")
-    public ChangesPage<Self> clickChangeOnLeftSideMenu() {
+    public ChangesPage clickChangeOnLeftSideMenu() {
         getWait10().until(ExpectedConditions.visibilityOf(changesButton)).click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Click 'Delete' and 'Accept'")
@@ -265,11 +265,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click 'Changes' from the build drop-down menu")
-    public ChangesPage<Self> clickChangesFromDropDownMenu() {
+    public ChangesPage clickChangesFromDropDownMenu() {
         openBuildsDropDownMenu();
         changesButtonDropDownMenu.click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Open a last build drop-down menu")
@@ -281,11 +281,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click 'Changes' from the last build drop-down menu")
-    public ChangesPage<Self> clickChangesViaLastBuildDropDownMenu() {
+    public ChangesPage clickChangesViaLastBuildDropDownMenu() {
         openLastBuildDropDownMenu();
         changesFromLastBuild.click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Click 'Workspace' from the side menu")

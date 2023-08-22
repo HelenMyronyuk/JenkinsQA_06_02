@@ -390,7 +390,7 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<>(new MultiConfigurationProjectPage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -653,7 +653,7 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] pipeDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<>(new PipelinePage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new PipelineConfigPage(new PipelinePage(driver)), "Configure", "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -826,7 +826,7 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] FreestyleDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
