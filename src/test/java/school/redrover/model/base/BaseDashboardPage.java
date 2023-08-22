@@ -46,7 +46,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
 
     @Step("Click 'New Item', 'People', 'Build History', 'Manage Jenkins', 'My Views' on the side menu")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionFromSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='" + sideMenuLink + "']"))).click();
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href, '"+sideMenuLink+"')]"))).click();
 
         return pageToReturn;
     }

@@ -5,14 +5,15 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
-import school.redrover.model.builds.BuildPage;
-import school.redrover.model.builds.BuildWithParametersPage;
-import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.builds.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.runner.BaseTest;
@@ -20,6 +21,7 @@ import school.redrover.runner.TestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class FreestyleProjectTest extends BaseTest {
 
@@ -500,21 +502,37 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @DataProvider(name = "buildDropDownMenu")
+    public Object[][] getDropDownMenu() {
+        return new Object[][] {
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+        };
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to build changes for Freestyle project from ProjectPage")
-    @Test
-    public void testBuildChangesFromProjectPage() {
-        final String heading = "Changes";
+    @Test(dataProvider = "buildDropDownMenu")
+    public void testNavigateToOptionsFromProjectPage(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage ) {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        String changesTitle = new MainPage(getDriver())
+        new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickChangesBuildFromProjectPage()
-                .getHeading();
+                .openBuildsDropDownMenu()
+                .clickBuildsOptionFromDropDownMenu(pageFromDropDown.apply(getDriver()), optionsName);
 
-        Assert.assertEquals(changesTitle, heading);
+        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
+        } else {
+            String breadcrumbHeader = pageFromDropDown.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
+        }
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -565,23 +583,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .isDisplayedBuildTitle();
 
         Assert.assertTrue(consoleOutputTitle, "Console Output Title is not displayed!");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to make console output from Freestyle Project Page")
-    @Test
-    public void testConsoleOutputFromProjectPage() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        boolean consoleOutput = new MainPage(getDriver())
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .openBuildsDropDownMenu()
-                .clickConsoleOutputType()
-                .isDisplayedBuildTitle();
-
-        Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -643,22 +644,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeaderText();
 
         Assert.assertEquals(getTitle, "Edit Build Information");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information from Freestyle Project Page")
-    @Test
-    public void testEditBuildInformationFromProjectPage() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        String titleEditBuildPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_NAME)
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickEditBuildInformFromProjectPage()
-                .getHeaderText();
-
-        Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -770,24 +755,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .clickBuildDropdownMenuDeleteBuild("#1")
                 .clickDelete(new FreestyleProjectPage(getDriver()))
-                .isNoBuildsDisplayed();
-
-        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of possibility to delete build for Freestyle project from side menu")
-    @Test
-    public void testDeleteBuildNowFromSideMenu() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        boolean noBuildsMessage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_NAME)
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickLastBuildLink()
-                .clickDeleteBuild(new FreestyleProjectPage(getDriver()))
-                .clickYesButton()
                 .isNoBuildsDisplayed();
 
         Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");

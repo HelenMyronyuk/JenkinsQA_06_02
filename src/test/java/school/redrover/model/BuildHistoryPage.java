@@ -145,6 +145,11 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
         return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).getText().contains("default");
     }
 
+    @Step("Verify that build bubble pop up has job name from header text")
+    public boolean isBuildPopUpHeaderTextDisplayed(String jobName) {
+        return getWait10().until(ExpectedConditions.visibilityOf(buildBubblePopUp)).getText().contains(jobName);
+    }
+
     @Step("Verify that build bubble pop up is displayed from timeline")
     public boolean isBuildPopUpInvisible() {
         return getWait5().until(ExpectedConditions.invisibilityOf(buildBubblePopUp));
