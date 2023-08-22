@@ -3,7 +3,6 @@ package school.redrover.model;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -14,10 +13,10 @@ import java.util.List;
 
 public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
 
-    @FindBy(xpath = "//div[text()='SMTP server']/following-sibling::div/input")
+    @FindBy(xpath = "(//div[text()='SMTP server']/following-sibling::div/input)[1]")
     private WebElement smtpServerFieldExtendedEmailNotifications;
 
-    @FindBy(xpath = "//div[text()='SMTP Port']/following-sibling::div/input")
+    @FindBy(xpath = "(//div[text()='SMTP Port']/following-sibling::div/input)[1]")
     private WebElement smtpPortFieldExtendedEmailNotifications;
 
     @FindBy(xpath = "//div[@class='setting-main help-sibling']//button[contains(@class, 'advancedButton')]")
@@ -201,7 +200,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Check 'Always' checkbox under Default Triggers section")
+    @Step("Check 'Always' checkbox under 'Default Triggers' section")
     public ConfigureSystemPage checkAlwaysDefaultTriggers() {
         for (WebElement trigger : defaultTriggersList) {
             if (trigger.getText().equals("Always")) {
@@ -212,7 +211,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Check 'Success' checkbox under Default Triggers section")
+    @Step("Check 'Success' checkbox under 'Default Triggers' section")
     public ConfigureSystemPage checkSuccessDefaultTriggers() {
         for (WebElement trigger : defaultTriggersList) {
             if (trigger.getText().equals("Success")) {
@@ -246,7 +245,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Enter a user name and password for 'SMTP Authentication'")
+    @Step("Enter a user name and password for 'Use SMTP Authentication'")
     public ConfigureSystemPage inputUserNameAndPasswordSMTPAuthentication(String username, String password) {
         getWait5().until(ExpectedConditions.visibilityOf(userNameSMTPAuthentication)).sendKeys(username);
         passwordSMTPAuthentication.sendKeys(password);
@@ -262,7 +261,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Enter a port number into 'SMTP Port' under 'Email Notifications' section")
+    @Step("Enter a port number into 'SMTP Port' under Advanced 'Email Notifications' section")
     public ConfigureSystemPage inputSmtpPortEmailNotificationsField(String port) {
         smtpPortFieldEmailNotifications.clear();
         smtpPortFieldEmailNotifications.sendKeys(port);
@@ -316,7 +315,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Uncheck 'Default Trigger Always' checkbox")
+    @Step("Uncheck 'Always' checkbox from 'Default Triggers' section")
     public ConfigureSystemPage unCheckDefaultTriggerAlwaysCheckbox() {
         if (defaultTriggerAlwaysVerification.isSelected()) {
             defaultTriggerAlwaysCheckbox.click();
@@ -325,7 +324,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Uncheck 'Default Trigger Success' checkbox")
+    @Step("Uncheck 'Success' checkbox from 'Default Triggers' section")
     public ConfigureSystemPage unCheckDefaultTriggerSuccessCheckbox() {
         if (defaultTriggerSuccessVerification.isSelected()) {
             defaultTriggerSuccessCheckbox.click();
@@ -334,7 +333,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Uncheck 'SMTP Authentication' checkbox")
+    @Step("Uncheck 'Use SMTP Authentication' checkbox from Advanced 'Email Notifications' section")
     public ConfigureSystemPage unCheckSMTPAuthenticationCheckbox() {
         if (useSMTPAuthenticationVerification.isSelected()) {
             useSMTPAuthenticationCheckbox.click();
@@ -343,7 +342,7 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Uncheck 'Use SSL' checkbox under 'Email Notifications' section")
+    @Step("Uncheck 'Use SSL' checkbox under Advanced 'Email Notifications' section")
     public ConfigureSystemPage unCheckUseSSLCheckboxEmailNotifications() {
         if (useSSLEmailCheckboxVerification.isSelected()) {
             useSSLEmailNotificationsCheckbox.click();
@@ -352,9 +351,9 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return this;
     }
 
-    @Step("Verifying that 'SMTP Port' field is displayed")
+    @Step("Verifying that 'SMTP Server' field from 'Extended Email Notifications' section is empty")
     public boolean isSmtpServerFieldExtendedEmailNotificationsEmpty() {
-        return smtpPortFieldExtendedEmailNotifications.getText().isEmpty();
+        return smtpServerFieldExtendedEmailNotifications.getText().isEmpty();
     }
 
     @Step("Verifying that 'SMTP Port' field under 'Extended Email Notifications' section is back to original")
@@ -367,12 +366,12 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return useSSLCheckboxExtendedEmailVerification.isSelected();
     }
 
-    @Step("Verifying that 'Triggers Always' is checked")
+    @Step("Verifying that 'Always' checkbox from 'Default Triggers' is checked")
     public boolean isTriggersAlwaysChecked() {
         return defaultTriggerAlwaysVerification.isSelected();
     }
 
-    @Step("Verifying that 'SMTP Port' field is displayed")
+    @Step("Verifying that 'Success' checkbox from 'Default Triggers' is checked")
     public boolean isTriggersSuccessChecked() {
         return defaultTriggerSuccessVerification.isSelected();
     }
@@ -382,17 +381,17 @@ public class ConfigureSystemPage extends BaseSubmenuPage<ConfigureSystemPage> {
         return smtpServerFieldEmailNotifications.getText().isEmpty();
     }
 
-    @Step("Verifying that 'SMTP Authentication' checkbox is checked")
+    @Step("Verifying that 'Use SMTP Authentication' checkbox from Advanced 'Email Notifications' section is checked")
     public boolean isUseSMTPAuthenticationCheckboxChecked() {
         return useSMTPAuthenticationVerification.isSelected();
     }
 
-    @Step("Verifying that 'Use SSL' checkbox under 'Email Notifications' section is checked")
+    @Step("Verifying that 'Use SSL' checkbox under Advanced 'Email Notifications' section is checked")
     public boolean isUseSSLCheckboxEmailNotificationsChecked() {
         return useSSLEmailCheckboxVerification.isSelected();
     }
 
-    @Step("Verifying that 'SMTP Port' field under 'Email Notifications' section is back to original")
+    @Step("Verifying that 'SMTP Port' field under Advanced 'Email Notifications' section is back to original")
     public boolean isSmtpPortFieldEmailNotificationsBackToOriginal() {
         return smtpPortFieldEmailNotifications.getAttribute("value").equals("25");
     }
