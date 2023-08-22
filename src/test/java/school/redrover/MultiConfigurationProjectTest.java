@@ -524,56 +524,38 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full text of the breadcrumb does not contain the last build number" );
     }
 
-    @DataProvider(name = "buildSubMenu")
-    public Object[][] getBuildSubmenu() {
-        return new Object[][]{
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"}
+    @DataProvider(name = "buildSideMenu")
+    public Object[][] getBuildSideMenu() {
+        return new Object[][] {
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
         };
     }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification that a user is able to navigate to the MultiConfiguration Project Build pages from the build drop-down")
-    @Test(dataProvider = "buildSubMenu")
+    @Test(dataProvider = "buildSideMenu")
     public void testNavigateToOptionsFromBuildPage(
-            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
-
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage ) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-        String actualResult = "";
 
-        BaseSubmenuPage submenuPage  = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
+        new MainPage(getDriver())
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .refreshPage()
                 .clickLastBuildLink()
-                .getBuildDropdownMenu()
-                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
+                .clickBuildOptionFromSideMenu(pageFromSideMenu.apply(getDriver()), optionsName);
 
-        if ("configure".equals(pageFromSubMenuConstructor.apply(getDriver()).callByMenuItemName())) {
-            actualResult = submenuPage.getTextEditBuildInformFromBreadCrumb();
+        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+            String actualPageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
-            actualResult = submenuPage.getHeading();
+            String breadcrumbHeader = pageFromSideMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
         }
-        Assert.assertTrue(actualResult.contains(expectedResult));
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification that a user is able to navigate to 'Delete' Build page from the build drop-down")
-    @Test
-    public void testNavigateToDeleteBuildFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        boolean deleteBuildPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickLastBuildLink()
-                .getBuildDropdownMenu()
-                .selectDeleteOptionFromBuildDropDownList(new MultiConfigurationProjectPage(getDriver()))
-                .isDeleteButtonDisplayed();
-
-        Assert.assertTrue(deleteBuildPage, "Test is not navigate to delete build from MultiConfigurationProject build page");
     }
 
     @Severity(SeverityLevel.NORMAL)

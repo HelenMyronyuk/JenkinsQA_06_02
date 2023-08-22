@@ -188,4 +188,12 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
 
         return new ReplayPage<>(jobTypePage);
     }
+
+    @Step("Select an option from the build side menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildOptionFromSideMenu(ReturnedPage pageToReturn, String sideMenuOption) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//span[contains(text(),'" + sideMenuOption + "')]/.."))).click();
+
+        return pageToReturn;
+    }
 }
