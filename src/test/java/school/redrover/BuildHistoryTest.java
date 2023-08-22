@@ -140,6 +140,24 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verify the ability to close the bubble pop up of Default MultiConfiguration from Timeline")
+    @Test
+    public void testCloseDefaultMultiConfigurationPopOpFromTimeline() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,
+                true);
+
+        boolean isBubblePopUpClosed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .closeProjectWindowButtonInTimeline()
+                .isBuildPopUpInvisible();
+
+        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window is not closed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
     @Ignore
