@@ -13,7 +13,6 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
-import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
@@ -32,6 +31,16 @@ public class MultiConfigurationProjectTest extends BaseTest {
     private static final String NEW_NAME = "MULTI_CONFIGURATION_NEW_NAME";
     private static final String DESCRIPTION = "Description";
     private static final String NEW_DESCRIPTION = "New Description";
+
+    @DataProvider(name = "buildMenu")
+    public Object[][] getBuildMenu() {
+        return new Object[][] {
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+        };
+    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
@@ -467,18 +476,35 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to build changes from last build of MultiConfiguration project")
-    @Test
-    public void testBuildChangesFromLastBuild() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+    @Description("Verification of possibility to navigate to the options from the last build drop-down menu of MultiConfiguration project")
+    @Test(dataProvider = "buildMenu")
+    public void testNavigateToOptionsFromLastBuild(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage ) {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        boolean isTextContains = new MultiConfigurationProjectPage(getDriver())
-                .clickBuildNowFromSideMenu()
-                .clickChangesViaLastBuildDropDownMenu()
-                .getTextOfPage()
-                .contains("No changes.");
+        String lastBuildNumber = new MainPage(getDriver())
+                .clickBuildByGreenArrow(NAME)
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .refreshPage()
+                .getLastBuildNumber();
 
-        Assert.assertTrue(isTextContains, "The text from Changes page of the build does not contain 'No changes.'");
+        new MultiConfigurationProjectPage(getDriver())
+                .refreshPage()
+                .clickLastBuildLink()
+                .clickBuildOptionFromSideMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        String breadcrumb = pageFromDropDown.apply(getDriver())
+                .getBreadcrumb()
+                .getFullBreadcrumbText();
+
+        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
+        } else {
+            String breadcrumbHeader = pageFromDropDown.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
+        }
+        Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full text of the breadcrumb does not contain the last build number" );
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -500,44 +526,8 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to make console output from last build of MultiConfiguration project")
-    @Test
-    public void testConsoleOutputFromLastBuild() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        MultiConfigurationProjectPage multiConfigJob = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()));
-
-        String lastBuildNumber = multiConfigJob
-                .getLastBuildNumber();
-
-        ConsoleOutputPage consoleOutput = multiConfigJob
-                .clickLastBuildLink()
-                .clickConsoleOutput();
-
-        String breadcrumb = consoleOutput
-                .getBreadcrumb()
-                .getFullBreadcrumbText();
-
-        Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
-        Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full text of the breadcrumb does not contain the last build number" );
-    }
-
-    @DataProvider(name = "buildSideMenu")
-    public Object[][] getBuildSideMenu() {
-        return new Object[][] {
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
-        };
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification that a user is able to navigate to the MultiConfiguration Project Build pages from the build drop-down")
-    @Test(dataProvider = "buildSideMenu")
+    @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromBuildPage(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage ) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -572,22 +562,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getHeaderText();
 
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information from last build of MultiConfiguration Project")
-    @Test
-    public void testEditBuildInformationFromLastBuild() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String editBuildInformPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .editBuildInfoPermalinksLastBuildDropDown()
-                .getTextEditBuildInformFromBreadCrumb();
-
-        Assert.assertEquals(editBuildInformPage, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
