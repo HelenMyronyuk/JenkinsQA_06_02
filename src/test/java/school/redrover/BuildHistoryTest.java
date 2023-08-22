@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -220,5 +221,41 @@ public class BuildHistoryTest extends BaseTest {
                 .isDisplayedBuildPageHeaderText();
 
         Assert.assertTrue(buildPageHeader, "Wrong page");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to close the bubble pop up of MultiConfiguration project build from timeline")
+    @Ignore
+    @Test
+    public void testCloseBuildPopUpOfMultiConfiguration() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        boolean isBubblePopUpClosed =  new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .closeProjectWindowButtonInTimeline()
+                .isBuildPopUpInvisible();
+
+        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @io.qameta.allure.Description("Verify that build bubble to Pipeline project is present on Time line on Build History page")
+    @Test
+    public void testOpenDefaultBuildPopUpOfPipeline() {
+        TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, false);
+
+        boolean isBuildPopUpDisplayed = new PipelinePage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(PIPELINE_PROJECT_NAME)
+                .isBuildPopUpHeaderTextDisplayed(PIPELINE_PROJECT_NAME);
+
+        Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
     }
 }
