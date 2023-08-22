@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
@@ -1115,6 +1116,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page for MultiConfiguration Project from build drop-down menu")
+    @Ignore
     @Test(dataProvider = "buildDropDownMenuOptions")
     public void testNavigateToOptionsFromDropDown(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);

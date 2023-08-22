@@ -125,6 +125,10 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Click last default build bubble on the Timeline")
     public BuildHistoryPage clickDefaultBuildBubbleFromTimeline() {
+        new Actions(getDriver())
+                .pause(3500)
+                .perform();
+        getDriver().navigate().refresh();
         getWait10().until(ExpectedConditions.elementToBeClickable(lastDefaultBuildBubbleLinkFromTimeline)).click();
 
         return new BuildHistoryPage(getDriver());
