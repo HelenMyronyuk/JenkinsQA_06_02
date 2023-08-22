@@ -38,7 +38,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
@@ -56,7 +56,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(multibranchName, "Error! Job Is Not Displayed");
+        Assert.assertTrue(multibranchName, "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -73,7 +73,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
+        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -89,7 +89,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
+        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -107,7 +107,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Error: the Multibranch Project's name is not displayed on Dashboard");
+        Assert.assertTrue(jobIsDisplayed, "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -124,9 +124,9 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the Multibranch Project's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -143,7 +143,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the folder name is not displayed");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -176,7 +176,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .enterItemName(character)
                 .selectJobType(TestUtils.JobType.MultibranchPipeline);
 
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
@@ -249,7 +249,7 @@ public class MultibranchPipelineTest extends BaseTest {
         boolean jobIsPresent = new MainPage(getDriver())
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsPresent);
+        Assert.assertTrue(jobIsPresent, "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -541,7 +541,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .isMetadataFolderIconDisplayed();
 
         Assert.assertEquals(disableButton, "Disable Multibranch Pipeline");
-        Assert.assertTrue(iconMultibranch, "the displayеd icon Multibranch pipeline exists");
+        Assert.assertTrue(iconMultibranch, "The Metadata Folder Icon is not displayed on Multibranch Pipeline's page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -587,7 +587,8 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickDisable()
                 .clickSaveButton()
                 .getTextFromDisableMessage();
-        Assert.assertTrue(actualDisableMessage.contains("This Multibranch Pipeline is currently disabled"));
+        Assert.assertTrue(actualDisableMessage.contains("This Multibranch Pipeline is currently disabled"),
+                "The info message of the disabled Multibranch Pipeline does not contain 'This Multibranch Pipeline is currently disabled'");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -663,7 +664,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickSaveButton();
 
         Assert.assertEquals(multibranchPipelinePage.getJobName(), multibranchPipelineDisplayName);
-        Assert.assertTrue(multibranchPipelinePage.isMetadataFolderIconDisplayed(), "error was not shown Metadata Folder icon");
+        Assert.assertTrue(multibranchPipelinePage.isMetadataFolderIconDisplayed(), "The Metadata Folder Icon is not displayed on MultibranchPipeline page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -719,7 +720,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickSaveButton()
                 .isDefaultIconDisplayed();
 
-        Assert.assertTrue(defaultIconDisplayed, "error was not shown default icon");
+        Assert.assertTrue(defaultIconDisplayed, "The default Icon is not displayed on MultibranchPipeline page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -738,7 +739,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickHealthMetrics()
                 .healthMetricIsVisible();
 
-        Assert.assertTrue(healthMetricIsVisible, "error was not shown Health Metrics");
+        Assert.assertTrue(healthMetricIsVisible, "Health Metric is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -761,7 +762,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickHealthMetrics()
                 .isHealthMetricInvisible();
 
-        Assert.assertTrue(healthMetric, "the deleted metric is no longer visible");
+        Assert.assertTrue(healthMetric, "The deleted Health Metric is visible");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -797,7 +798,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
+        Assert.assertTrue(isJobDisplayed, "The Multibranch Pipeline`s name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -814,7 +815,7 @@ public class MultibranchPipelineTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(isJobDisplayed, "Multibranch Pipeline`s name is not displayed");
+        Assert.assertTrue(isJobDisplayed, "The Multibranch Pipeline`s name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)

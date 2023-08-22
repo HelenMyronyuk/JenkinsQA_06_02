@@ -42,7 +42,7 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .isUserExist(USER_NAME);
 
-        Assert.assertTrue(newUser);
+        Assert.assertTrue(newUser, "The user is not created");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -274,7 +274,7 @@ public class UsersTest extends BaseTest {
                 .clickPeopleFromSideMenu()
                 .checkIfUserWasDeleted(newUserName);
 
-        Assert.assertTrue(isUserDeleted);
+        Assert.assertTrue(isUserDeleted, "The user is not deleted");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -291,7 +291,7 @@ public class UsersTest extends BaseTest {
                 .clickYesButton()
                 .isUserExist(USER_NAME);
 
-        Assert.assertFalse(userNotFound);
+        Assert.assertFalse(userNotFound, "Failed to delete user: the user is still listed in Users ID list on the Users page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -369,7 +369,7 @@ public class UsersTest extends BaseTest {
                 .enterSignIn(new MainPage(getDriver()));
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
 
-        Assert.assertTrue(actualResult.jobIsDisplayed(PROJECT_NAME), "true");
+        Assert.assertTrue(actualResult.jobIsDisplayed(PROJECT_NAME), "The user with an existing account could not log in using this account data");
     }
 
     @DataProvider(name = "invalid data for user login")
@@ -425,7 +425,7 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .isUserExist(USER_NAME);
 
-        Assert.assertTrue(actualResultFindUserID, "true");
+        Assert.assertTrue(actualResultFindUserID, "The user is not exist on the ManageUsers page");
     }
 
     @Severity(SeverityLevel.NORMAL)

@@ -40,7 +40,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
         Assert.assertEquals(mainPage.getJobName(ORGANIZATION_FOLDER_NAME), ORGANIZATION_FOLDER_NAME);
     }
 
@@ -54,7 +54,7 @@ public class OrganizationFolderTest extends BaseTest {
         boolean actualNewFolderName = new MainPage(getDriver())
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME);
 
-        Assert.assertTrue(actualNewFolderName, "error was not show name folder");
+        Assert.assertTrue(actualNewFolderName, "The Organization Folder's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -71,7 +71,8 @@ public class OrganizationFolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME));
+        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME),
+                "The Organization Folder's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -89,7 +90,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME);
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage, "Error: the Organization Folder name is not displayed on Dashboard");
+        Assert.assertTrue(newProjectFromBuildHistoryPage, "The Organization Folder's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -108,7 +109,8 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickDashboardButton()
                 .getJobList();
 
-        Assert.assertTrue(organizationFolderName.contains(ORGANIZATION_FOLDER_NAME));
+        Assert.assertTrue(organizationFolderName.contains(ORGANIZATION_FOLDER_NAME),
+                "The list of jobs from the Home page's Dashboard does not contain the Organization Folder's name");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -132,7 +134,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .jobIsDisplayed(newOrganizationFolderName);
 
         Assert.assertEquals(newOrganizationFolderName, ORGANIZATION_FOLDER_NAME);
-        Assert.assertTrue(newOrganizationFolderNameIsDisplayed);
+        Assert.assertTrue(newOrganizationFolderNameIsDisplayed, "The Organization Folder's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -149,9 +151,9 @@ public class OrganizationFolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(mainPage.jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "The Organization Folder's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(mainPage.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "Error: the Organization Folder's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(ORGANIZATION_FOLDER_NAME), "The Organization Folder's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -508,7 +510,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .isMetadataFolderIconDisplayed();
 
         Assert.assertEquals(disableButton, "Disable Organization Folder");
-        Assert.assertTrue(iconOrgFolder, "the dispayеd icon OrganizationFolder exists");
+        Assert.assertTrue(iconOrgFolder, "The Metadata Folder Icon is not displayed on OrganizationFolder page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -555,7 +557,8 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickSaveButton()
                 .getTextFromDisableMessage();
 
-        Assert.assertTrue(disabledText.contains("This Organization Folder is currently disabled"));
+        Assert.assertTrue(disabledText.contains("This Organization Folder is currently disabled"),
+                "The info message of the disabled Organization Folder does not contain 'This Organization Folder is currently disabled'");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -770,7 +773,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME);
 
-        Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
+        Assert.assertTrue(isOrganisationFolderDisplayed, "The Organization Folder`s name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -787,7 +790,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(ORGANIZATION_FOLDER_NAME);
 
-        Assert.assertTrue(isOrganisationFolderDisplayed, "Organisation Folder`s name is not displayed");
+        Assert.assertTrue(isOrganisationFolderDisplayed, "The Organization Folder`s name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -803,7 +806,7 @@ public class OrganizationFolderTest extends BaseTest {
                 .clickYesButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeToJenkinsIsDisplayed, "error, Welcome to Jenkins! is not displayed");
+        Assert.assertTrue(welcomeToJenkinsIsDisplayed, "'Welcome to Jenkins!' text is not displayed");
     }
 
     @Severity(SeverityLevel.CRITICAL)

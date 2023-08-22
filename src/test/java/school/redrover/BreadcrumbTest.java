@@ -219,7 +219,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -249,7 +249,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -281,7 +281,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -296,7 +296,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -390,7 +390,7 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<>(new MultiConfigurationProjectPage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -438,7 +438,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(lastBuild, "Error! No builds message is not display");
+        Assert.assertTrue(lastBuild, "'No builds' message is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -646,14 +646,14 @@ public class BreadcrumbTest extends BaseTest {
                 .clickJobNameFromBreadcrumb(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(deleteSubmenuPage, "Error");
+        Assert.assertTrue(deleteSubmenuPage, "'No builds' message is not displayed");
     }
 
     @DataProvider(name = "pipesubmenu")
     public Object[][] pipeDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<>(new PipelinePage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new PipelineConfigPage(new PipelinePage(driver)), "Configure", "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -826,7 +826,7 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] FreestyleDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)

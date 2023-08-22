@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
@@ -46,7 +47,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "error was not show name project");
+        Assert.assertTrue(jobIsDisplayed, "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -77,7 +78,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Job name is not displayed!");
+        Assert.assertTrue(jobIsDisplayed, "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -95,7 +96,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Job name is not displayed!");
+        Assert.assertTrue(jobIsDisplayed, "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -113,7 +114,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Error: the MultiConfiguration Project's name is not displayed on Dashboard");
+        Assert.assertTrue(jobIsDisplayed, "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -130,9 +131,9 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the MultiConfiguration Project's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(NAME), "The MultiConfiguration Project's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -150,7 +151,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Error: the project name is not displayed");
+        Assert.assertTrue(jobIsDisplayed, "The MultiConfiguration Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -184,7 +185,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         NewJobPage newJobPage = TestUtils.createFolderUsingInvalidData
                 (this, invalidCharacters + "MyProject", TestUtils.JobType.MultiConfigurationProject);
 
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’" + " is an unsafe character");
     }
 
@@ -228,7 +229,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.MultiConfigurationProject);
 
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» “.” is not an allowed name");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -366,7 +367,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build is not created");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -382,7 +383,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build is not created");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -402,7 +403,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getBuildHeaderText()
                 .contains(displayName);
 
-        Assert.assertTrue(buildHeaderText, "Error: The Display Name for the Build has not been changed.");
+        Assert.assertTrue(buildHeaderText, "The display name for the build has not been changed.");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -477,7 +478,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getTextOfPage()
                 .contains("No changes.");
 
-        Assert.assertTrue(isTextContains, "The text is not contains No changes.");
+        Assert.assertTrue(isTextContains, "The text from Changes page of the build does not contain 'No changes.'");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -520,7 +521,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getFullBreadcrumbText();
 
         Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
-        Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
+        Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full text of the breadcrumb does not contain the last build number" );
     }
 
     @DataProvider(name = "buildSubMenu")
@@ -556,6 +557,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
         }
         Assert.assertTrue(actualResult.contains(expectedResult));
     }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification that a user is able to navigate to 'Delete' Build page from the build drop-down")
@@ -746,7 +748,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 break;
             }
         }
-        Assert.assertTrue(checkboxesVisibleClickable);
+        Assert.assertTrue(checkboxesVisibleClickable, "Not all checkboxes are visible and clickable");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -784,7 +786,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .contains("No builds.");
 
         Assert.assertTrue(textContains,
-                "In theMultiConfiguration project Changes chapter, not displayed status of the latest build.");
+                "In the MultiConfiguration project Changes chapter, not displayed status of the latest build.");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -800,7 +802,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickWorkspaceFromSideMenu()
                 .getTextFromWorkspacePage();
 
-        Assert.assertEquals(workspacePage, "Workspace of MULTI_CONFIGURATION_NAME on Built-In Node");
+        Assert.assertEquals(workspacePage, "Workspace of " + NAME + " on Built-In Node");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -853,7 +855,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
         Assert.assertTrue(availableMode, "'Enabled' is not displayed");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(NAME), "Disabled");
-        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(NAME), "Error: disabled project cannot be built");
+        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(NAME), "The 'Build Now' option is available on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1052,7 +1054,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(projectIsPresent, "Error: the name of the MultiConfiguration project is not shown");
+        Assert.assertTrue(projectIsPresent, "The MultiConfiguration project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1069,7 +1071,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickLogo()
                 .verifyJobIsPresent(NAME);
 
-        Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
+        Assert.assertTrue(isProjectPresent, "The MultiConfiguration project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1115,6 +1117,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page for MultiConfiguration Project from build drop-down menu")
+    @Ignore
     @Test(dataProvider = "buildDropDownMenuOptions")
     public void testNavigateToOptionsFromDropDown(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);

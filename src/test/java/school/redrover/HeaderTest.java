@@ -44,8 +44,8 @@ public class HeaderTest extends BaseTest {
                 .getHeader()
                 .isDisplayedLogoText();
 
-        Assert.assertTrue(logoIcon);
-        Assert.assertTrue(logoText);
+        Assert.assertTrue(logoIcon, "The Logo icon is not displayed");
+        Assert.assertTrue(logoText, "The Logo text is not displayed");
     }
 
     @Severity(SeverityLevel.MINOR)
@@ -66,8 +66,8 @@ public class HeaderTest extends BaseTest {
                 .isDisplayedSearchBoxIcon();
 
         Assert.assertEquals(placeholder, "Search (CTRL+K)");
-        Assert.assertTrue(helpIcon);
-        Assert.assertTrue(searchIcon);
+        Assert.assertTrue(helpIcon, "The Help icon is not displayed");
+        Assert.assertTrue(searchIcon, "The Search icon is not displayed");
     }
 
     @DataProvider(name = "sideMenuOptions")

@@ -2,6 +2,8 @@ package school.redrover;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -30,6 +32,7 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String DISPLAY_NAME = "FreestyleDisplayName";
     private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'Create a job' button")
     @Test
@@ -42,10 +45,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
         Assert.assertEquals(mainPage.getJobName(FREESTYLE_NAME), FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify job creation when clicking on 'New Item' button")
     @Test
@@ -59,9 +63,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'People' Page")
     @Test
@@ -75,9 +80,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'Build History' Page")
     @Test
@@ -90,9 +96,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'Manage Jenkins' Page")
     @Test
@@ -107,9 +114,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Error: the Freestyle Project's name is not displayed on Dashboard");
+        Assert.assertTrue(jobIsDisplayed, "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'Create a Job' button from 'My Views' Page")
     @Test
@@ -123,11 +131,12 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating Freestyle project by clicking 'New Item' button from 'My Views' Page")
     @Test
@@ -145,10 +154,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the folder name is not displayed");
-        Assert.assertTrue(nameJobFromMyViewsPage, "Created Freestyle project name is displayed on MyViews Page");
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(nameJobFromMyViewsPage, "The Freestyle Project's name is not displayed on Dashboard from MyViews page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Freestyle project with existing name")
     @Test
@@ -168,6 +178,7 @@ public class FreestyleProjectTest extends BaseTest {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Freestyle project with name using unsafe characters")
     @Test(dataProvider = "invalid-characters")
@@ -177,10 +188,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .enterItemName(character)
                 .selectJobType(TestUtils.JobType.FreestyleProject);
 
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Freestyle project with empty name")
     @Test
@@ -195,6 +207,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking that the OK button is disabled if the project name has not been entered")
     @Test
@@ -204,9 +217,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .isOkButtonEnabled();
 
-        Assert.assertFalse(okButton);
+        Assert.assertFalse(okButton, "The OK button is enabled");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of showing error message on Error Page while creating Freestyle project with space instead name")
     @Test
@@ -218,6 +232,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Freestyle project with dot instead name")
     @Test
@@ -233,6 +248,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualError, expectedError);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of showing error message while creating Freestyle project with long name")
     @Test
@@ -248,6 +264,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Freestyle' can be renamed from drop down menu on the Main page")
     @Test
@@ -263,6 +280,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualFreestyleProjectName, "Project " + NEW_FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify that the 'Freestyle' can be renamed from side menu on the Project page")
     @Test
@@ -279,6 +297,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(projectName, "Project " + FREESTYLE_NAME + " New");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Freestyle project from drop-down menu with existing name")
     @Test
@@ -300,6 +319,7 @@ public class FreestyleProjectTest extends BaseTest {
                 {"?", "?"}, {"|", "|"}, {">", "&gt;"}, {"<", "&lt;"}, {"[", "["}, {"]", "]"}};
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Freestyle project with invalid data")
     @Test(dataProvider = "wrong-character")
@@ -316,6 +336,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "‘" + expectedResult + "’ is an unsafe character");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of impossibility to rename Freestyle project with '.' name'")
     @Test
@@ -332,6 +353,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualErrorMessage, "“.” is not an allowed name");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to build Freestyle project from drop-down menu")
     @Test
@@ -347,6 +369,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(createBuildNow, "Success");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to build Freestyle project from side menu")
     @Test
@@ -359,9 +382,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Freestyle Project is not created");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to build Freestyle project by clicking green arrow")
     @Test
@@ -374,9 +398,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Freestyle Project is not created");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Checking presence links to the build after the build is created")
     @Test
@@ -398,6 +423,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(sizeOfPermalinksList, 4);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of presence display name for build of Freestyle project")
     @Test
@@ -412,10 +438,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .getBuildHeaderText();
 
-        Assert.assertTrue(buildHeaderText.contains("DisplayName"),
-                "Error: The Display Name for the Build has not been changed.");
+        Assert.assertTrue(buildHeaderText.contains("DisplayName"), "The Display Name for the Build has not been changed.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of presence of preview description for build of Freestyle project")
     @Test
@@ -433,6 +459,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewText, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to rename description for build of Freestyle project")
     @Test
@@ -455,6 +482,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to build changes of Freestyle project")
     @Test
@@ -472,6 +500,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(titleChange, "Changes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to build changes for Freestyle project from ProjectPage")
     @Test
@@ -488,6 +517,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(changesTitle, heading);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to build changes for Freestyle project from last build")
     @Test
@@ -499,9 +529,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickChangesViaLastBuildDropDownMenu()
                 .getTextOfPage();
 
-        Assert.assertTrue(text.contains("No changes."), "Expected %s to contain 'No changes'".formatted(text));
+        Assert.assertTrue(text.contains("No changes."), "The text from Changes page does not contain 'No changes.'");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to build changes for Freestyle project from Build Page")
     @Test
@@ -518,6 +549,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(text, "Changes");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to console output for Freestyle project from drop-down menu")
     @Test
@@ -532,9 +564,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutputLastBuildDropDown()
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
+        Assert.assertTrue(consoleOutputTitle, "Console Output Title is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to make console output from Freestyle Project Page")
     @Test
@@ -551,6 +584,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput, "Console output page is not displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to make console output from last build of Freestyle project")
     @Test
@@ -573,9 +607,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .getFullBreadcrumbText();
 
         Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
-        Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
+        Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full breadcrumb text does not contain the last build number");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to console output for Freestyle project from BuildPage")
     @Test
@@ -589,9 +624,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutput()
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
+        Assert.assertTrue(consoleOutputTitleDisplayed, "Console Output Title is not displayed!");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to edit build information from drop-down menu for Freestyle Project")
     @Test
@@ -609,6 +645,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(getTitle, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to edit build information from Freestyle Project Page")
     @Test
@@ -624,6 +661,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to edit build information from last build of Freestyle Project")
     @Test
@@ -653,6 +691,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to edit build information for Freestyle project from BuildPage")
     @Test
@@ -680,6 +719,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, NEW_DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of presence preview description of build from Edit Information Page for Freestyle Project")
     @Test
@@ -697,6 +737,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewDescriptionText, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of description of build can be added from Edit Information Page for Freestyle Project")
     @Test
@@ -715,6 +756,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete build from drop-down menu for Freestyle Project")
     @Test
@@ -730,9 +772,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickDelete(new FreestyleProjectPage(getDriver()))
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "Error");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete build for Freestyle project from side menu")
     @Test
@@ -747,9 +790,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete build  for Freestyle project from LastBuild")
     @Test
@@ -763,9 +807,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(buildMessage, "error! No builds message is not display");
+        Assert.assertTrue(buildMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete build  for Freestyle project from BuildPage")
     @Test
@@ -780,10 +825,12 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verify that icons is not displayed")
     @Test
     public void testKeepThisBuildForever() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -803,7 +850,9 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(freestyleProjectPage.isIconLockIsDispalyed(), "The lock icon is not displayed");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
     @Feature("UI")
+    @Description("Verify that Project Name is Visible On the Project Page")
     @Test
     public void testVisibleProjectNameOnProjectPage() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
@@ -815,6 +864,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(projectNameOnProjectPage, "Project " + FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to disable Freestyle Project from Project Page")
     @Test
@@ -843,6 +893,7 @@ public class FreestyleProjectTest extends BaseTest {
         soft.assertAll();
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to enable disabled Freestyle Project from Project Page")
     @Test
@@ -861,6 +912,7 @@ public class FreestyleProjectTest extends BaseTest {
         soft.assertAll();
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of presence description for Freestyle Project")
     @Test
@@ -877,6 +929,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(previewDescription, "DESCRIPTION_TEXT");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of presence description added from Freestyle Project Page")
     @Test
@@ -893,6 +946,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualDescription, "Freestyle project");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to rename description for build of Freestyle project")
     @Test
@@ -910,6 +964,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(editDescription, NEW_DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Changes Page from side menu for Freestyle Project")
     @Test
@@ -925,6 +980,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "In the Freestyle project Changes chapter, not displayed status of the latest build.");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of possibility to navigate to Workspaces from Project Page for Freestyle Project")
     @Test
@@ -940,6 +996,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(workspacePage, "Workspace of FREESTYLE_NAME on Built-In Node");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of of presence Preview of description for Freestyle Project can be added from Configuration Page")
     @Test
@@ -962,6 +1019,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualDescriptionText, descriptionText);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility 'Description' for Freestyle Project can be added from Configuration Page")
     @Test
@@ -977,6 +1035,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(description, DESCRIPTION_TEXT);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify navigation to Configuration Page from drop-down menu on Dashboard for Freestyle Project")
     @Test
@@ -993,6 +1052,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify navigation to Configuration Page from drop-down menu on Project Page for Freestyle Project")
     @Test
@@ -1008,6 +1068,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(freestyleConfigPage.getHeaderText(), "Configure");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to disable Freestyle Project from Configuration Page")
     @Test
@@ -1028,9 +1089,10 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(availableMode, "Enable");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(FREESTYLE_NAME), "Disabled");
-        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "Error: disabled project cannot be built");
+        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "The 'Build Now' option is available on Dashboard from Home page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to enable disable Freestyle Project from Configuration Page")
     @Test
@@ -1047,9 +1109,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton();
 
         Assert.assertEquals(freestyleProjectPageDisabled.getDisableButtonText(), "Disable Project");
-        Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed());
+        Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed(),
+                "The info message 'This project is currently disabled' is displayed");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility of Setting Parameters to delete Builds ")
     @Test
@@ -1073,6 +1137,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .parseInt(freestyleProjectConfigPage.getMaxNumOfBuildsToKeep()), maxOfBuildsToKeep);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility of adding a Project on GitHub to a Freestyle Project")
     @Test
@@ -1094,6 +1159,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualNameRepo, expectedNameRepo);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to add boolean parameter for Freestyle project")
     @Test
@@ -1114,9 +1180,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildWithParameters()
                 .checkedTrue();
 
-        Assert.assertTrue(checkedSetByDefault);
+        Assert.assertTrue(checkedSetByDefault, "The 'This build requires parameters:' checkbox is unchecked");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the ability to Add a choice parameter")
     @Test
@@ -1142,11 +1209,12 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .clickBuildWithParameters();
 
-        Assert.assertTrue(buildPage.isParameterNameDisplayed(parameterName));
+        Assert.assertTrue(buildPage.isParameterNameDisplayed(parameterName), "The Parameter Name is not displayed in the 'This build requires parameters:' section");
         Assert.assertEquals(buildPage.getParameterDescription(), parameterDesc);
         Assert.assertEquals(buildPage.getChoiceParametersValuesList(), parameterChoicesList);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the ability to limit the speed for Builds")
     @Test
@@ -1165,6 +1233,8 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(actualTimePeriod, timePeriod);
     }
+
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility click 'ExecuteConcurrentBuilds' checkBox from Configuration page")
     @Test
@@ -1179,9 +1249,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure()
                 .isExecuteConcurrentBuildsSelected();
 
-        Assert.assertTrue(statusExecuteConcurrentBuilds, "ExecuteConcurrentBuilds is not Selected");
+        Assert.assertTrue(statusExecuteConcurrentBuilds, "The 'Execute concurrent builds if necessary' checkbox is unchecked");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Check period for Jenkins to wait before Actually Starting Triggered Build")
     @Test
@@ -1203,6 +1274,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualQuietPeriod, expectedQuietPeriod);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Check number of count for Jenkins if input SCM Checkout Retry Count from Configuration page")
     @Test
@@ -1224,6 +1296,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualRetryCount, retryCount);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility enable 'Block Build' from ‘Advanced’in the Configuration page")
     @Test
@@ -1240,9 +1313,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickAdvancedDropdownMenu()
                 .getTrueBlockBuildWhenUpstreamProjectIsBuilding();
 
-        Assert.assertTrue(statusBlockBuildWhenUpstreamProjectIsBuilding, "error input is not selected");
+        Assert.assertTrue(statusBlockBuildWhenUpstreamProjectIsBuilding, "The 'Block build when upstream project is building' checkbox is unchecked");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  'Use Custom Workspace' from ‘General Advanced’in the Configuration page ")
     @Test
@@ -1264,9 +1338,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutputLastBuildDropDown()
                 .getConsoleOutputText();
 
-        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
+        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "The directory is not used!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that 'Display name' can be added from Configuration page")
     @Test
@@ -1284,6 +1359,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(displayName, "Project " + NEW_FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  'add Repository' from ‘Source Code Management’ ")
     @Test
@@ -1306,6 +1382,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(repositoryUrl, GITHUB_URL);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  'add branch' from ‘Source Code Management’ ")
     @Test
@@ -1330,6 +1407,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(gitBuildDataPage.getRepositoryName(), NEW_GITHUB_URL);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  in the Configure click checkBox ‘Build After OtherProjects Are Built’ ")
     @Test
@@ -1352,6 +1430,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + NEW_FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to add build steps options for Freestyle Project")
     @Test
@@ -1371,6 +1450,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualOptionsInBuildStepsSection, expectedOptionsInBuildStepsSection);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  in the steps of Build add ‘Execute Windows Batch Command’ ")
     @Test
@@ -1394,6 +1474,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput.contains(cmdCommand), "Command wasn't run");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  in the steps of Build add ‘Execute Shell’ ")
     @Test
@@ -1415,6 +1496,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(consoleOutput.contains("Finished: SUCCESS"), "Build wasn't finished successfully");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility  in the steps of Build add ‘Invoke Maven Targets’")
     @Test
@@ -1434,6 +1516,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(mavenGoals, goals);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility of configuring actions after the build, aggregating test results in a downstream flow")
     @Test
@@ -1450,11 +1533,13 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink();
 
-        Assert.assertTrue(buildPage.isDisplayedAggregatedTestResultLink());
+        Assert.assertTrue(buildPage.isDisplayedAggregatedTestResultLink(), "The 'Aggregated Test Result' link is not displayed on Build page");
         Assert.assertEquals(buildPage.getTestResultsNodeText(), "Aggregated Test Result (no tests)");
-        Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/FREESTYLE_NAME/lastBuild/aggregatedTestReport"));
+        Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/" + FREESTYLE_NAME + "/lastBuild/aggregatedTestReport"),
+                "The Attribute 'href' of the 'Aggregated Test Result' side menu link does not contain '/job/" + FREESTYLE_NAME + "/lastBuild/aggregatedTestReport'");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the possibility of configuring the artifacts of the archive of actions after the build")
     @Test
@@ -1479,6 +1564,7 @@ public class FreestyleProjectTest extends BaseTest {
                 "Advanced");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking whether the post-build action can be configured to create other projects")
     @Test
@@ -1504,6 +1590,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(lastBuildInfo, "Started by upstream project " + FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the ability to add Git Publisher after the build in the configuration")
     @Test
@@ -1523,6 +1610,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(gitPublisherText, "Git Publisher\n?");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the ability to add email notifications after the build in the configuration")
     @Test
@@ -1545,6 +1633,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(currentEmail, email);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the ability to edit email notifications after the build in the configuration")
     @Test
@@ -1589,9 +1678,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildIconStatus()
                 .getConsoleOutputText();
 
-        Assert.assertTrue(emailSentLog.contains("Sending email to: " + userEmail), "Error: Email report wasn't sent");
+        Assert.assertTrue(emailSentLog.contains("Sending email to: " + userEmail), "The Email report wasn't sent");
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking the commit status on GitHub for post-build actions")
     @Test
@@ -1613,6 +1703,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(commitContextName, FREESTYLE_NAME);
     }
 
+    @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Checking that the workspace is deleted when the build is completed After performing the build actions")
     @Test
@@ -1634,6 +1725,7 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(actualWorkspaceStatus, expectedWorkspaceStatus);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that deleting Folder can be canceled from drop-down menu on the Main page")
     @Test
@@ -1647,9 +1739,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(projectIsPresent, "Error: the name of the Freestyle project is not shown");
+        Assert.assertTrue(projectIsPresent, "The name of the Freestyle project is not shown");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verify that deleting Folder can be canceled from side menu on the Main page")
     @Test
@@ -1663,9 +1756,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .verifyJobIsPresent(NEW_FREESTYLE_NAME);
 
-        Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
+        Assert.assertTrue(isProjectPresent, "The Freestyle project's name is not displayed on Dashboard from Home page!");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete Freestyle Project from drop-down menu")
     @Test
@@ -1675,10 +1769,11 @@ public class FreestyleProjectTest extends BaseTest {
                 .dropDownMenuClickDelete(FREESTYLE_NAME)
                 .acceptAlert();
 
-        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed());
+        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed(), "'Welcome to Jenkins!' text is not displayed");
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of possibility to delete Freestyle Project from side menu")
     @Test
@@ -1690,6 +1785,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickDeleteAndAccept()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
+        Assert.assertTrue(isProjectPresent, "'Welcome to Jenkins!' text is not displayed");
     }
 }

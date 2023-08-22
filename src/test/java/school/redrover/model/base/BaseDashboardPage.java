@@ -30,43 +30,49 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
         return "Reload Configuration from Disk";
     }
 
-    @Step("Click on 'New Item' in the side menu")
+    @Step("Click on 'New Item' on the side menu")
     public NewJobPage clickNewItemFromSideMenu() {
         newItem.click();
 
         return new NewJobPage(getDriver());
     }
 
+    @Step("Click on 'People' on the side menu")
     public PeoplePage clickPeopleFromSideMenu() {
         people.click();
 
         return new PeoplePage(getDriver());
     }
 
+    @Step("Click 'New Item', 'People', 'Build History', 'Manage Jenkins', 'My Views' on the side menu")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionFromSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='" + sideMenuLink + "']"))).click();
 
         return pageToReturn;
     }
 
+    @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
 
         return pageToReturn;
     }
 
+    @Step("Click 'Build History' on the side menu")
     public BuildHistoryPage clickBuildsHistoryFromSideMenu() {
         getWait5().until(ExpectedConditions.elementToBeClickable(buildHistory)).click();
 
         return new BuildHistoryPage(getDriver());
     }
 
+    @Step("Click 'Build Executor Status' under side menu")
     public ManageNodesPage clickBuildExecutorStatus() {
         getWait2().until(ExpectedConditions.elementToBeClickable(buildExecutorStatus)).click();
 
         return new ManageNodesPage(getDriver());
     }
 
+    @Step("Click 'Small', 'Medium' or 'Large' Dashboard Table Size")
     public Self clickChangeJenkinsTableSize(String size) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@tooltip='" + size + "']"))).click();
 

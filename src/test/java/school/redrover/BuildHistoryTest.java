@@ -6,11 +6,9 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
-import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
@@ -22,6 +20,14 @@ public class BuildHistoryTest extends BaseTest {
     private final String MULTI_CONFIGURATION_PROJECT_NAME = initName();
     private final String PIPELINE_PROJECT_NAME = initName();
 
+    @DataProvider(name = "project-type")
+    public Object[][] projectType() {
+        return new Object[][]{
+                {TestUtils.JobType.FreestyleProject},
+                {TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject},
+        };
+    }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
@@ -108,7 +114,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration(not default) from timeline")
+    @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration (not default) from timeline")
     @Test(dataProvider = "project-type")
     public void testNavigateToBuildPageFromTimeline(TestUtils.JobType jobType) {
         final String jobName = "BUILD_PROJECT";
@@ -129,12 +135,10 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
     @Test
     public void testOpenDefaultBuildPopUpOfMultiConfiguration() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        boolean isDefaultBuildPopUpDisplayed = new MultiConfigurationProjectPage(getDriver())
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
+        boolean isDefaultBuildPopUpDisplayed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .clickDefaultBuildBubbleFromTimeline()
                 .isDefaultBuildPopUpHeaderTextDisplayed();
@@ -143,30 +147,39 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
-    @Ignore
+    @Feature("Navigation")
+    @Description("Verify the ability to close the bubble pop up of Default MultiConfiguration from Timeline")
     @Test
-    public void testCloseBuildPopUpOfFreestyle() {
-        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+    public void testCloseDefaultMultiConfigurationPopOpFromTimeline() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,
+                true);
 
-        boolean isBubblePopUpClosed =  new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
+        boolean isBubblePopUpClosed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
-                .clickBuildNameOnTimeline(FREESTYLE_PROJECT_NAME)
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .closeProjectWindowButtonInTimeline()
+                .isBuildPopUpInvisible();
+
+        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window is not closed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to close the bubble pop up of Freestyle, Pipeline, MultiConfiguration(not default) project build from timeline")
+    @Test(dataProvider = "project-type")
+    public void testCloseBuildPopUp(TestUtils.JobType jobType) {
+        final String jobName = "BUILD_PROJECT";
+        TestUtils.createJob(this, jobName, jobType, true);
+
+        boolean isBubblePopUpClosed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(jobName)
+                .clickBuildsHistoryFromSideMenu()
+                .clickLastNotDefaultBuildFromTimeline()
                 .closeProjectWindowButtonInTimeline()
                 .isBuildPopUpInvisible();
 
         Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
-    }
-
-    @DataProvider(name = "project-type")
-    public Object[][] projectType() {
-        return new Object[][]{
-                {TestUtils.JobType.FreestyleProject},
-                {TestUtils.JobType.Pipeline},
-                {TestUtils.JobType.MultiConfigurationProject},
-        };
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -197,34 +210,15 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify the ability to navigate to build page of Multiconfiguration default from timeline")
     @Test
     public void testNavigateToMultiConfigurationDefaultBuildPageFromTimeline() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        boolean buildPageHeader = new MultiConfigurationProjectPage(getDriver())
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
+        boolean buildPageHeader = new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .clickDefaultBuildBubbleFromTimeline()
                 .clickDefaultBuildLinkFromTimeline()
                 .isDisplayedBuildPageHeaderText();
 
         Assert.assertTrue(buildPageHeader, "Wrong page");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verify the ability to close the bubble pop up of MultiConfiguration project build from timeline")
-    @Test
-    public void testCloseBuildPopUpOfMultiConfiguration() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        boolean isBubblePopUpClosed =  new MainPage(getDriver())
-                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
-                .clickBuildsHistoryFromSideMenu()
-                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
-                .closeProjectWindowButtonInTimeline()
-                .isBuildPopUpInvisible();
-
-        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
     }
 }

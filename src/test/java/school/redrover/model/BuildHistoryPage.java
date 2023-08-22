@@ -125,6 +125,10 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @Step("Click last default build bubble on the Timeline")
     public BuildHistoryPage clickDefaultBuildBubbleFromTimeline() {
+        new Actions(getDriver())
+                .pause(3500)
+                .perform();
+        getDriver().navigate().refresh();
         getWait10().until(ExpectedConditions.elementToBeClickable(lastDefaultBuildBubbleLinkFromTimeline)).click();
 
         return new BuildHistoryPage(getDriver());
@@ -167,7 +171,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Click last not default build link badge on the Jenkins table")
     public BuildHistoryPage clickLastNotDefaultBuildFromTimeline() {
         new Actions(getDriver())
-                .pause(2500)
+                .pause(3000)
                 .perform();
 
         getDriver().navigate().refresh();

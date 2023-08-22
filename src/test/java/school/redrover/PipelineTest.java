@@ -41,7 +41,7 @@ public class PipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
         Assert.assertEquals(mainPage.getJobName(NAME), NAME);
     }
 
@@ -77,7 +77,7 @@ public class PipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME));
+        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME), "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -93,7 +93,7 @@ public class PipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME));
+        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME), "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -112,7 +112,7 @@ public class PipelineTest extends BaseTest {
                 .clickLogo()
                 .getJobList();
 
-        Assert.assertTrue(jobList.contains(NAME));
+        Assert.assertTrue(jobList.contains(NAME), "The jobList from Home page does not contain the Pipeline Project's name");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -129,9 +129,9 @@ public class PipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the Pipeline Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Pipeline Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the FPipeline Project's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(NAME), "The Pipeline Project's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -148,7 +148,7 @@ public class PipelineTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the pipeline name is not displayed");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -164,7 +164,7 @@ public class PipelineTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.Pipeline);
 
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» A job already exists with the name " + "‘" + NAME + "’");
-        Assert.assertTrue(newJobPage.isOkButtonEnabled(), "error OK button is disabled");
+        Assert.assertTrue(newJobPage.isOkButtonEnabled(), "OK button is disabled");
     }
 
     @DataProvider(name = "invalid-characters")
@@ -181,7 +181,7 @@ public class PipelineTest extends BaseTest {
                 TestUtils.createFolderUsingInvalidData(this, invalidCharacters, TestUtils.JobType.Pipeline);
 
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’ is an unsafe character");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -383,8 +383,8 @@ public class PipelineTest extends BaseTest {
                 .clickTrend()
                 .clickBuildIcon();
 
-        Assert.assertTrue(consoleOutputPage.isDisplayedGreenIconV(), "Build failed");
-        Assert.assertTrue(consoleOutputPage.isDisplayedBuildTitle(), "Not found build");
+        Assert.assertTrue(consoleOutputPage.isDisplayedGreenIconV(), "The build of the Pipeline Project is not finished successfully");
+        Assert.assertTrue(consoleOutputPage.isDisplayedBuildTitle(), "The build of the Pipeline Project is not found");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -416,7 +416,7 @@ public class PipelineTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Pipeline Project is not created");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -432,7 +432,7 @@ public class PipelineTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Pipeline Project is not created");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -452,7 +452,7 @@ public class PipelineTest extends BaseTest {
                 .getBuildHeaderText()
                 .contains(DISPLAYED_BUILD_NAME);
 
-        Assert.assertTrue(newDisplayedBuildName, "Added Name for the Build is not displayed");
+        Assert.assertTrue(newDisplayedBuildName, "Added name for the build is not displayed");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -531,9 +531,9 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
-    @Description("Verification of navigation to options page for Pipeline project from build drop-down menu")
+    @Description("Verification of navigation to options page from build drop-down menu from dashboard")
     @Test(dataProvider = "buildDropDownMenuOptions")
-    public void testNavigateToOptionsFromBuildDropDown(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+    public void testNavigateToOptionsFromBuildDropDownFromDashboard(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         new MainPage(getDriver())
@@ -587,37 +587,25 @@ public class PipelineTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to build changes for Pipeline project from ProjectPage")
-    @Test
-    public void testBuildChangesFromProjectPage() {
-        final String title = "Changes";
+    @Feature("Navigation")
+    @Description("Verification of navigation to options page from build drop-down menu from ProjectPage")
+    @Test(dataProvider = "buildDropDownMenuOptions")
+    public void testNavigateToOptionsFromBuildDropDownFromProjectPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
-        String changesTitle = new MainPage(getDriver())
+        new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickChangesFromDropDownMenu()
-                .getPageHeaderText();
-
-        Assert.assertEquals(changesTitle, title);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("UI")
-    @Description("Verification of possibility to console output for Pipeline project from ProjectPage")
-    @Test
-    public void testConsoleOutputFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        boolean consoleOutput = new MainPage(getDriver())
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickBuildNowFromSideMenu()
                 .openBuildsDropDownMenu()
-                .clickConsoleOutputType()
-                .isDisplayedBuildTitle();
+                .clickBuildsOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
 
-        Assert.assertTrue(consoleOutput, "Console output page is not displayed");
+        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
+            String pageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
+            Assert.assertEquals(pageHeader, expectedPageHeader);
+        } else {
+            String breadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+            Assert.assertEquals(breadcrumbHeader, expectedPageHeader);
+        }
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -661,22 +649,6 @@ public class PipelineTest extends BaseTest {
                 .isDisplayedBuildTitle();
 
         Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information for Pipeline project from ProjectPage")
-    @Test
-    public void testEditBuildInformationFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String titleEditBuildPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickEditBuildInformFromProjectPage()
-                .getHeaderText();
-
-        Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -765,7 +737,7 @@ public class PipelineTest extends BaseTest {
                 .clickDelete(new PipelinePage(getDriver()))
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Pipeline project's page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -783,7 +755,7 @@ public class PipelineTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Pipeline Project's page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -800,25 +772,7 @@ public class PipelineTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(buildMessage, "error! No builds message is not display");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to delete build  for Pipeline project from BuildPage")
-    @Test
-    public void testDeleteBuildNowFromBuildPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        boolean noBuildsMessage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickLastBuildLink()
-                .clickDeleteBuild(new PipelinePage(getDriver()))
-                .clickYesButton()
-                .isNoBuildsDisplayed();
-
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(buildMessage, "'No builds' message is not displayed on the Pipeline Project's page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -832,25 +786,6 @@ public class PipelineTest extends BaseTest {
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .openPermalinksLastBuildsDropDownMenu()
-                .clickReplayFromDropDownMenu()
-                .clickRunButton()
-                .refreshPage()
-                .getLastBuildNumber();
-
-        Assert.assertEquals(lastBuildNumber, "#2");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to replay build  for Pipeline project from ProjectPage")
-    @Test
-    public void testReplayBuildFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String lastBuildNumber = new MainPage(getDriver())
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .openBuildsDropDownMenu()
                 .clickReplayFromDropDownMenu()
                 .clickRunButton()
                 .refreshPage()
@@ -901,22 +836,6 @@ public class PipelineTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to step build for Pipeline project from ProjectPage")
-    @Test
-    public void testPipelineStepsBuildFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String pipelineSteps = new MainPage(getDriver())
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .clickPipelineStepsFromBuildDropDownFromSideMenu()
-                .getTitlePipelineFromBreadcrumb();
-
-        Assert.assertEquals(pipelineSteps, "Pipeline Steps");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification of possibility to step build for Pipeline project from LastBuild")
     @Test
     public void testPipelineStepsBuildFromLastBuild() {
@@ -949,25 +868,6 @@ public class PipelineTest extends BaseTest {
                 .getTitlePipelineFromBreadcrumb();
 
         Assert.assertEquals(textFromStepsBuild, "Pipeline Steps");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of presence workspaces for Pipeline project from ProjectPage")
-    @Test
-    public void testWorkspacesBuildFromProjectPage() {
-        final String pageHeaderText = "Workspaces for " + NAME + " #1";
-
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new PipelinePage(getDriver()))
-                .openBuildsDropDownMenu()
-                .clickWorkspaceButtonFromBuildDropDown()
-                .getHeaderTextFromWorkspacesBuildPage();
-
-        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1026,7 +926,7 @@ public class PipelineTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .getConsoleOutputText();
 
-        Assert.assertTrue(textSuccessBuild.contains("Finished: SUCCESS"), "Job does not finished success");
+        Assert.assertTrue(textSuccessBuild.contains("Finished: SUCCESS"), "The build of the Pipeline Project is not finished successfully");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1132,7 +1032,7 @@ public class PipelineTest extends BaseTest {
                 .getTextOfPage();
 
         Assert.assertTrue(text.contains("No changes in any of the builds"),
-                "In the Pipeline Changes chapter, not displayed status of the latest build.");
+                "In the Pipeline Changes chapter is not displayed status of the latest build.");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1151,8 +1051,8 @@ public class PipelineTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink();
 
-        Assert.assertTrue(buildPage.isDisplayedBuildPageHeaderText(), "Build #1 failed");
-        Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "Build #1 failed");
+        Assert.assertTrue(buildPage.isDisplayedBuildPageHeaderText(), "The build's header text 'Build #1' is not displayed");
+        Assert.assertTrue(buildPage.isDisplayedGreenIconV(), "The build #1 is not finished successfully");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1198,7 +1098,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .isEnabledDisplayed();
 
-        Assert.assertFalse(projectDisable, "Pipeline is enabled");
+        Assert.assertFalse(projectDisable, "The Pipeline Project is enabled");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1289,7 +1189,7 @@ public class PipelineTest extends BaseTest {
                 .clickConfigure()
                 .checkboxDiscardOldBuildsIsSelected();
 
-        Assert.assertTrue(discardOldBuildsCheckbox);
+        Assert.assertTrue(discardOldBuildsCheckbox, "The checkbox 'Discard old builds' is not checked");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -1490,7 +1390,7 @@ public class PipelineTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(projectIsPresent);
+        Assert.assertTrue(projectIsPresent, "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1505,7 +1405,7 @@ public class PipelineTest extends BaseTest {
                 .dismissAlert()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(projectIsPresent);
+        Assert.assertTrue(projectIsPresent, "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1522,7 +1422,7 @@ public class PipelineTest extends BaseTest {
                 .clickLogo()
                 .verifyJobIsPresent(NAME);
 
-        Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
+        Assert.assertTrue(isProjectPresent, "The Pipeline Project's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)

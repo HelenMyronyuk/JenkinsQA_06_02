@@ -127,10 +127,10 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click on 'Changes' from left side menu")
-    public ChangesPage<Self> clickChangeOnLeftSideMenu() {
+    public ChangesPage clickChangeOnLeftSideMenu() {
         getWait10().until(ExpectedConditions.visibilityOf(changesButton)).click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Click 'Delete' and 'Accept'")
@@ -187,6 +187,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     public Self clickBuildNowFromSideMenu() {
         getWait10().until(ExpectedConditions.elementToBeClickable(buildNowButton)).click();
         getWait10().until(ExpectedConditions.visibilityOf(buildRowCell));
+        refreshPage();
 
         return (Self) this;
     }
@@ -265,11 +266,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click 'Changes' from the build drop-down menu")
-    public ChangesPage<Self> clickChangesFromDropDownMenu() {
+    public ChangesPage clickChangesFromDropDownMenu() {
         openBuildsDropDownMenu();
         changesButtonDropDownMenu.click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Open a last build drop-down menu")
@@ -281,11 +282,11 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Click 'Changes' from the last build drop-down menu")
-    public ChangesPage<Self> clickChangesViaLastBuildDropDownMenu() {
+    public ChangesPage clickChangesViaLastBuildDropDownMenu() {
         openLastBuildDropDownMenu();
         changesFromLastBuild.click();
 
-        return new ChangesPage<>((Self) this);
+        return new ChangesPage(getDriver());
     }
 
     @Step("Click 'Workspace' from the side menu")
@@ -407,5 +408,12 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         actions.click().perform();
 
         return new PipelineStepsPage(getDriver());
+    }
+
+    @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildsOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
+
+        return pageToReturn;
     }
 }
