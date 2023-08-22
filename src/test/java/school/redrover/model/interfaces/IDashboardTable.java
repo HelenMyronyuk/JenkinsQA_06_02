@@ -214,6 +214,7 @@ public interface IDashboardTable <Self extends BaseMainHeaderPage<?>> extends IB
     default Self clickBuildByGreenArrow(String projectName) {
         getWait2().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[@href='job/" + projectName + "/build?delay=0sec']"))).click();
+        getDriver().navigate().refresh();
 
         return (Self) this;
     }
