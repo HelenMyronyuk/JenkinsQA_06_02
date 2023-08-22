@@ -219,7 +219,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -249,7 +249,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -281,7 +281,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -296,7 +296,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickDashboardButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeJenkins, "Welcome Jenkins text is not displayed!");
+        Assert.assertTrue(welcomeJenkins, "'Welcome Jenkins' text is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -438,7 +438,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(lastBuild, "Error! No builds message is not display");
+        Assert.assertTrue(lastBuild, "'No builds' message is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -646,7 +646,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickJobNameFromBreadcrumb(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(deleteSubmenuPage, "Error");
+        Assert.assertTrue(deleteSubmenuPage, "'No builds' message is not displayed");
     }
 
     @DataProvider(name = "pipesubmenu")

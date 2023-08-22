@@ -98,7 +98,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
                 .clickConfigureGlobalSecurity()
                 .checkAPITokenCheckboxes();
 
-        Assert.assertTrue(allChecksAreOk);
+        Assert.assertTrue(allChecksAreOk, "Not all 'API Token' checkboxes are clickable on the Configure Global Security page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -111,7 +111,7 @@ public class ConfigureGlobalSecurityTest extends BaseTest {
                 .clickConfigureGlobalSecurity()
                 .checkRadioButtons();
 
-        Assert.assertTrue(allChecksAreOk);
+        Assert.assertTrue(allChecksAreOk, "Not all radio buttons are clickable on the Configure Global Security page");
     }
 
 

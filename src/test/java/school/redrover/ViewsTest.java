@@ -104,7 +104,7 @@ public class ViewsTest extends BaseTest {
         boolean isCreatedViewPresent = new MainPage(getDriver())
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertTrue(isCreatedViewPresent, "The view is not created");
+        Assert.assertTrue(isCreatedViewPresent, "The " + viewType + " type's view is not created");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -119,7 +119,7 @@ public class ViewsTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertTrue(isCreatedMyViewPresent, "The myView type is not created");
+        Assert.assertTrue(isCreatedMyViewPresent, "The " + viewType + " type's view is not created");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -141,7 +141,7 @@ public class ViewsTest extends BaseTest {
                 .getListOfAllViews()
                 .contains(NEW_VIEW_NAME);
 
-        Assert.assertTrue(actualViewName, "The new name is not displayed");
+        Assert.assertTrue(actualViewName, "The new name of " + viewType + " type's view is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -361,6 +361,7 @@ public class ViewsTest extends BaseTest {
                 .enterDescription(VIEW_DESCRIPTION)
                 .clickSaveButton()
                 .getDescriptionText();
+
         Assert.assertEquals(descriptionTest, VIEW_DESCRIPTION);
     }
 
@@ -404,7 +405,7 @@ public class ViewsTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertTrue(viewIsPresent, "View is not present on My Views page");
+        Assert.assertTrue(viewIsPresent, "The " + viewType + " type's view is not present on My Views page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -440,7 +441,7 @@ public class ViewsTest extends BaseTest {
                 .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
+        Assert.assertFalse(isDeletedViewPresent, "The " + viewType + " type's view is not deleted from view page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -457,7 +458,7 @@ public class ViewsTest extends BaseTest {
                 .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertFalse(isDeletedViewPresent, "The view is not deleted from view page");
+        Assert.assertFalse(isDeletedViewPresent, "The " + viewType + " type's view is not deleted from view page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -468,14 +469,14 @@ public class ViewsTest extends BaseTest {
         TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
         createNewView(true, VIEW_NAME, TestUtils.ViewType.MyView, false);
 
-        Boolean isViewPresent = new ViewPage(getDriver())
+        boolean isViewPresent = new ViewPage(getDriver())
                 .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
                 .clickEditView()
-                .clickDeleteView(new MainPage(getDriver()))
+                .clickDeleteView(new MyViewsPage(getDriver()))
                 .clickYesButton()
                 .verifyViewIsPresent(VIEW_NAME);
 
-        Assert.assertFalse(isViewPresent, "Error");
+        Assert.assertFalse(isViewPresent, "View is present on My Views page");
     }
 
     @Severity(SeverityLevel.NORMAL)

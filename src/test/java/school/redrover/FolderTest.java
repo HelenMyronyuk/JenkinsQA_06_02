@@ -50,8 +50,8 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "Error: was not show name folder");
-        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
+        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "The Folder's icon is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -60,8 +60,8 @@ public class FolderTest extends BaseTest {
     public void testCreateFromNewItem() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
 
-        Assert.assertTrue(new MainPage(getDriver()).jobIsDisplayed(NAME), "Error: was not show name folder");
-        Assert.assertTrue(new MainPage(getDriver()).isIconFolderDisplayed(), "Error: was not shown icon folder");
+        Assert.assertTrue(new MainPage(getDriver()).jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(new MainPage(getDriver()).isIconFolderDisplayed(), "The Folder's icon is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -77,8 +77,8 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the folder name is not displayed");
-        Assert.assertTrue(projectName.isIconFolderDisplayed(), "Error: the folder icon is not displayed");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.isIconFolderDisplayed(), "The Folder's icon is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -95,8 +95,8 @@ public class FolderTest extends BaseTest {
                 .getBreadcrumb()
                 .clickDashboardButton();
 
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "Error: was not show name folder");
-        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
+        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "The Folder's icon is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -113,8 +113,8 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "Error: was not show name folder");
-        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "Error: was not shown icon folder");
+        Assert.assertTrue(mainPage.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(mainPage.isIconFolderDisplayed(), "The Folder's icon is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -130,9 +130,9 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the folder name is not displayed");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -148,9 +148,9 @@ public class FolderTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "Error: the Folder's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(NAME), "The Folder's name is not displayed on Dashboard from MyViews page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -158,6 +158,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCreateWithExistingName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         CreateItemErrorPage errorPage = TestUtils.createJobWithExistingName(this, NAME, TestUtils.JobType.Folder);
 
         Assert.assertEquals(errorPage.getHeaderText(), "Error");
@@ -178,7 +179,7 @@ public class FolderTest extends BaseTest {
 
         NewJobPage newJobPage = TestUtils.createFolderUsingInvalidData(this, invalidData, TestUtils.JobType.Folder);
 
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), expectedErrorMessage);
     }
 
@@ -217,7 +218,7 @@ public class FolderTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.Folder);
 
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» “.” is not an allowed name");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "error OK button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -240,6 +241,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testRenameFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         boolean newNameIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickRename(NAME, new FolderPage(getDriver()))
                 .enterNewName(RENAME)
@@ -248,7 +250,7 @@ public class FolderTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(RENAME);
 
-        Assert.assertTrue(newNameIsDisplayed, "Error: was not show new name folder");
+        Assert.assertTrue(newNameIsDisplayed, "The new name of the Folder is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -256,6 +258,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testRenameFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         FolderPage folderPage = new FolderPage(getDriver())
                 .clickRename()
                 .enterNewName(RENAME)
@@ -270,6 +273,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testRenameToTheCurrentNameAndGetError() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         CreateItemErrorPage createItemErrorPage = new FolderPage(getDriver())
                 .clickRename()
                 .enterNewName(NAME)
@@ -325,6 +329,7 @@ public class FolderTest extends BaseTest {
     public void testAccessConfigurationPageFromDashboard() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         FolderConfigPage folderConfigPage = new MainPage(getDriver())
                 .clickConfigureDropDown(NAME, new FolderConfigPage(new FolderPage(getDriver())));
 
@@ -338,6 +343,7 @@ public class FolderTest extends BaseTest {
     public void testAccessConfigurationPageFromSideMenu() {
         final String breadcrumb = "Dashboard > " + NAME + " > Configuration";
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         FolderConfigPage folderConfigPage = new FolderPage(getDriver())
                 .clickConfigure();
 
@@ -350,6 +356,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testAddDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         String jobName = new FolderPage(getDriver())
                 .clickConfigure()
                 .enterDisplayName(DISPLAY_NAME)
@@ -364,6 +371,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testDeleteDisplayName() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         String folderName = new FolderPage(getDriver())
                 .clickConfigure()
                 .enterDisplayName(DISPLAY_NAME)
@@ -381,6 +389,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testAddDescriptionFromConfigurationPage(){
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
+
         String descriptionText = new FolderPage(getDriver())
                 .clickConfigure()
                 .addDescription(DESCRIPTION)
@@ -395,6 +404,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testPreviewDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
@@ -410,6 +420,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testDeleteDescriptionFromConfigPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         String actualDescription = new MainPage(getDriver())
                 .clickConfigureDropDown(NAME, new FolderConfigPage(new FolderPage(getDriver())))
                 .addDescription(DESCRIPTION)
@@ -417,7 +428,7 @@ public class FolderTest extends BaseTest {
                 .clickSaveButton()
                 .getFolderDescription();
 
-        Assert.assertTrue(actualDescription.isEmpty());
+        Assert.assertTrue(actualDescription.isEmpty(), "The Folder's description is not empty");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -425,6 +436,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testAddHealthMetricsFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         boolean isHealthMetricsAdded =  new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
@@ -434,7 +446,7 @@ public class FolderTest extends BaseTest {
                 .clickHealthMetrics()
                 .healthMetricIsVisible();
 
-        Assert.assertTrue(isHealthMetricsAdded, "Health Metric is not displayed");
+        Assert.assertTrue(isHealthMetricsAdded, "The Health Metric is not displayed");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -443,8 +455,10 @@ public class FolderTest extends BaseTest {
     public void testHealthMetricWithRecursive() {
         String pipelineName = "BadPipe";
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         new MainPage(getDriver()).
                 clickJobName(NAME, new FolderPage(getDriver()));
+
         String tooltipDescription = new FolderPage(getDriver())
                 .clickConfigure()
                 .addHealthMetrics()
@@ -470,6 +484,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testDeleteHealthMetrics() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         boolean healthMetric = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
@@ -514,6 +529,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testAddDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         FolderPage folderPage = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickAddOrEditDescription()
@@ -529,6 +545,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testPreviewDescriptionFromProjectPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         String previewText = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickAddOrEditDescription()
@@ -546,6 +563,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testEditDescription() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         String newDescription = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickAddOrEditDescription()
@@ -580,7 +598,7 @@ public class FolderTest extends BaseTest {
         List<String> jobNameList = new ArrayList<>(jobMap.keySet());
 
         Assert.assertEquals(jobNameList.size(), createdJobList.size());
-        Assert.assertTrue(createdJobList.containsAll(jobNameList));
+        Assert.assertTrue(createdJobList.containsAll(jobNameList), "The Folder page contains the list of all jobs");
     }
 
     @DataProvider(name = "jobType")
@@ -638,13 +656,14 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCancelDeletingFromDropDownMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         boolean folderIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDeleteFolders(NAME)
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
+        Assert.assertTrue(folderIsDisplayed, "The Folder's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -652,6 +671,7 @@ public class FolderTest extends BaseTest {
     @Test
     public void testCancelDeletingFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         boolean folderIsDisplayed = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickDeleteJobThatIsMainPage()
@@ -659,7 +679,7 @@ public class FolderTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(NAME);
 
-        Assert.assertTrue(folderIsDisplayed, "error was not show name folder");
+        Assert.assertTrue(folderIsDisplayed, "The Folder's name is not displayed on Dashboard from Home page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -667,11 +687,12 @@ public class FolderTest extends BaseTest {
     @Test
     public void testDeleteItemFromDropDown() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
+
         MainPage welcomeIsDisplayed = new MainPage(getDriver())
                 .dropDownMenuClickDeleteFolders(NAME)
                 .clickYesButton();
 
-        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed());
+        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed(), "'Welcome to Jenkins!' text is not displayed");
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
@@ -687,6 +708,6 @@ public class FolderTest extends BaseTest {
                 .clickYesButton()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(welcomeIsDisplayed, "error was not show Welcome to Jenkins!");
+        Assert.assertTrue(welcomeIsDisplayed, "'Welcome to Jenkins!' text is not displayed");
     }
 }

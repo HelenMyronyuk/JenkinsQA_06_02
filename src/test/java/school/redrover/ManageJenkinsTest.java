@@ -141,7 +141,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .selectAllDropdownResultsFromSearchField()
                 .isDropdownResultsFromSearchFieldContainsTextToSearch(keyword);
 
-        Assert.assertTrue(manageJenkinsPage);
+        Assert.assertTrue(manageJenkinsPage, "The search result does not contain the keyword text to search");
     }
 
     @DataProvider(name = "ToolsAndActions")
@@ -158,6 +158,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .inputToSearchField(inputText)
                 .getDropdownResultsInSearchField();
+
         Assert.assertEquals(searchResult, inputText);
     }
 
@@ -173,8 +174,9 @@ public class ManageJenkinsTest extends BaseTest {
                 .inputToSearchFieldUsingKeyboardShortcut(partOfSettingsName)
                 .selectAllDropdownResultsFromSearchField();
 
-        Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldContainsTextToSearch(partOfSettingsName));
-        Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldLinks());
+        Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldContainsTextToSearch(partOfSettingsName),
+                "The search result does not contain the part of settings name to search");
+        Assert.assertTrue(manageJenkinsPage.isDropdownResultsFromSearchFieldLinks(), "Not every search result is a link");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -318,7 +320,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(nodeName));
+        Assert.assertFalse(nodeNameList.contains(nodeName), "The node names' list contains the name of deleted node");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -335,7 +337,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(nodeName));
+        Assert.assertFalse(nodeNameList.contains(nodeName), "The node names' list contains the name of deleted node");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -406,15 +408,15 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickManageJenkinsPage()
                 .clickConfigureSystemLink();
 
-        Assert.assertTrue(configureSystemPage.isSmtpServerFieldExtendedEmailNotificationsEmpty());
-        Assert.assertTrue(configureSystemPage.isSmtpPortFieldExtendedEmailNotificationsBackToOriginal());
-        Assert.assertFalse(configureSystemPage.isUseSSLCheckboxChecked());
-        Assert.assertFalse(configureSystemPage.isTriggersAlwaysChecked());
-        Assert.assertFalse(configureSystemPage.isTriggersSuccessChecked());
-        Assert.assertTrue(configureSystemPage.isSmtpServerFieldEmailNotificationsEmpty());
-        Assert.assertFalse(configureSystemPage.isUseSMTPAuthenticationCheckboxChecked());
-        Assert.assertFalse(configureSystemPage.isUseSSLCheckboxEmailNotificationsChecked());
-        Assert.assertTrue(configureSystemPage.isSmtpPortFieldEmailNotificationsBackToOriginal());
+        Assert.assertTrue(configureSystemPage.isSmtpServerFieldExtendedEmailNotificationsEmpty(), "The 'SMTP server' field from 'Extended E-mail Notification' section is not empty");
+        Assert.assertTrue(configureSystemPage.isSmtpPortFieldExtendedEmailNotificationsBackToOriginal(), "The 'SMTP Port' field from 'Extended E-mail Notification' section is not back to original");
+        Assert.assertFalse(configureSystemPage.isUseSSLCheckboxChecked(), "The 'Use SSL' checkbox from advanced 'Extended E-mail Notification' section is checked");
+        Assert.assertFalse(configureSystemPage.isTriggersAlwaysChecked(), "The 'Always' checkbox from 'Default Triggers' section is checked");
+        Assert.assertFalse(configureSystemPage.isTriggersSuccessChecked(), "The 'Success' checkbox from 'Default Triggers' section is checked");
+        Assert.assertTrue(configureSystemPage.isSmtpServerFieldEmailNotificationsEmpty(), "The 'SMTP server' field from 'E-mail Notifications' section is not empty");
+        Assert.assertFalse(configureSystemPage.isUseSMTPAuthenticationCheckboxChecked(), "The 'Use SMTP Authentication' checkbox from advanced 'E-mail Notification' section is checked");
+        Assert.assertFalse(configureSystemPage.isUseSSLCheckboxEmailNotificationsChecked(), "The 'Use SSL' checkbox from advanced 'E-mail Notification' section is checked");
+        Assert.assertTrue(configureSystemPage.isSmtpPortFieldEmailNotificationsBackToOriginal(), "The 'SMTP Port' field from advanced 'E-mail Notification' section is not back to original");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -432,7 +434,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(nodeName));
+        Assert.assertFalse(nodeNameList.contains(nodeName), "The node names' list contains the name of deleted node");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -449,7 +451,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .clickYesButton()
                 .getNodesList();
 
-        Assert.assertFalse(nodeNameList.contains(nodeName));
+        Assert.assertFalse(nodeNameList.contains(nodeName), "The node names' list contains the name of deleted node");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -474,6 +476,7 @@ public class ManageJenkinsTest extends BaseTest {
                 .getSizeOfGlobalCredentialsNamesList();
 
         Assert.assertNotEquals(amountOfGlobalCredentialsBefore, amountOfGlobalCredentialsAfter);
-        Assert.assertTrue(new GlobalCredentialsPage(getDriver()).isCredentialWithSpecificNameDisplayed(credentialUsername), "Credentials with specific name weren't created");
+        Assert.assertTrue(new GlobalCredentialsPage(getDriver()).isCredentialWithSpecificNameDisplayed(credentialUsername),
+                "Credentials with specific name weren't created");
     }
 }

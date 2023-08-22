@@ -42,7 +42,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed());
+        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
         Assert.assertEquals(mainPage.getJobName(FREESTYLE_NAME), FREESTYLE_NAME);
     }
 
@@ -59,7 +59,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
     @Feature("Function")
@@ -75,7 +75,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
     @Feature("Function")
@@ -90,7 +90,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(FREESTYLE_NAME));
+        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
     @Feature("Function")
@@ -107,7 +107,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(jobIsDisplayed, "Error: the Freestyle Project's name is not displayed on Dashboard");
+        Assert.assertTrue(jobIsDisplayed, "The Freestyle Project's name is not displayed on Dashboard from Home page");
     }
 
     @Feature("Function")
@@ -123,9 +123,9 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogo();
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
         Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(FREESTYLE_NAME), "Error: the Freestyle Project's name is not displayed on Dashboard from MyViews page");
+                .jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from MyViews page");
     }
 
     @Feature("Function")
@@ -145,8 +145,8 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "Error: the folder name is not displayed");
-        Assert.assertTrue(nameJobFromMyViewsPage, "Created Freestyle project name is displayed on MyViews Page");
+        Assert.assertTrue(projectName.jobIsDisplayed(FREESTYLE_NAME), "The Freestyle Project's name is not displayed on Dashboard from Home page");
+        Assert.assertTrue(nameJobFromMyViewsPage, "The Freestyle Project's name is not displayed on Dashboard from MyViews page");
     }
 
     @Feature("Function")
@@ -177,7 +177,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .enterItemName(character)
                 .selectJobType(TestUtils.JobType.FreestyleProject);
 
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The button is enabled");
+        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
         Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
     }
 
@@ -204,7 +204,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .selectJobType(TestUtils.JobType.FreestyleProject)
                 .isOkButtonEnabled();
 
-        Assert.assertFalse(okButton);
+        Assert.assertFalse(okButton, "The OK button is enabled");
     }
 
     @Feature("Function")
@@ -359,7 +359,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "build not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Freestyle Project is not created");
     }
 
     @Feature("Function")
@@ -374,7 +374,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickIconBuildOpenConsoleOutput(1)
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(buildHeaderIsDisplayed, "Build is not created");
+        Assert.assertTrue(buildHeaderIsDisplayed, "The build of the Freestyle Project is not created");
     }
 
     @Feature("Function")
@@ -412,8 +412,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .getBuildHeaderText();
 
-        Assert.assertTrue(buildHeaderText.contains("DisplayName"),
-                "Error: The Display Name for the Build has not been changed.");
+        Assert.assertTrue(buildHeaderText.contains("DisplayName"), "The Display Name for the Build has not been changed.");
     }
 
     @Feature("Function")
@@ -499,7 +498,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickChangesViaLastBuildDropDownMenu()
                 .getTextOfPage();
 
-        Assert.assertTrue(text.contains("No changes."));
+        Assert.assertTrue(text.contains("No changes."), "The text from Changes page does not contain 'No changes.'");
     }
 
     @Feature("Function")
@@ -532,7 +531,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutputLastBuildDropDown()
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(consoleOutputTitle, "Error: Console Output Title is not displayed!");
+        Assert.assertTrue(consoleOutputTitle, "Console Output Title is not displayed!");
     }
 
     @Feature("Function")
@@ -573,7 +572,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .getFullBreadcrumbText();
 
         Assert.assertTrue(consoleOutput.isDisplayedBuildTitle(), "Console output page is not displayed");
-        Assert.assertTrue(breadcrumb.contains(lastBuildNumber));
+        Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full breadcrumb text does not contain the last build number");
     }
 
     @Feature("Function")
@@ -589,7 +588,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutput()
                 .isDisplayedBuildTitle();
 
-        Assert.assertTrue(consoleOutputTitleDisplayed, "Error: Console Output Title is not displayed!");
+        Assert.assertTrue(consoleOutputTitleDisplayed, "Console Output Title is not displayed!");
     }
 
     @Feature("Function")
@@ -730,7 +729,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickDelete(new FreestyleProjectPage(getDriver()))
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "Error");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
     @Feature("Function")
@@ -747,7 +746,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
     @Feature("Function")
@@ -763,7 +762,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(buildMessage, "error! No builds message is not display");
+        Assert.assertTrue(buildMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
     @Feature("Function")
@@ -780,7 +779,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickYesButton()
                 .isNoBuildsDisplayed();
 
-        Assert.assertTrue(noBuildsMessage, "error! No builds message is not display");
+        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
     @Feature("UI")
@@ -1028,7 +1027,7 @@ public class FreestyleProjectTest extends BaseTest {
 
         Assert.assertEquals(availableMode, "Enable");
         Assert.assertEquals(mainPage.getJobBuildStatusIcon(FREESTYLE_NAME), "Disabled");
-        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "Error: disabled project cannot be built");
+        Assert.assertFalse(mainPage.isScheduleBuildOnDashboardAvailable(FREESTYLE_NAME), "The 'Build Now' option is available on Dashboard from Home page");
     }
 
     @Feature("Function")
@@ -1047,7 +1046,8 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton();
 
         Assert.assertEquals(freestyleProjectPageDisabled.getDisableButtonText(), "Disable Project");
-        Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed());
+        Assert.assertTrue(freestyleProjectPageDisabled.isDisabledMessageNotDisplayed(),
+                "The info message 'This project is currently disabled' is displayed");
     }
 
     @Feature("Function")
@@ -1114,7 +1114,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildWithParameters()
                 .checkedTrue();
 
-        Assert.assertTrue(checkedSetByDefault);
+        Assert.assertTrue(checkedSetByDefault, "The 'This build requires parameters:' checkbox is unchecked");
     }
 
     @Feature("Function")
@@ -1142,7 +1142,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickSaveButton()
                 .clickBuildWithParameters();
 
-        Assert.assertTrue(buildPage.isParameterNameDisplayed(parameterName));
+        Assert.assertTrue(buildPage.isParameterNameDisplayed(parameterName), "The Parameter Name is not displayed in the 'This build requires parameters:' section");
         Assert.assertEquals(buildPage.getParameterDescription(), parameterDesc);
         Assert.assertEquals(buildPage.getChoiceParametersValuesList(), parameterChoicesList);
     }
@@ -1179,7 +1179,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConfigure()
                 .isExecuteConcurrentBuildsSelected();
 
-        Assert.assertTrue(statusExecuteConcurrentBuilds, "ExecuteConcurrentBuilds is not Selected");
+        Assert.assertTrue(statusExecuteConcurrentBuilds, "The 'Execute concurrent builds if necessary' checkbox is unchecked");
     }
 
     @Feature("Function")
@@ -1240,7 +1240,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickAdvancedDropdownMenu()
                 .getTrueBlockBuildWhenUpstreamProjectIsBuilding();
 
-        Assert.assertTrue(statusBlockBuildWhenUpstreamProjectIsBuilding, "error input is not selected");
+        Assert.assertTrue(statusBlockBuildWhenUpstreamProjectIsBuilding, "The 'Block build when upstream project is building' checkbox is unchecked");
     }
 
     @Feature("Function")
@@ -1264,7 +1264,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickConsoleOutputLastBuildDropDown()
                 .getConsoleOutputText();
 
-        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "Error: Directory is not used!");
+        Assert.assertTrue(actualConsoleOutputText.contains(directoryName), "The directory is not used!");
     }
 
     @Feature("Function")
@@ -1450,9 +1450,10 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink();
 
-        Assert.assertTrue(buildPage.isDisplayedAggregatedTestResultLink());
+        Assert.assertTrue(buildPage.isDisplayedAggregatedTestResultLink(), "The 'Aggregated Test Result' link is not displayed on Build page");
         Assert.assertEquals(buildPage.getTestResultsNodeText(), "Aggregated Test Result (no tests)");
-        Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/FREESTYLE_NAME/lastBuild/aggregatedTestReport"));
+        Assert.assertTrue(buildPage.getAggregateTestResultSideMenuLinkText().contains("/job/" + FREESTYLE_NAME + "/lastBuild/aggregatedTestReport"),
+                "The Attribute 'href' of the 'Aggregated Test Result' side menu link does not contain '/job/" + FREESTYLE_NAME + "/lastBuild/aggregatedTestReport'");
     }
 
     @Feature("Function")
@@ -1589,7 +1590,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickBuildIconStatus()
                 .getConsoleOutputText();
 
-        Assert.assertTrue(emailSentLog.contains("Sending email to: " + userEmail), "Error: Email report wasn't sent");
+        Assert.assertTrue(emailSentLog.contains("Sending email to: " + userEmail), "The Email report wasn't sent");
     }
 
     @Feature("Function")
@@ -1647,7 +1648,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .jobIsDisplayed(FREESTYLE_NAME);
 
-        Assert.assertTrue(projectIsPresent, "Error: the name of the Freestyle project is not shown");
+        Assert.assertTrue(projectIsPresent, "The name of the Freestyle project is not shown");
     }
 
     @Feature("Function")
@@ -1663,7 +1664,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickLogo()
                 .verifyJobIsPresent(NEW_FREESTYLE_NAME);
 
-        Assert.assertTrue(isProjectPresent, "error! project is not displayed!");
+        Assert.assertTrue(isProjectPresent, "The Freestyle project's name is not displayed on Dashboard from Home page!");
     }
 
     @Feature("Function")
@@ -1675,7 +1676,7 @@ public class FreestyleProjectTest extends BaseTest {
                 .dropDownMenuClickDelete(FREESTYLE_NAME)
                 .acceptAlert();
 
-        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed());
+        Assert.assertTrue(welcomeIsDisplayed.isWelcomeDisplayed(), "'Welcome to Jenkins!' text is not displayed");
         Assert.assertEquals(welcomeIsDisplayed.clickMyViewsSideMenuLink().getStatusMessageText(), "This folder is empty");
     }
 
@@ -1690,6 +1691,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickDeleteAndAccept()
                 .isWelcomeDisplayed();
 
-        Assert.assertTrue(isProjectPresent, "error was not show Welcome to Jenkins!");
+        Assert.assertTrue(isProjectPresent, "'Welcome to Jenkins!' text is not displayed");
     }
 }

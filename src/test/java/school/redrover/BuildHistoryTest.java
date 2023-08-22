@@ -107,7 +107,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration(not default) from timeline")
+    @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration (not default) from timeline")
     @Test(dataProvider = "project-type")
     public void testNavigateToBuildPageFromTimeline(TestUtils.JobType jobType) {
         final String jobName = "BUILD_PROJECT";
