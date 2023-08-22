@@ -6,7 +6,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -21,6 +20,14 @@ public class BuildHistoryTest extends BaseTest {
     private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration"+ RandomStringUtils.randomAlphanumeric(7);
     private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
 
+    @DataProvider(name = "project-type")
+    public Object[][] projectType() {
+        return new Object[][]{
+                {TestUtils.JobType.FreestyleProject},
+                {TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject},
+        };
+    }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
@@ -159,29 +166,20 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verify the ability to close the bubble pop up of Freestyle project build from timeline")
-    @Ignore
-    @Test
-    public void testCloseBuildPopUpOfFreestyle() {
-        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+    @Description("Verify the ability to close the bubble pop up of Freestyle, Pipeline, MultiConfiguration(not default) project build from timeline")
+    @Test(dataProvider = "project-type")
+    public void testCloseBuildPopUp(TestUtils.JobType jobType) {
+        final String jobName = "BUILD_PROJECT";
+        TestUtils.createJob(this, jobName, jobType, true);
 
-        boolean isBubblePopUpClosed =  new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
+        boolean isBubblePopUpClosed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(jobName)
                 .clickBuildsHistoryFromSideMenu()
-                .clickBuildNameOnTimeline(FREESTYLE_PROJECT_NAME)
+                .clickLastNotDefaultBuildFromTimeline()
                 .closeProjectWindowButtonInTimeline()
                 .isBuildPopUpInvisible();
 
         Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
-    }
-
-    @DataProvider(name = "project-type")
-    public Object[][] projectType() {
-        return new Object[][]{
-                {TestUtils.JobType.FreestyleProject},
-                {TestUtils.JobType.Pipeline},
-                {TestUtils.JobType.MultiConfigurationProject},
-        };
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -210,7 +208,6 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to build page of Multiconfiguration default from timeline")
-    @Ignore
     @Test
     public void testNavigateToMultiConfigurationDefaultBuildPageFromTimeline() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -223,23 +220,5 @@ public class BuildHistoryTest extends BaseTest {
                 .isDisplayedBuildPageHeaderText();
 
         Assert.assertTrue(buildPageHeader, "Wrong page");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verify the ability to close the bubble pop up of MultiConfiguration project build from timeline")
-    @Ignore
-    @Test
-    public void testCloseBuildPopUpOfMultiConfiguration() {
-        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        boolean isBubblePopUpClosed =  new MainPage(getDriver())
-                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
-                .clickBuildsHistoryFromSideMenu()
-                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
-                .closeProjectWindowButtonInTimeline()
-                .isBuildPopUpInvisible();
-
-        Assert.assertTrue(isBubblePopUpClosed, "Bubble pop up window not closed!");
     }
 }

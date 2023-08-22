@@ -171,7 +171,7 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     @Step("Click last not default build link badge on the Jenkins table")
     public BuildHistoryPage clickLastNotDefaultBuildFromTimeline() {
         new Actions(getDriver())
-                .pause(2500)
+                .pause(3000)
                 .perform();
 
         getDriver().navigate().refresh();
