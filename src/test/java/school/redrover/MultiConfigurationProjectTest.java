@@ -509,20 +509,27 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to make console output from MultiConfiguration Project Page")
-    @Test
-    public void testConsoleOutputFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
+    @Description("Verification of possibility to navigate to the build menu options from the MultiConfiguration Project Page")
+    @Test(dataProvider = "buildMenu")
+    public void testNavigateToOptionsFromProjectPage(
+        Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage ) {
+            TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        boolean consoleOutput = new MainPage(getDriver())
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .openBuildsDropDownMenu()
-                .clickConsoleOutputType()
-                .isDisplayedBuildTitle();
+            new MainPage(getDriver())
+                    .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                    .clickBuildNowFromSideMenu()
+                    .refreshPage()
+                    .openBuildsDropDownMenu()
+                    .clickBuildsOptionFromDropDownMenu(pageFromSideMenu.apply(getDriver()), optionsName);
 
-        Assert.assertTrue(consoleOutput, "Console output page is not displayed");
-    }
+            if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+                String actualPageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
+                Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
+            } else {
+                String breadcrumbHeader = pageFromSideMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+                Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
+            }
+        }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
@@ -546,22 +553,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
             String breadcrumbHeader = pageFromSideMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
             Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
         }
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information from MultiConfiguration Project Page")
-    @Test
-    public void testEditBuildInformationFromProjectPage() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String titleEditBuildPage = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
-                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
-                .clickEditBuildInformFromProjectPage()
-                .getHeaderText();
-
-        Assert.assertEquals(titleEditBuildPage, "Edit Build Information");
     }
 
     @Severity(SeverityLevel.TRIVIAL)
