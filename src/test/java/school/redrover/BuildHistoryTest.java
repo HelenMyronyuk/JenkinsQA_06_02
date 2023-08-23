@@ -140,6 +140,22 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
+    @Description("Verify that build bubble to Freestyle project is present on Time line on Build History page")
+    @Test
+    public void testOpenBuildPopUpOfFreestyle(){
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        boolean isBuildPopUpDisplayed = new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .clickLastNotDefaultBuildFromTimeline()
+                .isBuildPopUpHeaderTextDisplayed(FREESTYLE_PROJECT_NAME);
+
+        Assert.assertTrue(isBuildPopUpDisplayed, "Freestyle build pop up is not displayed!");
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
     @Description("Verify that default build bubble to MultiConfiguration project is present on Time line on Build History page")
     @Test
     public void testOpenDefaultBuildPopUpOfMultiConfiguration() {
