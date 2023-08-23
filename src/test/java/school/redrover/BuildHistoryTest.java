@@ -4,16 +4,23 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
+import school.redrover.model.jobsSidemenu.ChangesPage;
+import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.function.Function;
 
 public class BuildHistoryTest extends BaseTest {
 
@@ -257,5 +264,37 @@ public class BuildHistoryTest extends BaseTest {
                 .isBuildPopUpHeaderTextDisplayed(PIPELINE_PROJECT_NAME);
 
         Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
+
+    @DataProvider(name = "job-submenu-option")
+    public Object[][] provideJobSubmenuOption() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new WorkspacePage(driver), "Workspace", "Workspace of default on Built-In Node"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename", "Rename Configuration default"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to the page from Multiconfiguration default build drop-down")
+    @Test(dataProvider = "job-submenu-option")
+    public void testNavigateFromMultiConfigurationDefaultDropdownToPage(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String actualPageHeaderText = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openDefaultProjectDropdown()
+                .getPageFromDefaultProjectDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
 }
