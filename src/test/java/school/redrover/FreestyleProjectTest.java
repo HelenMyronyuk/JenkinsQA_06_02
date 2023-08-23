@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
-import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
@@ -484,24 +483,6 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_DESCRIPTION_TEXT);
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to build changes of Freestyle project")
-    @Test
-    public void testBuildChangesFromDropDown() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        String titleChange = new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_NAME)
-                .getHeader()
-                .clickLogo()
-                .openBuildDropDownMenu("#1")
-                .clickChangesBuildFromDropDown()
-                .getTextChanges();
-
-        Assert.assertEquals(titleChange, "Changes");
-    }
-
     @DataProvider(name = "buildMenu")
     public Object[][] getBuildMenu() {
         return new Object[][] {
@@ -533,6 +514,30 @@ public class FreestyleProjectTest extends BaseTest {
             String breadcrumbHeader = pageFromDropDown.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
             Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
         }
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification of navigation to options page for Freestyle Project from build drop-down menu on Dashboard from Home page")
+    @Test(dataProvider = "buildMenu")
+    public void testNavigateToOptionsFromDropDown(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+        String actualPageOrBreadcrumbHeader;
+        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_NAME)
+                .getHeader()
+                .clickLogoWithPause()
+                .openBuildDropDownMenu("#1")
+                .clickBuildOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+
+        if ("Changes".equals(dropDownMenuLink) || "Console Output".equals(dropDownMenuLink)) {
+            actualPageOrBreadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
+        } else {
+            actualPageOrBreadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
+        }
+        Assert.assertTrue(actualPageOrBreadcrumbHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -576,24 +581,6 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Verification of possibility to console output for Freestyle project from drop-down menu")
-    @Test
-    public void testConsoleOutputFromDropDown() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        boolean consoleOutputTitle = new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_NAME)
-                .getHeader()
-                .clickLogo()
-                .openLastBuildDropDownMenu()
-                .clickConsoleOutputLastBuildDropDown()
-                .isDisplayedBuildTitle();
-
-        Assert.assertTrue(consoleOutputTitle, "Console Output Title is not displayed!");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
     @Description("Verification of possibility to make console output from last build of Freestyle project")
     @Test
     public void testConsoleOutputFromLastBuild() {
@@ -618,24 +605,6 @@ public class FreestyleProjectTest extends BaseTest {
         Assert.assertTrue(breadcrumb.contains(lastBuildNumber), "The full breadcrumb text does not contain the last build number");
     }
 
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of possibility to edit build information from drop-down menu for Freestyle Project")
-    @Test
-    public void testEditBuildInformationFromDropDown() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        String getTitle = new MainPage(getDriver())
-                .clickBuildByGreenArrow(FREESTYLE_NAME)
-                .getHeader()
-                .clickLogo()
-                .openBuildDropDownMenu("#1")
-                .clickEditBuildInformFromDropDown()
-                .getHeaderText();
-
-        Assert.assertEquals(getTitle, "Edit Build Information");
-    }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
@@ -702,25 +671,6 @@ public class FreestyleProjectTest extends BaseTest {
                 .getDescriptionText();
 
         Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of possibility to delete build from drop-down menu for Freestyle Project")
-    @Test
-    public void testDeleteBuildNowFromDropDown() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        boolean noBuildsMessage = new MainPage(getDriver())
-                .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .getHeader()
-                .clickLogo()
-                .clickBuildDropdownMenuDeleteBuild("#1")
-                .clickDelete(new FreestyleProjectPage(getDriver()))
-                .isNoBuildsDisplayed();
-
-        Assert.assertTrue(noBuildsMessage, "'No builds' message is not displayed on the Freestyle Project's page");
     }
 
     @Severity(SeverityLevel.CRITICAL)
