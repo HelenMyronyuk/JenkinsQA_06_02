@@ -3,7 +3,6 @@ package school.redrover.runner;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import school.redrover.runner.order.OrderForTests;
@@ -18,10 +17,6 @@ import java.util.stream.Collectors;
 
 @Listeners({FilterForTests.class, OrderForTests.class})
 public abstract class BaseTest {
-
-    private WebDriverWait wait2;
-    private WebDriverWait wait5;
-    private WebDriverWait wait10;
 
     private WebDriver driver;
 
@@ -103,9 +98,6 @@ public abstract class BaseTest {
         if (driver != null) {
             driver.quit();
             driver = null;
-            wait2 = null;
-            wait5 = null;
-            wait10 = null;
             ProjectUtils.log("Browser closed");
         }
     }
@@ -131,26 +123,5 @@ public abstract class BaseTest {
 
     protected WebDriver getDriver() {
         return driver;
-    }
-
-    protected WebDriverWait getWait5() {
-        if (wait5 == null) {
-            wait5 = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
-        }
-        return wait5;
-    }
-
-    protected WebDriverWait getWait2() {
-        if (wait2 == null) {
-            wait2 = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
-        }
-        return wait2;
-    }
-
-    protected WebDriverWait getWait10() {
-        if (wait10 == null) {
-            wait10 = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        }
-        return wait10;
     }
 }
