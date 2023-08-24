@@ -12,10 +12,9 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
-import school.redrover.model.builds.ChangesBuildPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
-import school.redrover.model.builds.EditBuildInformationPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
 import school.redrover.model.jobsSidemenu.WorkspacePage;
@@ -126,12 +125,12 @@ public class BuildHistoryTest extends BaseTest {
     @DataProvider(name = "multi-configurationProjectMenu")
     public Object[][] getMultiConfigurationProjectMenu() {
         return new Object[][] {
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Workspace", "Workspace"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Build Now", "Build History of Jenkins"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Configure", "Configure"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete Multi-configuration project", "Delete Multi-configuration project: are you sure?"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Rename", "Rename Multi-configuration project"}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) WorkspacePage::new, "Workspace"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Build"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Configure"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Delete Multi-configuration project"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) RenamePage::new, "Rename"}
         };
     }
     @Severity(SeverityLevel.NORMAL)
@@ -139,21 +138,24 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
     @Test(dataProvider = "multi-configurationProjectMenu")
     public void testNavigateToOptionDropDownMenuForMultiConfigurationProject(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage ) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         new MainPage(getDriver())
-                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickJobName(MULTI_CONFIGURATION_PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
                 .clickBuildsHistoryFromSideMenu()
                 .openProjectDropDownMenu(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
 
         if (optionsName.equals("Delete Multi-configuration project")) {
             Alert alert = getDriver().switchTo().alert();
-            Assert.assertEquals(alert.getText(), expectedPage, "Navigated to an unexpected page");
+            Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
         } else {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
-            Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
         }
     }
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.BuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.runner.TestUtils;
@@ -16,7 +17,7 @@ import school.redrover.runner.TestUtils;
 import java.time.Duration;
 import java.util.List;
 
-public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
+public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
 
     @FindBy(xpath = "//table[@id='projectStatus']/tbody/tr/td[4]")
     private WebElement statusMessage;
@@ -71,6 +72,11 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return getHeading();
     }
 
     @Step("Click build console output on the Jenkins table")
@@ -228,13 +234,13 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
     }
 
     @Step("Select an option from the project menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionsFromMenu(ReturnedPage pageToReturn, String sideMenuLink) {
-        WebElement optionName = getDriver().
-                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + sideMenuLink + "')]"));
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage clickOptionsFromMenu(SubmenuPage submenuPage, String optionName) {
+        WebElement option = getDriver().
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + optionName + "')]"));
 
-        TestUtils.scrollWithPauseByActions(this, optionName, 800);
-        getWait2().until(ExpectedConditions.elementToBeClickable(optionName)).click();
+        TestUtils.scrollWithPauseByActions(this, option, 800);
+        getWait2().until(ExpectedConditions.elementToBeClickable(option)).click();
 
-        return pageToReturn;
+        return submenuPage;
     }
 }

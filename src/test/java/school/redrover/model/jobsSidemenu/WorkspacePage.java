@@ -6,15 +6,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
 
-public class WorkspacePage extends BaseMainHeaderPage<WorkspacePage> {
+public class WorkspacePage extends BaseSubmenuPage<WorkspacePage> {
 
     @FindBy(xpath = "//h1")
     private WebElement headerText;
 
     public WorkspacePage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Workspace";
     }
 
     @Step("Get Heading text from Workspaces Page ")

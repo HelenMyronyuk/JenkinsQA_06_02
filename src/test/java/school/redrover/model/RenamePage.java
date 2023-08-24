@@ -1,12 +1,14 @@
 package school.redrover.model;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.base.BaseSubmenuPage;
 
-public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseMainHeaderPage<RenamePage<JobTypePage>> {
+public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseSubmenuPage<RenamePage<JobTypePage>> {
 
     @FindBy(name = "newName")
     private WebElement newName;
@@ -14,12 +16,16 @@ public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseMainHea
     @FindBy(name = "Submit")
     private WebElement renameButton;
 
-    private final JobTypePage jobTypePage;
+    private JobTypePage jobTypePage;
 
     public RenamePage(JobTypePage jobTypePage) {
         super(jobTypePage.getDriver());
         this.jobTypePage = jobTypePage;
     }
+
+   public RenamePage(WebDriver webDriver) {
+       super(webDriver);
+   }
 
     @Step("enter new job name")
     public RenamePage<JobTypePage> enterNewName(String name) {
@@ -41,5 +47,10 @@ public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseMainHea
         renameButton.click();
 
         return new CreateItemErrorPage(getDriver());
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Rename";
     }
 }

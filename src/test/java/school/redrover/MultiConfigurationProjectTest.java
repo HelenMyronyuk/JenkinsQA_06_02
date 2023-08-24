@@ -13,6 +13,7 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
@@ -35,10 +36,10 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @DataProvider(name = "buildMenu")
     public Object[][] getBuildMenu() {
         return new Object[][] {
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
         };
     }
 
@@ -483,8 +484,8 @@ public class MultiConfigurationProjectTest extends BaseTest {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String lastBuildNumber = new MainPage(getDriver())
-                .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
                 .refreshPage()
                 .getLastBuildNumber();
 
