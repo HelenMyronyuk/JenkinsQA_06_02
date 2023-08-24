@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import school.redrover.runner.order.OrderForTests;
@@ -20,10 +19,6 @@ import java.util.stream.Collectors;
 
 @Listeners({FilterForTests.class, OrderForTests.class})
 public abstract class BaseTest {
-
-    private WebDriverWait wait2;
-    private WebDriverWait wait5;
-    private WebDriverWait wait10;
 
     private WebDriver driver;
 
@@ -111,9 +106,6 @@ public abstract class BaseTest {
         if (driver != null) {
             driver.quit();
             driver = null;
-            wait2 = null;
-            wait5 = null;
-            wait10 = null;
             ProjectUtils.log("Browser closed");
         }
     }

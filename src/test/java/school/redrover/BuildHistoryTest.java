@@ -4,16 +4,26 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Alert;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
+import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.jobs.MultiConfigurationProjectPage;
+import school.redrover.model.builds.EditBuildInformationPage;
 import school.redrover.model.jobs.PipelinePage;
+import school.redrover.model.jobsSidemenu.ChangesPage;
+import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.function.Function;
 
 public class BuildHistoryTest extends BaseTest {
 
@@ -111,6 +121,40 @@ public class BuildHistoryTest extends BaseTest {
                 .getBubbleTitleOnTimeline();
 
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
+    }
+
+    @DataProvider(name = "multi-configurationProjectMenu")
+    public Object[][] getMultiConfigurationProjectMenu() {
+        return new Object[][] {
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Workspace", "Workspace"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Build Now", "Build History of Jenkins"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Configure", "Configure"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete Multi-configuration project", "Delete Multi-configuration project: are you sure?"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Rename", "Rename Multi-configuration project"}
+        };
+    }
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
+    @Test(dataProvider = "multi-configurationProjectMenu")
+    public void testNavigateToOptionDropDownMenuForMultiConfigurationProject(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage ) {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        if (optionsName.equals("Delete Multi-configuration project")) {
+            Alert alert = getDriver().switchTo().alert();
+            Assert.assertEquals(alert.getText(), expectedPage, "Navigated to an unexpected page");
+        } else {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
+        }
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -255,6 +299,56 @@ public class BuildHistoryTest extends BaseTest {
                 .clickBuildsHistoryFromSideMenu()
                 .clickBuildNameOnTimeline(PIPELINE_PROJECT_NAME)
                 .isBuildPopUpHeaderTextDisplayed(PIPELINE_PROJECT_NAME);
+
+        Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
+
+    @DataProvider(name = "job-submenu-option")
+    public Object[][] provideJobSubmenuOption() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new WorkspacePage(driver), "Workspace", "Workspace of default on Built-In Node"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename", "Rename Configuration default"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to the page from Multiconfiguration default build drop-down")
+    @Test(dataProvider = "job-submenu-option")
+    public void testNavigateFromMultiConfigurationDefaultDropdownToPage(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String actualPageHeaderText = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openDefaultProjectDropdown()
+                .getPageFromDefaultProjectDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
+                .getPageHeaderText();
+
+        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @io.qameta.allure.Description("Verify that build bubble to Multiconfiguration project is present on Time line on Build History page")
+    @Test
+    public void testOpenBuildTableOfMultiConfigurationFromTimeline() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        boolean isBuildPopUpDisplayed = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .isBuildPopUpHeaderTextDisplayed(MULTI_CONFIGURATION_PROJECT_NAME);
 
         Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
     }

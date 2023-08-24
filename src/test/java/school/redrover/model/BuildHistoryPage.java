@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.BuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.runner.TestUtils;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
@@ -60,6 +62,12 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
 
     @FindBy(xpath = "//div[@class='simileAjax-bubble-contentContainer simileAjax-bubble-contentContainer-pngTranslucent']//a")
     private WebElement notDefaultBuildLinkFromBubblePopUp;
+
+    @FindBy(xpath = "//td/a[contains(@href, 'default')]/span")
+    private WebElement defaultProjectLink;
+
+    @FindBy(xpath = "//td/a[contains(@href, 'default')]/button")
+    private WebElement defaultProjectDropdown;
 
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
@@ -190,5 +198,43 @@ public class BuildHistoryPage extends BaseMainHeaderPage<BuildHistoryPage> {
         getWait10().until(ExpectedConditions.elementToBeClickable(notDefaultBuildLinkFromBubblePopUp)).click();
 
         return new BuildPage(getDriver());
+    }
+
+    @Step("Open default build drop-down menu")
+    public BuildHistoryPage openDefaultProjectDropdown() {
+        new Actions(getDriver())
+                .moveToElement(defaultProjectLink)
+                .pause(Duration.ofMillis(300))
+                .perform();
+        getWait2().until(ExpectedConditions.visibilityOf(defaultProjectDropdown)).sendKeys(Keys.RETURN);
+
+        return this;
+    }
+
+    @Step("Get a page form the 'Default' project drop-down menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDefaultProjectDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
+
+        return pageToReturn;
+    }
+
+    @Step("Open a project drop-down menu")
+    public BuildHistoryPage openProjectDropDownMenu(String projectName) {
+        getDriver().
+                findElement(By.xpath("//a[@href='/job/" + projectName + "/']/button[@class='jenkins-menu-dropdown-chevron']"))
+                .sendKeys(Keys.ENTER);
+
+        return this;
+    }
+
+    @Step("Select an option from the project menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionsFromMenu(ReturnedPage pageToReturn, String sideMenuLink) {
+        WebElement optionName = getDriver().
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + sideMenuLink + "')]"));
+
+        TestUtils.scrollWithPauseByActions(this, optionName, 800);
+        getWait2().until(ExpectedConditions.elementToBeClickable(optionName)).click();
+
+        return pageToReturn;
     }
 }

@@ -306,4 +306,19 @@ public class HeaderTest extends BaseTest {
 
         Assert.assertEquals(actualUserName, "Jenkins User ID: " + USER_NAME);
     }
+
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("UI")
+    @Description("Verification of possibility to hover mouse icon style change on Header")
+    @Test
+    public void testIconStyleChange() {
+        List<String> locatorList = List.of("//a[@href='/logout']", "//a[@class='model-link' and contains(@href, '/user/')]",
+                "//a[@id='visible-am-button']", "//a[@id='visible-sec-am-button']");
+
+        boolean styleChange = new MainPage(getDriver())
+                .getHeader()
+                .isIconStyleChanged(locatorList);
+
+        Assert.assertTrue(styleChange, "Icon style is not change!");
+    }
 }

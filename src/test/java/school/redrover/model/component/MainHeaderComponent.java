@@ -293,4 +293,24 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
         return this;
     }
+
+    @Step("Verify of icon style change when hover mouse")
+    public boolean isIconStyleChanged(List<String> locators) {
+        for (String iconLocator: locators) {
+            WebElement icon = getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(iconLocator)));
+
+            new Actions(getDriver())
+                    .moveToElement(icon)
+                    .perform();
+
+            String textDecoration = icon.getCssValue("text-decoration");
+            String background = icon.getCssValue("background");
+
+            if (!textDecoration.contains("underline") || !background.contains("64, 64, 64")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
