@@ -133,26 +133,26 @@ public abstract class BaseTest {
         return driver;
     }
 
-    protected WebDriverWait getWait5() {
-        if (wait5 == null) {
-            wait5 = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
-        }
-        return wait5;
-    }
-
-    protected WebDriverWait getWait2() {
-        if (wait2 == null) {
-            wait2 = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
-        }
-        return wait2;
-    }
-
-    protected WebDriverWait getWait10() {
-        if (wait10 == null) {
-            wait10 = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        }
-        return wait10;
-    }
+//    protected WebDriverWait getWait5() {
+//        if (wait5 == null) {
+//            wait5 = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
+//        }
+//        return wait5;
+//    }
+//
+//    protected WebDriverWait getWait2() {
+//        if (wait2 == null) {
+//            wait2 = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+//        }
+//        return wait2;
+//    }
+//
+//    protected WebDriverWait getWait10() {
+//        if (wait10 == null) {
+//            wait10 = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+//        }
+//        return wait10;
+//    }
 
     @Step("Init Job Name")
     public String initName(){
