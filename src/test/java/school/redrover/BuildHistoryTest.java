@@ -334,4 +334,22 @@ public class BuildHistoryTest extends BaseTest {
 
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @io.qameta.allure.Description("Verify that build bubble to Multiconfiguration project is present on Time line on Build History page")
+    @Test
+    public void testOpenBuildTableOfMultiConfigurationFromTimeline() {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        boolean isBuildPopUpDisplayed = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)
+                .isBuildPopUpHeaderTextDisplayed(MULTI_CONFIGURATION_PROJECT_NAME);
+
+        Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
 }
