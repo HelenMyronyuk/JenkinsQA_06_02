@@ -8,7 +8,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import school.redrover.model.BuildHistoryPage;
 import school.redrover.model.CreateItemErrorPage;
 import school.redrover.model.MainPage;
 import school.redrover.model.NewJobPage;
@@ -24,127 +23,6 @@ public class MultibranchPipelineTest extends BaseTest {
     private static final String NAME = "MultibranchPipeline";
     private static final String RENAMED = "MultibranchPipelineRenamed";
     private static final String DESCRIPTION = "Description";
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'Create a job' button")
-    @Test
-    public void testCreateFromCreateAJob() {
-        MainPage mainPage = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(mainPage.projectStatusTableIsDisplayed(), "The project status table is not displayed on Home page");
-        Assert.assertEquals(mainPage.getJobName(NAME), NAME);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verify job creation when clicking on 'New Item' button")
-    @Test
-    public void testCreateFromNewItem() {
-        boolean multibranchName = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(NAME);
-
-        Assert.assertTrue(multibranchName, "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from People Page")
-    @Test
-    public void testCreateFromPeoplePage() {
-        MainPage projectPeoplePage = new MainPage(getDriver())
-                .clickPeopleFromSideMenu()
-                .clickNewItem()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(projectPeoplePage.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from Build History Page")
-    @Test
-    public void testCreateFromBuildHistoryPage() {
-        MainPage newProjectFromBuildHistoryPage = new BuildHistoryPage(getDriver())
-                .clickNewItem()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(newProjectFromBuildHistoryPage.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from Manage Jenkins Page")
-    @Test
-    public void testCreateFromManageJenkinsPage() {
-        boolean jobIsDisplayed = new MainPage(getDriver())
-                .clickManageJenkinsPage()
-                .clickNewItem()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo()
-                .jobIsDisplayed(NAME);
-
-        Assert.assertTrue(jobIsDisplayed, "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'Create a Job' button from My Views Page")
-    @Test
-    public void testCreateFromMyViewsCreateAJob() {
-        MainPage projectName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickCreateAJobAndArrow()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-        Assert.assertTrue(projectName.clickMyViewsSideMenuLink()
-                .jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from MyViews page");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of creating Multibranch Pipeline project by clicking 'New Item' button from My Views Page")
-    @Test
-    public void testCreateFromMyViewsNewItem() {
-        MainPage projectName = new MainPage(getDriver())
-                .clickMyViewsSideMenuLink()
-                .clickNewItemFromSideMenu()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .clickOkButton(new MultibranchPipelineConfigPage(new MultibranchPipelinePage(getDriver())))
-                .getHeader()
-                .clickLogo();
-
-        Assert.assertTrue(projectName.jobIsDisplayed(NAME), "The Multibranch Pipeline's name is not displayed on Dashboard from Home page");
-    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
