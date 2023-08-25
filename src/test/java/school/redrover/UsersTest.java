@@ -30,6 +30,8 @@ public class UsersTest extends BaseTest {
     private static final String EXPECTED_TEXT_ALERT_INCORRECT_LOGIN_AND_PASSWORD = "Invalid username or password";
     protected static final String PROJECT_NAME = "PROJECT_NAME";
 
+    protected static final String DESCRIPTION_TEXT = "Description text";
+
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")
     @Description("Verification of creating New User")
@@ -140,11 +142,11 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .clickFirstUserEditButton()
                 .clearDescriptionArea()
-                .addDescription("Description text")
+                .addDescription(DESCRIPTION_TEXT)
                 .clickSaveButton()
                 .getDescriptionText();
 
-        Assert.assertEquals("Description text", descriptionText);
+        Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -157,11 +159,11 @@ public class UsersTest extends BaseTest {
                 .clickManageUsers()
                 .clickFirstUserEditButton()
                 .clearDescriptionArea()
-                .addDescription("Description text")
+                .addDescription(DESCRIPTION_TEXT)
                 .clickPreview()
                 .getPreviewText();
 
-        Assert.assertEquals("Description text", descriptionText);
+        Assert.assertEquals(descriptionText, DESCRIPTION_TEXT);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -563,7 +565,7 @@ public class UsersTest extends BaseTest {
     @Feature("Function")
     @Description("Verify that deleting created User can be canceled from side menu")
     @Test
-    public void testCancelDeletingFromSideMenu(){
+    public void testCancelDeletingFromSideMenu() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userIsExist = new MainPage(getDriver())
@@ -583,7 +585,7 @@ public class UsersTest extends BaseTest {
     @Feature("Function")
     @Description("Verify that deleting created User can be canceled from 'bin' icon")
     @Test
-    public void testCancelDeletingFromBin(){
+    public void testCancelDeletingFromBin() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userIsExist = new MainPage(getDriver())
@@ -603,7 +605,7 @@ public class UsersTest extends BaseTest {
     @Feature("Function")
     @Description("Verify that deleting created User can be canceled from Configure page")
     @Test
-    public void testCancelDeletingFromConfigurePage(){
+    public void testCancelDeletingFromConfigurePage() {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
         boolean userIsExist = new MainPage(getDriver())
