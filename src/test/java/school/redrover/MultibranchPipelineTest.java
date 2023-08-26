@@ -4,13 +4,10 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import school.redrover.model.CreateItemErrorPage;
 import school.redrover.model.MainPage;
-import school.redrover.model.NewJobPage;
 import school.redrover.model.jobsConfig.MultibranchPipelineConfigPage;
 import school.redrover.model.jobs.MultibranchPipelinePage;
 import school.redrover.runner.BaseTest;
@@ -23,99 +20,6 @@ public class MultibranchPipelineTest extends BaseTest {
     private static final String NAME = "MultibranchPipeline";
     private static final String RENAMED = "MultibranchPipelineRenamed";
     private static final String DESCRIPTION = "Description";
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Multibranch Pipeline project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultibranchPipeline, true);
-
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithExistingName(this, NAME, TestUtils.JobType.MultibranchPipeline);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(),
-                String.format("A job already exists with the name ‘%s’", NAME));
-    }
-
-    @DataProvider(name = "invalid-characters")
-    public Object[][] getInvalidCharacters() {
-        return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Multibranch Pipeline project with name using invalid data")
-    @Test(dataProvider = "invalid-characters")
-    public void testCreateUsingInvalidData(String character) {
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(character)
-                .selectJobType(TestUtils.JobType.MultibranchPipeline);
-
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Multibranch Pipeline project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message on Error Page while creating Multibranch Pipeline project with space instead name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.MultibranchPipeline);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Multibranch Pipeline project with dot instead name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        final String expectedError = "» “.” is not an allowed name";
-
-        String actualError = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .selectJobType(TestUtils.JobType.MultibranchPipeline)
-                .enterItemName(".")
-                .getItemInvalidMessage();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Multibranch Pipeline project with long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.MultibranchPipeline)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
-    }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")

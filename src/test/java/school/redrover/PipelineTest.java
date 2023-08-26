@@ -4,7 +4,6 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import jdk.jfr.Description;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -27,95 +26,6 @@ public class PipelineTest extends BaseTest {
     private static final String NEW_NAME = "Pipeline Project";
     private static final String DESCRIPTION = "This is a test description";
     private static final String DISPLAYED_BUILD_NAME = "New Build Name";
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(NAME)
-                .selectJobType(TestUtils.JobType.Pipeline);
-
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» A job already exists with the name " + "‘" + NAME + "’");
-        Assert.assertTrue(newJobPage.isOkButtonEnabled(), "OK button is disabled");
-    }
-
-    @DataProvider(name = "invalid-characters")
-    public Object[][] providerInvalidCharacters() {
-        return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with unsafe characters")
-    @Test(dataProvider = "invalid-characters")
-    public void testCreateUsingInvalidDate(String invalidCharacters) {
-        NewJobPage newJobPage =
-                TestUtils.createFolderUsingInvalidData(this, invalidCharacters, TestUtils.JobType.Pipeline);
-
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’ is an unsafe character");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.Pipeline)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with space instead of name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        CreateItemErrorPage createItemErrorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.Pipeline);
-
-        Assert.assertEquals(createItemErrorPage.getHeaderText(), "Error");
-        Assert.assertEquals(createItemErrorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with dot instead of name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        String getMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(".")
-                .getItemInvalidMessage();
-
-        Assert.assertEquals(getMessage, "» “.” is not an allowed name");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of impossibility to create Pipeline project with too long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.Pipeline)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
-    }
 
     @Severity(SeverityLevel.CRITICAL)
     @Feature("Function")

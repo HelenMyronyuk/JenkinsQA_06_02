@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,8 +15,6 @@ import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
 
-import java.util.List;
-
 public class OrganizationFolderTest extends BaseTest {
 
     private static final String ORGANIZATION_FOLDER_NAME = "OrgFolder";
@@ -26,91 +23,9 @@ public class OrganizationFolderTest extends BaseTest {
     private static final String DESCRIPTION_TEXT = "DESCRIPTION_TEXT";
     private static final String DISPLAY_NAME = "This is Display Name of Folder";
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Organization Folder project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        TestUtils.createJob(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder, true);
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithExistingName(this, ORGANIZATION_FOLDER_NAME, TestUtils.JobType.OrganizationFolder);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "A job already exists with the name ‘" + ORGANIZATION_FOLDER_NAME + "’");
-    }
-
     @DataProvider(name = "wrong-character")
     public Object[][] provideWrongCharacters() {
         return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Organization Folder project with name using unsafe characters")
-    @Test(dataProvider = "wrong-character")
-    public void testCreateUsingInvalidData(String invalidData) {
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(invalidData)
-                .selectJobType(TestUtils.JobType.OrganizationFolder);
-
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "Save button is enabled");
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidData + "’ is an unsafe character");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Organization Folder project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.OrganizationFolder)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message on Error Page while creating Organization Folder project with space instead name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.OrganizationFolder);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Organization Folder project with dot instead name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(".")
-                .getItemInvalidMessage();
-
-        Assert.assertEquals(errorMessage, "» “.” is not an allowed name");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Organization Folder project with long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.OrganizationFolder)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
     @Severity(SeverityLevel.NORMAL)

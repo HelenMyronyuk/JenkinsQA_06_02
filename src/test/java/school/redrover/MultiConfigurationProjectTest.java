@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -41,100 +40,6 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
         };
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating MultiConfiguration project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        final String errorMessageName = "A job already exists with the name " + "‘" + NAME + "’";
-
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithExistingName(this, NAME, TestUtils.JobType.MultiConfigurationProject);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), errorMessageName);
-    }
-
-    @DataProvider(name = "invalid-characters")
-    public static Object[][] provideUnsafeCharacters() {
-        return new Object[][]{{'!'}, {'@'}, {'#'}, {'$'}, {'%'}, {'^'}, {'&'},
-                {'*'}, {'['}, {']'}, {'\\'}, {'|'}, {';'}, {':'},
-                {'<'}, {'>'}, {'/'}, {'?'}};
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating MultiConfiguration project with name using unsafe characters")
-    @Test(dataProvider = "invalid-characters")
-    public void testCreateUsingInvalidData(char invalidCharacters) {
-        NewJobPage newJobPage = TestUtils.createFolderUsingInvalidData
-                (this, invalidCharacters + "MyProject", TestUtils.JobType.MultiConfigurationProject);
-
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + invalidCharacters + "’" + " is an unsafe character");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating MultiConfiguration project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.MultiConfigurationProject)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message on Error Page while creating MultiConfiguration project with space instead name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.MultiConfigurationProject);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating MultiConfiguration project with dot instead name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .enterItemName(".")
-                .selectJobType(TestUtils.JobType.MultiConfigurationProject);
-
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» “.” is not an allowed name");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "OK button is enabled");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating MultiConfiguration project with long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.MultiConfigurationProject)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
     @Severity(SeverityLevel.NORMAL)

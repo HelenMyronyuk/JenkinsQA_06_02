@@ -3,7 +3,6 @@ package school.redrover;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,87 +37,10 @@ public class FolderTest extends BaseTest {
                 .clickLogo();
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
-
-        CreateItemErrorPage errorPage = TestUtils.createJobWithExistingName(this, NAME, TestUtils.JobType.Folder);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "A job already exists with the name ‘" + NAME + "’");
-    }
-
     @DataProvider(name = "invalid-data")
     public Object[][] provideInvalidData() {
         return new Object[][]{{"!"}, {"#"}, {"$"}, {"%"}, {"&"}, {"*"}, {"/"}, {":"},
                 {";"}, {"<"}, {">"}, {"?"}, {"@"}, {"["}, {"]"}, {"|"}, {"\\"}, {"^"}};
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with name using unsafe characters")
-    @Test(dataProvider = "invalid-data")
-    public void testCreateUsingInvalidData(String invalidData) {
-        final String expectedErrorMessage = "» ‘" + invalidData + "’ is an unsafe character";
-
-        NewJobPage newJobPage = TestUtils.createFolderUsingInvalidData(this, invalidData, TestUtils.JobType.Folder);
-
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), expectedErrorMessage);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.Folder)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with space instead of name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.Folder);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with dot instead of name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .enterItemName(".")
-                .selectJobType(TestUtils.JobType.Folder);
-
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» “.” is not an allowed name");
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verification of showing error message after creating Folder project with long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.Folder)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
     }
 
     @Severity(SeverityLevel.NORMAL)

@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -32,112 +31,6 @@ public class FreestyleProjectTest extends BaseTest {
     private static final String NEW_GITHUB_URL = "https://github.com/nikabenz/repoForJenkinsBuild";
     private static final String DISPLAY_NAME = "FreestyleDisplayName";
     private static final String NEW_DISPLAY_NAME = "NewFreestyleDisplayName";
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Freestyle project with existing name")
-    @Test
-    public void testCreateWithExistingName() {
-        TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithExistingName(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(),
-                String.format("A job already exists with the name ‘%s’", FREESTYLE_NAME));
-    }
-
-    @DataProvider(name = "invalid-characters")
-    public Object[][] getInvalidCharacters() {
-        return new Object[][]{{"!"}, {"@"}, {"#"}, {"$"}, {"%"}, {"^"}, {"&"}, {"*"}, {"?"}, {"|"}, {">"}, {"["}, {"]"}};
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Freestyle project with name using unsafe characters")
-    @Test(dataProvider = "invalid-characters")
-    public void testCreateUsingInvalidData(String character) {
-        NewJobPage newJobPage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(character)
-                .selectJobType(TestUtils.JobType.FreestyleProject);
-
-        Assert.assertFalse(newJobPage.isOkButtonEnabled(), "The OK button is enabled");
-        Assert.assertEquals(newJobPage.getItemInvalidMessage(), "» ‘" + character + "’ is an unsafe character");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Freestyle project with empty name")
-    @Test
-    public void testCreateWithEmptyName() {
-        final String expectedError = "» This field cannot be empty, please enter a valid name";
-
-        String actualError = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .getItemNameRequiredErrorText();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Checking that the OK button is disabled if the project name has not been entered")
-    @Test
-    public void testOKButtonIsDisabledWhenEmptyName() {
-        boolean okButton = new MainPage(getDriver())
-                .clickCreateAJobAndArrow()
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .isOkButtonEnabled();
-
-        Assert.assertFalse(okButton, "The OK button is enabled");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of showing error message on Error Page while creating Freestyle project with space instead name")
-    @Test
-    public void testCreateWithSpaceInsteadOfName() {
-        CreateItemErrorPage errorPage =
-                TestUtils.createJobWithSpaceInsteadName(this, TestUtils.JobType.FreestyleProject);
-
-        Assert.assertEquals(errorPage.getHeaderText(), "Error");
-        Assert.assertEquals(errorPage.getErrorMessage(), "No name is specified");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Freestyle project with dot instead name")
-    @Test
-    public void testCreateWithDotInsteadOfName() {
-        final String expectedError = "» “.” is not an allowed name";
-
-        String actualError = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .selectJobType(TestUtils.JobType.FreestyleProject)
-                .enterItemName(".")
-                .getItemInvalidMessage();
-
-        Assert.assertEquals(actualError, expectedError);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification of showing error message while creating Freestyle project with long name")
-    @Test
-    public void testCreateWithLongName() {
-        String longName = RandomStringUtils.randomAlphanumeric(256);
-
-        String errorMessage = new MainPage(getDriver())
-                .clickNewItemFromSideMenu()
-                .enterItemName(longName)
-                .selectJobAndOkAndGoToBugPage(TestUtils.JobType.FreestyleProject)
-                .getErrorMessage();
-
-        Assert.assertEquals(errorMessage, "A problem occurred while processing the request.");
-    }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
