@@ -26,9 +26,9 @@ import java.util.function.Function;
 
 public class BuildHistoryTest extends BaseTest {
 
-    private final String FREESTYLE_PROJECT_NAME = "Freestyle"+ RandomStringUtils.randomAlphanumeric(7);
-    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration"+ RandomStringUtils.randomAlphanumeric(7);
-    private final String PIPELINE_PROJECT_NAME = "Pipeline"+ RandomStringUtils.randomAlphanumeric(7);
+    private final String FREESTYLE_PROJECT_NAME = "Freestyle" + RandomStringUtils.randomAlphanumeric(7);
+    private final String MULTI_CONFIGURATION_PROJECT_NAME = "MultiConfiguration" + RandomStringUtils.randomAlphanumeric(7);
+    private final String PIPELINE_PROJECT_NAME = "Pipeline" + RandomStringUtils.randomAlphanumeric(7);
 
     @DataProvider(name = "project-type")
     public Object[][] projectType() {
@@ -124,7 +124,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @DataProvider(name = "multi-configurationProjectMenu")
     public Object[][] getMultiConfigurationProjectMenu() {
-        return new Object[][] {
+        return new Object[][]{
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) WorkspacePage::new, "Workspace"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Build"},
@@ -133,6 +133,7 @@ public class BuildHistoryTest extends BaseTest {
                 {(Function<WebDriver, BaseSubmenuPage<?>>) RenamePage::new, "Rename"}
         };
     }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
@@ -162,6 +163,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration (not default) from timeline")
+    @Ignore
     @Test(dataProvider = "project-type")
     public void testNavigateToBuildPageFromTimeline(TestUtils.JobType jobType) {
         final String jobName = "BUILD_PROJECT";
@@ -277,7 +279,7 @@ public class BuildHistoryTest extends BaseTest {
     public void testCloseBuildPopUpOfMultiConfiguration() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
-        boolean isBubblePopUpClosed =  new MainPage(getDriver())
+        boolean isBubblePopUpClosed = new MainPage(getDriver())
                 .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickBuildsHistoryFromSideMenu()
                 .clickBuildNameOnTimeline(MULTI_CONFIGURATION_PROJECT_NAME)

@@ -296,7 +296,7 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
 
     @Step("Verify of icon style change when hover mouse")
     public boolean isIconStyleChanged(List<String> locators) {
-        for (String iconLocator: locators) {
+        for (String iconLocator : locators) {
             WebElement icon = getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(iconLocator)));
 
             new Actions(getDriver())
@@ -312,5 +312,16 @@ public class MainHeaderComponent<Page extends BasePage<?, ?>> extends BaseCompon
         }
 
         return true;
+    }
+
+    @Step("Click on the 'Logo' icon with long pause and return to Main page")
+    public MainPage clickLogoWithLongPause() {
+        new Actions(getDriver())
+                .moveToElement(logoIcon)
+                .pause(5000)
+                .click()
+                .perform();
+
+        return new MainPage(getDriver());
     }
 }
