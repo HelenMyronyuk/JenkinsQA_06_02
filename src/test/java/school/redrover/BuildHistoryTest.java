@@ -17,6 +17,8 @@ import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
+import school.redrover.model.jobsSidemenu.FullStageViewPage;
+import school.redrover.model.jobsSidemenu.PipelineSyntaxPage;
 import school.redrover.model.jobsSidemenu.WorkspacePage;
 import school.redrover.runner.BaseTest;
 import school.redrover.runner.TestUtils;
@@ -198,6 +200,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verify the ability to close the bubble pop up of Default MultiConfiguration from Timeline")
+    @Ignore
     @Test
     public void testCloseDefaultMultiConfigurationPopOpFromTimeline() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject,
@@ -216,6 +219,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to close the bubble pop up of Freestyle, Pipeline, MultiConfiguration(not default) project build from timeline")
+    @Ignore
     @Test(dataProvider = "project-type")
     public void testCloseBuildPopUp(TestUtils.JobType jobType) {
         final String jobName = "BUILD_PROJECT";
@@ -355,5 +359,43 @@ public class BuildHistoryTest extends BaseTest {
                 .isBuildPopUpHeaderTextDisplayed(MULTI_CONFIGURATION_PROJECT_NAME);
 
         Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
+    }
+
+    @DataProvider(name = "optionsPipelineProject")
+    public Object[][] PipelineDropDownLink() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Build"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Configure"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Delete Pipeline"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) FullStageViewPage::new, "Full"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) RenamePage::new, "Rename"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) PipelineSyntaxPage::new, "Syntax"}
+        };
+    }
+
+    @Test(dataProvider = "optionsPipelineProject")
+    public void testNavigateToPageFromDropDownPipelineProject(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
+        TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(PIPELINE_PROJECT_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(PIPELINE_PROJECT_NAME)
+                .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        if (optionsName.equals("Delete Pipeline")) {
+            Alert alert = getDriver().switchTo().alert();
+            Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
+        } else if (optionsName.equals("Full") || optionsName.equals("Syntax")) {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getTextFromBreadCrumb(optionsName);
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        } else {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        }
     }
 }

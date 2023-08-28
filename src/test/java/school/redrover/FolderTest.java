@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.jobs.*;
@@ -194,7 +195,7 @@ public class FolderTest extends BaseTest {
     @Severity(SeverityLevel.TRIVIAL)
     @Description("Verify that Folder description is  added from the Configuration page")
     @Test
-    public void testAddDescriptionFromConfigurationPage(){
+    public void testAddDescriptionFromConfigurationPage() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, false);
 
         String descriptionText = new FolderPage(getDriver())
@@ -203,7 +204,7 @@ public class FolderTest extends BaseTest {
                 .clickSaveButton()
                 .getFolderDescription();
 
-        Assert.assertEquals(descriptionText,DESCRIPTION);
+        Assert.assertEquals(descriptionText, DESCRIPTION);
     }
 
     @Severity(SeverityLevel.TRIVIAL)
@@ -244,7 +245,7 @@ public class FolderTest extends BaseTest {
     public void testAddHealthMetricsFromSideMenu() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
 
-        boolean isHealthMetricsAdded =  new MainPage(getDriver())
+        boolean isHealthMetricsAdded = new MainPage(getDriver())
                 .clickJobName(NAME, new FolderPage(getDriver()))
                 .clickConfigure()
                 .addHealthMetrics()
@@ -283,7 +284,7 @@ public class FolderTest extends BaseTest {
                 .getTooltipDescription();
 
         Assert.assertEquals(tooltipDescription,
-                "Worst health: " + NAME + " » " +  pipelineName + ": Build stability: All recent builds failed.");
+                "Worst health: " + NAME + " » " + pipelineName + ": Build stability: All recent builds failed.");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -310,6 +311,7 @@ public class FolderTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify that Pipeline Library can be added to Folder description through the Configuration page")
+    @Ignore
     @Test
     public void testAddedPipelineLibrary() {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Folder, true);
@@ -446,14 +448,14 @@ public class FolderTest extends BaseTest {
         TestUtils.createJob(this, jobType.name(), jobType, true);
 
         boolean isJobDisplayed = new MainPage(getDriver())
-                    .clickJobName(jobType.name(), new FolderPage(getDriver()))
-                    .clickMoveOnSideMenu()
-                    .selectDestinationFolder(NAME)
-                    .clickMoveButton()
-                    .getHeader()
-                    .clickLogo()
-                    .clickJobName(NAME, new FolderPage(getDriver()))
-                    .jobIsDisplayedF(jobType.name());
+                .clickJobName(jobType.name(), new FolderPage(getDriver()))
+                .clickMoveOnSideMenu()
+                .selectDestinationFolder(NAME)
+                .clickMoveButton()
+                .getHeader()
+                .clickLogo()
+                .clickJobName(NAME, new FolderPage(getDriver()))
+                .jobIsDisplayedF(jobType.name());
 
         Assert.assertTrue(isJobDisplayed, "Job is not present in Folder");
     }

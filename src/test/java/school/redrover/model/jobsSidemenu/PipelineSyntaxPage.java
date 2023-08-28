@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
-public class PipelineSyntaxPage extends BaseMainHeaderPage<PipelineSyntaxPage> {
+public class PipelineSyntaxPage extends BaseSubmenuPage<PipelineSyntaxPage> {
 
     @FindBy(xpath = "//select[@class='jenkins-select__input dropdownList']")
     private WebElement sampleStepDropdown;
@@ -39,6 +39,11 @@ public class PipelineSyntaxPage extends BaseMainHeaderPage<PipelineSyntaxPage> {
 
     public PipelineSyntaxPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Overview";
     }
 
     @Step("Select the 'echo: Print Message' option in 'Sample Step' dropdown menu")

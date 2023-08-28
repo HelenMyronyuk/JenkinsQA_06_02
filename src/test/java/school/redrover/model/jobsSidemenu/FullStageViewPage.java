@@ -5,14 +5,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 
-public class FullStageViewPage extends BaseMainHeaderPage<FullStageViewPage> {
+public class FullStageViewPage extends BaseSubmenuPage<FullStageViewPage> {
     @FindBy(xpath = "//h2")
     private WebElement header;
 
     public FullStageViewPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "- Stage View";
     }
 
     @Step("Get Heading text")
