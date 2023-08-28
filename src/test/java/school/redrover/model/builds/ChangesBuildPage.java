@@ -14,7 +14,7 @@ public class ChangesBuildPage extends BaseSubmenuPage<ChangesBuildPage> {
 
     @Override
     public String callByMenuItemName() {
-        return "changes";
+        return "Changes";
     }
 
     @Step("Get text 'Changes' ")

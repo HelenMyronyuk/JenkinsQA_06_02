@@ -10,7 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import school.redrover.model.*;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
@@ -253,10 +253,10 @@ public class FreestyleProjectTest extends BaseTest {
     @DataProvider(name = "buildMenu")
     public Object[][] getBuildMenu() {
         return new Object[][] {
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Confirm deletion"}
         };
     }
 
@@ -265,16 +265,16 @@ public class FreestyleProjectTest extends BaseTest {
     @Description("Verification of possibility to navigate to the build options from from ProjectPage for Freestyle project")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromProjectPage(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage ) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String expectedPage) {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         new MainPage(getDriver())
                 .clickBuildByGreenArrow(FREESTYLE_NAME)
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .openBuildsDropDownMenu()
-                .clickBuildsOptionFromDropDownMenu(pageFromDropDown.apply(getDriver()), optionsName);
+                .selectOptionFromDropDownList(pageFromDropDown.apply(getDriver()));
 
-        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
@@ -288,7 +288,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Description("Verification of navigation to options page for Freestyle Project from build drop-down menu on Dashboard from Home page")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromDropDown(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String expectedPage) {
         String actualPageOrBreadcrumbHeader;
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
@@ -297,14 +297,14 @@ public class FreestyleProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogoWithPause()
                 .openBuildDropDownMenu("#1")
-                .clickBuildOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+                .selectOptionFromDropDownList(pageFromDropDownMenu.apply(getDriver()));
 
-        if ("Changes".equals(dropDownMenuLink) || "Console Output".equals(dropDownMenuLink)) {
+        if ("Changes".equals(expectedPage) || "Console Output".equals(expectedPage)) {
             actualPageOrBreadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
         } else {
             actualPageOrBreadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
         }
-        Assert.assertTrue(actualPageOrBreadcrumbHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
+        Assert.assertTrue(actualPageOrBreadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -327,7 +327,7 @@ public class FreestyleProjectTest extends BaseTest {
     @Description("Verification of possibility to navigate to the build options from the Build Page for Freestyle project")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromBuildPage(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage ) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSideMenu, String expectedPage) {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);
 
         new MainPage(getDriver())
@@ -335,9 +335,9 @@ public class FreestyleProjectTest extends BaseTest {
                 .clickJobName(FREESTYLE_NAME, new FreestyleProjectPage(getDriver()))
                 .refreshPage()
                 .clickLastBuildLink()
-                .clickBuildOptionFromSideMenu(pageFromSideMenu.apply(getDriver()), optionsName);
+                .clickBuildOptionFromSideMenu(pageFromSideMenu.apply(getDriver()));
 
-        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {

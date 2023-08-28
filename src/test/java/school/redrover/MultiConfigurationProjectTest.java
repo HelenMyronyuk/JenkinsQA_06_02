@@ -8,10 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
-import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ChangesBuildPage;
 import school.redrover.model.builds.ConsoleOutputPage;
@@ -35,10 +33,10 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @DataProvider(name = "buildMenu")
     public Object[][] getBuildMenu() {
         return new Object[][]{
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Confirm deletion"}
         };
     }
 
@@ -264,7 +262,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of possibility to navigate to the options from the last build drop-down menu of MultiConfiguration project")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromLastBuild(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName, String expectedPage) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         String lastBuildNumber = new MainPage(getDriver())
@@ -276,13 +274,14 @@ public class MultiConfigurationProjectTest extends BaseTest {
         new MultiConfigurationProjectPage(getDriver())
                 .refreshPage()
                 .clickLastBuildLink()
-                .clickBuildOptionFromSideMenu(pageFromDropDown.apply(getDriver()), optionsName);
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromDropDown.apply(getDriver()));
 
         String breadcrumb = pageFromDropDown.apply(getDriver())
                 .getBreadcrumb()
                 .getFullBreadcrumbText();
 
-        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
@@ -297,7 +296,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification of possibility to navigate to the build menu options from the MultiConfiguration Project Page")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromProjectPage(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSideMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         new MainPage(getDriver())
@@ -305,9 +304,9 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .refreshPage()
                 .openBuildsDropDownMenu()
-                .clickBuildsOptionFromDropDownMenu(pageFromSideMenu.apply(getDriver()), optionsName);
+                .selectOptionFromDropDownList(pageFromSideMenu.apply(getDriver()));
 
-        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
@@ -321,7 +320,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     @Description("Verification that a user is able to navigate to the MultiConfiguration Project Build pages from the build drop-down")
     @Test(dataProvider = "buildMenu")
     public void testNavigateToOptionsFromBuildPage(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String optionsName, String expectedPage) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromSideMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         new MainPage(getDriver())
@@ -329,9 +328,10 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .clickBuildNowFromSideMenu()
                 .refreshPage()
                 .clickLastBuildLink()
-                .clickBuildOptionFromSideMenu(pageFromSideMenu.apply(getDriver()), optionsName);
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromSideMenu.apply(getDriver()));
 
-        if (optionsName.equals("Changes") || optionsName.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
@@ -836,21 +836,11 @@ public class MultiConfigurationProjectTest extends BaseTest {
         Assert.assertEquals(deletedProjPage.getWelcomeText(), "Welcome to Jenkins!");
     }
 
-    @DataProvider(name = "buildDropDownMenuOptions")
-    public Object[][] optionsFromDropDown() {
-        return new Object[][]{
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"}
-        };
-    }
-
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page for MultiConfiguration Project from build drop-down menu")
     @Test(dataProvider = "buildMenu")
-    public void testNavigateToOptionsFromDropDown(Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+    public void testNavigateToOptionsFromDropDown(Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, true);
 
         new MainPage(getDriver())
@@ -858,14 +848,14 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getHeader()
                 .clickLogoWithLongPause()
                 .openBuildDropDownMenu("#1")
-                .clickBuildOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+                .selectOptionFromDropDownList(pageFromDropDownMenu.apply(getDriver()));
 
-        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String pageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
-            Assert.assertTrue(pageHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
+            Assert.assertTrue(pageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
             String breadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
-            Assert.assertTrue(breadcrumbHeader.contains(expectedPageHeader), "Navigated to an unexpected page");
+            Assert.assertTrue(breadcrumbHeader.contains(expectedPage), "Navigated to an unexpected page");
         }
     }
 }

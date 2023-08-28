@@ -32,7 +32,7 @@ public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
 
     @Override
     public String callByMenuItemName() {
-        return "console";
+        return "Console";
     }
 
     @Step("get text from console output")

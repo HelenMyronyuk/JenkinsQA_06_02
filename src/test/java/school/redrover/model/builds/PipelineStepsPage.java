@@ -18,7 +18,7 @@ public class PipelineStepsPage extends BaseSubmenuPage<PipelineStepsPage> {
 
     @Override
     public String callByMenuItemName() {
-        return null;
+        return "Pipeline Steps";
     }
 
     @Step("Get title pipeline step from Breadcrumb")

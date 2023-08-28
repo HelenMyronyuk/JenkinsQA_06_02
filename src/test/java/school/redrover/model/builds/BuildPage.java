@@ -13,6 +13,7 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.interfaces.IDescription;
+import school.redrover.runner.TestUtils;
 
 import java.time.Duration;
 
@@ -164,8 +165,12 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
 
     @Step("Select an option from the build drop-down menu")
     public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromBuildDropDownList(SubmenuPage submenuPage) {
+        WebElement option = getDriver().
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
+
+        TestUtils.scrollWithPauseByActions(this, option, 800);
         new Actions(getDriver())
-                .moveToElement(getDriver().findElement(By.xpath("//a[contains(@href, '" + submenuPage.callByMenuItemName() + "')]")))
+                .moveToElement(option)
                 .click()
                 .perform();
 
@@ -190,17 +195,10 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Select an option from the build side menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildOptionFromSideMenu(ReturnedPage pageToReturn, String sideMenuOption) {
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage clickBuildOptionFromSideMenu(SubmenuPage submenuPage) {
         getWait2().until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//span[contains(text(),'" + sideMenuOption + "')]/.."))).click();
+                By.xpath("//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]/.."))).click();
 
-        return pageToReturn;
+        return submenuPage;
     }
-
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickOptionsFromSideMenu(ReturnedPage pageToReturn, String sideMenuLink) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href, '" + sideMenuLink + "')]"))).click();
-
-        return pageToReturn;
-    }
-
 }

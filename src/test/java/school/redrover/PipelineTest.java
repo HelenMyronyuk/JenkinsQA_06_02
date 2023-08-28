@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
-import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.*;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
@@ -303,39 +303,39 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(newBuildDescription, NEW_NAME);
     }
 
-    @DataProvider(name = "buildDropDownMenuOptions")
-    public Object[][] buildDropDownMenuOptions() {
+    @DataProvider(name = "buildPipelineMenuOptions")
+    public Object[][] buildPipelineMenuOptions() {
         return new Object[][]{
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build", "Confirm deletion"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ReplayPage::new, "Replay", "Replay"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) PipelineStepsPage::new, "Pipeline Steps", "Pipeline Steps"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacesBuildPage::new, "Workspaces", "Workspaces"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Confirm deletion"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ReplayPage::new, "Replay"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) PipelineStepsPage::new, "Pipeline Steps"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) WorkspacesBuildPage::new, "Workspaces"},
         };
     }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page from build drop-down menu from dashboard")
-    @Test(dataProvider = "buildDropDownMenuOptions")
-    public void testNavigateToOptionsFromBuildDropDownFromDashboard(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+    @Test(dataProvider = "buildPipelineMenuOptions")
+    public void testNavigateToOptionsFromBuildDropDownFromDashboard(Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
-
+        String actualResult;
         new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .getHeader()
                 .clickLogo()
                 .openBuildDropDownMenu("#1")
-                .clickBuildOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+                .selectOptionFromDropDownList(pageFromDropDownMenu.apply(getDriver()));
 
-        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
-            String pageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
-            Assert.assertEquals(pageHeader, expectedPageHeader);
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
+            String actualPageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
+            Assert.assertEquals(actualPageHeader,expectedPage, "Navigated to an unexpected page");
         } else {
             String breadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
-            Assert.assertEquals(breadcrumbHeader, expectedPageHeader);
+            Assert.assertEquals(breadcrumbHeader, expectedPage, "Navigated to an unexpected page");
         }
     }
 
@@ -360,9 +360,9 @@ public class PipelineTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verification of possibility to navigate to the option from the last build drop-down menu of Pipeline project")
-    @Test(dataProvider = "buildDropDownMenuOptions")
+    @Test(dataProvider = "buildPipelineMenuOptions")
     public void testNavigateToOptionsFromLastBuild(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPage) {
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         String lastBuildNumber = new MainPage(getDriver())
@@ -374,13 +374,13 @@ public class PipelineTest extends BaseTest {
         new PipelinePage(getDriver())
                 .clickLastBuildLink()
                 .getBuildDropdownMenu()
-                .clickBuildOptionFromSideMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+                .clickBuildOptionFromSideMenu(pageFromDropDownMenu.apply(getDriver()));
 
         String breadcrumb = pageFromDropDownMenu.apply(getDriver())
                 .getBreadcrumb()
                 .getFullBreadcrumbText();
 
-        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String actualPageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(expectedPage), "Navigated to an unexpected page");
         } else {
@@ -393,22 +393,23 @@ public class PipelineTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page from build drop-down menu from ProjectPage")
-    @Test(dataProvider = "buildDropDownMenuOptions")
-    public void testNavigateToOptionsFromBuildDropDownFromProjectPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDownMenu, String dropDownMenuLink, String expectedPageHeader) {
+    @Test(dataProvider = "buildPipelineMenuOptions")
+    public void testNavigateToOptionsFromBuildDropDownFromProjectPage(Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDownMenu, String expectedPage) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
+                .refreshPage()
                 .openBuildsDropDownMenu()
-                .clickBuildsOptionFromDropDownMenu(pageFromDropDownMenu.apply(getDriver()), dropDownMenuLink);
+                .selectOptionFromDropDownList(pageFromDropDownMenu.apply(getDriver()));
 
-        if (dropDownMenuLink.equals("Changes") || dropDownMenuLink.equals("Console Output")) {
+        if (expectedPage.equals("Changes") || expectedPage.equals("Console Output")) {
             String pageHeader = pageFromDropDownMenu.apply(getDriver()).getPageHeaderText();
-            Assert.assertEquals(pageHeader, expectedPageHeader);
+            Assert.assertEquals(pageHeader, expectedPage);
         } else {
             String breadcrumbHeader = pageFromDropDownMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
-            Assert.assertEquals(breadcrumbHeader, expectedPageHeader);
+            Assert.assertEquals(breadcrumbHeader, expectedPage);
         }
     }
 
@@ -1124,38 +1125,25 @@ public class PipelineTest extends BaseTest {
         Assert.assertEquals(welcomeText, "Welcome to Jenkins!");
     }
 
-    @DataProvider(name = "buildSideMenuOptions")
-    public Object[][] buildSideMenuOptions() {
-        return new Object[][]{
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "changes", "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "console", "Console Output"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "configure", "Edit Build Information"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "confirmDelete", "Confirm deletion"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) ReplayPage::new, "replay", "Replay"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) PipelineStepsPage::new, "flowGraphTable", "Pipeline Steps"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacesBuildPage::new, "ws", "Workspaces"},
-        };
-    }
-
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification of navigation to options page for Pipeline project from build side menu")
-    @Test(dataProvider = "buildSideMenuOptions")
-    public void testNavigateToOptionsFromBuildSide(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenu, String sideMenuLink, String expectedPageHeader) {
+    @Test(dataProvider = "buildPipelineMenuOptions")
+    public void testNavigateToOptionsFromBuildSide(Function<WebDriver, BaseSubmenuPage<?>> pageFromSideMenu, String expectedPageHeader) {
         TestUtils.createJob(this, NAME, TestUtils.JobType.Pipeline, true);
 
         new MainPage(getDriver())
                 .clickBuildByGreenArrow(NAME)
                 .clickJobName(NAME, new PipelinePage(getDriver()))
                 .clickLastBuildLink()
-                .clickOptionsFromSideMenu(pageFromSideMenu.apply(getDriver()), sideMenuLink);
+                .clickBuildOptionFromSideMenu(pageFromSideMenu.apply(getDriver()));
 
-        if (sideMenuLink.equals("changes") || sideMenuLink.equals("console")) {
+        if (expectedPageHeader.equals("Changes") || expectedPageHeader.equals("Console Output")) {
             String pageHeader = pageFromSideMenu.apply(getDriver()).getPageHeaderText();
-            Assert.assertEquals(pageHeader, expectedPageHeader);
+            Assert.assertEquals(pageHeader, expectedPageHeader, "Navigated to an unexpected page");
         } else {
             String breadcrumbHeader = pageFromSideMenu.apply(getDriver()).getBreadcrumb().getPageNameFromBreadcrumb();
-            Assert.assertEquals(breadcrumbHeader, expectedPageHeader);
+            Assert.assertEquals(breadcrumbHeader, expectedPageHeader, "Navigated to an unexpected page");
         }
     }
 }

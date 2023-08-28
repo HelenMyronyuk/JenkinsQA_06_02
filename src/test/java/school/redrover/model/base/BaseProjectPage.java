@@ -410,10 +410,17 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
         return new PipelineStepsPage(getDriver());
     }
 
-    @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildsOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
+    @Step("Select an option from the project drop-down menu")
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
+        WebElement option = getDriver().
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 
-        return pageToReturn;
+        TestUtils.scrollWithPauseByActions(this, option, 800);
+        new Actions(getDriver())
+                .moveToElement(option)
+                .click()
+                .perform();
+
+        return submenuPage;
     }
 }

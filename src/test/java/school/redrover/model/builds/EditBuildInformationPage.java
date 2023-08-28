@@ -34,7 +34,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
 
     @Override
     public String callByMenuItemName() {
-        return "configure";
+        return "Edit Build Information";
     }
 
     @Step("Click on the 'Save' button")
@@ -44,8 +44,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return new BuildPage(getDriver());
     }
 
-    @Step("Input the display name '{displayName} in the 'Display Name' field" +
-            " on the Edit Build Information page")
+    @Step("Input the display name '{displayName} in the 'Display Name' field on the Edit Build Information page")
     public EditBuildInformationPage enterDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField))
                 .sendKeys(displayName);
@@ -53,8 +52,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return this;
     }
 
-    @Step("Input the description '{description} in the 'Description' field" +
-            " on the Edit Build Information page")
+    @Step("Input the description '{description} in the 'Description' field on the Edit Build Information page")
     public EditBuildInformationPage enterDescription(String description) {
         getWait5().until(ExpectedConditions.visibilityOf(buildDescriptionTextArea)).clear();
         buildDescriptionTextArea.sendKeys(description);
@@ -79,8 +77,7 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
 
-    @Step("Edit and input new display name '{displayName} in the 'Display Name' field" +
-            " on the Edit Build Information page")
+    @Step("Edit and input new display name '{displayName} in the 'Display Name' field on the Edit Build Information page")
     public EditBuildInformationPage editDisplayName(String displayName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(displayNameField)).clear();
         displayNameField.sendKeys(displayName);

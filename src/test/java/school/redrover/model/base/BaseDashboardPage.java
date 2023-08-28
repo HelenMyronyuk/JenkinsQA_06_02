@@ -2,10 +2,12 @@ package school.redrover.model.base;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.*;
 import school.redrover.model.manageJenkins.ManageNodesPage;
+import school.redrover.runner.TestUtils;
 
 public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> extends BaseSubmenuPage<Self> {
 
@@ -52,10 +54,17 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickBuildOptionFromDropDownMenu(ReturnedPage pageToReturn, String dropDownMenuLink) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'" + dropDownMenuLink + "')]"))).click();
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
+        WebElement option = getDriver().
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 
-        return pageToReturn;
+        TestUtils.scrollWithPauseByActions(this, option, 800);
+        new Actions(getDriver())
+                .moveToElement(option)
+                .click()
+                .perform();
+
+        return submenuPage;
     }
 
     @Step("Click 'Build History' on the side menu")

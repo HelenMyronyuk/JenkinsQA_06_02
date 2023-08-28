@@ -31,7 +31,7 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPag
 
     @Override
     public String callByMenuItemName() {
-        return getHeading();
+        return "Delete";
     }
 
     @Step("Click on the 'Yes' button on the DeletePage")

@@ -599,7 +599,8 @@ public class BreadcrumbTest extends BaseTest {
         return new Object[][]{
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"}
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Confirm deletion"}
         };
     }
 
@@ -609,44 +610,22 @@ public class BreadcrumbTest extends BaseTest {
     @Test(dataProvider = "buildSubMenu")
     public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
-        String projectName = "FreestyleProject";
-        TestUtils.createJob(this, projectName, TestUtils.JobType.FreestyleProject, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
         String actualResult = "";
 
         BaseSubmenuPage submenuPage = new MainPage(getDriver())
-                .clickJobName(projectName, new FreestyleProjectPage(getDriver()))
+                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
                 .getBuildDropdownMenu()
                 .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
 
-        if ("configure".equals(pageFromSubMenuConstructor.apply(getDriver()).callByMenuItemName())) {
-            actualResult = submenuPage.getTextEditBuildInformFromBreadCrumb();
+        if (expectedResult.equals("Edit Build Information") || expectedResult.equals("Confirm deletion")) {
+            actualResult = submenuPage.getBreadcrumb().getPageNameFromBreadcrumb();
         } else {
             actualResult = submenuPage.getHeading();
         }
         Assert.assertEquals(actualResult, expectedResult);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that a user is able to navigate to the 'Delete' Build page from the build drop-down")
-    @Test
-    public void testNavigateToFreestyleDeletePageFromDropdownOnBreadcrumb() {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-
-        Boolean deleteSubmenuPage = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
-                .clickBuildNowFromSideMenu()
-                .clickLastBuildLink()
-                .getBuildDropdownMenu()
-                .selectDeleteOptionFromBuildDropDownList(new FreestyleProjectPage(getDriver()))
-                .clickYesButton()
-                .getBreadcrumb()
-                .clickJobNameFromBreadcrumb(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
-                .isNoBuildsDisplayed();
-
-        Assert.assertTrue(deleteSubmenuPage, "'No builds' message is not displayed");
     }
 
     @DataProvider(name = "pipesubmenu")

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.*;
 
-public class ReplayPage<ParentPage extends BasePage<?,?>> extends BaseMainHeaderPage<ReplayPage<ParentPage>>  {
+public class ReplayPage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPage<ReplayPage<ParentPage>>  {
     @FindBy(name = "Submit")
     private WebElement runButton;
     private ParentPage parentPage;
@@ -18,6 +18,11 @@ public class ReplayPage<ParentPage extends BasePage<?,?>> extends BaseMainHeader
 
     public ReplayPage(WebDriver webDriver) {
         super(webDriver);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Replay";
     }
 
     @Step("Click on 'Run' button")
