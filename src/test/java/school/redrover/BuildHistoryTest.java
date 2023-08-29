@@ -428,6 +428,7 @@ public class BuildHistoryTest extends BaseTest {
         }
     }
 
+
     @DataProvider(name = "optionsFreestyleProject")
     public Object[][] FreestyleDropDownLink() {
         return new Object[][]{
@@ -446,7 +447,6 @@ public class BuildHistoryTest extends BaseTest {
         };
     }
 
-    @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
     @Description("Verification that a user is able to navigate to the pages from the Freestyle project drop-down")
     @Test(dataProvider = "optionsFreestyleProject")
@@ -472,9 +472,48 @@ public class BuildHistoryTest extends BaseTest {
         } else if (submenu.equals("Build Now")) {
             pageHeader = optionFromDropdownMenu.getPageHeaderText();
             Assert.assertEquals(pageHeader, expectedHeaderBuildHistory);
-        }else{
+        } else {
             pageHeader = optionFromDropdownMenu.getPageHeaderText();
             Assert.assertTrue(pageHeader.contains(submenu), "Wrong page");
         }
     }
+
+    @DataProvider(name = "MultiConfigurationProjectOptionsFromDropDownMenu")
+    public Object[][] getMultiConfigurationProjectDropDownMenu() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Workspace"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Build"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Configure"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Rename"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) FullStageViewPage::new, "Delete Multi-configuration project"},
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from drop down menu for MultiConfiguration project")
+    @Test(dataProvider = "MultiConfigurationProjectOptionsFromDropDownMenu")
+    public void testNavigateToPageFromDropDownMultiConfigurationProject(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(MULTI_CONFIGURATION_PROJECT_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(MULTI_CONFIGURATION_PROJECT_NAME)
+                .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        if (optionsName.equals("Delete Multi-configuration project")) {
+            Alert alert = getDriver().switchTo().alert();
+            Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
+        } else {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        }
+    }
 }
+  
+
