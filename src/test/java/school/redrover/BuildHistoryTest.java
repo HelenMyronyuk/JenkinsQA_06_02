@@ -14,6 +14,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
@@ -124,14 +125,14 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(projectNameOnBuildHistoryTimeline, "Project name is not displayed from time line!");
     }
 
-    @DataProvider(name = "multi-configurationProjectMenu")
-    public Object[][] getMultiConfigurationProjectMenu() {
+    @DataProvider(name = "projectOptionsFromDropDownMenu")
+    public Object[][] getProjectDropDownMenu() {
         return new Object[][]{
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) WorkspacePage::new, "Workspace"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Build"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Configure"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Delete Multi-configuration project"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Delete"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) RenamePage::new, "Rename"}
         };
     }
@@ -139,7 +140,7 @@ public class BuildHistoryTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
-    @Test(dataProvider = "multi-configurationProjectMenu")
+    @Test(dataProvider = "projectOptionsFromDropDownMenu")
     public void testNavigateToOptionDropDownMenuForMultiConfigurationProject(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
@@ -153,7 +154,7 @@ public class BuildHistoryTest extends BaseTest {
                 .openProjectDropDownMenu(MULTI_CONFIGURATION_PROJECT_NAME)
                 .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
 
-        if (optionsName.equals("Delete Multi-configuration project")) {
+        if (optionsName.equals("Delete")) {
             Alert alert = getDriver().switchTo().alert();
             Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
         } else {
@@ -361,8 +362,8 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertTrue(isBuildPopUpDisplayed, "Default build pop up is not displayed!");
     }
 
-    @DataProvider(name = "optionsPipelineProject")
-    public Object[][] PipelineDropDownLink() {
+    @DataProvider(name = "pipelineProjectOptionsFromDropDownMenu")
+    public Object[][] getPipelineProjectDropDownMenu() {
         return new Object[][]{
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) BuildHistoryPage::new, "Build"},
@@ -374,7 +375,10 @@ public class BuildHistoryTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "optionsPipelineProject")
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from drop down menu for Pipeline project")
+    @Test(dataProvider = "pipelineProjectOptionsFromDropDownMenu")
     public void testNavigateToPageFromDropDownPipelineProject(
             Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
         TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, true);
@@ -393,6 +397,31 @@ public class BuildHistoryTest extends BaseTest {
         } else if (optionsName.equals("Full") || optionsName.equals("Syntax")) {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getTextFromBreadCrumb(optionsName);
             Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        } else {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        }
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from drop down menu for Freestyle project")
+    @Test(dataProvider = "projectOptionsFromDropDownMenu")
+    public void testNavigateToOptionDropDownMenuForFreestyleProject(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String optionsName) {
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(FREESTYLE_PROJECT_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(FREESTYLE_PROJECT_NAME)
+                .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        if (optionsName.equals("Delete")) {
+            Alert alert = getDriver().switchTo().alert();
+            Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
         } else {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
