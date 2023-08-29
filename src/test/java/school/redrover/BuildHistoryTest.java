@@ -427,4 +427,54 @@ public class BuildHistoryTest extends BaseTest {
             Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
         }
     }
+
+    @DataProvider(name = "optionsFreestyleProject")
+    public Object[][] FreestyleDropDownLink() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        WorkspacePage::new, "Workspace"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        BuildHistoryPage::new, "Build Now"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        ConfigureSystemPage::new, "Configure"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        BuildHistoryPage::new, "Delete Project"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>)
+                        RenamePage::new, "Rename"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification that a user is able to navigate to the pages from the Freestyle project drop-down")
+    @Test(dataProvider = "optionsFreestyleProject")
+    public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDataConstructor, String submenu) {
+        TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+
+        BaseSubmenuPage<?> optionFromDropdownMenu = new MainPage(getDriver())
+                .clickJobName(FREESTYLE_PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(FREESTYLE_PROJECT_NAME)
+                .clickOptionsFromMenu(pageFromDataConstructor.apply(getDriver()), submenu);
+
+        String pageHeader;
+        String expectedHeaderHomePage = "Welcome to Jenkins!";
+        String expectedHeaderBuildHistory = "Build History of Jenkins";
+        if (submenu.equals("Delete Project")) {
+            pageHeader = optionFromDropdownMenu.acceptAlert().getPageHeaderText();
+            Assert.assertEquals(pageHeader, expectedHeaderHomePage);
+        } else if (submenu.equals("Build Now")) {
+            pageHeader = optionFromDropdownMenu.getPageHeaderText();
+            Assert.assertEquals(pageHeader, expectedHeaderBuildHistory);
+        }else{
+            pageHeader = optionFromDropdownMenu.getPageHeaderText();
+            Assert.assertTrue(pageHeader.contains(submenu), "Wrong page");
+        }
+    }
 }
