@@ -14,7 +14,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
-import school.redrover.model.jobs.FreestyleProjectPage;
+import school.redrover.model.builds.EditBuildInformationPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
@@ -163,6 +163,36 @@ public class BuildHistoryTest extends BaseTest {
         }
     }
 
+    @DataProvider(name = "multiConfigurationBuildDropDownMenu")
+    public Object[][] getBuildDropDownMenuFroMultiConfigurationProject() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build ‘#1’"},
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
+    @Test(dataProvider = "multiConfigurationBuildDropDownMenu")
+    public void testNavigateToDefaultBuildOptionDropDownMenuForMultiConfigurationProject(
+            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String textFromPage) {
+        TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String actualTextFromPage = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openDefaultBuildDropDownMenu(MULTI_CONFIGURATION_PROJECT_NAME)
+                .getPageFromDefaultBuildDropdownMenu(pageFromDropDown.apply(getDriver()))
+                .getAssertTextFromPage();
+
+        Assert.assertEquals(actualTextFromPage, textFromPage);
+    }
+
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to build page of Freestyle, Pipeline and Multiconfiguration (not default) from timeline")
@@ -296,7 +326,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
-    @io.qameta.allure.Description("Verify that build bubble to Pipeline project is present on Time line on Build History page")
+    @Description("Verify that build bubble to Pipeline project is present on Time line on Build History page")
     @Test
     public void testOpenDefaultBuildPopUpOfPipeline() {
         TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, false);
@@ -346,7 +376,7 @@ public class BuildHistoryTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Navigation")
-    @io.qameta.allure.Description("Verify that build bubble to Multiconfiguration project is present on Time line on Build History page")
+    @Description("Verify that build bubble to Multiconfiguration project is present on Time line on Build History page")
     @Test
     public void testOpenBuildTableOfMultiConfigurationFromTimeline() {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);

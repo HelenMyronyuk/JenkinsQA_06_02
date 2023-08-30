@@ -27,7 +27,6 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
     @FindBy(xpath = "//li[contains(text(),'Edit Build Information')]")
     private WebElement titleEditFromBreadCrumb;
 
-
     public EditBuildInformationPage(WebDriver driver) {
         super(driver);
     }
@@ -83,5 +82,14 @@ public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformati
         displayNameField.sendKeys(displayName);
 
         return this;
+    }
+
+    @Override
+    public String getAssertTextFromPage() {
+        if (getWait5().until(ExpectedConditions.visibilityOf(displayNameField)).isDisplayed()) {
+            return "Edit Build Information";
+        } else {
+            return "Wrong page!";
+        }
     }
 }

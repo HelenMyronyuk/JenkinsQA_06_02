@@ -224,6 +224,22 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
         return pageToReturn;
     }
 
+    @Step("Get a page form the 'Default' build drop-down menu")
+    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage getPageFromDefaultBuildDropdownMenu(SubmenuPage submenuPage) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]"))).click();
+
+        return submenuPage;
+    }
+
+    @Step("Open a default build drop-down menu")
+    public BuildHistoryPage openDefaultBuildDropDownMenu(String projectName) {
+        getDriver().
+                findElement(By.xpath("(//a[contains(@href, '/job/" + projectName + "/default/')]//button)[2]"))
+                .sendKeys(Keys.ENTER);
+
+        return this;
+    }
+
     @Step("Open a project drop-down menu")
     public BuildHistoryPage openProjectDropDownMenu(String projectName) {
         getDriver().

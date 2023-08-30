@@ -36,4 +36,9 @@ public abstract class BaseSubmenuPage<Self extends BaseSubmenuPage<?>> extends B
                 By.xpath("//a[contains(text(),'" + name + "')]"))).getText();
 
     }
+
+    @Step("Get the text of the alert window")
+    public String getAssertTextFromPage() {
+        return getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//h1"))).getText();
+    }
 }
