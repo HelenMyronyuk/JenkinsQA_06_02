@@ -17,7 +17,7 @@ public class FullStageViewPage extends BaseSubmenuPage<FullStageViewPage> {
 
     @Override
     public String callByMenuItemName() {
-        return "- Stage View";
+        return "Stage View";
     }
 
     @Step("Get Heading text")
@@ -26,4 +26,8 @@ public class FullStageViewPage extends BaseSubmenuPage<FullStageViewPage> {
         return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
     }
 
+    @Override
+    public String getAssertTextFromPage() {
+        return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
+    }
 }

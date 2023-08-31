@@ -45,11 +45,10 @@ public class ManageJenkinsTest extends BaseTest {
     @Description("Navigate to 'Manage Jenkins' menu from main page using dashboard")
     @Test
     public void testNavigateToManageJenkinsFromMainPageUsingDashboard() {
-
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 
         Assert.assertEquals(actualResult, "Manage Jenkins");

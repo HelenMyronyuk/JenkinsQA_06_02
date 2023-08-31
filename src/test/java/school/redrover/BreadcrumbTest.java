@@ -25,6 +25,7 @@ import school.redrover.model.jobsConfig.*;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobsSidemenu.*;
 import school.redrover.model.manageJenkins.*;
+import school.redrover.model.users.UserConfigPage;
 import school.redrover.model.users.UserPage;
 import school.redrover.model.views.MyViewsPage;
 import school.redrover.runner.BaseTest;
@@ -48,7 +49,7 @@ public class BreadcrumbTest extends BaseTest {
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("Manage Jenkins", new ManageJenkinsPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new ManageJenkinsPage(getDriver()))
                 .getActualHeader();
 
         Assert.assertEquals(actualResult, "Manage Jenkins");
@@ -57,22 +58,22 @@ public class BreadcrumbTest extends BaseTest {
     @DataProvider(name = "subsections")
     public Object[][] provideSubsection() {
         return new Object[][]{
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureSystemPage::new, "Configure System"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) GlobalToolConfigurationPage::new, "Global Tool Configuration"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) PluginsPage::new, "Plugins"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ManageNodesPage::new, "Manage nodes and clouds"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureGlobalSecurityPage::new, "Configure Global Security"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) CredentialsPage::new, "Credentials"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConfigureCredentialProvidersPage::new, "Configure Credential Providers"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) UserPage::new, "Users"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) SystemInformationPage::new, "System Information"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) LogRecordersPage::new, "Log Recorders"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) LoadStatisticsPage::new, "Load statistics: Jenkins"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) AboutJenkinsPage::new, "Jenkins\n" + "Version\n" + "2.387.2"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ManageOldDataPage::new, "Manage Old Data"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) JenkinsCLIPage::new, "Jenkins CLI"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ScriptConsolePage::new, "Script Console"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) PrepareForShutdownPage::new, "Prepare for Shutdown"}
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConfigureSystemPage::new, "Configure System"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) GlobalToolConfigurationPage::new, "Global Tool Configuration"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PluginsPage::new, "Plugins"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ManageNodesPage::new, "Manage nodes and clouds"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConfigureGlobalSecurityPage::new, "Configure Global Security"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) CredentialsPage::new, "Credentials"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConfigureCredentialProvidersPage::new, "Configure Credential Providers"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "Users"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) SystemInformationPage::new, "System Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) LogRecordersPage::new, "Log Recorders"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) LoadStatisticsPage::new, "Load statistics: Jenkins"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) AboutJenkinsPage::new, "Jenkins\n" + "Version\n" + "2.387.2"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ManageOldDataPage::new, "Manage Old Data"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) JenkinsCLIPage::new, "Jenkins CLI"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ScriptConsolePage::new, "Script Console"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PrepareForShutdownPage::new, "Prepare for Shutdown"}
         };
     }
 
@@ -81,13 +82,13 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate from 'Dashboard' -> 'Manage Jenkins' to the pages listed in the drop-down")
     @Test(dataProvider = "subsections")
     public void testNavigateToManageJenkinsSubsection(
-            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSubMenuConstructor, String expectedResult) {
 
         String actualResult = new MainPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
                 .selectAnOptionFromDashboardManageJenkinsSubmenuList(pageFromSubMenuConstructor.apply(getDriver()))
-                .getHeading();
+                .getAssertTextFromPage();
 
         Assert.assertEquals(actualResult, expectedResult);
     }
@@ -179,13 +180,12 @@ public class BreadcrumbTest extends BaseTest {
             "by clicking 'Dashboard'->'Build History'")
     @Test(dataProvider = "job-type")
     public void testNavigateToBuildHistoryPageFromProjectPage(TestUtils.JobType jobType) {
-        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+        TestUtils.createJob(this, PROJECT_NAME, jobType, false);
 
-        String actualHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, jobType.createJobPage(getDriver()))
+        String actualHeaderText = jobType.createJobPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("Build History", new BuildHistoryPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new BuildHistoryPage(getDriver()))
                 .getHeaderText();
 
         Assert.assertEquals(actualHeaderText, "Build History of Jenkins", "The header is not correct");
@@ -201,7 +201,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickBuildsHistoryFromSideMenu()
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("People", new PeoplePage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new PeoplePage(getDriver()))
                 .getPageTitle();
 
         Assert.assertEquals(actualTitle, "People");
@@ -258,10 +258,9 @@ public class BreadcrumbTest extends BaseTest {
             "by clicking 'Dashboard'")
     @Test(dataProvider = "job-type")
     public void testReturnToDashboardPageFromConfigurationPage(TestUtils.JobType jobType) {
-        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+        TestUtils.createJob(this, PROJECT_NAME, jobType, false);
 
-        boolean mainPageOpen = new MainPage(getDriver())
-                .clickConfigureDropDown(PROJECT_NAME, jobType.createConfigPage(getDriver()))
+        boolean mainPageOpen = jobType.createConfigPage(getDriver())
                 .getBreadcrumb()
                 .clickDashboardButton()
                 .isMainPageOpen();
@@ -305,13 +304,12 @@ public class BreadcrumbTest extends BaseTest {
             "by selecting 'Dashboard' drop-down menu")
     @Test(dataProvider = "job-type")
     public void testNavigateToMyViewsPageFromConfigurationPage(TestUtils.JobType jobType) {
-        TestUtils.createJob(this, PROJECT_NAME, jobType, true);
+        TestUtils.createJob(this, PROJECT_NAME, jobType, false);
 
-        String actualTextFromBreadCrumb = new MainPage(getDriver())
-                .clickConfigureDropDown(PROJECT_NAME, jobType.createConfigPage(getDriver()))
+        String actualTextFromBreadCrumb = jobType.createConfigPage(getDriver())
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("My Views", new MyViewsPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new MyViewsPage(getDriver()))
                 .getBreadcrumb()
                 .getFullBreadcrumbText();
 
@@ -326,7 +324,7 @@ public class BreadcrumbTest extends BaseTest {
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new NewJobPage(getDriver()), "Enter an item name"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new DeletePage<>(getDriver()), "Delete Folder " + PROJECT_NAME},
+                        driver -> new DeletePage<>(new FolderPage(getDriver())), "Delete Folder " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new PeoplePage(getDriver()), "People"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
@@ -393,15 +391,17 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
+                        driver -> new WorkspacePage(driver), "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MultiConfigurationProjectPage(driver), "Configure", "Configure"},
+                        driver -> new MultiConfigurationProjectConfigPage(new MultiConfigurationProjectPage(driver)), "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new MultiConfigurationProjectPage(driver)), "Move", "Move"},
+                        driver -> new MovePage<>(new MultiConfigurationProjectPage(driver)), "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename", "Rename Multi-configuration project " + PROJECT_NAME}
+                        driver -> new DeletePage<>(new MultiConfigurationProjectPage(driver)), "Delete Multi-configuration project: are you sure?"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename Multi-configuration project " + PROJECT_NAME}
         };
     }
 
@@ -410,18 +410,23 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to Multiconfiguration Project pages from the project drop-down")
     @Test(dataProvider = "job-submenu-option")
     public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String pageHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
-        String pageText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+        String actualTextFromPage;
+
+        BaseMainHeaderPage<?> baseMainHeaderPage = new MultiConfigurationProjectPage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromDashboardDropdownMenu(pageFromDataConstructor.apply(getDriver()));
+        if (pageFromDataConstructor.apply(getDriver()).callByMenuItemName().contains("Delete")) {
+            actualTextFromPage = baseMainHeaderPage.getAlertBoxText();
+        } else {
+            actualTextFromPage = baseMainHeaderPage.getAssertTextFromPage();
+        }
 
-        Assert.assertEquals(pageText, pageHeaderText);
+        Assert.assertEquals(actualTextFromPage, pageHeaderText);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -444,39 +449,24 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertTrue(lastBuild, "'No builds' message is not displayed");
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification that Multiconfiguration Project can be deleted from the project drop-down menu")
-    @Test
-    public void testDeleteNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Delete Multi-configuration project";
-        final String alertText = "Delete Multi-configuration project: are you sure?";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
-
-        String actualAlertText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new MultiConfigurationProjectPage(getDriver()))
-                .getAlertBoxText();
-
-        Assert.assertEquals(actualAlertText, alertText);
+    @DataProvider(name = "job-types")
+    public Object[][] jobTypes() {
+        return new Object[][]{{TestUtils.JobType.FreestyleProject}, {TestUtils.JobType.Pipeline},
+                {TestUtils.JobType.MultiConfigurationProject}};
     }
 
     @Severity(SeverityLevel.NORMAL)
     @Description("Verification that a user is able to navigate to 'Build' page from the project drop-down")
-    @Test
-    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow() {
+    @Test(dataProvider = "job-types")
+    public void testNavigateToMultiConfigurationPagesFromDropdownOnBreadcrumbBuildNow(TestUtils.JobType jobType) {
         final String optionName = "Build Now";
 
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, true);
+        TestUtils.createJob(this, PROJECT_NAME, jobType, false);
 
-        boolean isBuildDisplayed = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultiConfigurationProjectPage(getDriver()))
+        boolean isBuildDisplayed = jobType.createJobPage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new MultiConfigurationProjectPage(getDriver()))
+                .clickBuildNowFromDashboardDropdownMenu(new MultiConfigurationProjectPage(getDriver()))
                 .refreshPage()
                 .isLastBuildIconDisplayed();
 
@@ -493,7 +483,7 @@ public class BreadcrumbTest extends BaseTest {
                 .clickMyViewsSideMenuLink()
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("New Item", new NewJobPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new NewJobPage(getDriver()))
                 .getHeaderText();
 
         Assert.assertEquals(actualResult, "Enter an item name");
@@ -504,17 +494,21 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] organizationFolderDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new OrganizationFolderConfigPage(new OrganizationFolderPage(driver)), "Configure", "Configuration"},
+                        driver -> new OrganizationFolderConfigPage(new OrganizationFolderPage(driver)), "Configuration"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Organization Folder Log", "Scan Organization Folder Log"},
+                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Organization Folder Log"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new OtherFoldersEventsPage(driver), "Organization Folder Events", "Organization Folder Events"},
+                        driver -> new OtherFoldersEventsPage(driver), "Organization Folder Events"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new OrganizationFolderPage(driver)), "Move", "Move"},
+                        driver -> new DeletePage<>(new OrganizationFolderPage(driver)), "Delete Organization Folder " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new OrganizationFolderPage(driver)), "Rename", "Rename Organization Folder " + PROJECT_NAME},
+                        driver -> new MovePage<>(new OrganizationFolderPage(driver)), "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new CredentialsPage(driver), "Credentials", "Credentials"}
+                        driver -> new RenamePage<>(new OrganizationFolderPage(driver)), "Rename Organization Folder " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PipelineSyntaxPage(driver), "Overview"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Credentials"}
         };
     }
 
@@ -523,16 +517,15 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to Organization Folder pages from the project drop-down")
     @Test(dataProvider = "optionsOrganizationFolder")
     public void testNavigateToOrgFolderPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String pageHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, false);
 
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
+        String actualPageHeaderText = new OrganizationFolderPage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromDashboardDropdownMenu(pageFromDataConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
         Assert.assertEquals(actualPageHeaderText, pageHeaderText);
     }
@@ -541,21 +534,25 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] multibranchPipelineDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MultibranchPipelineConfigPage(new MultibranchPipelinePage(driver)), "Configure", "Configuration"},
+                        driver -> new MultibranchPipelineConfigPage(new MultibranchPipelinePage(driver)), "Configuration"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Multibranch Pipeline Log", "Scan Multibranch Pipeline Log"},
+                        driver -> new ScanOtherFoldersLogPage(driver), "Scan Multibranch Pipeline Log"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new OtherFoldersEventsPage(driver), "Multibranch Pipeline Events", "Multibranch Pipeline Events"},
+                        driver -> new OtherFoldersEventsPage(driver), "Multibranch Pipeline Events"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PeoplePage(getDriver()), "People", "People - Welcome"},
+                        driver -> new DeletePage<>(new MultibranchPipelinePage(driver)), "Delete Multibranch Pipeline " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new BuildHistoryPage(getDriver()), "Build History", "Build History of Welcome"},
+                        driver -> new PeoplePage(driver), "People - Welcome"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new MultibranchPipelinePage(driver)), "Move", "Move"},
+                        driver -> new BuildHistoryPage(driver), "Build History of Welcome"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new MultibranchPipelinePage(driver)), "Rename", "Rename Multibranch Pipeline " + PROJECT_NAME},
+                        driver -> new MovePage<>(new MultibranchPipelinePage(driver)), "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new CredentialsPage(driver), "Credentials", "Credentials"}
+                        driver -> new RenamePage<>(new MultibranchPipelinePage(driver)), "Rename Multibranch Pipeline " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new PipelineSyntaxPage(driver), "Overview"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Credentials"}
         };
     }
 
@@ -564,16 +561,15 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to Multibrunch Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsMultibranchPipeline")
     public void testNavigateToMultibranchPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, false);
 
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
+        String actualPageHeaderText = new MultibranchPipelinePage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromDashboardDropdownMenu(pageFromDataConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
@@ -581,10 +577,10 @@ public class BreadcrumbTest extends BaseTest {
     @DataProvider(name = "buildSubMenu")
     public Object[][] getBuildSubmenu() {
         return new Object[][]{
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesBuildPage::new, "Changes"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Confirm deletion"}
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesBuildPage::new, "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build #1"}
         };
     }
 
@@ -593,22 +589,16 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to the Freestyle Project Build pages from the build drop-down")
     @Test(dataProvider = "buildSubMenu")
     public void testNavigateToFreestyleBuildPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseSubmenuPage<?>> pageFromSubMenuConstructor, String expectedResult) {
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
-        String actualResult = "";
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, false);
 
-        BaseSubmenuPage submenuPage = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+        String actualResult = new FreestyleProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .clickLastBuildLink()
                 .getBuildDropdownMenu()
-                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()));
+                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
-        if (expectedResult.equals("Edit Build Information") || expectedResult.equals("Confirm deletion")) {
-            actualResult = submenuPage.getBreadcrumb().getPageNameFromBreadcrumb();
-        } else {
-            actualResult = submenuPage.getHeading();
-        }
         Assert.assertEquals(actualResult, expectedResult);
     }
 
@@ -616,19 +606,19 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] pipeDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PipelineConfigPage(new PipelinePage(driver)), "Configure", "Configure"},
+                        driver -> new PipelineConfigPage(new PipelinePage(driver)), "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PipelinePage(driver), "Delete Pipeline", "Welcome to Jenkins!"},
+                        driver -> new DeletePage<>(new PipelinePage(driver)), "Delete Pipeline: are you sure?"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new PipelinePage(driver)), "Move", "Move"},
+                        driver -> new MovePage<>(new PipelinePage(driver)), "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new FullStageViewPage(driver), "Full Stage View", PROJECT_NAME + " - Stage View"},
+                        driver -> new FullStageViewPage(driver), PROJECT_NAME + " - Stage View"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new PipelinePage(driver)), "Rename", "Rename Pipeline " + PROJECT_NAME},
+                        driver -> new RenamePage<>(new PipelinePage(driver)), "Rename Pipeline " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PipelineSyntaxPage(driver), "Pipeline Syntax", "Overview"}};
+                        driver -> new PipelineSyntaxPage(driver), "Overview"}};
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -636,112 +626,37 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "pipesubmenu")
     public void testNavigateToPipelinePagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, false);
 
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new PipelinePage(getDriver()))
+        String actualPageText;
+
+        BaseMainHeaderPage<?> baseMainHeaderPage = new PipelinePage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromDashboardDropdownMenu(pageFromDataConstructor.apply(getDriver()));
 
-        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
+        if (pageFromDataConstructor.apply(getDriver()).callByMenuItemName().contains("Delete")) {
+            actualPageText = baseMainHeaderPage.getAlertBoxText();
+        } else {
+            actualPageText = baseMainHeaderPage.getAssertTextFromPage();
+        }
 
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
-            "the Organization Folder project drop-down")
-    @Test
-    public void testPipelineSyntaxNavigateToOrgFolderPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Pipeline Syntax";
-        final String text = "Overview";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        String actualText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new PipelineSyntaxPage(getDriver()))
-                .getOverviewText();
-
-        Assert.assertEquals(actualText, text);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that a user is able to navigate to the 'Pipeline Syntax' page from " +
-            "the Multibranch Pipeline project drop-down")
-    @Test
-    public void testNavigateToPipelineSyntaxFromMultibranchPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Pipeline Syntax";
-        final String text = "Overview";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
-
-        String actualText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new PipelineSyntaxPage(getDriver()))
-                .getOverviewText();
-
-        Assert.assertEquals(actualText, text);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that an Organization Folder project can be deleted from the project drop-down")
-    @Test
-    public void testNavigateToDeleteOrgFolderPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Delete Organization Folder";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.OrganizationFolder, true);
-
-        boolean deleteButton = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new OrganizationFolderPage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new OrganizationFolderPage(getDriver())))
-                .isDeleteButtonDisplayed();
-
-        Assert.assertTrue(deleteButton, "Delete button is not displayed!");
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that a Multibranch Pipeline project can be deleted from the project drop-down")
-    @Test
-    public void testNavigateToDeleteMultibranchPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Delete Multibranch Pipeline";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultibranchPipeline, true);
-
-        String deletePage = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new MultibranchPipelinePage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new MultibranchPipelinePage(getDriver())))
-                .getTextFromConfirmDeletionForm();
-
-        Assert.assertEquals(deletePage, "Delete the Multibranch Pipeline ‘" + PROJECT_NAME + "’?\nYes");
+         Assert.assertEquals(actualPageText, expectedHeaderText);
     }
 
     @DataProvider(name = "userDropDownMenu")
     public Object[][] userDropDownBreadcrumbToMyViews2() {
         return new Object[][]{
-                {"builds", (Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new BuildPage(driver), "Dashboard > admin > Builds"},
-                {"configure", (Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ConfigureSystemPage(driver), "Dashboard > admin > Configure"},
-                {"my-views", (Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MyViewsPage(driver), "Dashboard > admin > My Views > All"},
-                {"credentials", (Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new CredentialsPage(driver), "Dashboard > admin > Credentials"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new BuildPage(driver), "Builds for admin"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new UserConfigPage(new UserPage(driver)), "Full Name"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new MyViewsPage(driver), "This folder is empty"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(driver), "Credentials"},
         };
     }
 
@@ -750,37 +665,35 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to 'My Views' page from the 'Admin' drop-down menu items")
     @Test(dataProvider = "userDropDownMenu")
     public void testNavigateToMyViewsPagesFromDropdownOnBreadcrumb(
-            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedFullBreadcrumbText) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedPageText) {
 
-        String actualFullBreadcrumbText =
-                new MainPage(getDriver())
-                        .getHeader()
-                        .clickUserDropdownMenu()
-                        .clickMyViewsFromUserDropdownMenu()
-                        .getBreadcrumb()
-                        .getUserBreadcrumbDropdownMenu()
-                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), "admin")
-                        .getBreadcrumb()
-                        .getFullBreadcrumbText();
+        String actualFullBreadcrumbText = new MainPage(getDriver())
+                .getHeader()
+                .clickUserDropdownMenu()
+                .clickMyViewsFromUserDropdownMenu()
+                .getBreadcrumb()
+                .getUserBreadcrumbDropdownMenu()
+                .clickPageFromUserBreadcrumbDropdownMenu(pageFromDataConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+        Assert.assertEquals(actualFullBreadcrumbText, expectedPageText);
     }
 
     @DataProvider(name = "optionsFreestyleProject")
     public Object[][] FreestyleDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                        driver -> new ChangesPage(driver), "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new WorkspacePage(driver), "Workspace", "Error: no workspace"},
+                        driver -> new WorkspacePage(driver), "Error: no workspace"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new FreestyleProjectPage(driver), "Build Now", "Project " + PROJECT_NAME},
+                        driver -> new FreestyleProjectConfigPage(new FreestyleProjectPage(driver)), "Configure"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new FreestyleProjectConfigPage(new FreestyleProjectPage(driver)), "Configure", "Configure"},
+                        driver -> new DeletePage<>(new FreestyleProjectPage(driver)), "Delete Project: are you sure?"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new FreestyleProjectPage(driver)), "Move", "Move"},
+                        driver -> new MovePage<>(new FreestyleProjectPage(driver)), "Move"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Rename", "Rename Project " + PROJECT_NAME}
+                        driver -> new RenamePage<FreestyleProjectPage>(new FreestyleProjectPage(driver)), "Rename Project " + PROJECT_NAME}
         };
     }
 
@@ -789,48 +702,33 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to the Pipeline pages from the project drop-down")
     @Test(dataProvider = "optionsFreestyleProject")
     public void testNavigateToFreestylePagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String submenu, String expectedHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedPageText) {
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.FreestyleProject, false);
 
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FreestyleProjectPage(getDriver()))
+        String actualPageHeaderText;
+
+        BaseMainHeaderPage<?> baseMainHeaderPage = new FreestyleProjectPage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromDashboardDropdownMenu(pageFromDataConstructor.apply(getDriver()));
 
-        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
-    }
+        if (pageFromDataConstructor.apply(getDriver()).callByMenuItemName().contains("Delete")) {
+            actualPageHeaderText = baseMainHeaderPage.getAlertBoxText();
+        } else {
+            actualPageHeaderText = baseMainHeaderPage.getAssertTextFromPage();
+        }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Function")
-    @Description("Verification that a user is able to compile a build from PipeLine project drop-down menu")
-    @Test
-    public void testBuildNowPipelineJobFromDropDownByBreadcrumb() {
-        String DisplayedAlertText = "No data available. This Pipeline has not yet run.";
-        String expectedWarningText = "This Pipeline has run successfully, but does not define any stages. " +
-                "Please use the stage step to define some stages in this Pipeline.";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, true);
-        String actualWarningText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new PipelinePage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .clickBuildNowFromDashboardDropdownMenu(new PipelinePage(getDriver()))
-                .getWarningText();
-
-        Assert.assertNotEquals(DisplayedAlertText, expectedWarningText);
-        Assert.assertEquals(actualWarningText, expectedWarningText);
+        Assert.assertEquals(actualPageHeaderText, expectedPageText);
     }
 
     @DataProvider(name = "testuserDropDownMenu")
     public Object[][] userDropDownBreadcrumb() {
         return new Object[][]{
-                {"builds", (Function<WebDriver, BaseMainHeaderPage<?>>) BuildPage::new, "Dashboard > testuser > Builds"},
-                {"configure", (Function<WebDriver, BaseMainHeaderPage<?>>) ConfigureSystemPage::new, "Dashboard > testuser > Configure"},
-                {"my-views", (Function<WebDriver, BaseMainHeaderPage<?>>) MyViewsPage::new, "Dashboard > testuser > My Views > All"},
-                {"credentials", (Function<WebDriver, BaseMainHeaderPage<?>>) CredentialsPage::new, "Dashboard > testuser > Credentials"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new BuildPage(driver), "Builds for tuser"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Full Name"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new MyViewsPage(driver), "This folder is empty"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new CredentialsPage(driver), "Credentials"},
         };
     }
 
@@ -839,31 +737,29 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to the user pages from the 'User' drop-down")
     @Test(dataProvider = "testuserDropDownMenu")
     public void testNavigateToSubMenuUserFromDropDownOnBreadcrumb(
-            String submenu, Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedHeaderText) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String expectedPageText) {
         final String user = "tuser";
         final String pass = "p@ssword123";
         final String email = "test@test.com";
         final String userFullName = "testuser";
 
-        TestUtils.checkMoveOptionAndCreateFolder(submenu, this, true);
+        TestUtils.checkMoveOptionAndCreateFolder(pageFromDataConstructor.apply(getDriver()).callByMenuItemName(), this, true);
         TestUtils.createUserAndReturnToMainPage(this, user, pass, userFullName, email);
 
-        String actualPageHeaderText =
-                new MainPage(getDriver())
-                        .getHeader()
-                        .clickLogOutButton()
-                        .enterUsername(user)
-                        .enterPassword(pass)
-                        .enterSignIn(new MainPage(getDriver()))
-                        .getHeader()
-                        .clickUserAdminButton()
-                        .getBreadcrumb()
-                        .getUserBreadcrumbDropdownMenu()
-                        .clickPageFromUserBreadcrumbDropdownMenu(submenu, pageFromDataConstructor.apply(getDriver()), user)
-                        .getBreadcrumb()
-                        .getFullBreadcrumbText();
+        String actualPageHeaderText = new MainPage(getDriver())
+                .getHeader()
+                .clickLogOutButton()
+                .enterUsername(user)
+                .enterPassword(pass)
+                .enterSignIn(new MainPage(getDriver()))
+                .getHeader()
+                .clickUserAdminButton()
+                .getBreadcrumb()
+                .getUserBreadcrumbDropdownMenu()
+                .clickPageFromUserBreadcrumbDropdownMenu(pageFromDataConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
+        Assert.assertEquals(actualPageHeaderText, expectedPageText);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -878,7 +774,7 @@ public class BreadcrumbTest extends BaseTest {
                 .getBreadcrumb()
                 .getManageJenkinsDropdownMenu()
                 .selectOptionFromManageJenkinsDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
-                .getHeading();
+                .getAssertTextFromPage();
 
         Assert.assertEquals(actualResult, expectedResult);
     }

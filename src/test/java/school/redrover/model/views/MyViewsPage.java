@@ -31,8 +31,17 @@ public class MyViewsPage extends BaseDashboardPage<MyViewsPage> implements IDesc
     @FindBy(xpath = "//a[@href = 'delete']")
     private WebElement deleteViewButton;
 
-    public String getStatusMessageText() {
+    @Override
+    public String callByMenuItemName() {
+        return "My Views";
+    }
 
+    @Override
+    public String getAssertTextFromPage() {
+        return getWait2().until(ExpectedConditions.visibilityOf(statusMessage)).getText();
+    }
+
+    public String getStatusMessageText() {
         return statusMessage.getText();
     }
 

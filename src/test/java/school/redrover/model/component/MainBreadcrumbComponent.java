@@ -87,10 +87,8 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     }
 
     @Step("Get a page form the 'Dashboard' drop-down menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
-            if (listItemName.contains("Delete Pipeline"))
-                 {clickOkOnPopUp();}
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDashboardDropdownMenu(ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + pageToReturn.callByMenuItemName() + "')]"))).click();
 
         return pageToReturn;
     }
@@ -103,7 +101,7 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
     }
 
     @Step("Select an option from 'Dashboard' -> 'Manage Jenkins' submenu list")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(SubmenuPage submenuPage) {
         getDashboardDropdownMenu();
         new Actions(getDriver())
                 .moveToElement(manageJenkinsSubmenu)
@@ -187,9 +185,9 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
 
     @Step("Click a page from 'User' drop-down")
     public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage clickPageFromUserBreadcrumbDropdownMenu(
-            String listItemName, ReturnedPage pageToReturn, String userName) {
+            ReturnedPage pageToReturn) {
         getWait5().until(ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@id='breadcrumb-menu']//a[@href='/user/" + userName + "/" + listItemName + "']")))
+                        By.xpath("//span[contains(text(), '" + pageToReturn.callByMenuItemName() + "')]")))
                 .click();
 
         return pageToReturn;

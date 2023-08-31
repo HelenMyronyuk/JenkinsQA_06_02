@@ -529,7 +529,7 @@ public class ViewsTest extends BaseTest {
                 .clickSaveButton()
                 .getBreadcrumb()
                 .getDashboardDropdownMenu()
-                .getPageFromDashboardDropdownMenu("My Views", new MyViewsPage(getDriver()))
+                .getPageFromDashboardDropdownMenu(new MyViewsPage(getDriver()))
                 .clickOnView(VIEW_NAME, new ViewPage(getDriver()))
                 .isDeleteViewButtonDisplayed();
 

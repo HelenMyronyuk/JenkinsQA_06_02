@@ -68,6 +68,11 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
         super(driver);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Builds";
+    }
+
     @Step("Green check mark symbol is present")
     public boolean isDisplayedGreenIconV() {
         return getWait10().until(ExpectedConditions.visibilityOf(greenIconV)).isDisplayed();
@@ -164,7 +169,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Select an option from the build drop-down menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromBuildDropDownList(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectOptionFromBuildDropDownList(SubmenuPage submenuPage) {
         WebElement option = getDriver().
                 findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 

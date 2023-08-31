@@ -26,8 +26,22 @@ public class UserConfigPage extends BaseConfigPage<UserConfigPage, UserPage> {
 
     @FindBy(xpath = "//input[@class='jenkins-input validated  ']")
     private WebElement defaultViewField;
+
+    @FindBy(xpath = "//div[text()='Full Name']")
+    private WebElement fullNameLabel;
+
     public UserConfigPage(UserPage statusUserPage) {
         super(statusUserPage);
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Configure";
+    }
+
+    @Override
+    public String getAssertTextFromPage() {
+        return getWait2().until(ExpectedConditions.visibilityOf(fullNameLabel)).getText().replaceAll("\\?", "").trim();
     }
 
     @Step("Get an E-mail address")

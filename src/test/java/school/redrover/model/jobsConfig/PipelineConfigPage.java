@@ -41,6 +41,11 @@ public class PipelineConfigPage extends BaseConfigProjectsPage<PipelineConfigPag
         super(pipelinePage);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Configure";
+    }
+
     @Step("Click on the 'Advanced' arrow in the Advanced Project Options section")
     public PipelineConfigPage scrollAndClickAdvancedButton() {
         TestUtils.scrollWithPauseByActions(this, scriptSection, 500);
