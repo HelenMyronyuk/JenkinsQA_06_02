@@ -7,8 +7,9 @@ import org.openqa.selenium.support.FindBy;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
 import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.interfaces.IDropDownMenu;
 
-public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseSubmenuPage<RenamePage<JobTypePage>> {
+public class RenamePage <JobTypePage extends BasePage<?, ?>> extends BaseSubmenuPage<RenamePage<JobTypePage>> implements IDropDownMenu {
 
     @FindBy(name = "newName")
     private WebElement newName;

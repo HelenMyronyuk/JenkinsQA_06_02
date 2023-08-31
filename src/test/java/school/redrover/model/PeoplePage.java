@@ -39,6 +39,11 @@ public class PeoplePage extends BaseMainHeaderPage<PeoplePage> {
         super(driver);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "People";
+    }
+
     public UserPage clickUserName(String newUserName) {
         getWait5().until(ExpectedConditions.elementToBeClickable(getDriver()
                 .findElement(By.xpath("//a[@href='/user/" + newUserName + "/']")))).click();

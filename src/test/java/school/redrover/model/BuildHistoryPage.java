@@ -76,7 +76,7 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
 
     @Override
     public String callByMenuItemName() {
-        return getHeading();
+        return "Build History";
     }
 
     @Step("Click build console output on the Jenkins table")

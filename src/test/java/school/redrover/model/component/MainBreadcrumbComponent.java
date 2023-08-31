@@ -95,6 +95,13 @@ public class MainBreadcrumbComponent<Page extends BasePage<?, ?>> extends BaseCo
         return pageToReturn;
     }
 
+    @Step("Get a page form the 'Dashboard' drop-down menu")
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromBreadcrumbDropdownMenuWithoutDeleteAlert(ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + pageToReturn.callByMenuItemName() + "')]"))).click();
+
+        return pageToReturn;
+    }
+
     @Step("Select an option from 'Dashboard' -> 'Manage Jenkins' submenu list")
     public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectAnOptionFromDashboardManageJenkinsSubmenuList(SubmenuPage submenuPage) {
         getDashboardDropdownMenu();

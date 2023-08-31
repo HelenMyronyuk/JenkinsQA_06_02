@@ -322,17 +322,21 @@ public class BreadcrumbTest extends BaseTest {
     public Object[][] folderDropDownBreadcrumb() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new FolderConfigPage(new FolderPage(driver)), "Configure", "Configuration"},
+                        driver -> new FolderConfigPage(new FolderPage(driver)), "Configuration"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new PeoplePage(getDriver()), "People", "People"},
+                        driver -> new NewJobPage(getDriver()), "Enter an item name"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new BuildHistoryPage(getDriver()), "Build History", "Build History of Jenkins"},
+                        driver -> new DeletePage<>(getDriver()), "Delete Folder " + PROJECT_NAME},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new MovePage<>(new FolderPage(driver)), "Move", "Move"},
+                        driver -> new PeoplePage(getDriver()), "People"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new FolderPage(driver)), "Rename", "Rename Folder " + PROJECT_NAME},
+                        driver -> new BuildHistoryPage(getDriver()), "Build History of Jenkins"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new CredentialsPage(getDriver()), "Credentials", "Credentials"}
+                        driver -> new MovePage<>(new FolderPage(driver)), "Move"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new RenamePage<>(new FolderPage(driver)), "Rename Folder " + PROJECT_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new CredentialsPage(getDriver()), "Credentials"}
         };
     }
 
@@ -341,18 +345,17 @@ public class BreadcrumbTest extends BaseTest {
     @Description("Verification that a user is able to navigate to folder pages from the drop-down")
     @Test(dataProvider = "optionsFolder")
     public void testNavigateToFolderPagesFromDropdownOnBreadcrumb(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String optionName, String pageHeaderText) {
-        TestUtils.checkMoveOptionAndCreateFolder(optionName, this, true);
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDataConstructor, String textFromPage) {
+        TestUtils.checkMoveOptionAndCreateFolder(textFromPage, this, true);
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, false);
 
-        String pageName = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
+        String actualTextFromPage = new FolderPage(getDriver())
                 .getBreadcrumb()
                 .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, pageFromDataConstructor.apply(getDriver()))
-                .getPageHeaderText();
+                .getPageFromBreadcrumbDropdownMenuWithoutDeleteAlert(pageFromDataConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(pageName, pageHeaderText);
+        Assert.assertEquals(actualTextFromPage, textFromPage);
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -575,25 +578,6 @@ public class BreadcrumbTest extends BaseTest {
         Assert.assertEquals(actualPageHeaderText, expectedHeaderText);
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that a user is able to navigate to 'New Item' page from the Folder project drop-down")
-    @Test
-    public void testNewItemNavigateToFolderPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "New Item";
-        final String pageHeaderText = "Enter an item name";
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
-
-        String actualPageHeaderText = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new NewJobPage(getDriver()))
-                .getHeaderText();
-
-        Assert.assertEquals(actualPageHeaderText, pageHeaderText);
-    }
-
     @DataProvider(name = "buildSubMenu")
     public Object[][] getBuildSubmenu() {
         return new Object[][]{
@@ -707,25 +691,6 @@ public class BreadcrumbTest extends BaseTest {
                 .getOverviewText();
 
         Assert.assertEquals(actualText, text);
-    }
-
-    @Severity(SeverityLevel.NORMAL)
-    @Feature("Navigation")
-    @Description("Verification that a Folder project can be deleted from the project drop-down")
-    @Test
-    public void testDeleteNavigateToFolderPagesFromDropdownOnBreadcrumb() {
-        final String optionName = "Delete Folder";
-
-        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Folder, true);
-
-        boolean deleteButton = new MainPage(getDriver())
-                .clickJobName(PROJECT_NAME, new FolderPage(getDriver()))
-                .getBreadcrumb()
-                .getJobBreadcrumbDropdownMenu()
-                .getPageFromDashboardDropdownMenu(optionName, new DeletePage<>(new FolderPage(getDriver())))
-                .isDeleteButtonDisplayed();
-
-        Assert.assertTrue(deleteButton, "Delete button is not displayed!");
     }
 
     @Severity(SeverityLevel.NORMAL)

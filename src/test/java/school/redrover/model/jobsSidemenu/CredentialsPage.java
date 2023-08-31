@@ -23,7 +23,7 @@ public class CredentialsPage extends BaseSubmenuPage<CredentialsPage> {
 
     @Override
     public String callByMenuItemName() {
-        return "Manage Credentials";
+        return "Credentials";
     }
 
     @Step("Get Heading text from Credentials page")

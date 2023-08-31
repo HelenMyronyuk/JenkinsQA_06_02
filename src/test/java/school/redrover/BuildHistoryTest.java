@@ -15,6 +15,7 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
@@ -169,7 +170,7 @@ public class BuildHistoryTest extends BaseTest {
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
                 {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build ‘#1’"},
+                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build #1"},
         };
     }
 

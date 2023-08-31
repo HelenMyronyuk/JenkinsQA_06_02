@@ -6,12 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.JenkinsVersionPage;
-import school.redrover.model.MainPage;
 import school.redrover.model.component.MainBreadcrumbComponent;
 import school.redrover.model.component.MainHeaderComponent;
 import school.redrover.model.interfaces.IAlert;
+import school.redrover.model.interfaces.IDropDownMenu;
 
-public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> extends BasePage<MainHeaderComponent<Self>, MainBreadcrumbComponent<Self>> implements IAlert<Self> {
+public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> extends BasePage<MainHeaderComponent<Self>, MainBreadcrumbComponent<Self>> implements IAlert<Self>, IDropDownMenu {
 
     @FindBy(xpath = "//h1")
     private WebElement header;

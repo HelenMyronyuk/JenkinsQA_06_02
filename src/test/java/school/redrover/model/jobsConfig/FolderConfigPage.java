@@ -48,6 +48,11 @@ public class FolderConfigPage extends BaseConfigFoldersPage<FolderConfigPage, Fo
         super(folderPage);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Configure";
+    }
+
     @Step("Enter a library name in 'Name' input field under 'Library'")
     public FolderConfigPage inputNameLibrary() {
         TestUtils.scrollWithPauseByActions(this, footer, 500);

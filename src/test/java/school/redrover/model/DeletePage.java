@@ -33,6 +33,13 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPag
         return "Delete";
     }
 
+    @Override
+    public String getAssertTextFromPage() {
+        String confirmDeleteText = getWait5().until(ExpectedConditions.visibilityOf(confirmDeletionForm)).getText().replaceAll(" the", "").replaceAll("‘", "").replaceAll("’","");
+
+        return confirmDeleteText.substring(0, confirmDeleteText.lastIndexOf("?"));
+    }
+
     @Step("Click on the 'Yes' button on the DeletePage")
     public ParentPage clickYesButton() {
         deleteYesButton.click();
@@ -55,12 +62,5 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPag
     @Step("Check if delete button is displayed")
     public boolean isDeleteButtonDisplayed() {
         return getWait5().until(ExpectedConditions.visibilityOf(deleteYesButton)).isDisplayed();
-    }
-
-    @Override
-    public String getAssertTextFromPage() {
-        String confirmDeleteText = getWait5().until(ExpectedConditions.visibilityOf(confirmDeletionForm)).getText().replaceAll(" the", "");
-
-        return confirmDeleteText.substring(0, confirmDeleteText.lastIndexOf("?"));
     }
 }
