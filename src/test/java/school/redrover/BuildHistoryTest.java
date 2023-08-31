@@ -15,6 +15,7 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
