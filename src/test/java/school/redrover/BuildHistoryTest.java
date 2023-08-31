@@ -167,10 +167,10 @@ public class BuildHistoryTest extends BaseTest {
     @DataProvider(name = "multiConfigurationBuildDropDownMenu")
     public Object[][] getBuildDropDownMenuFroMultiConfigurationProject() {
         return new Object[][]{
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ChangesPage::new, "Changes"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) ConsoleOutputPage::new, "Console Output"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
-                {(Function<WebDriver, BaseSubmenuPage<?>>) DeletePage::new, "Delete build #1"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete build #1"},
         };
     }
 
@@ -179,7 +179,7 @@ public class BuildHistoryTest extends BaseTest {
     @Description("Verify the ability to navigate to options from drop down menu for Multi-configuration project")
     @Test(dataProvider = "multiConfigurationBuildDropDownMenu")
     public void testNavigateToDefaultBuildOptionDropDownMenuForMultiConfigurationProject(
-            Function<WebDriver, BaseSubmenuPage<?>> pageFromDropDown, String textFromPage) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String textFromPage) {
         TestUtils.createJob(this, MULTI_CONFIGURATION_PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
 
         String actualTextFromPage = new MultiConfigurationProjectPage(getDriver())

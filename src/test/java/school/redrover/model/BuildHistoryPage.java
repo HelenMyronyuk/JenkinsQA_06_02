@@ -225,7 +225,7 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     }
 
     @Step("Get a page form the 'Default' build drop-down menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage getPageFromDefaultBuildDropdownMenu(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage getPageFromDefaultBuildDropdownMenu(SubmenuPage submenuPage) {
         getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]"))).click();
 
         return submenuPage;

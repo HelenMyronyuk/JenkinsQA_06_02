@@ -54,7 +54,7 @@ public abstract class BaseDashboardPage<Self extends BaseDashboardPage<?>> exten
     }
 
     @Step("Click 'Changes', 'Console Output', 'Edit Build Information', 'Delete build', 'Replay', 'Pipeline Steps' and 'Workspaces' on build drop-down menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
         WebElement option = getDriver().
                 findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 

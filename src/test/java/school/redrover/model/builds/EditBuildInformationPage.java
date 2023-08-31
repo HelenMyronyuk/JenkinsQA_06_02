@@ -5,9 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 
-public class EditBuildInformationPage extends BaseSubmenuPage<EditBuildInformationPage> {
+
+public class EditBuildInformationPage extends BaseMainHeaderPage<EditBuildInformationPage> {
 
     @FindBy(xpath = "//textarea[@name='description']")
     private WebElement buildDescriptionTextArea;

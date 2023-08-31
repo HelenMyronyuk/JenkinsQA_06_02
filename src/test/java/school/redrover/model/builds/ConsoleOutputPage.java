@@ -7,9 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.GitBuildDataPage;
-import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 
-public class ConsoleOutputPage extends BaseSubmenuPage<ConsoleOutputPage> {
+
+public class ConsoleOutputPage extends BaseMainHeaderPage<ConsoleOutputPage> {
 
     @FindBy(xpath = "//pre[@class='console-output']")
     private WebElement consoleOutput;

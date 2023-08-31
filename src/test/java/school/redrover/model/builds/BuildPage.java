@@ -200,7 +200,7 @@ public class BuildPage extends BaseMainHeaderPage<BuildPage> implements IDescrip
     }
 
     @Step("Select an option from the build side menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage clickBuildOptionFromSideMenu(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage clickBuildOptionFromSideMenu(SubmenuPage submenuPage) {
         getWait2().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]/.."))).click();
 
