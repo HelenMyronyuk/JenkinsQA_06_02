@@ -218,17 +218,10 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     }
 
     @Step("Get a page form the 'Default' project drop-down menu")
-    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDefaultProjectDropdownMenu(String listItemName, ReturnedPage pageToReturn) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + listItemName + "')]"))).click();
+    public <ReturnedPage extends BaseMainHeaderPage<?>> ReturnedPage getPageFromDefaultProjectDropdownMenu(ReturnedPage pageToReturn) {
+        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + pageToReturn.callByMenuItemName() + "')]"))).click();
 
         return pageToReturn;
-    }
-
-    @Step("Get a page form the 'Default' build drop-down menu")
-    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage getPageFromDefaultBuildDropdownMenu(SubmenuPage submenuPage) {
-        getWait2().until(ExpectedConditions.elementToBeClickable(By.xpath("//li/a/span[contains(text(), '" + submenuPage.callByMenuItemName() + "')]"))).click();
-
-        return submenuPage;
     }
 
     @Step("Open a default build drop-down menu")
@@ -250,9 +243,9 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     }
 
     @Step("Select an option from the project menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage clickOptionsFromMenu(SubmenuPage submenuPage, String optionName) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage clickOptionsFromMenu(SubmenuPage submenuPage) {
         WebElement option = getDriver().
-                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + optionName + "')]"));
+                findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 
         TestUtils.scrollWithPauseByActions(this, option, 800);
         getWait2().until(ExpectedConditions.elementToBeClickable(option)).click();
@@ -270,14 +263,13 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     }
 
     @Step("Select an option from the Buildproject menu")
-    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage clickOptionsFromBuildMenu(SubmenuPage submenuPage, String optionName) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage clickOptionsFromBuildMenu(SubmenuPage submenuPage) {
         WebElement option = getDriver().
-                findElement(By.xpath("//span[contains(text(),'" + optionName + "')]"));
+                findElement(By.xpath("//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 
         TestUtils.scrollWithPauseByActions(this, option, 800);
         getWait2().until(ExpectedConditions.elementToBeClickable(option)).click();
 
         return submenuPage;
     }
-
 }
