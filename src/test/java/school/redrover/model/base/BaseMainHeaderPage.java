@@ -1,6 +1,7 @@
 package school.redrover.model.base;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,5 +49,11 @@ public abstract class BaseMainHeaderPage<Self extends BaseMainHeaderPage<?>> ext
         jenkinsVersionLink.click();
 
         return new JenkinsVersionPage(getDriver());
+    }
+
+    @Step("Get text from BreadCrumb")
+    public String getTextFromBreadCrumb(String name) {
+        return getWait2().until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//*[contains(text(),'" + name + "')]"))).getText();
     }
 }

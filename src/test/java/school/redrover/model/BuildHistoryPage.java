@@ -133,7 +133,7 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     }
 
     @Step("Get Page header")
-    public String getHeaderText(){
+    public String getHeaderText() {
         return pageHeader.getText();
     }
 
@@ -259,4 +259,25 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
 
         return submenuPage;
     }
+
+    @Step("Open a project from Build drop-down menu")
+    public BuildHistoryPage openProjectBuildDropDownMenu() {
+        getDriver().
+                findElement(By.xpath("//a[@class='jenkins-table__link jenkins-table__badge model-link inside']//button[@class='jenkins-menu-dropdown-chevron']"))
+                .sendKeys(Keys.ENTER);
+
+        return this;
+    }
+
+    @Step("Select an option from the Buildproject menu")
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage clickOptionsFromBuildMenu(SubmenuPage submenuPage, String optionName) {
+        WebElement option = getDriver().
+                findElement(By.xpath("//span[contains(text(),'" + optionName + "')]"));
+
+        TestUtils.scrollWithPauseByActions(this, option, 800);
+        getWait2().until(ExpectedConditions.elementToBeClickable(option)).click();
+
+        return submenuPage;
+    }
+
 }

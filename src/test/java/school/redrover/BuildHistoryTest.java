@@ -15,6 +15,8 @@ import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
+import school.redrover.model.builds.PipelineStepsPage;
+import school.redrover.model.builds.ReplayPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
@@ -347,9 +349,9 @@ public class BuildHistoryTest extends BaseTest {
     public Object[][] provideJobSubmenuOption() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new ChangesPage(driver), "Changes", "Changes"},
+                        ChangesPage::new, "Changes", "Changes"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new WorkspacePage(driver), "Workspace", "Workspace of default on Built-In Node"},
+                        WorkspacePage::new, "Workspace", "Workspace of default on Built-In Node"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
                         driver -> new RenamePage<>(new MultiConfigurationProjectPage(driver)), "Rename", "Rename Configuration default"}
         };
@@ -540,6 +542,48 @@ public class BuildHistoryTest extends BaseTest {
         if (optionsName.equals("Delete Multi-configuration project")) {
             Alert alert = getDriver().switchTo().alert();
             Assert.assertTrue(alert.getText().contains(optionsName), "Navigated to an unexpected page");
+        } else {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
+        }
+    }
+
+    @DataProvider(name = "pipelineProjectBuildOptionsFromDropDownMenu")
+    public Object[][] getPipelineProjectBuildDropDownMenu() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) DeletePage::new, "Delete"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ReplayPage::new, "Replay"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PipelineStepsPage::new, "Pipeline Steps"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacePage::new, "Workspaces"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to navigate to options from Build drop down menu for Pipeline project")
+    @Test(dataProvider = "pipelineProjectBuildOptionsFromDropDownMenu")
+    public void testNavigateToPageFromBuildDropDownPipelineProject(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String optionsName) {
+        TestUtils.createJob(this, PIPELINE_PROJECT_NAME, TestUtils.JobType.Pipeline, true);
+
+        new MainPage(getDriver())
+                .clickBuildByGreenArrow(PIPELINE_PROJECT_NAME)
+                .getHeader()
+                .clickLogo()
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectBuildDropDownMenu()
+                .clickOptionsFromBuildMenu(pageFromDropDown.apply(getDriver()), optionsName);
+
+        if (optionsName.equals("Delete")) {
+            String expectedBreadCrumb = "Confirm deletion";
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getTextFromBreadCrumb(expectedBreadCrumb);
+            Assert.assertTrue(actualPageHeader.contains(expectedBreadCrumb), "Navigated to an unexpected page");
+        } else if (optionsName.equals("Edit Build Information") || optionsName.equals("Pipeline Steps")) {
+            String actualPageHeader = pageFromDropDown.apply(getDriver()).getTextFromBreadCrumb(optionsName);
+            Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
         } else {
             String actualPageHeader = pageFromDropDown.apply(getDriver()).getPageHeaderText();
             Assert.assertTrue(actualPageHeader.contains(optionsName), "Navigated to an unexpected page");
