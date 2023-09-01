@@ -626,6 +626,23 @@ public class MultiConfigurationProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.TRIVIAL)
     @Feature("Function")
+    @Description("The 'Display Name' can be added to the MultiConfiguration project from Configuration page")
+    @Test
+    public void testAddDisplayName() {
+        TestUtils.createJob(this, NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        MultiConfigurationProjectPage multiConfigurationProjectPage = new MultiConfigurationProjectPage(getDriver())
+                .clickConfigure()
+                .clickAdvancedDropdownMenu()
+                .enterDisplayName(NEW_NAME)
+                .clickSaveButton();
+
+        Assert.assertEquals(multiConfigurationProjectPage.getProjectName(), NEW_NAME);
+        Assert.assertEquals(multiConfigurationProjectPage.getProjectNameSubtitleWithDisplayName(), NAME);
+    }
+
+    @Severity(SeverityLevel.TRIVIAL)
+    @Feature("Function")
     @Description("The 'Display name' can be deleted to the MultiConfiguration from Configuration page")
     @Test
     public void testDeleteDisplayName() {
