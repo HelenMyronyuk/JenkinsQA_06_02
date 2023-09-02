@@ -444,44 +444,33 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualPageText, pageText);
     }
 
-    @DataProvider(name = "freestyleProjectOptionsFromDropDownMenu")
-    public Object[][] getFreestyleProjectDropDownMenu() {
+    @DataProvider(name = "freestyleProjectOptionsFromBuildDropDownMenu")
+    public Object[][] getFreestyleProjectBuildDropDownMenu() {
         return new Object[][]{
                 {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesPage::new, "Changes"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacePage::new,
-                        "Workspace of " + FREESTYLE_PROJECT_NAME + " on Built-In Node"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
                 {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new FreestyleProjectConfigPage(new FreestyleProjectPage(driver)), "Configure"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new DeletePage<>(new FreestyleProjectPage(driver)), "Delete Project: are you sure?"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>)
-                        driver -> new RenamePage<>(new FreestyleProjectPage(driver)), "Rename Project " + FREESTYLE_PROJECT_NAME}
+                        driver -> new DeletePage<>(new PipelinePage(driver)), "Delete build #1"}
         };
     }
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to navigate to options from drop down menu for Freestyle project")
-    @Test(dataProvider = "freestyleProjectOptionsFromDropDownMenu")
-    public void testNavigateToOptionDropDownMenuForFreestyleProject(
+    @Test(dataProvider = "freestyleProjectOptionsFromBuildDropDownMenu")
+    public void testNavigateToOptionBuildDropDownMenuForFreestyleProject(
             Function<WebDriver, BaseMainHeaderPage<?>> pageFromDropDown, String pageText) {
         TestUtils.createJob(this, FREESTYLE_PROJECT_NAME, TestUtils.JobType.FreestyleProject, false);
 
-        String actualPageText;
-
-        BaseMainHeaderPage<?> baseMainHeaderPage = new FreestyleProjectPage(getDriver())
+        String actualPageText = new FreestyleProjectPage(getDriver())
                 .clickBuildNowFromSideMenu()
                 .getHeader()
                 .clickLogo()
                 .clickBuildsHistoryFromSideMenu()
-                .openProjectDropDownMenu(FREESTYLE_PROJECT_NAME)
-                .clickOptionsFromMenu(pageFromDropDown.apply(getDriver()));
-
-        if (pageFromDropDown.apply(getDriver()).callByMenuItemName().contains("Delete")) {
-            actualPageText = baseMainHeaderPage.getAlertBoxText();
-        } else {
-            actualPageText = baseMainHeaderPage.getAssertTextFromPage();
-        }
+                .openProjectBuildDropDownMenu()
+                .clickOptionsFromBuildMenu(pageFromDropDown.apply(getDriver()))
+                .getAssertTextFromPage();
 
         Assert.assertEquals(actualPageText, pageText);
     }
