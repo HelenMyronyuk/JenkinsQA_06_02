@@ -15,6 +15,11 @@ public class ScanOtherFoldersLogPage extends BaseMainHeaderPage<ScanOtherFolders
         super(driver);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Scan";
+    }
+
     @Step("Get title 'Scan Organization Folder Log' ")
     public String getTextFromTitle() {
         return title.getText();

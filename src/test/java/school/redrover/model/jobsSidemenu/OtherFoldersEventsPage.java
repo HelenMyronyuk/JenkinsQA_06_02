@@ -9,4 +9,9 @@ public class OtherFoldersEventsPage extends BaseMainHeaderPage<ScanOtherFoldersL
     public OtherFoldersEventsPage(WebDriver driver) {
         super(driver);
     }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Events";
+    }
 }

@@ -411,7 +411,7 @@ public abstract class BaseProjectPage<Self extends BaseProjectPage<?>> extends B
     }
 
     @Step("Select an option from the project drop-down menu")
-    public <SubmenuPage extends BaseSubmenuPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
+    public <SubmenuPage extends BaseMainHeaderPage<?>> SubmenuPage selectOptionFromDropDownList(SubmenuPage submenuPage) {
         WebElement option = getDriver().
                 findElement(By.xpath("//div[@id='breadcrumb-menu-target']//span[contains(text(),'" + submenuPage.callByMenuItemName() + "')]"));
 

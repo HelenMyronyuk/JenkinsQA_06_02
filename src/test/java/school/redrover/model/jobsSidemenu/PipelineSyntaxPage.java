@@ -43,7 +43,7 @@ public class PipelineSyntaxPage extends BaseSubmenuPage<PipelineSyntaxPage> {
 
     @Override
     public String callByMenuItemName() {
-        return "Overview";
+        return "Syntax";
     }
 
     @Step("Select the 'echo: Print Message' option in 'Sample Step' dropdown menu")
@@ -104,5 +104,10 @@ public class PipelineSyntaxPage extends BaseSubmenuPage<PipelineSyntaxPage> {
         dropdown.selectByVisibleText(option);
 
         return this;
+    }
+
+    @Override
+    public String getAssertTextFromPage() {
+        return getWait5().until(ExpectedConditions.visibilityOf(header)).getText();
     }
 }

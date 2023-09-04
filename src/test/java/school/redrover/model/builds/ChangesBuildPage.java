@@ -4,9 +4,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import school.redrover.model.base.BaseSubmenuPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 
-public class ChangesBuildPage extends BaseSubmenuPage<ChangesBuildPage> {
+
+public class ChangesBuildPage extends BaseMainHeaderPage<ChangesBuildPage> {
 
     public ChangesBuildPage(WebDriver driver) {
         super(driver);

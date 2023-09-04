@@ -31,6 +31,7 @@ public abstract class BaseSubmenuPage<Self extends BaseSubmenuPage<?>> extends B
         return getWait5().until(ExpectedConditions.visibilityOf(titleEditFromBreadCrumb)).getText();
     }
 
+    @Step("Get text from BreadCrumb")
     public String getTextFromBreadCrumb(String name) {
         return getWait2().until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//a[contains(text(),'" + name + "')]"))).getText();

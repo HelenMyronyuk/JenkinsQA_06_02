@@ -6,10 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import school.redrover.model.base.BaseJobPage;
+import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
-import school.redrover.model.base.BaseSubmenuPage;
 
-public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPage<DeletePage<ParentPage>> {
+public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseMainHeaderPage<DeletePage<ParentPage>> {
 
     @FindBy(xpath = "//form[@action='doDelete']")
     private WebElement confirmDeletionForm;
@@ -31,6 +31,13 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPag
     @Override
     public String callByMenuItemName() {
         return "Delete";
+    }
+
+    @Override
+    public String getAssertTextFromPage() {
+        String confirmDeleteText = getWait5().until(ExpectedConditions.visibilityOf(confirmDeletionForm)).getText().replaceAll(" the", "").replaceAll("‘", "").replaceAll("’","");
+
+        return confirmDeleteText.substring(0, confirmDeleteText.lastIndexOf("?"));
     }
 
     @Step("Click on the 'Yes' button on the DeletePage")
@@ -55,12 +62,5 @@ public class DeletePage<ParentPage extends BasePage<?,?>> extends BaseSubmenuPag
     @Step("Check if delete button is displayed")
     public boolean isDeleteButtonDisplayed() {
         return getWait5().until(ExpectedConditions.visibilityOf(deleteYesButton)).isDisplayed();
-    }
-
-    @Override
-    public String getAssertTextFromPage() {
-        String confirmDeleteText = getWait5().until(ExpectedConditions.visibilityOf(confirmDeletionForm)).getText().replaceAll(" the", "");
-
-        return confirmDeleteText.substring(0, confirmDeleteText.lastIndexOf("?"));
     }
 }

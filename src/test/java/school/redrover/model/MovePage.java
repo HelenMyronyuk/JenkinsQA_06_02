@@ -7,8 +7,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BasePage;
+import school.redrover.model.interfaces.IDropDownMenu;
 
-public class MovePage<JobTypePage extends BasePage<?, ?>> extends BaseMainHeaderPage<MovePage<JobTypePage>> {
+public class MovePage<JobTypePage extends BasePage<?, ?>> extends BaseMainHeaderPage<MovePage<JobTypePage>> implements IDropDownMenu {
 
     @FindBy(name = "Submit")
     private WebElement moveButton;
@@ -35,5 +36,10 @@ public class MovePage<JobTypePage extends BasePage<?, ?>> extends BaseMainHeader
         moveButton.click();
 
         return jobTypePage;
+    }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Move";
     }
 }

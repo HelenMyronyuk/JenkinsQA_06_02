@@ -11,6 +11,12 @@ public class MultiConfigurationProjectConfigPage extends BaseConfigFreestyleAndM
     public MultiConfigurationProjectConfigPage(MultiConfigurationProjectPage multiConfigurationProjectPage) {
         super(multiConfigurationProjectPage);
     }
+
+    @Override
+    public String callByMenuItemName() {
+        return "Configure";
+    }
+
     @Step("Get checkbox '{id}' on Multi-configuration project config page ")
     public WebElement getCheckboxById(int id){
         return getDriver().findElement(By.id("cb" + id));

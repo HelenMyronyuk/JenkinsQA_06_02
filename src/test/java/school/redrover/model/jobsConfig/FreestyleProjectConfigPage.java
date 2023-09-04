@@ -18,6 +18,11 @@ public class FreestyleProjectConfigPage extends BaseConfigFreestyleAndMulticonfi
         super(freestyleProjectPage);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Configure";
+    }
+
     @Step("Get a mark from the option 'Block build when upstream project is building' in the 'General' " +
             "section on the Configuration page")
     public boolean getTrueBlockBuildWhenUpstreamProjectIsBuilding() {

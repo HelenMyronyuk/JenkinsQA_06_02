@@ -77,6 +77,11 @@ public class ManageJenkinsPage extends BaseMainHeaderPage<ManageJenkinsPage> {
         super(driver);
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "Manage Jenkins";
+    }
+
     @Step("Input '{text}' in the search field on ManageJenkins Page")
     public ManageJenkinsPage inputToSearchField(String text) {
         getWait2().until(ExpectedConditions.elementToBeClickable(searchBarOnManageJenkinsPage));

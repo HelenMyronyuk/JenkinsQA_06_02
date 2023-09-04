@@ -38,6 +38,16 @@ public class NewJobPage extends BaseMainHeaderPage<NewJobPage> {
         return jobType;
     }
 
+    @Override
+    public String callByMenuItemName() {
+        return "New Item";
+    }
+
+    @Override
+    public String getAssertTextFromPage() {
+        return getWait2().until(ExpectedConditions.visibilityOf(header)).getText();
+    }
+
     @Step("The button is enabled")
     public boolean isOkButtonEnabled() {
         return getWait5().until(ExpectedConditions.visibilityOf(okButton)).isEnabled();
