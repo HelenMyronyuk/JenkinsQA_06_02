@@ -8,9 +8,11 @@
 </test>
 <test name="FirefoxAllTests">
     <parameter name="browserName" value="firefox"/>
-    <packages>
-        <package name="school.redrover.*"/>
-    </packages>
+    <classes>
+        <class name="school.redrover.CreateErrorTest"/>
+        <class name="school.redrover.CreateJobTest"/>
+        <class name="school.redrover.DashboardTest"/>
+    </classes>
 </test>
 <listeners>
     <listener class-name="io.qameta.allure.testng.AllureTestNg" />
