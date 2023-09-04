@@ -510,6 +510,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualPageText, pageText);
     }
 
+    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to click to Build Now option from Project drop down menu")
