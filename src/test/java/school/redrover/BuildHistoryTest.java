@@ -19,7 +19,6 @@ import school.redrover.model.builds.ReplayPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.jobs.MultiConfigurationProjectPage;
 import school.redrover.model.jobs.PipelinePage;
-import school.redrover.model.jobsConfig.FreestyleProjectConfigPage;
 import school.redrover.model.jobsConfig.MultiConfigurationProjectConfigPage;
 import school.redrover.model.jobsConfig.PipelineConfigPage;
 import school.redrover.model.jobsSidemenu.ChangesPage;
@@ -509,5 +508,23 @@ public class BuildHistoryTest extends BaseTest {
                 .getAssertTextFromPage();
 
         Assert.assertEquals(actualPageText, pageText);
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Verify the ability to click to Build Now option from Project drop down menu")
+    @Test(dataProvider = "project-type")
+    public void testClickBuildNowFromDropDown(TestUtils.JobType jobType) {
+        final String jobName = "JOB_NAME";
+        TestUtils.createJob(this, jobName, jobType, true);
+
+        boolean actualPageText = new MainPage(getDriver())
+                .clickBuildByGreenArrow(jobName)
+                .clickBuildsHistoryFromSideMenu()
+                .openProjectDropDownMenu(jobName)
+                .clickBuildNowFromMenu()
+                .isNewBuildDisplayed(jobType);
+
+        Assert.assertTrue(actualPageText, "The new build is not displayed!");
     }
 }

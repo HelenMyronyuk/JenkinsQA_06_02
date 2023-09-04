@@ -70,6 +70,15 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
     @FindBy(xpath = "//td/a[contains(@href, 'default')]/button")
     private WebElement defaultProjectDropdown;
 
+    @FindBy(xpath = "//span[contains(text(),'Build Now')]")
+    private WebElement buildNowButton;
+
+    @FindBy(xpath = "//a[@class='jenkins-table__link jenkins-table__badge model-link inside' and contains(@href, '2')]")
+    private WebElement newBuildLink;
+
+    @FindBy(xpath = "//a[@class='jenkins-table__link jenkins-table__badge model-link inside' and contains(@href, 'default/2')]")
+    private WebElement newDefaultBuildLink;
+
     public BuildHistoryPage(WebDriver driver) {
         super(driver);
     }
@@ -271,5 +280,29 @@ public class BuildHistoryPage extends BaseSubmenuPage<BuildHistoryPage> {
         getWait2().until(ExpectedConditions.elementToBeClickable(option)).click();
 
         return submenuPage;
+    }
+
+    @Step("Select an Build now option from the project drop down menu")
+    public BuildHistoryPage clickBuildNowFromMenu() {
+        getWait2().until(ExpectedConditions.elementToBeClickable(buildNowButton)).click();
+
+        return this;
+    }
+
+    public boolean isNewBuildDisplayed(TestUtils.JobType jobType) {
+        getDriver().navigate().refresh();
+
+        boolean newBuild;
+        newBuild = getWait5().until(ExpectedConditions.visibilityOf(newBuildLink)).isDisplayed();
+
+        if (jobType == TestUtils.JobType.MultiConfigurationProject && newBuild) {
+            new Actions(getDriver())
+                    .pause(1500)
+                    .perform();
+            getDriver().navigate().refresh();
+            newBuild = getWait5().until(ExpectedConditions.visibilityOf(newDefaultBuildLink)).isDisplayed();
+        }
+
+        return newBuild;
     }
 }
