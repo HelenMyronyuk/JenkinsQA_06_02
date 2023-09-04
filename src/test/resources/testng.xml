@@ -12,6 +12,7 @@
         <class name="school.redrover.CreateErrorTest"/>
         <class name="school.redrover.CreateJobTest"/>
         <class name="school.redrover.DashboardTest"/>
+        <class name="school.redrover.FooterTest"/>
     </classes>
 </test>
 <listeners>
