@@ -52,8 +52,24 @@ public class UserPage extends BaseSubmenuPage<UserPage> implements IDescription<
     }
 
     @Step("Select item from the side Menu ")
-    public <SidePage extends BaseMainHeaderPage<?>> SidePage selectItemFromTheSideMenu(String itemName, SidePage sidePage) {
-        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href, '/" + itemName + "')]"))).click();
+    public <SidePage extends BaseMainHeaderPage<?>> SidePage selectItemFromTheSideMenu(SidePage sidePage, String userName) {
+        String optionName;
+        switch (sidePage.callByMenuItemName()) {
+            case ("People"):
+                optionName = "//a[contains(@href, '" + sidePage.callByMenuItemName() + "')]";
+                break;
+            case ("Manage Users"):
+                optionName = "//a[contains(@href, '" + userName + "')]";
+                break;
+            case ("My Views"):
+                optionName = "//a[contains(@href, '" + sidePage.callByMenuItemName().toLowerCase().replaceAll(" ", "-") + "')]";
+                break;
+            default:
+                optionName = "//a[contains(@href, '" + sidePage.callByMenuItemName().toLowerCase() + "')]";
+                break;
+        }
+
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath(optionName))).click();
 
         return sidePage;
     }

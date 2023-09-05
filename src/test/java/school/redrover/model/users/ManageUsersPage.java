@@ -80,6 +80,13 @@ public class ManageUsersPage extends BaseSubmenuPage<ManageUsersPage> {
         return redirectPage;
     }
 
+    @Step("Select '{optionName}' menu item in User ID Dropdown menu")
+    public <RedirectPage extends BaseMainHeaderPage<?>> RedirectPage selectOptionFromUserDropDownMenu(RedirectPage redirectPage) {
+        getWait5().until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '" + redirectPage.callByMenuItemName() +"')]"))).click();
+
+        return redirectPage;
+    }
+
     @Step("Verify if '{userName}' user is exist")
     public boolean isUserExist(String userName) {
         for (WebElement el : users) {

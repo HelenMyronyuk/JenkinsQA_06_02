@@ -1,5 +1,6 @@
 package school.redrover;
 
+import io.cucumber.java.hu.De;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
@@ -10,7 +11,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
+import school.redrover.model.builds.BuildPage;
 import school.redrover.model.builds.UserBuildsPage;
+import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.users.ManageUsersPage;
 import school.redrover.model.users.UserConfigPage;
 import school.redrover.model.users.UserPage;
@@ -199,19 +202,18 @@ public class UsersTest extends BaseTest {
             " by click options on the side menu from Users page")
     @Test(dataProvider = "sideMenuItem")
     public void testNavigateToSideMenuUserFromUsersPage(
-            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String expectedPageText) {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        String actualFullBreadcrumbText = new MainPage(getDriver())
+        String actualPageText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .clickUserIDName(USER_NAME)
-                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
-                .getBreadcrumb()
-                .getFullBreadcrumbText();
+                .selectItemFromTheSideMenu(pageFromSideMenuConstructor.apply(getDriver()), USER_NAME)
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+        Assert.assertEquals(actualPageText, expectedPageText);
     }
 
     @Severity(SeverityLevel.MINOR)
@@ -501,12 +503,12 @@ public class UsersTest extends BaseTest {
     @DataProvider(name = "sideMenuItem")
     public Object[][] provideSideMenuItem() {
         return new Object[][]{
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "asynchPeople", "Dashboard > People"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "testuser", "Dashboard > Manage Jenkins > Jenkins’ own user database > Test User"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "builds", "Dashboard > Test User > Builds"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "configure", "Dashboard > Test User > Configure"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "my-views", "Dashboard > Test User > My Views > All"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "delete", "Dashboard > Test User > Delete"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PeoplePage::new, "People"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserPage::new, "Test User"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserBuildsPage::new, "Builds for " + USER_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Full Name"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) MyViewsPage::new, "This folder is empty"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new DeletePage<>(new UserPage(driver)), "Delete Jenkins user " + USER_FULL_NAME}
         };
     }
 
@@ -515,28 +517,27 @@ public class UsersTest extends BaseTest {
     @Description("Verification of possibility to navigate to pages " +
             " by click options on the side menu from Configure page")
     @Test(dataProvider = "sideMenuItem")
-    public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedFullBreadcrumbText) {
+    public void testNavigateToPageFromSideMenuOnConfigure(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String expectedPageText) {
 
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        String actualFullBreadcrumbText = new MainPage(getDriver())
+        String actualPageText = new MainPage(getDriver())
                 .clickManageJenkinsPage()
                 .clickManageUsers()
                 .selectConfigureButton(USER_NAME)
-                .selectItemFromTheSideMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
-                .getBreadcrumb()
-                .getFullBreadcrumbText();
+                .selectItemFromTheSideMenu(pageFromSideMenuConstructor.apply(getDriver()), USER_NAME)
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(actualFullBreadcrumbText, expectedFullBreadcrumbText);
+        Assert.assertEquals(actualPageText, expectedPageText);
     }
 
     @DataProvider(name = "dropDownOnUsersPageMenu")
     public Object[][] provideDropDownMenuItem() {
         return new Object[][]{
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserBuildsPage(driver), "Builds", "Dashboard > Test User > Builds"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Configure", "Dashboard > Test User > Configure"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new MyViewsPage(driver), "My Views", "Dashboard > Test User > My Views > All"},
-                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new DeletePage<>(new ManageUsersPage(driver)), "Delete", "Dashboard > Test User > Delete"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) UserBuildsPage::new, "Builds for " + USER_NAME},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new UserConfigPage(new UserPage(driver)), "Full Name"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) MyViewsPage::new, "This folder is empty"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) driver -> new DeletePage<>(new ManageUsersPage(driver)), "Delete Jenkins user " + USER_FULL_NAME},
         };
     }
 
@@ -545,19 +546,17 @@ public class UsersTest extends BaseTest {
     @Description("Verification of possibility to navigate to pages " +
             " by click options on the drop-down menu from Users page")
     @Test(dataProvider = "dropDownOnUsersPageMenu")
-    public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String optionName, String expectedBreadcrumbText) throws InterruptedException {
-
+    public void testNavigateToPageFromDropDownOnUsersPage(Function<WebDriver, BaseMainHeaderPage<?>> pageFromSideMenuConstructor, String expectedPageText) {
         TestUtils.createUserAndReturnToMainPage(this, USER_NAME, PASSWORD, USER_FULL_NAME, EMAIL);
 
-        String breadcrumbText = new MainPage(getDriver())
+        String actualPageText = new MainPage(getDriver())
                 .getBreadcrumb()
                 .selectAnOptionFromDashboardManageJenkinsSubmenuList(new ManageUsersPage(getDriver()))
                 .openUserIDDropDownMenu(USER_NAME)
-                .selectItemInUserIDDropDownMenu(optionName, pageFromSideMenuConstructor.apply(getDriver()))
-                .getBreadcrumb()
-                .getFullBreadcrumbText();
+                .selectOptionFromUserDropDownMenu(pageFromSideMenuConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
 
-        Assert.assertEquals(breadcrumbText, expectedBreadcrumbText);
+        Assert.assertEquals(actualPageText, expectedPageText);
 
     }
 
