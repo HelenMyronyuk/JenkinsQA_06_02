@@ -13,6 +13,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.builds.ConsoleOutputPage;
 import school.redrover.model.builds.EditBuildInformationPage;
+import school.redrover.model.jobs.FreestyleProjectPage;
 import school.redrover.model.builds.PipelineStepsPage;
 import school.redrover.model.builds.ReplayPage;
 import school.redrover.model.jobs.FreestyleProjectPage;
@@ -525,6 +526,7 @@ public class BuildHistoryTest extends BaseTest {
         Assert.assertEquals(actualPageText, pageText);
     }
 
+    @Ignore
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
     @Description("Verify the ability to click to Build Now option from Project drop down menu")

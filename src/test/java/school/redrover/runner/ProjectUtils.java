@@ -8,6 +8,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -84,8 +86,20 @@ public final class ProjectUtils {
                 properties.getProperty(PROP_PORT));
     }
 
-    static WebDriver createDriver() {
-        return new ChromeDriver(chromeOptions);
+    static WebDriver createDriver(String browserName) {
+        switch (browserName) {
+            case "chrome" -> {
+                return new ChromeDriver(chromeOptions);
+            }
+            case "firefox" -> {
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("-headless");
+                return new FirefoxDriver(firefoxOptions);
+            }
+            default -> {
+                return new ChromeDriver(chromeOptions);
+            }
+        }
     }
 
     public static void get(WebDriver driver) {

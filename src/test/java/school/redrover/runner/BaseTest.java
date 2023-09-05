@@ -33,12 +33,13 @@ public abstract class BaseTest {
     }
 
     @BeforeMethod
-    protected void beforeMethod(Method method) {
+    @Parameters("browserName")
+    protected void beforeMethod(Method method, @Optional("chrome") String browserName) {
         ProjectUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             if (!methodsOrder.isGroupStarted(method) || methodsOrder.isGroupFinished(method)) {
                 clearData();
-                startDriver();
+                startDriver(browserName);
                 getWeb();
                 loginWeb();
             } else {
@@ -67,14 +68,14 @@ public abstract class BaseTest {
         ProjectUtils.get(driver);
     }
 
-    protected void startDriver() {
+    protected void startDriver(String browserName) {
         ProjectUtils.log("Browser open");
 
         int count = 0;
         do {
             try {
                 Thread.sleep(500);
-                driver = ProjectUtils.createDriver();
+                driver = ProjectUtils.createDriver(browserName);
             } catch (Exception e) {
                 if (++count >= 3) {
                     throw new RuntimeException(e);

@@ -1,9 +1,19 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="AllTestsSuite">
-<test name="AllTests">
+<test name="ChromeAllTests">
+    <parameter name="browserName" value="chrome"/>
     <packages>
         <package name="school.redrover.*"/>
     </packages>
+</test>
+<test name="FirefoxAllTests">
+    <parameter name="browserName" value="firefox"/>
+    <classes>
+        <class name="school.redrover.CreateErrorTest"/>
+        <class name="school.redrover.CreateJobTest"/>
+        <class name="school.redrover.DashboardTest"/>
+        <class name="school.redrover.FooterTest"/>
+    </classes>
 </test>
 <listeners>
     <listener class-name="io.qameta.allure.testng.AllureTestNg" />
