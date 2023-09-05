@@ -12,10 +12,7 @@ import school.redrover.model.*;
 import school.redrover.model.base.BaseJobPage;
 import school.redrover.model.base.BaseMainHeaderPage;
 import school.redrover.model.base.BaseSubmenuPage;
-import school.redrover.model.builds.BuildPage;
-import school.redrover.model.builds.ChangesBuildPage;
-import school.redrover.model.builds.ConsoleOutputPage;
-import school.redrover.model.builds.EditBuildInformationPage;
+import school.redrover.model.builds.*;
 import school.redrover.model.jobs.FolderPage;
 import school.redrover.model.jobs.PipelinePage;
 import school.redrover.model.jobs.OrganizationFolderPage;
@@ -643,7 +640,7 @@ public class BreadcrumbTest extends BaseTest {
             actualPageText = baseMainHeaderPage.getAssertTextFromPage();
         }
 
-         Assert.assertEquals(actualPageText, expectedHeaderText);
+        Assert.assertEquals(actualPageText, expectedHeaderText);
     }
 
     @DataProvider(name = "userDropDownMenu")
@@ -774,6 +771,39 @@ public class BreadcrumbTest extends BaseTest {
                 .getBreadcrumb()
                 .getManageJenkinsDropdownMenu()
                 .selectOptionFromManageJenkinsDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
+
+        Assert.assertEquals(actualResult, expectedResult);
+    }
+
+    @DataProvider(name = "getBuildFromPipelineDropDownSubmenu")
+    public Object[][] getBuildFromPipelineDropDownSubmenu() {
+        return new Object[][]{
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ChangesPage::new, "Changes"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) ConsoleOutputPage::new, "Console Output"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) EditBuildInformationPage::new, "Edit Build Information"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new DeletePage<>(new PipelinePage(driver)), "Delete build #1"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>)
+                        driver -> new ReplayPage<>(new PipelinePage(driver)), "Replay #1"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) PipelineStepsPage::new, "Pipeline Steps"},
+                {(Function<WebDriver, BaseMainHeaderPage<?>>) WorkspacePage::new, "Workspaces for " + PROJECT_NAME + " #1"}
+        };
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification that a user is able to navigate to the Pipeline Project Build pages from the build drop-down")
+    @Test(dataProvider = "getBuildFromPipelineDropDownSubmenu")
+    public void testNavigateToPipelineBuildPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.Pipeline, false);
+
+        String actualResult = new PipelinePage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
                 .getAssertTextFromPage();
 
         Assert.assertEquals(actualResult, expectedResult);
