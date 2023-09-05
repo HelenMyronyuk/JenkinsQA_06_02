@@ -975,7 +975,7 @@ public class FreestyleProjectTest extends BaseTest {
 
     @Severity(SeverityLevel.NORMAL)
     @Feature("Function")
-    @Description("Checking the possibility  'add Repository' from ‘Source Code Management’ ")
+    @Description("Checking the possibility 'add Repository' from ‘Source Code Management’ ")
     @Test
     public void testAddRepositoryFromSourceCodeManagement() {
         TestUtils.createJob(this, FREESTYLE_NAME, TestUtils.JobType.FreestyleProject, true);

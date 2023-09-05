@@ -29,6 +29,7 @@ public class MultiConfigurationProjectTest extends BaseTest {
     private static final String NEW_NAME = "MULTI_CONFIGURATION_NEW_NAME";
     private static final String DESCRIPTION = "Description";
     private static final String NEW_DESCRIPTION = "New Description";
+    private static final String GITHUB_REPOSITORY_URL = "https://github.com/nikabenz/sourceCodeManagementForJenkinsBuild";
 
     @DataProvider(name = "buildMenu")
     public Object[][] getBuildMenu() {
@@ -730,6 +731,31 @@ public class MultiConfigurationProjectTest extends BaseTest {
                 .getAllOptionsOfAddParameterDropdown();
 
         Assert.assertEquals(actualOptionsProjectIsParameterizedList, expectedOptionsProjectIsParameterizedList);
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Function")
+    @Description("Checking the possibility 'add Repository' from ‘Source Code Management’ ")
+    @Test
+    public void testAddRepositoryFromSourceCodeManagement() {
+        TestUtils.createJob(this, NAME,TestUtils.JobType.MultiConfigurationProject, true);
+
+        GitBuildDataPage gitBuildDataPage = new MainPage(getDriver())
+                .clickJobName(NAME, new MultiConfigurationProjectPage(getDriver()))
+                .clickConfigure()
+                .clickSourceCodeManagementLink()
+                .clickRadioButtonGit()
+                .inputRepositoryUrl(GITHUB_REPOSITORY_URL)
+                .correctMainBranchName()
+                .clickSaveButton()
+                .clickBuildNowFromSideMenu()
+                .refreshPage()
+                .openPermalinksLastBuildsDropDownMenu()
+                .clickConsoleOutputType()
+                .clickGitBuildDataLink();
+
+        Assert.assertEquals(gitBuildDataPage.getNamesOfBuiltBranches(), "refs/remotes/origin/main");
+        Assert.assertEquals(gitBuildDataPage.getRepositoryName(), GITHUB_REPOSITORY_URL);
     }
 
     @Severity(SeverityLevel.NORMAL)
