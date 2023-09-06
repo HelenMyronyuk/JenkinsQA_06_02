@@ -808,4 +808,22 @@ public class BreadcrumbTest extends BaseTest {
 
         Assert.assertEquals(actualResult, expectedResult);
     }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("Navigation")
+    @Description("Verification that a user is able to navigate to the MultiConfiguration Project Build pages from the build drop-down")
+    @Test(dataProvider = "buildSubMenu")
+    public void testNavigateToMultiConfigBuildPagesFromDropdownOnBreadcrumb(
+            Function<WebDriver, BaseMainHeaderPage<?>> pageFromSubMenuConstructor, String expectedResult) {
+        TestUtils.createJob(this, PROJECT_NAME, TestUtils.JobType.MultiConfigurationProject, false);
+
+        String actualResult = new MultiConfigurationProjectPage(getDriver())
+                .clickBuildNowFromSideMenu()
+                .clickLastBuildLink()
+                .getBuildDropdownMenu()
+                .selectOptionFromBuildDropDownList(pageFromSubMenuConstructor.apply(getDriver()))
+                .getAssertTextFromPage();
+
+        Assert.assertEquals(actualResult, expectedResult);
+    }
 }
